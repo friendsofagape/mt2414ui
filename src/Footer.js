@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Grid, Nav, NavItem } from 'react-bootstrap';
-
 class Footer extends Component{
  render(){
    return (
