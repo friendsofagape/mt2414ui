@@ -1,7 +1,8 @@
 .App {
   text-align: center;
-  padding-left: 152px;
+  padding-left: 450px;
 }
-.Sign {
-  padding-top: 50px;
+
+.col-md-6 {
+  padding: 50px;
 }
