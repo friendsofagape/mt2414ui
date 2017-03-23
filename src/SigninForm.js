@@ -11,6 +11,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
 import $ from 'jquery';
+import Header from './Header';
+import Footer from './Footer';
 
 
   class SigninForm extends Component {
@@ -33,29 +35,29 @@ import $ from 'jquery';
         e.preventDefault();
         //Performing a POST request for authentcation
         $.ajax({
-             url: "https://api.mt2414.in/v1/auth",
-             data :{
-             username : this.state.email,
-             password : this.state.password
+            url: "https://api.mt2414.in/v1/auth",
+            data :{
+              username : this.state.email,
+              password : this.state.password
+            },
+            method : "POST",
+            success: function(result) {
+              if (result){
+                var auth = result;
+                $("#auth_token").val(auth);
+              }
              },
-             method : "POST",
-             success: function(result) {
-               console.log("Successfully Excuted !!! ");
-                 console.log(result);
-             },
-             error: function(error){
-                 console.log(error);
-             },
-             complete(complete){
-             console.log("Successfully Completed !!");
+            error: function(error){
+              console.log(error);
              }
          });
         }
 
     render() {
       return (
-        <div className="App">
-        <form onSubmit={this.onLogin} className="col-md-6">
+        <div className="App text-center">
+        <Header />
+        <form onSubmit={this.onLogin} className="col-md-8">
           <h1>Sign in</h1>
           <div className="form-goup"><br/>
             <lable className="control-lable"> Email</lable>
@@ -81,13 +83,27 @@ import $ from 'jquery';
             />
           </div>
           <div className="form-goup">
-            <button className="btn btn-primary"> Sign in </button>
+            <button className="btn btn-primary btn-block signup-button"> Sign in </button>
           </div>
           <div className="signlink">
             <Link to={'/signup'}>Sign up instead</Link>
           </div>
-        </form>
+          <hr/>
+          <div className="form-goup">
+          <lable className="control-lable"> Auth Token </lable>
+          <input
+            value=""
+            type="text"
+            id="auth_token"
+            name="auth token"
+            placeholder="Token"
+            className="form-control"
+          />
         </div>
+        </form>
+        <Footer />
+        </div>
+
       );
     }
 }
