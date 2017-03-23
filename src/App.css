@@ -1,8 +1,10 @@
 .App {
   text-align: center;
-  padding-left: 450px;
 }
 
-.col-md-6 {
-  padding: 50px;
+.col-md-8 {
+   margin: 5% 0% 0% 17%;
+}
+.signup-button{
+	margin-top: 1%; 
 }
