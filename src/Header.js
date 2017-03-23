@@ -8,8 +8,8 @@ class Header extends Component {
       <Navbar fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">
-              Header
+            <a href="#">
+              MT2414UI
             </a>
           </Navbar.Brand>
           <Navbar.Toggle />
@@ -18,13 +18,13 @@ class Header extends Component {
           <Nav pullRight>
             <NavItem
               eventKey={1}
-              href="#">
-              Home
+              href="/signin">
+              Sign in
             </NavItem>
             <NavItem
               eventKey={2}
-              href="#">
-              About
+              href="/signup">
+              Sign up
             </NavItem>
           </Nav>
         </Navbar.Collapse>
