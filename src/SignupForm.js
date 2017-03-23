@@ -12,6 +12,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
 import $ from 'jquery';
+import Header from './Header';
+import Footer from './Footer';
 
 class SignupForm extends Component {
     constructor(props) {
@@ -56,8 +58,9 @@ class SignupForm extends Component {
 
   render() {
       return (
-        <div className="App">
-        <form onSubmit={this.onRegistration} className="col-md-6">
+        <div className="App text-center">
+        <Header />
+        <form onSubmit={this.onRegistration} className="col-md-8">
           <h1>Sign up</h1>
               <div className="form-goup">
                 <lable className="control-lable"> Email </lable>
@@ -94,12 +97,13 @@ class SignupForm extends Component {
                 />
               </div>
           <div className="form-goup">
-            <button className="btn btn-primary" > Sign up </button>
+            <button className="btn btn-primary btn-block signup-button" > Sign up </button>
           </div>
           <div className="signlink">
             <Link to={'/signin'}>Already a user? Sign in instead</Link>
           </div>
         </form>
+         <Footer />
         </div>
       );
     }
