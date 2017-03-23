@@ -1,7 +1,17 @@
+/**
+ * @module src/SignupForm
+ *
+ * Component that display SignupForm and SigninForm
+ * Accepts the following properties:
+ *  - email: enter email for signin
+ *  - password: enter the same password which you have enter at the time of signup
+ *  - confirmpassword: enter the same password for confirmpassword
+ *
+ */
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
-import axios from 'axios';
+import $ from 'jquery';
 
 class SignupForm extends Component {
     constructor(props) {
@@ -10,48 +20,55 @@ class SignupForm extends Component {
         email: '',
         password: ''
     }
+      // Signup form form specific callback handlers
       this.onChange = this.onChange.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+      this.onRegistration = this.onRegistration.bind(this);
    }
 
-    onChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value });
-      }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value });
+  }
 
-    onSubmit(e) {
-        e.preventDefault();
-        console.log(e)
-        console.log(this.state);
-        var self = this;
-        //Performing a POST request
-        axios.post('https://api.mt2414.in/v1/registrations', {
-           email: self.state,
-           password: self.state
-         })
-         .then(function (response) {
-           console.log(response);
-        })
-        .catch(function (error) {
-          console.log("Hello")
-          console.log('error' + error)
-        });
-     }
+  onRegistration(e) {
+    e.preventDefault();
+    //Performing a POST request for registrations using AJAX call
+    $.ajax({
+       url: "https://api.mt2414.in/v1/registrations",
+       data :{
+           email : this.state.email,
+           password : this.state.password
+           },
+           method : "POST",
+         success: function(result) {
+             console.log("Successfully Excuted !!");
+             console.log(result);
+             window.location.href = "./signin";
+           },
+         error: function(error){
+             console.log(error);
+          },
+         complete(complete){
+           console.log("Successfully completed !!");
+         }
+     });
+  }
 
-    render() {
+  render() {
       return (
         <div className="App">
-        <form onSubmit={this.onSubmit} className="col-md-6">
-          <h1>Signup Page</h1>
+        <form onSubmit={this.onRegistration} className="col-md-6">
+          <h1>Sign up</h1>
               <div className="form-goup">
                 <lable className="control-lable"> Email </lable>
                 <input
                   value={this.state.value}
                   onChange={this.onChange}
-                  type="text"
+                  type="email"
                   name="email"
                   placeholder="Email"
                   className="form-control"
+                  required="true"
                 />
               </div>
               <div className="form-goup">
@@ -86,6 +103,5 @@ class SignupForm extends Component {
         </div>
       );
     }
-  }
-
-  export default SignupForm;
+ }
+export default SignupForm;
