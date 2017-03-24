@@ -60,7 +60,7 @@ import Footer from './Footer';
         <form onSubmit={this.onLogin} className="col-md-8">
           <h1>Sign in</h1>
           <div className="form-goup"><br/>
-            <lable className="control-lable"> Email</lable>
+            <lable className="control-lable">Email</lable>
             <input
               value={this.state.email}
               onChange={this.onChange}

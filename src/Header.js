@@ -26,6 +26,11 @@ class Header extends Component {
               href="/signup">
               Sign up
             </NavItem>
+            <NavItem
+              eventKey={1}
+              href="/sourcedocument">
+              Source Document
+            </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

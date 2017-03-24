@@ -7,6 +7,8 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
+import SourceDocument from './SourceDocument';
+import FileUpload from './FileUpload';
 
 const store = createStore(
   (state = {}) => state,
@@ -19,6 +21,8 @@ ReactDOM.render(
       <Route path="/app" component={App} />
       <Route path="/signup" component={SignupForm} />
       <Route path="/signin" component={SigninForm} />
+      <Route path="/sourcedocument" component={SourceDocument} />
+      <Route path="/fileupload" component={FileUpload} />
     </Router>
   </Provider>,
   document.getElementById('root')
