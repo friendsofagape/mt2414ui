@@ -34,6 +34,7 @@ import Footer from './Footer';
     onLogin(e) {
         e.preventDefault();
         //Performing a POST request for authentcation
+        console.log(this.state.password);
         $.ajax({
             url: "https://api.mt2414.in/v1/auth",
             data :{
@@ -57,10 +58,10 @@ import Footer from './Footer';
       return (
         <div className="App text-center">
         <Header />
-        <form onSubmit={this.onLogin} className="col-md-8">
+        <form onSubmit={this.onLogin} className="col-md-8 ">
           <h1>Sign in</h1>
           <div className="form-goup"><br/>
-            <lable className="control-lable">Email</lable>
+            <lable className="control-lable ">Email</lable>
             <input
               value={this.state.email}
               onChange={this.onChange}

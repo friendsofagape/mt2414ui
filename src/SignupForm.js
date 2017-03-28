@@ -37,14 +37,15 @@ class SignupForm extends Component {
     //Performing a POST request for registrations using AJAX call
     $.ajax({
        url: "https://api.mt2414.in/v1/registrations",
-       data :{
-           email : this.state.email,
-           password : this.state.password
-           },
+       data: {
+          email : this.state.email,
+          password : this.state.password
+          },
            method : "POST",
          success: function(result) {
              console.log("Successfully Excuted !!");
              console.log(result);
+             alert("Done");
              window.location.href = "./signin";
            },
          error: function(error){
