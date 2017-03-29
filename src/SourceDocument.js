@@ -13,16 +13,19 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import { FormControl } from 'react-bootstrap';
+import ContentJson from './content';
 import $ from 'jquery';
+
+console.log(ContentJson);
 
 class SourceDocument extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        LanguageName: 'Tamil',
-        EthnologueCode: 'tam',
-        TranslationVersion: 'ULB'
+        LanguageName: '',
+        EthnologueCode: '',
+        TranslationVersion: ''
       }
 
       // Upload file specific callback handlers
@@ -39,13 +42,22 @@ class SourceDocument extends Component {
 
   uploadFile(e){
     e.preventDefault()
+
+    $.getJSON('ContentJson', function(data){
+            console.log("Its working !!");  
+    });
+
     var ext = $('#file').val().split('.').pop().toLowerCase();
+    
       if($.inArray(ext, ['usfm']) === -1) {
         console.log("File is not valid");
       } else {
         console.log("File is valid");
-      }
-      
+            var fpath = $('#file').val();
+            fpath = fpath.replace(/\\/g, '/');
+            var fname = fpath.substring(fpath.lastIndexOf('/')+1, fpath.lastIndexOf('.'));
+            console.log(fname);
+      } 
   }
 
   render() {
@@ -55,25 +67,26 @@ class SourceDocument extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1>Source</h1>
               <div className="form-goup ">
-                <lable className="control-label col-sm-2">LanguageName </lable>
+                <lable className="control-label col-sm-2">LanguageName</lable>
                   <div className="col-sm-10">
                     <FormControl componentClass="select" placeholder="select">
-                      <option value="other">Tamil</option>
-                      <option value="other">Hindi</option>
-                      <option value="other">English</option>
-                      <option value="other">Gujrati</option>
-                      <option value="other">Bengali</option>
-                      <option value="other">Marathi</option>
-                      <option value="other">Sanskrit</option>
+                      <option >Select</option>
+                      <option value="tam">Tamil</option>
+                      <option value="hin">Hindi</option>
+                      <option value="eng">English</option>
+                      <option value="guj">Gujrati</option>
+                      <option value="ben">Bengali</option>
+                      <option value="mar">Marathi</option>
+                      <option value="san">Sanskrit</option>
                     </FormControl>
                   </div>
-              </div>
+              </div>&nbsp;
               <div className="form-goup">
                 <lable className="control-lable col-sm-2">Ethnologue Code</lable>
                   <div className="col-sm-10">
                       <input value={this.state.EthnologueCode} onChange={this.onChange} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
                   </div>
-              </div>
+              </div>&nbsp;
               <div className="form-goup">
                 <lable className="control-lable col-sm-2">Translation Version </lable>
                   <div className="col-sm-10">

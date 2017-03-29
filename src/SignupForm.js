@@ -45,7 +45,7 @@ class SignupForm extends Component {
          success: function(result) {
              console.log("Successfully Excuted !!");
              console.log(result);
-             alert("Done");
+             alert("Successfully Signup ");
              window.location.href = "./signin";
            },
          error: function(error){
@@ -62,7 +62,7 @@ class SignupForm extends Component {
         <div className="App text-center">
         <Header />
         <form onSubmit={this.onRegistration} className="col-md-8">
-          <h1>Sign up</h1>
+          <h1>Sign up</h1><br />
               <div className="form-goup">
                 <lable className="control-lable"> Email </lable>
                 <input
