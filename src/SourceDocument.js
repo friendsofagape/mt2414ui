@@ -13,50 +13,46 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import { FormControl } from 'react-bootstrap';
-import ContentJson from './content';
+import Languages from './Languages';
 import $ from 'jquery';
 
-console.log(ContentJson);
+// console.log(ContentJson);
 
 class SourceDocument extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        LanguageName: '',
-        EthnologueCode: '',
-        TranslationVersion: ''
-      }
-
+      lang:'tam'
+    }
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
-      this.onChange = this.onChange.bind(this);
-
+      this.onSelect = this.onSelect.bind(this);
   }
   
-  onChange(e) {
-  
-    this.setState({ [e.target.name]: e.target.value });
-  
+  onSelect(e) {
+    this.setState({
+      lang:e.target.value
+    });
   }
 
   uploadFile(e){
-    e.preventDefault()
+    e.preventDefault();
 
-    $.getJSON('ContentJson', function(data){
-            console.log("Its working !!");  
-    });
-
-    var ext = $('#file').val().split('.').pop().toLowerCase();
-    
+    var ext = $('#file-input').val().split('.').pop().toLowerCase();
       if($.inArray(ext, ['usfm']) === -1) {
         console.log("File is not valid");
       } else {
-        console.log("File is valid");
-            var fpath = $('#file').val();
-            fpath = fpath.replace(/\\/g, '/');
-            var fname = fpath.substring(fpath.lastIndexOf('/')+1, fpath.lastIndexOf('.'));
-            console.log(fname);
+      console.log("File is valid");
+        var fpath = $('#file-input').val();
+        console.log(fpath);
+        fpath = fpath.replace(/\\/g, '/');
+        var fname = fpath.substring(fpath.lastIndexOf('/')+1, fpath.lastIndexOf('.'));
+        console.log(fname);
+        var input = document.getElementById( 'file-input' );
+        for (var i = 0; i < input.files.length; ++i){
+        console.log(input.files);
+    }   
       } 
   }
 
@@ -65,37 +61,30 @@ class SourceDocument extends Component {
       <div className="App text-center">
         <Header/ >
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1>Source</h1>
-              <div className="form-goup ">
-                <lable className="control-label col-sm-2">LanguageName</lable>
+            <h1>Sources</h1>
+              <div className="form-goup">
+                <lable className="control-label col-sm-2">Language Name</lable>
                   <div className="col-sm-10">
-                    <FormControl componentClass="select" placeholder="select">
-                      <option >Select</option>
-                      <option value="tam">Tamil</option>
-                      <option value="hin">Hindi</option>
-                      <option value="eng">English</option>
-                      <option value="guj">Gujrati</option>
-                      <option value="ben">Bengali</option>
-                      <option value="mar">Marathi</option>
-                      <option value="san">Sanskrit</option>
+                    <FormControl value={this.state.lang} onChange={this.onSelect} componentClass="select" placeholder="select">
+                      {Languages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
                   </div>
               </div>&nbsp;
               <div className="form-goup">
                 <lable className="control-lable col-sm-2">Ethnologue Code</lable>
                   <div className="col-sm-10">
-                      <input value={this.state.EthnologueCode} onChange={this.onChange} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
+                      <input value={this.state.lang} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
                   </div>
               </div>&nbsp;
               <div className="form-goup">
                 <lable className="control-lable col-sm-2">Translation Version </lable>
                   <div className="col-sm-10">
-                    <input value={this.state.TranslationVersion} onChange={this.onChange} type="text" name="TranslationVersion" placeholder="ULB" className="form-control"/> 
+                    <input type="text" placeholder="ULB" className="form-control"/> 
                   </div>
               </div>
               <div className="form-goup">
                 <div className="col-sm-10">
-                  <input id="file" type="file" name="file" className="upload-file" multiple/>
+                  <input id="file-input" type="file" name="file" className="upload-file" multiple/>
                 </div>
               </div> 
               <div className="form-goup">
@@ -109,4 +98,5 @@ class SourceDocument extends Component {
       );
     }
 }
+
 export default SourceDocument;
