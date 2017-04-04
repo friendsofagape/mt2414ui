@@ -16,7 +16,6 @@ import { FormControl } from 'react-bootstrap';
 import Languages from './Languages';
 import $ from 'jquery';
 
-// console.log(ContentJson);
 
 class SourceDocument extends Component {
   constructor(props) {
@@ -39,20 +38,15 @@ class SourceDocument extends Component {
   uploadFile(e){
     e.preventDefault();
 
-    var ext = $('#file-input').val().split('.').pop().toLowerCase();
+      var ext = $('#file-input').val().split('.').pop().toLowerCase();
       if($.inArray(ext, ['usfm']) === -1) {
         console.log("File is not valid");
       } else {
-      console.log("File is valid");
+        console.log("File is valid");
         var fpath = $('#file-input').val();
-        console.log(fpath);
         fpath = fpath.replace(/\\/g, '/');
         var fname = fpath.substring(fpath.lastIndexOf('/')+1, fpath.lastIndexOf('.'));
         console.log(fname);
-        var input = document.getElementById( 'file-input' );
-        for (var i = 0; i < input.files.length; ++i){
-        console.log(input.files);
-    }   
       } 
   }
 

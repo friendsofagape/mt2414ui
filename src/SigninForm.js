@@ -59,8 +59,14 @@ import Footer from './Footer';
         <div className="App text-center">
         <Header />
         <form onSubmit={this.onLogin} className="col-md-8 ">
+          <div className="form-goup">
+            <div className="alert alert-success alert-dismissable">
+              <a href="#" className="close" data-dismiss="alert" aria-label="close">×</a>
+              <strong>Sign up Successfully !</strong>
+            </div>
+          </div>
           <h1>Sign in</h1>
-          <div className="form-goup"><br/>
+            <div className="form-goup"><br/>
             <lable className="control-lable ">Email</lable>
             <input
               value={this.state.email}
