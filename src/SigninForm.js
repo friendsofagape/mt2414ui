@@ -28,31 +28,78 @@ import Footer from './Footer';
     }
 
     onChange(e) {
+      e.target.classList.add('active');
       this.setState({ [e.target.name]: e.target.value });
-      }
+      this.showInputError(e.target.name);
+    }
 
-    onLogin(e) {
-        e.preventDefault();
-        //Performing a POST request for authentcation
-        console.log(this.state.password);
-        $.ajax({
-            url: "https://api.mt2414.in/v1/auth",
-            data :{
-              username : this.state.email,
-              password : this.state.password
-            },
-            method : "POST",
-            success: function(result) {
-              if (result){
-                var auth = result;
-                $("#auth_token").val(auth);
-              }
-             },
-            error: function(error){
-              console.log(error);
-             }
-         });
+    // Checking signup form error
+
+  showFormErrors() {
+    const inputs = document.querySelectorAll('input');
+    let isFormValid = true;
+    
+    inputs.forEach(input => {
+      input.classList.add('active');
+      
+      const isInputValid = this.showInputError(input.name);
+      
+      if (!isInputValid) {
+        isFormValid = false;
+      }
+    });
+    
+    return isFormValid;
+  }
+
+//Showing input error for each field 
+
+  showInputError(refName) {
+    const validity = this.refs[refName].validity;
+    const label = document.getElementById(`${refName}Label`).textContent;
+    const error = document.getElementById(`${refName}Error`);
+    const isPassword = refName.indexOf('password') !== -1;
+          
+      if (!validity.valid) {
+        if (validity.valueMissing) {
+          error.textContent = `${label} is a required field`; 
+        } else if (validity.typeMismatch) {
+          error.textContent = `${label} should be a valid email address`; 
+        } else if (isPassword && validity.patternMismatch) {
+          error.textContent = `${label} should be longer than 4 chars`; 
         }
+        return false;
+      }
+      
+      error.textContent = '';
+      return true;
+  }
+
+  onLogin(e) {
+    e.preventDefault();
+    //Performing a POST request for authentcation
+    $("#success-alert").show();
+    setTimeout(function() { $("#success-alert").slideUp(); }, 500);
+
+    console.log(this.state.password);
+    $.ajax({
+      url: "https://api.mt2414.in/v1/auth",
+      data :{
+        username : this.state.email,
+        password : this.state.password
+      },
+        method : "POST",
+        success: function(result) {
+        if (result){
+          var auth = result;
+          $("#auth_token").val(auth);
+        }
+        },
+        error: function(error){
+        console.log(error);
+        }
+    });
+  }
 
     render() {
       return (
@@ -60,35 +107,37 @@ import Footer from './Footer';
         <Header />
         <form onSubmit={this.onLogin} className="col-md-8 ">
           <div className="form-goup">
-            <div className="alert alert-success alert-dismissable">
+            <div className="alert alert-success alert-dismissable"  id="success-alert">
               <a href="#" className="close" data-dismiss="alert" aria-label="close">×</a>
               <strong>Sign up Successfully !</strong>
             </div>
           </div>
           <h1>Sign in</h1>
             <div className="form-goup"><br/>
-            <lable className="control-lable ">Email</lable>
-            <input
+            <lable className="control-lable " id="emailLabel">Email</lable>
+            <input className="form-control"
               value={this.state.email}
               onChange={this.onChange}
               type="email"
               name="email"
               placeholder="Email"
-              className="form-control"
-              required="true"
-            />
-          </div>
+              ref="email"
+              required />
+            <div className="error" id="emailError" />
+          </div>&nbsp;
           <div className="form-goup">
-            <lable className="control-lable"> Password </lable>
-            <input
+            <lable className="control-lable" id="passwordLabel"> Password </lable>
+            <input className="form-control"
               value={this.state.password}
               onChange={this.onChange}
               type="password"
               name="password"
               placeholder="password"
-              className="form-control"
-            />
-          </div>
+              pattern=".{5,}"
+              ref="password"
+              required />
+            <div className="error" id="passwordError" />
+          </div>&nbsp;
           <div className="form-goup">
             <button className="btn btn-primary btn-block signup-button"> Sign in </button>
           </div>
