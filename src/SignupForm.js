@@ -1,13 +1,14 @@
 /**
  * @module src/SignupForm
  *
- * Component that display SignupForm and SigninForm
+ * Component that display SignupForm  with validation of each field 
  * Accepts the following properties:
  *  - email: enter email for signin
  *  - password: enter the same password which you have enter at the time of signup
- *  - confirmpassword: enter the same password for confirmpassword
+ *  - passwordConfirm: enter the same password for confirmpassword
  *
  */
+ 
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
@@ -20,7 +21,8 @@ class SignupForm extends Component {
       super(props);
       this.state = {
         email: '',
-        password: ''
+        password: '',
+        passwordConfirm: ''
     }
       // Signup form form specific callback handlers
       this.onChange = this.onChange.bind(this);
@@ -28,12 +30,71 @@ class SignupForm extends Component {
    }
 
   onChange(e) {
+    e.target.classList.add('active');
+
     this.setState({
       [e.target.name]: e.target.value });
+
+    this.showInputError(e.target.name);
+
+  }
+
+// Checking signup form error
+
+  showFormErrors() {
+    const inputs = document.querySelectorAll('input');
+    let isFormValid = true;
+    
+    inputs.forEach(input => {
+      input.classList.add('active');
+      
+      const isInputValid = this.showInputError(input.name);
+      
+      if (!isInputValid) {
+        isFormValid = false;
+      }
+    });
+    
+    return isFormValid;
+  }
+
+//Showing input error for each field 
+
+  showInputError(refName) {
+    const validity = this.refs[refName].validity;
+    const label = document.getElementById(`${refName}Label`).textContent;
+    const error = document.getElementById(`${refName}Error`);
+    const isPassword = refName.indexOf('password') !== -1;
+    const isPasswordConfirm = refName === 'passwordConfirm';
+      
+      if (isPasswordConfirm) {
+        if (this.refs.password.value !== this.refs.passwordConfirm.value) {
+          this.refs.passwordConfirm.setCustomValidity('Passwords do not match');
+        } else {
+          this.refs.passwordConfirm.setCustomValidity('');
+        }
+      }
+          
+      if (!validity.valid) {
+        if (validity.valueMissing) {
+          error.textContent = `${label} is a required field`; 
+        } else if (validity.typeMismatch) {
+          error.textContent = `${label} should be a valid email address`; 
+        } else if (isPassword && validity.patternMismatch) {
+          error.textContent = `${label} should be longer than 4 chars`; 
+        } else if (isPasswordConfirm && validity.customError) {
+          error.textContent = 'Passwords do not match';
+        }
+        return false;
+      }
+      
+      error.textContent = '';
+      return true;
   }
 
   onRegistration(e) {
     e.preventDefault();
+
     //Performing a POST request for registrations using AJAX call
     $.ajax({
        url: "https://api.mt2414.in/v1/registrations",
@@ -63,39 +124,42 @@ class SignupForm extends Component {
         <form onSubmit={this.onRegistration} className="col-md-8">
           <h1>Sign up</h1><br />
               <div className="form-goup">
-                <lable className="control-lable"> Email </lable>
-                <input
-                  value={this.state.value}
+                <lable className="control-lable" id="emailLabel"> Email </lable>
+                <input className="form-control"
+                  value={this.state.email}
                   onChange={this.onChange}
                   type="email"
                   name="email"
                   placeholder="Email"
-                  className="form-control"
-                  required="true"
-                />
-              </div>
+                  ref="email"
+                  required />
+                <div className="error" id="emailError" />
+              </div>&nbsp;
               <div className="form-goup">
-                <lable className="control-lable"> Password </lable>
-                <input
-                  value={this.state.value}
+                <lable className="control-lable" id="passwordLabel"> Password </lable>
+                <input className="form-control"
+                  value={this.state.password}
                   onChange={this.onChange}
                   type="password"
                   name="password"
                   placeholder="Password"
-                  className="form-control"
-                />
-              </div>
+                  ref="password"
+                  pattern=".{5,}"
+                  required />
+                <div className="error" id="passwordError" />
+              </div>&nbsp;
               <div className="form-goup">
-                <lable className="control-lable"> Confirm Password </lable>
-                <input
-                  value={this.state.value}
+                <lable className="control-lable" id="passwordConfirmLabel"> Confirm Password </lable>
+                <input className="form-control" 
+                  value={this.state.passwordConfirm}
                   onChange={this.onChange}
                   type="password"
-                  name="confirmpassword"
+                  name="passwordConfirm"
                   placeholder="Confirm Password"
-                  className="form-control"
-                />
-              </div>
+                  ref="passwordConfirm"
+                  required />
+                <div className="error" id="passwordConfirmError" />
+              </div>&nbsp;
           <div className="form-goup">
             <button className="btn btn-primary btn-block signup-button" > Sign up </button>
           </div>
