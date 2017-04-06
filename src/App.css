@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .col-md-8 {
@@ -7,4 +7,22 @@
 }
 .signup-button{
 	margin-top: 1%; 
+}
+
+input.active:valid {
+	box-shadow: 0 0 5px 1px green;
+}
+
+input.active:invalid {
+	box-shadow: 0 0 5px 1px red;
+}
+
+.error {
+	color: red;
+	font-size: 13px;
+	margin-top: 5px;
+}
+
+.control-lable {
+	font-family: sans-serif;
 }
