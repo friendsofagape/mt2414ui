@@ -52,41 +52,35 @@ class SourceDocument extends Component {
 
   render() {
     return(
-      <div className="App text-center">
+      <div className="container">
         <Header/ >
+        <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1>Sources</h1>
+            <h1 className="source-header">Sources</h1>&nbsp;
               <div className="form-goup">
-                <lable className="control-label col-sm-2">Language Name</lable>
-                  <div className="col-sm-10">
+                <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.lang} onChange={this.onSelect} componentClass="select" placeholder="select">
                       {Languages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
-                  </div>
               </div>&nbsp;
               <div className="form-goup">
-                <lable className="control-lable col-sm-2">Ethnologue Code</lable>
-                  <div className="col-sm-10">
+                <lable className="control-lable"> <strong> Ethnologue Code </strong> </lable>
                       <input value={this.state.lang} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
-                  </div>
               </div>&nbsp;
               <div className="form-goup">
-                <lable className="control-lable col-sm-2">Translation Version </lable>
-                  <div className="col-sm-10">
+                <lable className="control-lable"> <strong> Translation Version </strong> </lable>
                     <input type="text" placeholder="ULB" className="form-control"/> 
-                  </div>
-              </div>
+              </div>&nbsp;
               <div className="form-goup">
-                <div className="col-sm-10">
-                  <input id="file-input" type="file" name="file" className="upload-file" multiple/>
-                </div>
-              </div> 
-              <div className="form-goup">
-                <div className="col-sm-10">
-                  <input type="button" id="button" value="Upload" className="UploadButton" onClick={this.uploadFile} /> 
+                <div className="form-control">
+                  <input id="file-input" type="file" className="fileInput" multiple />
+                </div>&nbsp;
+                <div className="form-goup">
+                  <button id="button" type="button" className="btn btn-success" onClick={this.uploadFile}>Upload Books</button>
                 </div>
               </div>
           </form>
+          </div>
         <Footer/>
       </div>
       );

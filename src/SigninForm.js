@@ -103,18 +103,19 @@ import Footer from './Footer';
 
     render() {
       return (
-        <div className="App text-center">
+        <div className="container">
         <Header />
+        <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onLogin} className="col-md-8 ">
           <div className="form-goup">
-            <div className="alert alert-success alert-dismissable"  id="success-alert">
+            <div className="row col-sm-12 alert alert-success"  id="success-alert">
               <a href="#" className="close" data-dismiss="alert" aria-label="close">×</a>
-              <strong>Sign up Successfully !</strong>
+              Sign up successful
             </div>
           </div>
-          <h1>Sign in</h1>
+          <h1 className="signin-header">Sign in</h1>&nbsp;
             <div className="form-goup"><br/>
-            <lable className="control-lable " id="emailLabel">Email</lable>
+            <lable className="control-lable " id="emailLabel"> <strong> Email </strong> </lable>
             <input className="form-control"
               value={this.state.email}
               onChange={this.onChange}
@@ -126,7 +127,7 @@ import Footer from './Footer';
             <div className="error" id="emailError" />
           </div>&nbsp;
           <div className="form-goup">
-            <lable className="control-lable" id="passwordLabel"> Password </lable>
+            <lable className="control-lable" id="passwordLabel"> <strong> Password </strong> </lable>
             <input className="form-control"
               value={this.state.password}
               onChange={this.onChange}
@@ -139,7 +140,7 @@ import Footer from './Footer';
             <div className="error" id="passwordError" />
           </div>&nbsp;
           <div className="form-goup">
-            <button className="btn btn-primary btn-block signup-button"> Sign in </button>
+            <button className="btn btn-success"> Sign in </button>
           </div>
           <div className="signlink">
             <Link to={'/signup'}>Sign up instead</Link>
@@ -157,6 +158,7 @@ import Footer from './Footer';
           />
         </div>
         </form>
+        </div>
         <Footer />
         </div>
 

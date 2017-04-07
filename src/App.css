@@ -5,9 +5,6 @@
 .col-md-8 {
    margin: 5% 0% 0% 17%;
 }
-.signup-button{
-	margin-top: 1%; 
-}
 
 input.active:valid {
 	box-shadow: 0 0 5px 1px green;
@@ -26,3 +23,29 @@ input.active:invalid {
 .control-lable {
 	font-family: sans-serif;
 }
+
+.navbar-fixed-bottom {
+	text-align: center;
+}
+
+.signup-header {
+    margin: 90px 100px -5px
+}
+
+.signin-header {
+	margin: 99px 100px -19px;
+}
+
+.alert {
+	padding: 8px;
+	margin: 34px 1px -96px;
+	color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+ }
+
+ .source-header {
+ 	margin: 90px 100px -5px
+ }
+
+ 
