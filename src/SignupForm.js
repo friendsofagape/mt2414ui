@@ -124,8 +124,8 @@ class SignupForm extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onRegistration} className="col-md-8">
           <h1 className="signup-header">Sign up</h1>&nbsp;
-              <div className="form-goup">
-                <lable className="control-lable" id="emailLabel"> <strong> Email </strong> </lable>
+              <div className="form-group">
+                <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
                 <input className="form-control" 
                   value={this.state.email}
                   onChange={this.onChange}
@@ -136,8 +136,8 @@ class SignupForm extends Component {
                   required />
                 <div className="error" id="emailError" />
               </div>&nbsp;
-              <div className="form-goup">
-                <lable className="control-lable" id="passwordLabel"> <strong> Password </strong> </lable>
+              <div className="form-group">
+                <lable className="control-label" id="passwordLabel"> <strong> Password </strong> </lable>
                 <input className="form-control"
                   value={this.state.password}
                   onChange={this.onChange}
@@ -149,8 +149,8 @@ class SignupForm extends Component {
                   required />
                 <div className="error" id="passwordError" />
               </div>&nbsp;
-              <div className="form-goup">
-                <lable className="control-lable" id="passwordConfirmLabel"> <strong> Confirm Password </strong> </lable>
+              <div className="form-group">
+                <lable className="control-label" id="passwordConfirmLabel"> <strong> Confirm Password </strong> </lable>
                 <input className="form-control" 
                   value={this.state.passwordConfirm}
                   onChange={this.onChange}
@@ -161,7 +161,7 @@ class SignupForm extends Component {
                   required />
                 <div className="error" id="passwordConfirmError" />
               </div>&nbsp;
-          <div className="form-goup">
+          <div className="form-group">
             <button className="btn btn-success" > Sign up </button>
           </div>
           <div className="signlink">

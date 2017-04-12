@@ -57,25 +57,25 @@ class SourceDocument extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Sources</h1>&nbsp;
-              <div className="form-goup">
+              <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.lang} onChange={this.onSelect} componentClass="select" placeholder="select">
                       {Languages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
-              <div className="form-goup">
+              <div className="form-group">
                 <lable className="control-lable"> <strong> Ethnologue Code </strong> </lable>
                       <input value={this.state.lang} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
               </div>&nbsp;
-              <div className="form-goup">
+              <div className="form-group">
                 <lable className="control-lable"> <strong> Translation Version </strong> </lable>
                     <input type="text" placeholder="ULB" className="form-control"/> 
               </div>&nbsp;
-              <div className="form-goup">
+              <div className="form-group">
                 <div className="form-control">
                   <input id="file-input" type="file" className="fileInput" multiple />
                 </div>&nbsp;
-                <div className="form-goup">
+                <div className="form-group">
                   <button id="button" type="button" className="btn btn-success" onClick={this.uploadFile}>Upload Books</button>
                 </div>
               </div>

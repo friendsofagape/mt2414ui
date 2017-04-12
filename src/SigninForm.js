@@ -107,15 +107,15 @@ import Footer from './Footer';
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onLogin} className="col-md-8 ">
-          <div className="form-goup">
+          <div className="form-group">
             <div className="row col-sm-12 alert alert-success"  id="success-alert">
               <a href="#" className="close" data-dismiss="alert" aria-label="close">×</a>
               Sign up successful
             </div>
           </div>
           <h1 className="signin-header">Sign in</h1>&nbsp;
-            <div className="form-goup"><br/>
-            <lable className="control-lable " id="emailLabel"> <strong> Email </strong> </lable>
+            <div className="form-group"><br/>
+            <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
             <input className="form-control"
               value={this.state.email}
               onChange={this.onChange}
@@ -126,8 +126,8 @@ import Footer from './Footer';
               required />
             <div className="error" id="emailError" />
           </div>&nbsp;
-          <div className="form-goup">
-            <lable className="control-lable" id="passwordLabel"> <strong> Password </strong> </lable>
+          <div className="form-group">
+            <lable className="control-label" id="passwordLabel"> <strong> Password </strong> </lable>
             <input className="form-control"
               value={this.state.password}
               onChange={this.onChange}
@@ -139,15 +139,15 @@ import Footer from './Footer';
               required />
             <div className="error" id="passwordError" />
           </div>&nbsp;
-          <div className="form-goup">
+          <div className="form-group">
             <button className="btn btn-success"> Sign in </button>
           </div>
           <div className="signlink">
             <Link to={'/signup'}>Sign up instead</Link>
           </div>
           <hr/>
-          <div className="form-goup">
-          <lable className="control-lable"> Auth Token </lable>
+          <div className="form-group">
+          <lable className="control-label"> Auth Token </lable>
           <input
             value=""
             type="text"
