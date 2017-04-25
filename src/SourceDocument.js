@@ -28,7 +28,7 @@ class SourceDocument extends Component {
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
-      this.test = this.test.bind(this);
+      this.file_base64 = this.file_base64.bind(this);
   }
   
   onSelect(e) {
@@ -38,7 +38,7 @@ class SourceDocument extends Component {
     });
   }
 
-  test(e){
+  file_base64(e){
     var files = document.getElementById('file-input').files;
     var file = files[0]
     global.base64_arr = [];
@@ -107,13 +107,10 @@ class SourceDocument extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" onChange={this.test} multiple />
+                  <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} multiple />
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success" onClick={this.uploadFile}>Upload Books</button>
-                </div>
-                <div className="form-group">
-                  <button id="button_test" type="button" className="btn btn-success" onClick={this.test}>Test</button>
                 </div>
               </div>
           </form>
