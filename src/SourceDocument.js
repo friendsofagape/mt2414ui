@@ -16,38 +16,72 @@ import { FormControl } from 'react-bootstrap';
 import Languages from './Languages';
 import $ from 'jquery';
 
-
 class SourceDocument extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      lang:'tam'
+      language:'',
+      version: '',
+      base64_arr: []
     }
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
+      this.test = this.test.bind(this);
   }
   
   onSelect(e) {
     this.setState({
-      lang:e.target.value
+      language:e.target.value,
+      version:e.target.value
     });
+  }
+
+  test(e){
+    var files = document.getElementById('file-input').files;
+    var file = files[0]
+    global.base64_arr = [];
+    if(files.length > 0){
+      for (var i = 0; i < files.length; i++) {
+        var reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = (function (file) {
+          return function (e) {
+            var data = this.result;
+            global.base64_arr.push(data);
+          }
+        })(file);
+
+        reader.onerror = function (error) {
+         console.log('Error: ', error);
+        };
+      }
+    }
+    
   }
 
   uploadFile(e){
     e.preventDefault();
-
-      var ext = $('#file-input').val().split('.').pop().toLowerCase();
-      if($.inArray(ext, ['usfm']) === -1) {
-        console.log("File is not valid");
-      } else {
-        console.log("File is valid");
-        var fpath = $('#file-input').val();
-        fpath = fpath.replace(/\\/g, '/');
-        var fname = fpath.substring(fpath.lastIndexOf('/')+1, fpath.lastIndexOf('.'));
-        console.log(fname);
-      } 
+    var ext = $('#file-input').val().split('.').pop().toLowerCase();
+    if($.inArray(ext, ['usfm']) === -1) {
+      console.log("File is not valid");
+    } else {
+      console.log("File is valid");
+    } 
+    console.log("Languages: " + this.state.language);
+    console.log("Version: " + this.state.version);
+    $.ajax({
+      url: "https://api.mt2414.in/v1/sources",
+      data: {"language": this.state.language, "version": this.state.version, "content": global.base64_arr },
+      method : "POST",
+      success: function(result) {
+        console.log(result);
+      },
+      error: function(error){
+        console.log("failure:" + error);
+      }
+    });
   }
 
   render() {
@@ -59,24 +93,27 @@ class SourceDocument extends Component {
             <h1 className="source-header">Sources</h1>&nbsp;
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
-                    <FormControl value={this.state.lang} onChange={this.onSelect} componentClass="select" placeholder="select">
+                    <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
                       {Languages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Ethnologue Code </strong> </lable>
-                      <input value={this.state.lang} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
+                      <input value={this.state.language} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
               </div>&nbsp;
               <div className="form-group">
-                <lable className="control-lable"> <strong> Translation Version </strong> </lable>
-                    <input type="text" placeholder="ULB" className="form-control"/> 
+                <lable className="control-lable"> <strong> Version </strong> </lable>
+                    <input  type="text" name="Version" placeholder="version" className="form-control"/> 
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" multiple />
+                  <input id="file-input" type="file" className="fileInput" onChange={this.test} multiple />
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success" onClick={this.uploadFile}>Upload Books</button>
+                </div>
+                <div className="form-group">
+                  <button id="button_test" type="button" className="btn btn-success" onClick={this.test}>Test</button>
                 </div>
               </div>
           </form>
