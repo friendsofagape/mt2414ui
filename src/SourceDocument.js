@@ -23,12 +23,15 @@ class SourceDocument extends Component {
     this.state = {
       language:'',
       version: '',
-      base64_arr: []
+      base64_arr: [],
+      uploaded:'uploading',
+      uploadStatus: global.uploadStatus
     }
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
       this.file_base64 = this.file_base64.bind(this);
+      global.uploadStatus = "uploading"
   }
   
   onSelect(e) {
@@ -69,19 +72,22 @@ class SourceDocument extends Component {
     } else {
       console.log("File is valid");
     } 
-    console.log("Languages: " + this.state.language);
-    console.log("Version: " + this.state.version);
+
     $.ajax({
       url: "https://api.mt2414.in/v1/sources",
       data: {"language": this.state.language, "version": this.state.version, "content": global.base64_arr },
       method : "POST",
-      success: function(result) {
-        console.log(result);
+      success: (result) => {
+        // uploadHelper.setState({uploading:'success'})
+        global.uploadStatus = "success"
       },
-      error: function(error){
-        console.log("failure:" + error);
+      error: (error) => {
+        // uploadHelper.setState({uploading:'failure'})
+        global.uploadStatus = "failure"
       }
     });
+
+    
   }
 
   render() {
@@ -90,6 +96,13 @@ class SourceDocument extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
+          {console.log(this.state.uploadStatus)}
+            <div className={"alert" + this.state.uploadStatus === 'success'? 'alert-success' : 'invisible'}>
+                <strong>File Uploaded Successfully !!!</strong>
+            </div>
+            <div className={"alert"+ this.state.uploadStatus === 'failure'? 'alert-danger': 'invisible' }>
+                <strong>Fail to upload file !!!</strong>
+            </div>
             <h1 className="source-header">Sources</h1>&nbsp;
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>

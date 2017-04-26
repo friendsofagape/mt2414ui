@@ -20,7 +20,7 @@ ReactDOM.render(
       <Route path="/app" component={App} />
       <Route path="/signup" component={SignupForm} />
       <Route path="/signin" component={SigninForm} />
-      <Route path="/sourcedocument" component={SourceDocument} />
+      <Route path="/sources" component={SourceDocument} />
     </Router>
   </Provider>,
   document.getElementById('root')
