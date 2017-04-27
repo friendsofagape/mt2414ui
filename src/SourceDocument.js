@@ -24,14 +24,12 @@ class SourceDocument extends Component {
       language:'',
       version: '',
       base64_arr: [],
-      uploaded:'uploading',
-      uploadStatus: global.uploadStatus
+      uploaded:'uploadingStatus',
     }
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
       this.file_base64 = this.file_base64.bind(this);
-      global.uploadStatus = "uploading"
   }
   
   onSelect(e) {
@@ -65,6 +63,7 @@ class SourceDocument extends Component {
   }
 
   uploadFile(e){
+
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['usfm']) === -1) {
@@ -73,21 +72,25 @@ class SourceDocument extends Component {
       console.log("File is valid");
     } 
 
+    var _this = this
+   
     $.ajax({
-      url: "https://api.mt2414.in/v1/sources",
-      data: {"language": this.state.language, "version": this.state.version, "content": global.base64_arr },
+      url: "http://127.0.0.1:8000/v1/sources",
+      data: {"language": this.state.language, "version": this.state.version, "content": global.base64_arr},
       method : "POST",
-      success: (result) => {
-        // uploadHelper.setState({uploading:'success'})
-        global.uploadStatus = "success"
+      headers: {
+                "Authorization": localStorage.getItem('auth')
       },
-      error: (error) => {
-        // uploadHelper.setState({uploading:'failure'})
-        global.uploadStatus = "failure"
+      success: function (result) {
+        _this.setState({uploaded:'success'})
+      },
+      error: function (error) {
+        _this.setState({uploaded:'failure'}) 
       }
-    });
-
+    });   
     
+    console.log(this.state.uploaded)
+
   }
 
   render() {
@@ -96,14 +99,14 @@ class SourceDocument extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-          {console.log(this.state.uploadStatus)}
-            <div className={"alert" + this.state.uploadStatus === 'success'? 'alert-success' : 'invisible'}>
+            <h1 className="source-header">Sources</h1>&nbsp;
+            {console.log(this.state.uploaded)}
+            <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>File Uploaded Successfully !!!</strong>
             </div>
-            <div className={"alert"+ this.state.uploadStatus === 'failure'? 'alert-danger': 'invisible' }>
+            <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
                 <strong>Fail to upload file !!!</strong>
             </div>
-            <h1 className="source-header">Sources</h1>&nbsp;
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
