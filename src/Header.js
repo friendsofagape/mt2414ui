@@ -28,7 +28,7 @@ class Header extends Component {
             </NavItem>
             <NavItem
               eventKey={1}
-              href="/sourcedocument">
+              href="/sources">
               Source Document
             </NavItem>
           </Nav>
