@@ -75,7 +75,7 @@ class SourceDocument extends Component {
     var _this = this
    
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/sources",
+      url: "https://api.mt2414.in/v1/sources",
       data: {"language": this.state.language, "version": this.state.version, "content": global.base64_arr},
       method : "POST",
       headers: {
@@ -100,7 +100,6 @@ class SourceDocument extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Sources</h1>&nbsp;
-            {console.log(this.state.uploaded)}
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>File Uploaded Successfully !!!</strong>
             </div>
