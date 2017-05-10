@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
+import { Link } from 'react-router';
 import { FormControl } from 'react-bootstrap';
 import Languages from './Languages';
 import $ from 'jquery';
@@ -75,7 +76,7 @@ class SourceDocument extends Component {
     var _this = this
    
     $.ajax({
-      url: "https://api.mt2414.in/v1/sources",
+      url: "https://api.mt2414.inv/1/sources",
       data: {"language": this.state.language, "version": this.state.version, "content": global.base64_arr},
       method : "POST",
       headers: {
@@ -85,6 +86,7 @@ class SourceDocument extends Component {
         _this.setState({uploaded:'success'})
       },
       error: function (error) {
+         console.log(error);
         _this.setState({uploaded:'failure'}) 
       }
     });   
@@ -125,8 +127,9 @@ class SourceDocument extends Component {
                   <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} multiple />
                 </div>&nbsp;
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success" onClick={this.uploadFile}>Upload Books</button>
-                </div>
+                  <button id="button" type="button" className="btn btn-success" onClick={this.uploadFile}>Upload Books</button>&nbsp;&nbsp;&nbsp;
+                   <Link to={'/createsource'} >Clikc me for Create Source</Link>
+                  </div>
               </div>
           </form>
           </div>

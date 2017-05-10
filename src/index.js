@@ -8,6 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import SourceDocument from './SourceDocument';
+import CreateSource from './CreateSource';
 
 const store = createStore(
       (state = {}) => state,
@@ -21,6 +22,7 @@ ReactDOM.render(
       <Route path="/signup" component={SignupForm} />
       <Route path="/signin" component={SigninForm} />
       <Route path="/sources" component={SourceDocument} />
+      <Route path="/createsource" component={CreateSource}/>
     </Router>
   </Provider>,
   document.getElementById('root')

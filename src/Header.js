@@ -31,6 +31,11 @@ class Header extends Component {
               href="/sources">
               Source Document
             </NavItem>
+            <NavItem
+              eventKey={2}
+               href="/createsource">
+               Create Source
+            </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
