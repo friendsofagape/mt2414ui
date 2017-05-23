@@ -83,7 +83,7 @@ import Footer from './Footer';
 
     console.log(this.state.password);
     $.ajax({
-      url: "https://api.mt2414.in/v1/auth",
+      url: "http://127.0.0.1:8000/v1/auth",
       data :{
         username : this.state.email,
         password : this.state.password

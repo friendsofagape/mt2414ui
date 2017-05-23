@@ -9,6 +9,7 @@ import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import UploadSource from './UploadSource';
 import GenerateTokens from './GenerateTokens';
+import GetConcordances from './GetConcordances';
 
 const store = createStore(
       (state = {}) => state,
@@ -23,6 +24,7 @@ ReactDOM.render(
       <Route path="/signin" component={SigninForm} />
       <Route path="/uploadsource" component={UploadSource} />
       <Route path="/generatetokens" component={GenerateTokens}/>
+      <Route path="/getconcordances" component={GetConcordances}/>
     </Router>
   </Provider>,
   document.getElementById('root')
