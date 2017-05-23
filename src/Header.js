@@ -28,13 +28,13 @@ class Header extends Component {
             </NavItem>
             <NavItem
               eventKey={1}
-              href="/sources">
-              Source Document
+              href="/uploadsource">
+              Upload Source 
             </NavItem>
             <NavItem
               eventKey={2}
-               href="/createsource">
-               Create Source
+               href="/generatetokens">
+               Generate Tokens
             </NavItem>
           </Nav>
         </Navbar.Collapse>
