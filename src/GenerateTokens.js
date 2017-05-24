@@ -91,7 +91,7 @@ class GenerateTokens extends Component {
     
     for (var i = 0; i < arrData.length; i++) {
         for (index in arrData[i]) {
-          // row += '"' + arrData[i][index] + '",';    
+          row += '"' + arrData[i][index] + '",';    
         }
         row.slice(0, row.length - 1);
         CSV += row + '\r\n';
