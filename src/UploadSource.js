@@ -73,29 +73,23 @@ class UploadSource extends Component {
     } 
 
     var _this = this
-    console.log("Languages: " + this.state.language);
-    console.log("Version: " + this.state.version);
-    console.log("Content: " + global.base64_arr);
     var data = { 
             "language": this.state.language, "version": this.state.version, "content": global.base64_arr
           }
-
     $.ajax({
       url: "http://127.0.0.1:8000/v1/sources",
-      dataType : "json",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
       headers: {
                 "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
-
       },
       success: function (result) {
-         console.log("Sources Uploaded Successfully !!!")
+         console.log(result)
         _this.setState({uploaded:'success'})
       },
       error: function (error) {
-         console.log(error);
+        console.log("Sources Uploaded failure !!!")
         _this.setState({uploaded:'failure'}) 
       }
     });   
@@ -108,7 +102,7 @@ class UploadSource extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header">UploadSource</h1>&nbsp;
+            <h1 className="source-header">Upload Source</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>File Uploaded Successfully !!!</strong>
             </div>
