@@ -31,7 +31,9 @@ class GenerateTokens extends Component {
       this.onSelect = this.onSelect.bind(this);
       this.downloadTokenWords = this.downloadTokenWords.bind(this);
       this.generateConcordance = this.generateConcordance.bind(this);
-      this.JSONToCSVConvertor = this.JSONToCSVConvertor.bind(this);
+      // this.JSONToCSVConvertor = this.JSONToCSVConvertor.bind(this);
+      this.parseJSONToCSVStr = this.parseJSONToCSVStr.bind(this);
+      this.exportToCsvFile = this.exportToCsvFile.bind(this);
   }
   
   onSelect(e) {
@@ -59,7 +61,8 @@ class GenerateTokens extends Component {
       },
       success: function (result) {
         if (result){
-         _this.JSONToCSVConvertor(result, "Tokens Report", true);
+         // _this.JSONToCSVConvertor(result, "Tokens Report", true);
+         _this.exportToCsvFile(result);
         }
         console.log("Success in Generate Tokens");
         _this.setState({uploaded:'success'})
@@ -70,49 +73,88 @@ class GenerateTokens extends Component {
       }
     });  
   }
-
-  JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
-    var arrData1 = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
-    
-    var arrData = arrData1.tokenwords
-
-    var CSV = '';       
-    CSV += ReportTitle + '\r\n\n';
-
-    if (ShowLabel) {
-        var row = "";
-          for (var index in arrData[0]) {
-          row += index + ',';
-          console.log("Row: " + arrData);
-        }
-        row = row.slice(0, -1);
-        CSV += row + '\r\n';
-    }
-    
-    for (var i = 0; i < arrData.length; i++) {
-        for (index in arrData[i]) {
-          row += '"' + arrData[i][index] + '",';    
-        }
-        row.slice(0, row.length - 1);
-        CSV += row + '\r\n';
+parseJSONToCSVStr(jsonData) {
+    var jsonData1 = [
+      {'msgid': 'Gospel', 'msgstr': ''}, {'msgid': 'by', 'msgstr': ''}, {'msgid': 'book', 'msgstr': ''}, {'msgid': 'Zerah', 'msgstr': ''}, {'msgid': 'Judah', 'msgstr': ''}, {'msgid': 'The', 'msgstr': ''}, {'msgid': '\\\\toc3', 'msgstr': ''}, {'msgid': 'to', 'msgstr': ''}, {'msgid': 'Tamar', 'msgstr': ''}, {'msgid': 'Christ', 'msgstr': ''}, {'msgid': 'UTF8', 'msgstr': ''}, {'msgid': 'MAT', 'msgstr': ''}, {'msgid': '\\\\mt', 'msgstr': ''}, {'msgid': 'Hezron', 'msgstr': ''}, {'msgid': 'Unlocked', 'msgstr': ''}, {'msgid': '\\\\toc1', 'msgstr': ''}, {'msgid': '\\\\c', 'msgstr': ''}, {'msgid': '\\\\id', 'msgstr': ''}, {'msgid': '\\\\p', 'msgstr': ''}, {'msgid': '2', 'msgstr': ''}, {'msgid': 'and', 'msgstr': ''}, {'msgid': 'his', 'msgstr': ''}, {'msgid': 'Ram', 'msgstr': ''}, {'msgid': 'Abraham', 'msgstr': ''}, {'msgid': 'the', 'msgstr': ''}, {'msgid': 'son', 'msgstr': ''}, {'msgid': 'Mat', 'msgstr': ''}, {'msgid': '3', 'msgstr': ''}, {'msgid': '\\\\h', 'msgstr': ''}, {'msgid': 'Isaac', 'msgstr': ''}, {'msgid': 'According', 'msgstr': ''}, {'msgid': 'Jacob', 'msgstr': ''}, {'msgid': 'David', 'msgstr': ''}, {'msgid': '\\\\v', 'msgstr': ''}, {'msgid': 'Literal', 'msgstr': ''}, {'msgid': 'Jesus', 'msgstr': ''}, {'msgid': 'genealogy', 'msgstr': ''}, {'msgid': 'Bible', 'msgstr': ''}, {'msgid': 'father', 'msgstr': ''}, {'msgid': '\\\\ide', 'msgstr': ''}, {'msgid': 'Perez', 'msgstr': ''}, {'msgid': 'was', 'msgstr': ''}, {'msgid': 'of', 'msgstr': ''}, {'msgid': 'Matthew', 'msgstr': ''}, {'msgid': '\\\\toc2', 'msgstr': ''}, {'msgid': '1', 'msgstr': ''}, {'msgid': 'brothers', 'msgstr': ''}, {'msgid': 'St', 'msgstr': ''}
+    ]
+    if(jsonData1.length === 0) {
+        return '';
     }
 
-    if (CSV === '') {        
-        alert("Invalid data");
-        return;
-    }   
+    let keys = Object.keys(jsonData1[0]);
 
-    var fileName = "TokenWords_";
-    fileName += ReportTitle.replace(/ /g,"_");   
-    var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-    var link = document.createElement("a");    
-    link.href = uri;
-    link.style = "visibility:hidden";
-    link.download = fileName + ".csv";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    let columnDelimiter = ',';
+    let lineDelimiter = '\n';
+    
+    let csvColumnHeader = keys.join(columnDelimiter);
+
+    let csvStr = csvColumnHeader + lineDelimiter;
+
+    jsonData1.forEach(item => { keys.forEach((key, index) => 
+        { if( (index > 0) && (index < keys.length-1) ) {
+                csvStr += columnDelimiter;
+            }
+            csvStr += item[key];
+        });
+        csvStr += lineDelimiter;
+    });
+
+    return encodeURIComponent(csvStr);
 }
+
+ exportToCsvFile(jsonData) {
+    let csvStr = this.parseJSONToCSVStr(jsonData);
+    let dataUri = 'data:text/csv;charset=utf-8,'+ csvStr;
+    
+    let exportFileDefaultName = 'data.csv';
+    
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}
+//   JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+//     var arrData1 = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
+    
+//     var arrData = arrData1.tokenwords
+
+//     var CSV = '';       
+//     CSV += ReportTitle + '\r\n\n';
+
+//     if (ShowLabel) {
+//         var row = "";
+//           for (var index in arrData[0]) {
+//           row += index + ',';
+//           console.log("Row: " + arrData);
+//         }
+//         row = row.slice(0, -1);
+//         CSV += row + '\r\n';
+//     }
+    
+//     for (var i = 0; i < arrData.length; i++) {
+//         for (index in arrData[i]) {
+//           row += '"' + arrData[i][index] + '",';    
+//         }
+//         row.slice(0, row.length - 1);
+//         CSV += row + '\r\n';
+//     }
+
+//     if (CSV === '') {        
+//         alert("Invalid data");
+//         return;
+//     }   
+
+//     var fileName = "TokenWords_";
+//     fileName += ReportTitle.replace(/ /g,"_");   
+//     var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+//     var link = document.createElement("a");    
+//     link.href = uri;
+//     link.style = "visibility:hidden";
+//     link.download = fileName + ".csv";
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// }
 
 // For Generating Concordance
   generateConcordance(e){
