@@ -38,13 +38,13 @@ class Header extends Component {
             </NavItem>
             <NavItem
               eventKey={2}
-               href="/getconcordances">
-               Get Concordances
+               href="/generateconcordance">
+               Generate Concordance
             </NavItem>
             <NavItem
               eventKey={2}
-               href="/generateconcordance">
-               Generate Concordance
+               href="/getconcordances">
+               Get Concordances
             </NavItem>
           </Nav>
         </Navbar.Collapse>

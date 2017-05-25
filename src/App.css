@@ -36,14 +36,14 @@ input.active:invalid {
 	margin: 99px 100px -19px;
 }
 
-.alert {
+/*.alert {
 	padding: 8px;
-	margin: 34px 1px -96px;
+	margin: 1px 36px 2px;
 	color: #3c763d;
     background-color: #dff0d8;
     border-color: #d6e9c6;
  }
-
+*/
  .source-header {
  	margin: 90px 77px 5px 86px;
  	font-size: 20px;
@@ -53,7 +53,6 @@ input.active:invalid {
 	margin: 90px 77px 5px 43px;
 	font-size: 20px;
 }
-
 
 .invisible{
    display: none;
