@@ -40,10 +40,6 @@ class GetConcordances extends Component {
 //To get concordances for a particular token
   getConcordances(e){
     e.preventDefault();
-    console.log("Language: " + this.state.language);
-    console.log("Version: " + this.state.version);
-    console.log("Revision: " + this.state.revision);
-    console.log("Token: " + this.state.token);
     var _this = this
     var data = {
       "language": this.state.language, "version": this.state.version, "revision": this.state.revision, "token": this.state.token
@@ -57,11 +53,9 @@ class GetConcordances extends Component {
                 "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
       },
       success: function (result) {
-         alert(result);
         _this.setState({uploaded:'success'})
       },
       error: function (error) {
-         console.log("Token does not exits in DB !!!")
         _this.setState({uploaded:'failure'}) 
       }
     });      
@@ -74,6 +68,12 @@ class GetConcordances extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Get Concordances</h1>&nbsp;
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+              <strong>Sources Uploaded Successfully !!!</strong>
+            </div>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+              <strong>Token does not exits in DB !!!</strong>
+            </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
