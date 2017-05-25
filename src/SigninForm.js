@@ -20,7 +20,8 @@ import Footer from './Footer';
       super(props);
       this.state = {
         email: '',
-        password: ''
+        password: '',
+        uploaded:'uploadingStatus',
       }
       // Signin form form specific callback handlers
       this.onChange = this.onChange.bind(this);
@@ -78,10 +79,8 @@ import Footer from './Footer';
   onLogin(e) {
     e.preventDefault();
     //Performing a POST request for authentcation
-    $("#success-alert").show();
-    setTimeout(function() { $("#success-alert").slideUp(); }, 500);
-
-    console.log(this.state.password);
+   
+    var _this = this
     $.ajax({
       url: "http://127.0.0.1:8000/v1/auth",
       data :{
@@ -90,13 +89,15 @@ import Footer from './Footer';
       },
         method : "POST",
         success: function(result) {
+
         if (result){
           var auth = result;
+          _this.setState({uploaded:'success'})
           $("#auth_token").val(auth);
         }
         },
         error: function(error){
-        console.log(error);
+        _this.setState({uploaded:'failure'})
         }
     });
   }
@@ -107,13 +108,13 @@ import Footer from './Footer';
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onLogin} className="col-md-8 ">
-          <div className="form-group">
-            <div className="row col-sm-12 alert alert-success"  id="success-alert">
-              <a href="#" className="close" data-dismiss="alert" aria-label="close">×</a>
-              Sign up successful
-            </div>
-          </div>
           <h1 className="signin-header">Sign in</h1>&nbsp;
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+                <strong>Sources Uploaded Successfully !!!</strong>
+            </div>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+              <strong>Token does not exits in DB !!!</strong>
+            </div>
             <div className="form-group"><br/>
             <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
             <input className="form-control"
