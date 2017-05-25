@@ -67,9 +67,9 @@ class UploadSource extends Component {
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['usfm']) === -1) {
-      console.log("File is not valid");
+      alert("File is not valid");
     } else {
-      console.log("File is valid");
+      alert("File is valid");
     } 
 
     var _this = this
@@ -85,7 +85,7 @@ class UploadSource extends Component {
                 "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
       },
       success: function (result) {
-         console.log(result)
+         alert(result)
         _this.setState({uploaded:'success'})
       },
       error: function (error) {
@@ -102,12 +102,12 @@ class UploadSource extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header">Upload Source</h1>&nbsp;
+            <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
-                <strong>File Uploaded Successfully !!!</strong>
+                <strong>Sources Uploaded Successfully !!!</strong>
             </div>
             <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
-                <strong>Fail to upload file !!!</strong>
+                <strong>Failed to Upload Sources !!!</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
