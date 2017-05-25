@@ -54,11 +54,9 @@ class GenerateConcordance extends Component {
                 "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
       },
       success: function (result) {
-        alert("Concordances Created and Stored in DB");
         _this.setState({uploaded:'success'})
       },
       error: function (error) {
-        console.log("Concordances was not generated !!!");
         _this.setState({uploaded:'failure'}) 
       }
     });  
@@ -71,11 +69,11 @@ class GenerateConcordance extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header1">Generate Concordance</h1>&nbsp;
-            <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
-                <strong>File Uploaded Successfully !!!</strong>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+                <strong>Concordances Created and Stored in DB !!!</strong>
             </div>
-            <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
-                <strong>Fail to upload file !!!</strong>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible') }>
+                <strong>Concordances could not be generated !!!</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
