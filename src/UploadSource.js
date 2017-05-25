@@ -25,8 +25,9 @@ class UploadSource extends Component {
       language:'',
       version: '',
       base64_arr: [],
-      uploaded:'uploadingStatus',
+      uploaded:'Uploading'
     }
+
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
@@ -67,9 +68,11 @@ class UploadSource extends Component {
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['usfm']) === -1) {
-      alert("File is not valid");
+      // alert("File is not valid");
+      this.setState({uploaded: 'success'})
     } else {
-      alert("File is valid");
+      // alert("File is valid");
+      this.setState({uploaded: 'failure'}) 
     } 
 
     var _this = this
@@ -85,12 +88,12 @@ class UploadSource extends Component {
                 "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
       },
       success: function (result) {
-         alert(result)
-        _this.setState({uploaded:'success'})
+        _this.setState({uploaded: 'success'})
+        console.log({uploaded: 'success'})
       },
       error: function (error) {
         console.log("Sources Uploaded failure !!!")
-        _this.setState({uploaded:'failure'}) 
+        _this.setState({uploaded: 'failure'}) 
       }
     });   
     
@@ -103,10 +106,11 @@ class UploadSource extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
-            <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
+            {console.log("reader: " + this.state.uploaded)}
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>Sources Uploaded Successfully !!!</strong>
             </div>
-            <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
                 <strong>Failed to Upload Sources !!!</strong>
             </div>
               <div className="form-group">
@@ -121,7 +125,7 @@ class UploadSource extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/> 
+                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
