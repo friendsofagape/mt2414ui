@@ -44,16 +44,24 @@ class GetConcordances extends Component {
     var data = {
       "language": this.state.language, "version": this.state.version, "revision": this.state.revision, "token": this.state.token
     }
+
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+    
     $.ajax({
       url: "http://127.0.0.1:8000/v1/getconcordance",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-                "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
+                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
       },
       success: function (result) {
-        _this.setState({uploaded:'success'})
+        var text = ""
+        $.each(JSON.parse(result), function (key, value) {
+          _this.setState({uploaded:'success'})
+            text+= key+ " -> " + value+ "\n";
+        });
+        $("#get_concordances").val(text);
       },
       error: function (error) {
         _this.setState({uploaded:'failure'}) 
@@ -69,7 +77,7 @@ class GetConcordances extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Get Concordances</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-              <strong>Sources Uploaded Successfully !!!</strong>
+              <strong>Found Concordances Successfully !!!</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
               <strong>Token does not exits in DB !!!</strong>
@@ -94,6 +102,10 @@ class GetConcordances extends Component {
               </div>&nbsp;
               <div className="form-group">
                   <button id="button" type="button" className="btn btn-success" onClick={this.getConcordances}>Get Concordances</button>&nbsp;&nbsp;&nbsp;
+              </div>
+              <div className="form-group">
+                <lable className="control-label"> Get Concordance </lable>
+                <textarea value="" type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
               </div>
           </form>
           </div>
