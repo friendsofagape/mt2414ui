@@ -93,6 +93,7 @@ import Footer from './Footer';
         if (result){
           var auth = result;
           _this.setState({uploaded:'success'})
+          window.localStorage.setItem('access_token', auth)
           $("#auth_token").val(auth);
         }
         },
@@ -110,10 +111,10 @@ import Footer from './Footer';
         <form onSubmit={this.onLogin} className="col-md-8 ">
           <h1 className="signin-header">Sign in</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Sources Uploaded Successfully !!!</strong>
+                <strong>Sign-in Successfully !!!</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-              <strong>Token does not exits in DB !!!</strong>
+              <strong>Failed to Sign-in !!!</strong>
             </div>
             <div className="form-group"><br/>
             <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
