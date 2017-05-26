@@ -49,13 +49,16 @@ class GenerateTokens extends Component {
     var data = { 
         "language": this.state.language, "version": this.state.version, "revision": this.state.revision 
       }
+
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+
     $.ajax({
       url: "http://127.0.0.1:8000/v1/tokenwords",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-                "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
+                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
       },
       success: function (result) {
         if (result){
