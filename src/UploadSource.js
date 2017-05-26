@@ -79,14 +79,16 @@ class UploadSource extends Component {
     var data = { 
             "language": this.state.language, "version": this.state.version, "content": global.base64_arr
           }
+
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+
     $.ajax({
       url: "http://127.0.0.1:8000/v1/sources",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-                "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb3VyY2V0ZXh0QHlvcG1haWwuY29tIn0.Xh4Lc8A8Q-l0a6Vjy-KuLK0u6u-et28omajdlPWJY8E"
-      },
+                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
         _this.setState({uploaded: 'success'})
         console.log({uploaded: 'success'})
@@ -106,7 +108,6 @@ class UploadSource extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
-            {console.log("reader: " + this.state.uploaded)}
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>Sources Uploaded Successfully !!!</strong>
             </div>
