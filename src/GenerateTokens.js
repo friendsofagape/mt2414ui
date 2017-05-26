@@ -49,7 +49,6 @@ class GenerateTokens extends Component {
     var data = { 
         "language": this.state.language, "version": this.state.version, "revision": this.state.revision 
       }
-
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
