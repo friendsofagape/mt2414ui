@@ -13,7 +13,7 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import { FormControl } from 'react-bootstrap';
-import Languages from './Languages';
+import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
 
 class GetConcordances extends Component {
@@ -85,7 +85,7 @@ class GetConcordances extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {Languages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
+                      {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
@@ -101,7 +101,7 @@ class GetConcordances extends Component {
                     <input value={this.state.token} onChange={this.onSelect} name="token" type="text"  placeholder="token" className="form-control"/> 
               </div>&nbsp;
               <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success" onClick={this.getConcordances}>Get Concordances</button>&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.getConcordances}>Get Concordances</button>&nbsp;&nbsp;&nbsp;
               </div>
               <div className="form-group">
                 <lable className="control-label"> Get Concordance </lable>
