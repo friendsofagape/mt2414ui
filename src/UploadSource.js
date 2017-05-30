@@ -24,7 +24,8 @@ class UploadSource extends Component {
       language:'',
       version: '',
       base64_arr: [],
-      uploaded:'Uploading'
+      uploaded:'Uploading',
+      message: ''
     }
 
       // Upload file specific callback handlers
@@ -75,6 +76,7 @@ class UploadSource extends Component {
     } 
 
     var _this = this
+    console.log(this.state.version)
     var data = { 
             "language": this.state.language, "version": this.state.version, "content": global.base64_arr
           }
@@ -89,11 +91,13 @@ class UploadSource extends Component {
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
-        _this.setState({uploaded: 'success'})
-        console.log({uploaded: 'success'})
+        result = JSON.parse(result)
+        _this.setState({uploaded: result.success ? 'success' : ''})
+        _this.setState({message: result.message})
+
       },
       error: function (error) {
-        console.log("Sources Uploaded failure !!!")
+         console.log(error);
         _this.setState({uploaded: 'failure'}) 
       }
     });   
@@ -108,7 +112,7 @@ class UploadSource extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Sources Uploaded Successfully !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
                 <strong>Failed to Upload Sources !!!</strong>
