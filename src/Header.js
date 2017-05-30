@@ -46,6 +46,11 @@ class Header extends Component {
                href="/getconcordances">
                Get Concordances
             </NavItem>
+            <NavItem
+              eventKey={2}
+               href="/gettranslationdraft">
+               Get Translation Draft
+            </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

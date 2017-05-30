@@ -11,6 +11,7 @@ import UploadSource from './UploadSource';
 import GenerateTokens from './GenerateTokens';
 import GetConcordances from './GetConcordances';
 import GenerateConcordance from './GenerateConcordance';
+import GetTranslationDraft from './GetTranslationDraft';
 
 const store = createStore(
       (state = {}) => state,
@@ -27,6 +28,7 @@ ReactDOM.render(
       <Route path="/generatetokens" component={GenerateTokens}/>
       <Route path="/getconcordances" component={GetConcordances}/>
       <Route path="/generateconcordance" component={GenerateConcordance}/>
+      <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
     </Router>
   </Provider>,
   document.getElementById('root')
