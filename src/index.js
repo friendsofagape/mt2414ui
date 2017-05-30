@@ -12,6 +12,7 @@ import GenerateTokens from './GenerateTokens';
 import GetConcordances from './GetConcordances';
 import GenerateConcordance from './GenerateConcordance';
 import GetTranslationDraft from './GetTranslationDraft';
+import GetLanguages from './GetLanguages';
 
 const store = createStore(
       (state = {}) => state,
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Route path="/app" component={App} />
       <Route path="/signup" component={SignupForm} />
       <Route path="/signin" component={SigninForm} />
+      <Route path="/getlanguages" component={GetLanguages}/>
       <Route path="/uploadsource" component={UploadSource} />
       <Route path="/generatetokens" component={GenerateTokens}/>
       <Route path="/getconcordances" component={GetConcordances}/>

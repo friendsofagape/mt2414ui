@@ -94,7 +94,7 @@ import Footer from './Footer';
           var auth = result;
           _this.setState({uploaded:'success'})
           window.localStorage.setItem('access_token', auth)
-          $("#auth_token").val(auth);
+          location.href = "http://localhost:3000/getlanguages"
         }
         },
         error: function(error){
