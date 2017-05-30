@@ -3,7 +3,7 @@
 }
 
 .col-md-8 {
-   margin: 5% 0% 0% 17%;
+   margin: 3% 0% 0% 17%;
 }
 
 input.active:valid {
@@ -55,4 +55,8 @@ input.active:invalid {
     min-height: 60px;
 	overflow-y: auto;
 	word-wrap:break-word
+}
+
+.sourcefooter{
+	margin: 1px 109px
 }
