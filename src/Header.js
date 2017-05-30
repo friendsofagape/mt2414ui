@@ -28,6 +28,11 @@ class Header extends Component {
             </NavItem>
             <NavItem
               eventKey={1}
+              href="/getlanguages">
+              Get Languages
+            </NavItem>
+            <NavItem
+              eventKey={1}
               href="/uploadsource">
               Upload Source
             </NavItem>
