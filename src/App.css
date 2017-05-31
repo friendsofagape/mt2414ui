@@ -1,24 +1,62 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.col-md-8 {
+   margin: 3% 0% 0% 17%;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+input.active:valid {
+	box-shadow: 0 0 5px 1px green;
 }
 
-.App-intro {
-  font-size: large;
+input.active:invalid {
+	box-shadow: 0 0 5px 1px red;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.error {
+	color: red;
+	font-size: 13px;
+	margin-top: 5px;
+}
+
+.control-lable {
+	font-family: sans-serif;
+}
+
+.navbar-fixed-bottom {
+	text-align: center;
+}
+
+.signup-header {
+    margin: 90px 100px -5px
+}
+
+.signin-header {
+	margin: 99px 100px -19px;
+}
+
+ .source-header {
+ 	margin: 90px 77px 5px 86px;
+ 	font-size: 20px;
+ }
+
+.source-header1 {
+	margin: 90px 77px 5px 43px;
+	font-size: 20px;
+}
+
+.invisible{
+   display: none;
+}
+ 
+
+.textarea{
+    min-height: 60px;
+	overflow-y: auto;
+	word-wrap:break-word
+}
+
+.sourcefooter{
+	margin: 1px 109px
 }
