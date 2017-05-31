@@ -4,8 +4,8 @@
  * Component that display SourceDocument
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
- *  - content: Content of all the source documents stored
- *  - Access ID & Key: Returned as a response after authentication
+ *  - version: version of source language
+ *  - base64_arr: file in the form of base64
 */
 
 import React, { Component } from 'react';
