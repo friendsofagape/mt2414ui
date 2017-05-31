@@ -14,6 +14,7 @@ import GenerateConcordance from './GenerateConcordance';
 import GetTranslationDraft from './GetTranslationDraft';
 import GetLanguages from './GetLanguages';
 
+
 const store = createStore(
       (state = {}) => state,
       applyMiddleware(thunk)
@@ -31,6 +32,7 @@ ReactDOM.render(
       <Route path="/getconcordances" component={GetConcordances}/>
       <Route path="/generateconcordance" component={GenerateConcordance}/>
       <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
+
     </Router>
   </Provider>,
   document.getElementById('root')

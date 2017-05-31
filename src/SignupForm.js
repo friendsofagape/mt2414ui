@@ -105,7 +105,6 @@ class SignupForm extends Component {
            method : "POST",
          success: function(result) {
             console.log("Successfully Excuted !!");
-            console.log(result);
             window.location.href = "./signin";
            },
          error: function(error){

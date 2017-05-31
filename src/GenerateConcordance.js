@@ -4,8 +4,7 @@
  * Component that display SourceDocument
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
- *  - content: Content of all the source documents stored
- *  - 
+ *  - version: version of the source language
 */
 
 import React, { Component } from 'react';

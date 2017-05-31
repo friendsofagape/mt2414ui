@@ -15,7 +15,7 @@ class Header extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav pullRight>
+          <Nav pullLeft>
             <NavItem
               eventKey={1}
               href="/signup">

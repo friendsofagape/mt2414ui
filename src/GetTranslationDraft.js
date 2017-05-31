@@ -4,7 +4,7 @@
  * Component that display GetTranslationDraft
  * Accepts the following properties:
  *  - source language: Which language you want to convert from 
- *  - version : version of source language
+ *  - version : Version of source language
  *  - target language: In which tokens have been translated too
  *  - token words: token words showul be entered in the form of xls
 */
