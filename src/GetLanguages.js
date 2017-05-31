@@ -10,7 +10,6 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,} from 'material-ui/Table';
 
 class GetLanguages extends Component {
   constructor(props) {
@@ -80,6 +79,7 @@ class GetLanguages extends Component {
                     <tr>
                     <td>{this.state.getLanguages}</td>
                     <td>{this.state.getVersions}</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
