@@ -43,6 +43,11 @@ class Header extends Component {
             </NavItem>
             <NavItem
               eventKey={2}
+               href="/uploadtokens">
+               Upload Tokens
+            </NavItem>
+            <NavItem
+              eventKey={2}
                href="/generateconcordance">
                Generate Concordance
             </NavItem>
