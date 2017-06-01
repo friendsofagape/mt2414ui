@@ -4,7 +4,7 @@
  * Component that display GetTranslationDraft
  * Accepts the following properties:
  *  - source language: Which language you want to convert from 
- *  - version : version of source language
+ *  - version : Version of source language
  *  - target language: In which tokens have been translated too
  *  - token words: token words showul be entered in the form of xls
 */
@@ -52,7 +52,7 @@ class GetTranslationDraft extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/translations",
+      url: "https://api.mt2414.in/v1/translations",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",

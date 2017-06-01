@@ -26,13 +26,13 @@ class GetLanguages extends Component {
   componentDidMount() {
       window.addEventListener('load', this.getLanguages);
   }
-
+  
   getLanguages(e){
     e.preventDefault();
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var _this = this;
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/get_languages",
+      url: "https://api.mt2414.in/v1/get_languages",
       contentType: "application/json; charset=utf-8",
       method : "POST",
       headers: {

@@ -4,8 +4,7 @@
  * Component that display SourceDocument
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
- *  - content: Content of all the source documents stored
- *  - 
+ *  - version: version of the source language
 */
 
 import React, { Component } from 'react';
@@ -49,7 +48,7 @@ class GenerateConcordance extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/generateconcordance",
+      url: "https://api.mt2414.in/v1/generateconcordance",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",

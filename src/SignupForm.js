@@ -97,7 +97,7 @@ class SignupForm extends Component {
 
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: "http://127.0.0.1:8000/v1/registrations",
+       url: "https://api.mt2414.in/v1/registrations",
        data: {
           email : this.state.email,
           password : this.state.password
@@ -105,7 +105,6 @@ class SignupForm extends Component {
            method : "POST",
          success: function(result) {
             console.log("Successfully Excuted !!");
-            console.log(result);
             window.location.href = "./signin";
            },
          error: function(error){

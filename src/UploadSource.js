@@ -4,8 +4,8 @@
  * Component that display SourceDocument
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
- *  - content: Content of all the source documents stored
- *  - Access ID & Key: Returned as a response after authentication
+ *  - version: version of source language
+ *  - base64_arr: file in the form of base64
 */
 
 import React, { Component } from 'react';
@@ -84,7 +84,7 @@ class UploadSource extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/sources",
+      url: "https://api.mt2414.in/v1/sources",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
