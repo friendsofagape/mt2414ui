@@ -85,12 +85,6 @@ class UploadTokens extends Component {
     }
     e.preventDefault();
 
-    console.log(this.state.language);
-    console.log(this.state.version);
-    console.log(this.state.revision);
-    console.log(this.state.targetlang);
-    console.log(this.state.tokenwords);
-
     var data = { 
             "language": this.state.language, "version": this.state.version, "revision": this.state.revision, "targetlang": this.state.targetlang, "tokenwords": this.state.tokenwords
           }
