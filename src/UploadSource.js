@@ -21,7 +21,7 @@ class UploadSource extends Component {
     super(props);
 
     this.state = {
-      language:'',
+      language:'tam',
       version: '',
       base64_arr: [],
       uploaded:'Uploading',
