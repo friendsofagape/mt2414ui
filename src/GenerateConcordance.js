@@ -22,7 +22,7 @@ class GenerateConcordance extends Component {
     super(props);
 
     this.state = {
-      language: '',
+      language: 'tam',
       version: '',
       uploaded:'uploadingStatus',
     }

@@ -22,7 +22,7 @@ class GenerateTokens extends Component {
     super(props);
 
     this.state = {
-      language: '',
+      language: 'tam',
       version: '',
       revision: '',
       uploaded:'uploadingStatus',
@@ -52,7 +52,7 @@ class GenerateTokens extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/tokenwords",
+      url: "http://127.0.0.1:8000/v1/autotokens",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
@@ -67,6 +67,7 @@ class GenerateTokens extends Component {
         _this.setState({uploaded:'success'})
       },
       error: function (error) {
+        console.log(error)
          console.log("Failled in Generate Tokens");
           _this.setState({uploaded:'failure'}) 
       }
@@ -142,7 +143,6 @@ class GenerateTokens extends Component {
               <div className="form-group">
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                  <button id="button" type="button" className="btn btn-success" onClick={this.generateConcordance}>Upload Tokens</button>
                 </div>
               </div>
           </form>

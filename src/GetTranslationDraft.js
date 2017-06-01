@@ -23,8 +23,8 @@ class GetTranslationDraft extends Component {
     super(props);
 
     this.state = {
-      sourcelang:'',
-      targetlang:'',
+      sourcelang:'tam',
+      targetlang:'tam',
       version: '',
       uploaded:'Uploading'
     }
@@ -120,8 +120,8 @@ class GetTranslationDraft extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label"> <strong> Target Language </strong> </lable>
-                    <FormControl name="tlanguage" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((tlanguage, i) => <option  key={i} value={tlanguage.code}>{tlanguage.value}</option>)}
+                    <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
+                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
                     </FormControl>
               </div>&nbsp;
                   <div className="form-group">

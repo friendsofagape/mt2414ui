@@ -21,7 +21,7 @@ class GetConcordances extends Component {
     super(props);
 
     this.state = {
-      language:'',
+      language:'tam',
       version: '',
       revision: '',
       token: '',
