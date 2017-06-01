@@ -14,7 +14,6 @@ import $ from 'jquery';
 import Header from './Header';
 import Footer from './Footer';
 
-
   class SigninForm extends Component {
     constructor(props) {
       super(props);
@@ -108,7 +107,7 @@ import Footer from './Footer';
         <div className="container">
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onLogin} className="col-md-8 ">
+        <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 ">
           <h1 className="signin-header">Sign in</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>Sign-in Successfully !!!</strong>
@@ -147,18 +146,6 @@ import Footer from './Footer';
           <div className="signlink">
             <Link to={'/signup'}>Sign up instead</Link>
           </div>
-          <hr/>
-          <div className="form-group">
-          <lable className="control-label"> Auth Token </lable>
-          <input
-            value=""
-            type="text"
-            id="auth_token"
-            name="auth token"
-            placeholder="Token"
-            className="form-control"
-          />
-        </div>
         </form>
         </div>
         <Footer />
