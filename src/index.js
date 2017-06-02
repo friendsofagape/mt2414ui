@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import { Router, Route, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -24,8 +23,8 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <Router path="/" history={browserHistory}>
-      <Route path="/app" component={App} />
       <Route path="/signup" component={SignupForm} />
+      <Route path="/" component={SigninForm} />
       <Route path="/signin" component={SigninForm} />
       <Route path="/getlanguages" component={GetLanguages}/>
       <Route path="/uploadsource" component={UploadSource} />

@@ -3,7 +3,7 @@
 }
 
 .col-md-8 {
-   margin: 3% 0% 0% 17%;
+   margin: 9% 0% 0% 17%;
 }
 
 input.active:valid {
@@ -29,11 +29,13 @@ input.active:invalid {
 }
 
 .signup-header {
-    margin: 90px 100px -5px
+    margin: 90px 100px -5px;
+    font-size: 27px;
 }
 
 .signin-header {
 	margin: 99px 100px -19px;
+	font-size: 27px;
 }
 
  .source-header {
