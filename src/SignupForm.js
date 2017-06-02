@@ -10,7 +10,6 @@
  */
  
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import './App.css';
 import $ from 'jquery';
 import Header from './Header';
@@ -97,7 +96,7 @@ class SignupForm extends Component {
 
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: "https://api.mt2414.in/v1/registrations",
+       url: "http://127.0.0.1:8000/v1/registrations",
        data: {
           email : this.state.email,
           password : this.state.password
@@ -162,9 +161,6 @@ class SignupForm extends Component {
               </div>&nbsp;
           <div className="form-group">
             <button className="btn btn-success" > Sign up </button>
-          </div>
-          <div className="signlink">
-            <Link to={'/signin'}>Already a user? Sign in instead</Link>
           </div>
         </form>
         </div>

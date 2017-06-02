@@ -81,7 +81,7 @@ import Footer from './Footer';
    
     var _this = this
     $.ajax({
-      url: "https://api.mt2414.in/v1/auth",
+      url: "http://127.0.0.1:8000/v1/auth",
       data :{
         username : this.state.email,
         password : this.state.password
@@ -108,12 +108,12 @@ import Footer from './Footer';
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 ">
-          <h1 className="signin-header">Sign in</h1>&nbsp;
+          <h1 className="signin-header">Login</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Sign-in Successfully !!!</strong>
+                <strong>Sign-in Successfully !!</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-              <strong>Failed to Sign-in !!!</strong>
+              <strong>Failed to Login !!</strong>
             </div>
             <div className="form-group"><br/>
             <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
@@ -144,7 +144,7 @@ import Footer from './Footer';
             <button className="btn btn-success"> Sign in </button>
           </div>
           <div className="signlink">
-            <Link to={'/signup'}>Sign up instead</Link>
+            Create a new account ? &nbsp; &nbsp;<Link to={'/signup'}>Click here !!</Link>
           </div>
         </form>
         </div>
