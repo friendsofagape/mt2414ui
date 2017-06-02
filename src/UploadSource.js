@@ -76,22 +76,22 @@ class UploadSource extends Component {
     } 
 
     var _this = this
-    console.log(this.state.version)
     var data = { 
             "language": this.state.language, "version": this.state.version, "content": global.base64_arr
           }
+    console.log(window.localStorage.getItem('access_token'));
 
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
 
     $.ajax({
-      url: "https://api.mt2414.in/v1/sources",
+      url: "http://127.0.0.1:8000/v1/sources",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
-        result = JSON.parse(result)
+         result = JSON.parse(result)
         _this.setState({uploaded: result.success ? 'success' : ''})
         _this.setState({message: result.message})
 
