@@ -17,10 +17,14 @@ class GetLanguages extends Component {
 
     this.state = {
       getLanguages: '',
-      getVersions: []
+      getBooks: '',
+      language: '',
+      version: ''
     }
       // Upload file specific callback handlers
       this.getLanguages = this.getLanguages.bind(this);
+      this.getBooks = this.getBooks.bind(this);
+      // this.getBookData = this.getBookData.bind(this);
   }
   
   componentDidMount() {
@@ -28,9 +32,12 @@ class GetLanguages extends Component {
   }
   
   getLanguages(e){
+
     e.preventDefault();
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var _this = this;
+
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+        
     $.ajax({
       url: "http://127.0.0.1:8000/v1/get_languages",
       contentType: "application/json; charset=utf-8",
@@ -44,20 +51,54 @@ class GetLanguages extends Component {
         }
       },
       error: function (error) {
-        console.log("Sources Uploaded failure !!!")
+        console.log("failure !!!")
       }
     });   
     
   }
 
+  getBooks(e){
+
+    e.preventDefault();
+    var _this = this;
+    console.log("getBooks")
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+
+    var data = {
+      "language": "kan", "version": "ULB"
+    }
+    $.ajax({
+      url: "http://127.0.0.1:8000/v1/get_books",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(data),
+      method : "POST",
+      headers: {
+                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+      success: function (result) {
+        var getBook = JSON.parse(result);
+        _this.setState({getBooks: getBook.length > 0 ? getBook : []})
+      },
+      error: function (error) {
+        console.log("Books failure !!!")
+      }
+    });     
+  }
+
+  getBookData(obj){
+    console.log(obj)
+  }
+
   render() {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
+    let currentBooks = this.state.getBooks.length > 0 ?  this.state.getBooks : [];
+
     return(
       <div className="container">
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header-lan">Available Source Texts</h1>&nbsp;
+            <div>
               <table className="table">
                 <thead>
                   <tr>
@@ -67,10 +108,26 @@ class GetLanguages extends Component {
                 </thead>
                 <tbody>
                   {currentLanguages.map(function(data, index){
+                    return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td><td><button data-lang={data[0]} data-ver={data[1]} type="button" onClick={this.getBookData.bind(this)} >Show Books</button></td></tr>);
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Book Name</th>
+                    <th>Id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentBooks.map(function(data, index){
                     return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td></tr>);
                   })}
                 </tbody>
               </table>
+            </div>
           </form>
         </div>
         <Footer/>
