@@ -99,9 +99,9 @@ class UploadTokens extends Component {
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
-        // result = JSON.stringify(result)
-        console.log(result);
-        _this.setState({uploaded: result.success})
+         result = JSON.parse(result)
+         console.log(result)
+        _this.setState({uploaded: result.success ? 'success' : ''})
         _this.setState({message: result.message})
 
       },
