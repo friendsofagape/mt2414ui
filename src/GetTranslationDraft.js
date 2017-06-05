@@ -33,8 +33,8 @@ class GetTranslationDraft extends Component {
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
-      this.parseJSONToXLS = this.parseJSONToXLS.bind(this);
-      this.exportToXlsFile = this.exportToXlsFile.bind(this);
+      this.parseJSONToText = this.parseJSONToText.bind(this);
+      this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
   }
   
   onSelect(e) {
@@ -60,26 +60,24 @@ class GetTranslationDraft extends Component {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
         _this.setState({uploaded: 'success'})
-        _this.exportToXlsFile(result)
+        _this.exportToUSFMFile(result)
 
       },
       error: function (error) {
-        console.log(error)
-        console.log("Sources Uploaded failure !!!")
         _this.setState({uploaded: 'failure'}) 
       }
     });   
     
   }
 
-  parseJSONToXLS(jsonData) {
+  parseJSONToText(jsonData) {
       jsonData = JSON.parse(jsonData)
       var jsonData1 = jsonData["MAT"]
       return encodeURIComponent(jsonData1);
   }
 
-  exportToXlsFile(jsonData) {
-      let xlsStr = this.parseJSONToXLS(jsonData);
+  exportToUSFMFile(jsonData) {
+      let xlsStr = this.parseJSONToText(jsonData);
       let dataUri = 'data:text/csv;charset=utf-8,'+ xlsStr;      
       let exportFileDefaultName = 'TranslatedDraft.usfm';    
       let linkElement = document.createElement('a');

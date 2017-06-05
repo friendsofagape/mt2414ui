@@ -90,7 +90,6 @@ import Footer from './Footer';
         success: function(result) {
 
         if (result){
-          console.log(result)
           var auth = result;
           _this.setState({uploaded:'success'})
           window.localStorage.setItem('access_token', auth)
