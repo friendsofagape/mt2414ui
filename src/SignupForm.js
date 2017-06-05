@@ -21,7 +21,8 @@ class SignupForm extends Component {
       this.state = {
         email: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        uploaded:'uploadingStatus'
     }
       // Signup form form specific callback handlers
       this.onChange = this.onChange.bind(this);
@@ -93,7 +94,7 @@ class SignupForm extends Component {
 
   onRegistration(e) {
     e.preventDefault();
-
+    var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
        url: "https://api.mt2414.in/v1/registrations",
@@ -103,15 +104,13 @@ class SignupForm extends Component {
           },
            method : "POST",
          success: function(result) {
-            console.log("Successfully Excuted !!");
             window.location.href = "./signin";
+            _this.setState({uploaded:'success'})
+
            },
          error: function(error){
-             console.log(error);
-          },
-         complete(complete){
-           console.log("Successfully completed !!");
-         }
+        _this.setState({uploaded:'failure'})
+          }
      });
   }
 
@@ -122,6 +121,12 @@ class SignupForm extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onRegistration} className="col-md-8">
           <h1 className="signup-header">Sign up</h1>&nbsp;
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+                <strong>Sign-up Successfully !!</strong>
+            </div>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+              <strong>Failed to create account !!</strong>
+            </div>
               <div className="form-group">
                 <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
                 <input className="form-control" 
