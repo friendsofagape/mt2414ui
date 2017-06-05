@@ -67,7 +67,7 @@ class GetLanguages extends Component {
     }
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/get_books",
+      url: "https://api.mt2414.in/v1/get_books",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(data),
       method : "POST",

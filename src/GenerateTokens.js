@@ -41,9 +41,6 @@ class GenerateTokens extends Component {
 
 // For Downloads Token words
   downloadTokenWords(e){
-    console.log("language: " + this.state.language);
-    console.log("version: " + this.state.version);
-    console.log("revision: " + this.state.revision);
     e.preventDefault();
     var _this = this
     var data = { 

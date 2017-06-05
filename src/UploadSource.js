@@ -79,7 +79,6 @@ class UploadSource extends Component {
     var data = { 
             "language": this.state.language, "version": this.state.version, "content": global.base64_arr
           }
-    console.log(window.localStorage.getItem('access_token'));
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
 
