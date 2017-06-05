@@ -15,7 +15,6 @@ class Header extends Component {
   }
 
   handleSelect(selectedKey) {
-    console.log("SelectedKey: " + selectedKey);
     this.setState({
       activeKey: selectedKey
     });
@@ -24,7 +23,7 @@ class Header extends Component {
   render() {
     return (
       <Navbar fixedTop>
-        <Navbar.Header><Navbar.Brand>MT2414: Machine Translation Engine</Navbar.Brand></Navbar.Header>
+        <Navbar.Header><Navbar.Brand>MT2414: Machine Translation Engine</Navbar.Brand><Navbar.Toggle/></Navbar.Header>
         <Navbar.Collapse>
           <Nav  bsStyle="pills" stacked   activeKey={this.state.activeKey} onSelect={this.handleSelect}>
             <NavItem eventKey={1} ><Link to={'/signin'}>Sign in</Link></NavItem>
