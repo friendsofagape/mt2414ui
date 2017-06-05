@@ -48,7 +48,7 @@ class GetLanguages extends Component {
         }
       },
       error: function (error) {
-        console.log("Sources Uploaded failure !!!")
+
       }
     });   
     
@@ -57,7 +57,6 @@ class GetLanguages extends Component {
   getBooks(e){
 
     e.preventDefault();
-    console.log("Hello")
     var _this = this;
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -75,19 +74,13 @@ class GetLanguages extends Component {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
         var getBook = JSON.parse(result);
-        console.log(getBook)
       },
       error: function (error) {
-        console.log("Books failure !!!")
       }
     });     
   }
 
-  // getBookData(obj){
-  //   console.log("Hello")
-  //   console.log(obj)
-  // }
-
+  
   render() {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
     return(

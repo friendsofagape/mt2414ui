@@ -56,7 +56,6 @@ class UploadSource extends Component {
           }
         })(file);
         reader.onerror = function (error) {
-         console.log('Error: ', error);
         };
       }
     }
@@ -96,8 +95,8 @@ class UploadSource extends Component {
 
       },
       error: function (error) {
-         console.log(error);
-        _this.setState({uploaded: 'failure'}) 
+       _this.setState({message: error.message, uploaded: 'failure'})
+
       }
     });   
     
@@ -114,7 +113,7 @@ class UploadSource extends Component {
                 <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-                <strong>Failed to Upload Sources !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>

@@ -24,6 +24,7 @@ class GenerateConcordance extends Component {
       language: 'tam',
       version: '',
       uploaded:'uploadingStatus',
+      message: ''
     }
       // Upload file specific callback handlers
       this.onSelect = this.onSelect.bind(this);
@@ -37,8 +38,6 @@ class GenerateConcordance extends Component {
 
 // For Generating Concordance
   generateConcordance(e){
-    console.log("language: " + this.state.language);
-    console.log("version: " + this.state.version);
     e.preventDefault();
     var _this = this
     var data = {
@@ -56,10 +55,12 @@ class GenerateConcordance extends Component {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
       },
       success: function (result) {
-        _this.setState({uploaded:'success'})
+        result = JSON.parse(result)
+        _this.setState({message: result.message, uploaded: 'success'})
+
       },
       error: function (error) {
-        _this.setState({uploaded:'failure'}) 
+       _this.setState({message: error.message, uploaded: 'failure'})
       }
     });  
   }
@@ -72,10 +73,10 @@ class GenerateConcordance extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header1">Generate Concordance</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Concordances Created and Stored in DB !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible') }>
-                <strong>Concordances could not be generated !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>

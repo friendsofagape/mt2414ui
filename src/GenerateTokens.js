@@ -26,6 +26,7 @@ class GenerateTokens extends Component {
       version: '',
       revision: '',
       uploaded:'uploadingStatus',
+      message: ''
     }
       // Upload file specific callback handlers
       this.onSelect = this.onSelect.bind(this);
@@ -60,13 +61,10 @@ class GenerateTokens extends Component {
         if (result){
          _this.exportToXlsFile(result);
         }
-        console.log("Success in Generate Tokens");
-        _this.setState({uploaded:'success'})
+        _this.setState({message: result.message, uploaded: 'success'})
       },
       error: function (error) {
-        console.log(error)
-         console.log("Failled in Generate Tokens");
-          _this.setState({uploaded:'failure'}) 
+       _this.setState({message: error.message, uploaded: 'failure'})
       }
     });  
   }
@@ -74,8 +72,8 @@ class GenerateTokens extends Component {
   // for parse JSON to XLS
   parseJSONToXLS(jsonData) {
       jsonData = JSON.parse(jsonData)
+
       var jsonData1 = jsonData["tokenwords"]
-     
       let keys = Object.keys(jsonData1[0]);
 
       let columnDelimiter = ',';
@@ -118,10 +116,10 @@ class GenerateTokens extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Generate Tokens</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
-                <strong>File Uploaded Successfully !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
-                <strong>Fail to upload file !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
