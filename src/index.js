@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import { Router, Route, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -13,6 +12,8 @@ import GetConcordances from './GetConcordances';
 import GenerateConcordance from './GenerateConcordance';
 import GetTranslationDraft from './GetTranslationDraft';
 import GetLanguages from './GetLanguages';
+import UploadTokens from './UploadTokens';
+
 
 const store = createStore(
       (state = {}) => state,
@@ -22,12 +23,13 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <Router path="/" history={browserHistory}>
-      <Route path="/app" component={App} />
       <Route path="/signup" component={SignupForm} />
+      <Route path="/" component={SigninForm} />
       <Route path="/signin" component={SigninForm} />
       <Route path="/getlanguages" component={GetLanguages}/>
       <Route path="/uploadsource" component={UploadSource} />
       <Route path="/generatetokens" component={GenerateTokens}/>
+      <Route path="/uploadtokens" component={UploadTokens}/>
       <Route path="/getconcordances" component={GetConcordances}/>
       <Route path="/generateconcordance" component={GenerateConcordance}/>
       <Route path="/gettranslationdraft" component={GetTranslationDraft}/>

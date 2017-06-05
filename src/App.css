@@ -3,7 +3,7 @@
 }
 
 .col-md-8 {
-   margin: 3% 0% 0% 17%;
+   margin: 9% 0% 0% 17%;
 }
 
 input.active:valid {
@@ -23,21 +23,27 @@ input.active:invalid {
 .control-lable {
 	font-family: sans-serif;
 }
-
 .navbar-fixed-bottom {
 	text-align: center;
 }
 
 .signup-header {
-    margin: 90px 100px -5px
+    margin: 90px 100px -5px;
+    font-size: 27px;
 }
 
 .signin-header {
 	margin: 99px 100px -19px;
+	font-size: 27px;
 }
 
  .source-header {
  	margin: 90px 77px 5px 86px;
+ 	font-size: 20px;
+ }
+
+  .source-header-lan {
+ 	margin: 90px 77px 5px 36px;
  	font-size: 20px;
  }
 

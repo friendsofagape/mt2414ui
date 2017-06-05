@@ -10,7 +10,6 @@
  */
  
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import './App.css';
 import $ from 'jquery';
 import Header from './Header';
@@ -22,7 +21,8 @@ class SignupForm extends Component {
       this.state = {
         email: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        uploaded:'uploadingStatus'
     }
       // Signup form form specific callback handlers
       this.onChange = this.onChange.bind(this);
@@ -94,26 +94,23 @@ class SignupForm extends Component {
 
   onRegistration(e) {
     e.preventDefault();
-
+    var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: "http://127.0.0.1:8000/v1/registrations",
+       url: "https://api.mt2414.in/v1/registrations",
        data: {
           email : this.state.email,
           password : this.state.password
           },
            method : "POST",
          success: function(result) {
-            console.log("Successfully Excuted !!");
-            console.log(result);
             window.location.href = "./signin";
+            _this.setState({uploaded:'success'})
+
            },
          error: function(error){
-             console.log(error);
-          },
-         complete(complete){
-           console.log("Successfully completed !!");
-         }
+        _this.setState({uploaded:'failure'})
+          }
      });
   }
 
@@ -124,6 +121,12 @@ class SignupForm extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onRegistration} className="col-md-8">
           <h1 className="signup-header">Sign up</h1>&nbsp;
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+                <strong>Sign-up Successfully !!</strong>
+            </div>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+              <strong>Failed to create account !!</strong>
+            </div>
               <div className="form-group">
                 <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
                 <input className="form-control" 
@@ -163,9 +166,6 @@ class SignupForm extends Component {
               </div>&nbsp;
           <div className="form-group">
             <button className="btn btn-success" > Sign up </button>
-          </div>
-          <div className="signlink">
-            <Link to={'/signin'}>Already a user? Sign in instead</Link>
           </div>
         </form>
         </div>

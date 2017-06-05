@@ -14,7 +14,6 @@ import $ from 'jquery';
 import Header from './Header';
 import Footer from './Footer';
 
-
   class SigninForm extends Component {
     constructor(props) {
       super(props);
@@ -82,7 +81,7 @@ import Footer from './Footer';
    
     var _this = this
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/auth",
+      url: "https://api.mt2414.in/v1/auth",
       data :{
         username : this.state.email,
         password : this.state.password
@@ -91,10 +90,11 @@ import Footer from './Footer';
         success: function(result) {
 
         if (result){
+          console.log(result)
           var auth = result;
           _this.setState({uploaded:'success'})
           window.localStorage.setItem('access_token', auth)
-          location.href = "http://localhost:3000/getlanguages"
+          window.location.href = "./getlanguages";
         }
         },
         error: function(error){
@@ -108,13 +108,13 @@ import Footer from './Footer';
         <div className="container">
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onLogin} className="col-md-8 ">
-          <h1 className="signin-header">Sign in</h1>&nbsp;
+        <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 ">
+          <h1 className="signin-header">Login</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Sign-in Successfully !!!</strong>
+                <strong>Sign-in Successfully !!</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-              <strong>Failed to Sign-in !!!</strong>
+              <strong>Failed to Login !!</strong>
             </div>
             <div className="form-group"><br/>
             <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
@@ -145,20 +145,8 @@ import Footer from './Footer';
             <button className="btn btn-success"> Sign in </button>
           </div>
           <div className="signlink">
-            <Link to={'/signup'}>Sign up instead</Link>
+            Create a new account ? &nbsp; &nbsp;<Link to={'/signup'}>Click here !!</Link>
           </div>
-          <hr/>
-          <div className="form-group">
-          <lable className="control-label"> Auth Token </lable>
-          <input
-            value=""
-            type="text"
-            id="auth_token"
-            name="auth token"
-            placeholder="Token"
-            className="form-control"
-          />
-        </div>
         </form>
         </div>
         <Footer />

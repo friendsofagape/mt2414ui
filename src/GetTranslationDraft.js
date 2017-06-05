@@ -4,7 +4,7 @@
  * Component that display GetTranslationDraft
  * Accepts the following properties:
  *  - source language: Which language you want to convert from 
- *  - version : version of source language
+ *  - version : Version of source language
  *  - target language: In which tokens have been translated too
  *  - token words: token words showul be entered in the form of xls
 */
@@ -23,8 +23,8 @@ class GetTranslationDraft extends Component {
     super(props);
 
     this.state = {
-      sourcelang:'',
-      targetlang:'',
+      sourcelang:'tam',
+      targetlang:'tam',
       version: '',
       uploaded:'Uploading'
     }
@@ -52,7 +52,7 @@ class GetTranslationDraft extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/translations",
+      url: "https://api.mt2414.in/v1/translations",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
@@ -120,8 +120,8 @@ class GetTranslationDraft extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label"> <strong> Target Language </strong> </lable>
-                    <FormControl name="tlanguage" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((tlanguage, i) => <option  key={i} value={tlanguage.code}>{tlanguage.value}</option>)}
+                    <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
+                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
                     </FormControl>
               </div>&nbsp;
                   <div className="form-group">
