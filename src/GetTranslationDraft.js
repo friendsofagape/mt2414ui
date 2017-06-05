@@ -26,6 +26,7 @@ class GetTranslationDraft extends Component {
       sourcelang:'tam',
       targetlang:'tam',
       version: '',
+      revision: '',
       uploaded:'Uploading'
     }
 
@@ -46,11 +47,10 @@ class GetTranslationDraft extends Component {
     e.preventDefault();
     var _this = this
     var data = { 
-            "sourcelang": this.state.sourcelang, "version": this.state.version, "targetlang": this.state.targetlang, "tokenwords":{"and":"DNAforeaxmple"}
+            "sourcelang": this.state.sourcelang, "version": this.state.version, "revision": this.state.revision,  "targetlang": this.state.targetlang
           }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
     $.ajax({
       url: "https://api.mt2414.in/v1/translations",
       contentType: "application/json; charset=utf-8",
@@ -59,13 +59,12 @@ class GetTranslationDraft extends Component {
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
-        
-        if (result){
-         _this.exportToXlsFile(result);
-        }
         _this.setState({uploaded: 'success'})
+        _this.exportToXlsFile(result)
+
       },
       error: function (error) {
+        console.log(error)
         console.log("Sources Uploaded failure !!!")
         _this.setState({uploaded: 'failure'}) 
       }
@@ -74,17 +73,15 @@ class GetTranslationDraft extends Component {
   }
 
   parseJSONToXLS(jsonData) {
-      jsonData = JSON.parse(jsonData);
-      console.log(jsonData)
+      jsonData = JSON.parse(jsonData)
       var jsonData1 = jsonData["MAT"]
       return encodeURIComponent(jsonData1);
   }
 
-// for export to XLS file
   exportToXlsFile(jsonData) {
       let xlsStr = this.parseJSONToXLS(jsonData);
       let dataUri = 'data:text/csv;charset=utf-8,'+ xlsStr;      
-      let exportFileDefaultName = 'TranslationDraft.usfm';    
+      let exportFileDefaultName = 'TranslatedDraft.usfm';    
       let linkElement = document.createElement('a');
       linkElement.setAttribute('href', dataUri);
       linkElement.setAttribute('download', exportFileDefaultName);
@@ -117,6 +114,10 @@ class GetTranslationDraft extends Component {
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
                     <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
+              </div>&nbsp;
+              <div className="form-group">
+                <lable className="control-lable"> <strong> Revision </strong> </lable>
+                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label"> <strong> Target Language </strong> </lable>
