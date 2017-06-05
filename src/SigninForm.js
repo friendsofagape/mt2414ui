@@ -94,7 +94,7 @@ import Footer from './Footer';
           var auth = result;
           _this.setState({uploaded:'success'})
           window.localStorage.setItem('access_token', auth)
-          location.href = "http://192.168.2.234:3000/getlanguages"
+          window.location.href = "./getlanguages";
         }
         },
         error: function(error){
