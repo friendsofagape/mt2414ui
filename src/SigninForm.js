@@ -81,7 +81,7 @@ import Footer from './Footer';
    
     var _this = this
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/auth",
+      url: "https://api.mt2414.in/v1/auth",
       data :{
         username : this.state.email,
         password : this.state.password
@@ -90,6 +90,7 @@ import Footer from './Footer';
         success: function(result) {
 
         if (result){
+          console.log(result)
           var auth = result;
           _this.setState({uploaded:'success'})
           window.localStorage.setItem('access_token', auth)

@@ -32,14 +32,11 @@ class GetLanguages extends Component {
   }
   
   getLanguages(e){
-
     e.preventDefault();
-    var _this = this;
-
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-        
+    var _this = this;
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/get_languages",
+      url: "https://api.mt2414.in/v1/get_languages",
       contentType: "application/json; charset=utf-8",
       method : "POST",
       headers: {
@@ -51,7 +48,7 @@ class GetLanguages extends Component {
         }
       },
       error: function (error) {
-        console.log("failure !!!")
+        console.log("Sources Uploaded failure !!!")
       }
     });   
     
@@ -60,13 +57,15 @@ class GetLanguages extends Component {
   getBooks(e){
 
     e.preventDefault();
+    console.log("Hello")
     var _this = this;
-    console.log("getBooks")
+
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     var data = {
-      "language": "kan", "version": "ULB"
+      "language": "this.state.language", "version": "this.state.version"
     }
+
     $.ajax({
       url: "http://127.0.0.1:8000/v1/get_books",
       contentType: "application/json; charset=utf-8",
@@ -76,7 +75,7 @@ class GetLanguages extends Component {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
         var getBook = JSON.parse(result);
-        _this.setState({getBooks: getBook.length > 0 ? getBook : []})
+        console.log(getBook)
       },
       error: function (error) {
         console.log("Books failure !!!")
@@ -84,14 +83,13 @@ class GetLanguages extends Component {
     });     
   }
 
-  getBookData(obj){
-    console.log(obj)
-  }
+  // getBookData(obj){
+  //   console.log("Hello")
+  //   console.log(obj)
+  // }
 
   render() {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
-    let currentBooks = this.state.getBooks.length > 0 ?  this.state.getBooks : [];
-
     return(
       <div className="container">
         <Header/ >
@@ -108,22 +106,10 @@ class GetLanguages extends Component {
                 </thead>
                 <tbody>
                   {currentLanguages.map(function(data, index){
-                    return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td><td><button data-lang={data[0]} data-ver={data[1]} type="button" onClick={this.getBookData.bind(this)} >Show Books</button></td></tr>);
-                  })}
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Book Name</th>
-                    <th>Id</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentBooks.map(function(data, index){
-                    return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td></tr>);
+                    return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td>
+                            <td><button data-lang={data[0]} data-ver={data[1]} >Show Book</button></td>
+                            </tr>
+                            );
                   })}
                 </tbody>
               </table>

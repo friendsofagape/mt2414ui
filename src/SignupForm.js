@@ -96,7 +96,7 @@ class SignupForm extends Component {
 
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: "http://127.0.0.1:8000/v1/registrations",
+       url: "https://api.mt2414.in/v1/registrations",
        data: {
           email : this.state.email,
           password : this.state.password

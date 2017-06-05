@@ -33,7 +33,6 @@ ReactDOM.render(
       <Route path="/getconcordances" component={GetConcordances}/>
       <Route path="/generateconcordance" component={GenerateConcordance}/>
       <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
-
     </Router>
   </Provider>,
   document.getElementById('root')
