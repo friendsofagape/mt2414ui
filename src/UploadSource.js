@@ -82,7 +82,7 @@ class UploadSource extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
 
     $.ajax({
-      url: "http://127.0.0.1:8000/v1/sources",
+      url: "https://api.mt2414.in/v1/sources",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
