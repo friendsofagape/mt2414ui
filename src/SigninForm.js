@@ -33,7 +33,7 @@ import Footer from './Footer';
       this.showInputError(e.target.name);
     }
 
-    // Checking signup form error
+  // Checking signup form error
 
   showFormErrors() {
     const inputs = document.querySelectorAll('input');
@@ -81,7 +81,7 @@ import Footer from './Footer';
    
     var _this = this
     $.ajax({
-      url: "https://api.mt2414.in/v1/auth",
+      url: "http://127.0.0.1:8000/v1/auth",
       data :{
         username : this.state.email,
         password : this.state.password
@@ -91,13 +91,13 @@ import Footer from './Footer';
 
         if (result){
           var auth = result;
-          _this.setState({uploaded:'success'})
+        _this.setState({message: result.message, uploaded: 'success'})
           window.localStorage.setItem('access_token', auth)
           window.location.href = "./getlanguages";
         }
         },
         error: function(error){
-        _this.setState({uploaded:'failure'})
+       _this.setState({message: error.message, uploaded: 'failure'})
         }
     });
   }
@@ -110,10 +110,10 @@ import Footer from './Footer';
         <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 ">
           <h1 className="signin-header">Login</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Sign-in Successfully !!</strong>
+                <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-              <strong>Failed to Login !!</strong>
+              <strong>{this.state.message}</strong>
             </div>
             <div className="form-group"><br/>
             <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>

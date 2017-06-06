@@ -14,7 +14,6 @@ import GetTranslationDraft from './GetTranslationDraft';
 import GetLanguages from './GetLanguages';
 import UploadTokens from './UploadTokens';
 
-
 const store = createStore(
       (state = {}) => state,
       applyMiddleware(thunk)
