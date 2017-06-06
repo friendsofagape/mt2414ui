@@ -34,9 +34,10 @@ class GetLanguages extends Component {
   getLanguages(e){
     e.preventDefault();
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+     console.log(accessToken)
     var _this = this;
     $.ajax({
-      url: "https://api.mt2414.in/v1/get_languages",
+      url: "http://127.0.0.1:8000/v1/get_languages",
       contentType: "application/json; charset=utf-8",
       method : "POST",
       headers: {
@@ -57,6 +58,7 @@ class GetLanguages extends Component {
   getBooks(e){
 
     e.preventDefault();
+    
     var _this = this;
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -66,14 +68,14 @@ class GetLanguages extends Component {
     }
 
     $.ajax({
-      url: "https://api.mt2414.in/v1/get_books",
+      url: "http://127.0.0.1:8000/v1/get_books",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(data),
       method : "POST",
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
-        var getBook = JSON.parse(result);
+        // var getBook = JSON.parse(result);
       },
       error: function (error) {
       }

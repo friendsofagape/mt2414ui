@@ -50,7 +50,7 @@ class GenerateTokens extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "https://api.mt2414.in/v1/autotokens",
+      url: "http://127.0.0.1:8000/v1/autotokens",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
@@ -72,27 +72,11 @@ class GenerateTokens extends Component {
   // for parse JSON to XLS
   parseJSONToXLS(jsonData) {
       jsonData = JSON.parse(jsonData)
-
       var jsonData1 = jsonData["tokenwords"]
-      let keys = Object.keys(jsonData1[0]);
-
-      let columnDelimiter = ',';
-      let lineDelimiter = '\n';
-      
-      let xlsColumnHeader = keys.join(columnDelimiter);
-
-      let xlsStr = xlsColumnHeader + lineDelimiter;
-
-      jsonData1.forEach(item => { keys.forEach((key, index) => 
-          { 
-            if( (index > 0) && (index < keys.length-1) ) {
-                  xlsStr += columnDelimiter;
-              }
-              xlsStr += item[key];
-          });
-          xlsStr += lineDelimiter;
-      });
-
+      var xlsStr = '';
+      for (var i = 0; i < jsonData1.length; i++) {
+        xlsStr += jsonData1[i] + '\n' ;
+      }
       return encodeURIComponent(xlsStr);
   }
 
