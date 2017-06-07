@@ -13,6 +13,7 @@ import './App.css';
 import $ from 'jquery';
 import Header from './Header';
 import Footer from './Footer';
+import GlobalURL from './GlobalURL';
 
   class SigninForm extends Component {
     constructor(props) {
@@ -81,7 +82,7 @@ import Footer from './Footer';
    
     var _this = this
     $.ajax({
-      url: "https://api.mt2414.in/v1/auth",
+      url: GlobalURL["hostURL"]+"/v1/auth",
       data :{
         username : this.state.email,
         password : this.state.password

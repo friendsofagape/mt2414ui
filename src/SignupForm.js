@@ -14,6 +14,7 @@ import './App.css';
 import $ from 'jquery';
 import Header from './Header';
 import Footer from './Footer';
+import GlobalURL from './GlobalURL';
 
 class SignupForm extends Component {
     constructor(props) {
@@ -97,7 +98,7 @@ class SignupForm extends Component {
     var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: "https://api.mt2414.in/v1/registrations",
+       url: GlobalURL["hostURL"]+"/v1/registrations",
        data: {
           email : this.state.email,
           password : this.state.password

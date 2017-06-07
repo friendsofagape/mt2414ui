@@ -10,6 +10,7 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
+import GlobalURL from './GlobalURL';
 
 class GetLanguages extends Component {
   constructor(props) {
@@ -34,10 +35,9 @@ class GetLanguages extends Component {
   getLanguages(e){
     e.preventDefault();
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-     console.log(accessToken)
     var _this = this;
     $.ajax({
-      url: "https://api.mt2414.in/v1/get_languages",
+      url: GlobalURL["hostURL"]+"/v1/get_languages",
       contentType: "application/json; charset=utf-8",
       method : "POST",
       headers: {
@@ -68,7 +68,7 @@ class GetLanguages extends Component {
     }
 
     $.ajax({
-      url: "https://api.mt2414.in/v1/get_books",
+      url: GlobalURL["hostURL"]+"/v1/get_books",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(data),
       method : "POST",
