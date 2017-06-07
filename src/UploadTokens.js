@@ -16,6 +16,7 @@ import { FormControl } from 'react-bootstrap';
 import Language from './SourceLanguages';
 import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
+import GlobalURL from './GlobalURL';
 
 class UploadTokens extends Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class UploadTokens extends Component {
          allRows = evt.target.result.split(/\r?\n|\r/);
         for(var singleRow = 0; singleRow < allRows.length; singleRow++) {
           let token = allRows[singleRow].split(",");
-          _this.state.tokenwords[token[0]] = token[1];
+            _this.state.tokenwords[token[0]] = token[1];
         }
         
       }
@@ -87,7 +88,7 @@ class UploadTokens extends Component {
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
     $.ajax({
-      url: "https://api.mt2414.in/v1/uploadtokentranslation",
+      url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",

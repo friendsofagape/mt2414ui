@@ -17,6 +17,7 @@ import { FormControl } from 'react-bootstrap';
 import SourceLanguages from './SourceLanguages';
 import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
+import GlobalURL from './GlobalURL';
 
 class GetTranslationDraft extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class GetTranslationDraft extends Component {
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
-      url: "https://api.mt2414.in/v1/translations",
+      url: GlobalURL["hostURL"]+"/v1/translations",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
