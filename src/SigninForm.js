@@ -21,7 +21,8 @@ import GlobalURL from './GlobalURL';
       this.state = {
         email: '',
         password: '',
-        uploaded:'uploadingStatus',
+        uploaded:'Uploading',
+        message: ''
       }
       // Signin form form specific callback handlers
       this.onChange = this.onChange.bind(this);
@@ -87,19 +88,18 @@ import GlobalURL from './GlobalURL';
         username : this.state.email,
         password : this.state.password
       },
-        method : "POST",
-        success: function(result) {
-
-        if (result){
-          var auth = result;
-        _this.setState({message: result.message, uploaded: 'success'})
+      method : "POST",
+      success: function(result){
+        var result = JSON.parse(result)
+         if (result.success !== false) {
+          var auth = JSON.stringify(result);
           window.localStorage.setItem('access_token', auth)
           window.location.href = "./getlanguages";
         }
-        },
-        error: function(error){
-       _this.setState({message: error.message, uploaded: 'failure'})
+        else {
+          _this.setState({message: result.message, uploaded: 'failure'})
         }
+      }
     });
   }
 
