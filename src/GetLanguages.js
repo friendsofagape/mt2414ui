@@ -41,7 +41,6 @@ class GetLanguages extends Component {
         _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
       },
       error: function (error) {
-
       }
     });
   }
