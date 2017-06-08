@@ -25,16 +25,31 @@ class GetLanguages extends Component {
       // Upload file specific callback handlers
       this.getLanguages = this.getLanguages.bind(this);
       this.getBooks = this.getBooks.bind(this);
-      // this.getBookData = this.getBookData.bind(this);
   }
   
-  componentDidMount() {
-      window.addEventListener('load', this.getLanguages);
+  componentWillMount() {
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/get_languages",
+      contentType: "application/json; charset=utf-8",
+      method : "POST",
+      headers: {
+                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+      success: function (result) {
+        var getLang = JSON.parse(result);
+        _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
+      },
+      error: function (error) {
+
+      }
+    });
   }
   
   getLanguages(e){
     e.preventDefault();
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    
     var _this = this;
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/get_languages",
@@ -44,7 +59,6 @@ class GetLanguages extends Component {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
         var getLang = JSON.parse(result);
-        console.log(getLang)
         _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
       },
       error: function (error) {
@@ -54,10 +68,7 @@ class GetLanguages extends Component {
     
   }
 
-  getBooks(obj){
-
-    console.log(obj)
-        
+  getBooks(obj){        
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var _this = this;
     $.ajax({
@@ -69,7 +80,6 @@ class GetLanguages extends Component {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
       success: function (result) {
         var getBook = JSON.parse(result);
-        console.log(getBook)
         _this.setState({getBooks: getBook.length > 0 ? getBook : []})
 
       },
