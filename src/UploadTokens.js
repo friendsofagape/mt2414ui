@@ -70,14 +70,12 @@ class UploadTokens extends Component {
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
       reader.onload = function (evt) {
-         allRows = evt.target.result.split(/\r?\n|\r/);
+        allRows = evt.target.result.split(/\r?\n|\r/);
         for(var singleRow = 0; singleRow < allRows.length; singleRow++) {
           let token = allRows[singleRow].split(",");
             tokenwords[token[0]] = token[1];
         }
-
         var data = {
-
             "language": _this.state.language, "version": _this.state.version, "revision": _this.state.revision, "targetlang": _this.state.targetlang, "tokenwords": tokenwords
           }
      
@@ -99,10 +97,7 @@ class UploadTokens extends Component {
           error: function (error) {
            _this.setState({message: error.message, uploaded: 'failure'})
           }
-        });   
-    
-        
-        
+        });      
       }
       reader.onerror = function (evt) {
           allRows = []
