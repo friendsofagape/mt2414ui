@@ -28,13 +28,13 @@ class GetTranslationDraft extends Component {
       targetlang:'tam',
       version: '',
       revision: '',
+      bookName: '',
       uploaded:'Uploading'
     }
 
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
-      this.parseJSONToText = this.parseJSONToText.bind(this);
       this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
   }
   
@@ -50,7 +50,6 @@ class GetTranslationDraft extends Component {
     var data = { 
             "sourcelang": this.state.sourcelang, "version": this.state.version, "revision": this.state.revision,  "targetlang": this.state.targetlang
           }
-
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/translations",
@@ -71,20 +70,18 @@ class GetTranslationDraft extends Component {
     
   }
 
-  parseJSONToText(jsonData) {
-      jsonData = JSON.parse(jsonData)
-      var jsonData1 = jsonData["MAT"]
-      return encodeURIComponent(jsonData1);
-  }
-
   exportToUSFMFile(jsonData) {
-      let xlsStr = this.parseJSONToText(jsonData);
-      let dataUri = 'data:text/csv;charset=utf-8,'+ xlsStr;      
-      let exportFileDefaultName = 'TranslatedDraft.usfm';    
+    var jsonData1 = '';
+    jsonData = JSON.parse(jsonData)
+    $.each(jsonData, function(key, value) {
+      jsonData1 = jsonData[key]
+      let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(jsonData1); 
+      let exportFileDefaultName = key + '.usfm';    
       let linkElement = document.createElement('a');
       linkElement.setAttribute('href', dataUri);
       linkElement.setAttribute('download', exportFileDefaultName);
       linkElement.click();
+    });
   }
 
   render() {
