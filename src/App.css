@@ -43,7 +43,7 @@ input.active:invalid {
  }
 
   .source-header-lan {
- 	margin: 90px 77px 5px 36px;
+ 	margin: 137px 67px 18px 419px;
  	font-size: 20px;
  }
 
@@ -66,3 +66,7 @@ input.active:invalid {
 .sourcefooter{
 	margin: 1px 109px
 }
+
+.floatLeft { width: 45%; float: left; }
+.floatRight {width: 43%; float: right; }
+.container { overflow: hidden; }
