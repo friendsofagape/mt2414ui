@@ -65,6 +65,7 @@ class UploadTokens extends Component {
     var _this = this;
     let file = document.getElementById('file-input').files[0];
     var allRows = [];
+    var tokenwords = {};
     if (file) {
       var reader = new FileReader();
       reader.readAsText(file, "UTF-8");
@@ -72,8 +73,35 @@ class UploadTokens extends Component {
          allRows = evt.target.result.split(/\r?\n|\r/);
         for(var singleRow = 0; singleRow < allRows.length; singleRow++) {
           let token = allRows[singleRow].split(",");
-            _this.state.tokenwords[token[0]] = token[1];
+            tokenwords[token[0]] = token[1];
         }
+
+        var data = {
+
+            "language": _this.state.language, "version": _this.state.version, "revision": _this.state.revision, "targetlang": _this.state.targetlang, "tokenwords": tokenwords
+          }
+     
+        let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+
+        $.ajax({
+          url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
+          contentType: "application/json; charset=utf-8",
+          data : JSON.stringify(data),
+          method : "POST",
+          headers: {
+                    "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+          success: function (result) {
+             result = JSON.parse(result)
+            _this.setState({uploaded: result.success ? 'success' : ''})
+            _this.setState({message: result.message})
+
+          },
+          error: function (error) {
+           _this.setState({message: error.message, uploaded: 'failure'})
+          }
+        });   
+    
+        
         
       }
       reader.onerror = function (evt) {
@@ -81,29 +109,6 @@ class UploadTokens extends Component {
       }
     }
     e.preventDefault();
-    var data = { 
-            "language": this.state.language, "version": this.state.version, "revision": this.state.revision, "targetlang": this.state.targetlang, "tokenwords": this.state.tokenwords
-          }
- 
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
-      success: function (result) {
-         result = JSON.parse(result)
-        _this.setState({uploaded: result.success ? 'success' : ''})
-        _this.setState({message: result.message})
-
-      },
-      error: function (error) {
-       _this.setState({message: error.message, uploaded: 'failure'})
-      }
-    });   
     
   }
 
