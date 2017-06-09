@@ -3,7 +3,14 @@
 }
 
 .col-md-8 {
-   margin: 9% 0% 0% 17%;
+  margin: 9% 0% 0% 17%;
+  background-color: lightcyan;
+  color: black;
+}
+
+.col-md-6 {
+  background-color: lightcyan;
+  color: black;
 }
 
 input.active:valid {
@@ -74,6 +81,6 @@ input.active:invalid {
     line-height: 1.42857143;
     color: blue;
 }
-.floatLeft { width: 45%; float: left; margin: 16px; background: papayawhip; border: groove;}
-.floatRight {width: 44%; float: right; margin: 16px; background: papayawhip; border: groove;}
+.floatLeft { width: 41%; float: left; margin: 16px; background: azure; border: groove;}
+.floatRight {width: 43%; float: right; margin: 16px; background: azure; border: groove;}
 .container { overflow: hidden; }
