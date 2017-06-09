@@ -98,21 +98,21 @@ class GetConcordances extends Component {
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
-                    <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
-                    </FormControl>
+                  <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
+                    {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
+                  </FormControl>
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/> 
+                  <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/> 
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Revision </strong> </lable>
-                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
+                  <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong>Token </strong> </lable>
-                    <input value={this.state.token} onChange={this.onSelect} name="token" type="text"  placeholder="token" className="form-control"/> 
+                  <input value={this.state.token} onChange={this.onSelect} name="token" type="text"  placeholder="token" className="form-control"/> 
               </div>&nbsp;
               <div onClick={this.getConcordances}>
                 <Button className="btn btn-success" onClick={this.open}>Get Concordances</Button>
@@ -121,7 +121,7 @@ class GetConcordances extends Component {
                     <Modal.Title>Get Concordances</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                      <textarea value="" type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
+                    <textarea value="" type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button className="btn btn-success" onClick={this.close}>Close</Button>

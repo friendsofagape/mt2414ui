@@ -92,7 +92,7 @@ class GenerateTokens extends Component {
       linkElement.setAttribute('download', exportFileDefaultName);
       linkElement.click();
   }
-
+  
   render() {
     return(
       <div className="container">

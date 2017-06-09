@@ -121,7 +121,7 @@ class GetLanguages extends Component {
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Book</th>
+                    <th>Book Name</th>
                     <th>Revision</th>
                   </tr>
                 </thead>
