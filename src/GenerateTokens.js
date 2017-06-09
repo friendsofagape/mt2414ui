@@ -86,7 +86,7 @@ class GenerateTokens extends Component {
 
       let xlsStr = this.parseJSONToXLS(jsonData);
       let dataUri = 'data:text/csv;charset=utf-8,'+ xlsStr;      
-      let exportFileDefaultName = 'TokenWords.xls';    
+      let exportFileDefaultName = this.language + this.version +'.xls';    
       let linkElement = document.createElement('a');
       linkElement.setAttribute('href', dataUri);
       linkElement.setAttribute('download', exportFileDefaultName);

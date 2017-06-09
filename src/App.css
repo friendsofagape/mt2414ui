@@ -35,8 +35,8 @@ input.active:invalid {
 }
 
 .signup-header {
-    margin: 90px 100px -5px;
-    font-size: 22px;
+  margin: 90px 100px -5px;
+  font-size: 22px;
 }
 
 .signin-header {
@@ -44,42 +44,43 @@ input.active:invalid {
 	font-size: 22px;
 }
 
- .source-header {
+.source-header {
  	margin: 90px 77px 5px 86px;
  	font-size: 20px;
- }
+}
 
-  .source-header-lan {
+.source-header-lan {
   margin: 137px 67px 18px 419px;
   font-size: 25px;
- }
+}
 
 .source-header1 {
-	margin: 90px 77px 5px 43px;
-	font-size: 20px;
+  margin: 90px 77px 5px 43px;
+  font-size: 20px;
 }
 
 .invisible{
-   display: none;
+  display: none;
 }
  
- .navbar-nav {
-    float: left;
-    margin: -11px 0px 0px -8px;
+.navbar-nav {
+  float: left;
+  margin: -11px 0px 0px -8px;
 }
 
 .textarea{
-    min-height: 150px;
-    overflow-y: auto;
-    word-wrap: inherit;
-    background-color: lightcyan;
-    border-color: indigo;
-    font-family: monospace;
+  min-height: 150px;
+  overflow-y: auto;
+  word-wrap: inherit;
+  background-color: lightcyan;
+  border-color: indigo;
+  font-family: monospace;
 }
+
 .modal-title {
-    margin: 0;
-    line-height: 1.42857143;
-    color: blue;
+  margin: 0;
+  line-height: 1.42857143;
+  color: blue;
 }
 .floatLeft { width: 41%; float: left; margin: 16px; background: azure; border: groove;}
 .floatRight {width: 43%; float: right; margin: 16px; background: azure; border: groove;}

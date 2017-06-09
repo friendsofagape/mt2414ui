@@ -101,7 +101,7 @@ class GetLanguages extends Component {
             <div className="container">
             <div className="floatLeft">
               <table className="table">
-                <thead >
+                <thead>
                   <tr>
                     <th>Language</th>
                     <th>Versions</th>
