@@ -7,7 +7,7 @@ class Header extends Component {
     return (
         <Navbar inverse collapseOnSelect fixedTop>
         <Navbar.Header><Navbar.Brand>
-            <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;MT2414: Machine Translation Engine</a>
+            <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT: Machine Translation Engine</a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
