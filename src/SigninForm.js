@@ -90,7 +90,7 @@ import GlobalURL from './GlobalURL';
       },
       method : "POST",
       success: function(result){
-         result = JSON.parse(result)
+        var result = JSON.parse(result)
          if (result.success !== false) {
           var auth = JSON.stringify(result);
           window.localStorage.setItem('access_token', auth)
@@ -142,7 +142,7 @@ import GlobalURL from './GlobalURL';
             <div className="error" id="passwordError" />
           </div>&nbsp;
           <div className="form-group">
-            <button className="btn btn-success"> {<span className='glyphicon glyphicon-user'></span>}&nbsp; Sign in </button>
+            <button className="btn btn-success"> Sign in </button>
           </div>
           <div className="signlink">
             Create a new account ? &nbsp; &nbsp;<Link to={'/signup'}>Click here !!</Link>

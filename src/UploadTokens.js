@@ -145,7 +145,7 @@ class UploadTokens extends Component {
                   <input id="file-input" type="file" className="fileInput" multiple />
                 </div>&nbsp;
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}>Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                   </div>
               </div>
           </form>

@@ -121,9 +121,9 @@ class GetTranslationDraft extends Component {
                       {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
                     </FormControl>
               </div>&nbsp;
-                <div className="form-group"> 
+                  <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}> Translate </button>&nbsp;&nbsp;&nbsp;
-                </div>
+                  </div>
           </form>
           </div>
         <Footer/>

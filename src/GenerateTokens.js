@@ -86,13 +86,13 @@ class GenerateTokens extends Component {
 
       let xlsStr = this.parseJSONToXLS(jsonData);
       let dataUri = 'data:text/csv;charset=utf-8,'+ xlsStr;      
-      let exportFileDefaultName = this.language + this.version +'.xls';    
+      let exportFileDefaultName = 'TokenWords.xls';    
       let linkElement = document.createElement('a');
       linkElement.setAttribute('href', dataUri);
       linkElement.setAttribute('download', exportFileDefaultName);
       linkElement.click();
   }
-  
+
   render() {
     return(
       <div className="container">
@@ -122,7 +122,7 @@ class GenerateTokens extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
               </div>
           </form>
