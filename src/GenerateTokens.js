@@ -122,7 +122,7 @@ class GenerateTokens extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
               </div>
           </form>
