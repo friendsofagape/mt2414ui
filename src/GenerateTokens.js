@@ -33,7 +33,6 @@ class GenerateTokens extends Component {
       this.onSelect = this.onSelect.bind(this);
       this.downloadTokenWords = this.downloadTokenWords.bind(this);
       this.parseJSONToXLS = this.parseJSONToXLS.bind(this);
-      this.exportToXlsFile = this.exportToXlsFile.bind(this);
   }
   
   onSelect(e) {
@@ -49,7 +48,6 @@ class GenerateTokens extends Component {
         "language": this.state.language, "version": this.state.version, "revision": this.state.revision 
       }
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/autotokens",
       contentType: "application/json; charset=utf-8",
@@ -60,7 +58,7 @@ class GenerateTokens extends Component {
       },
       success: function (result) {
         if (result){
-         _this.exportToXlsFile(result);
+         _this.parseJSONToXLS(result);
         }
         _this.setState({message: result.message, uploaded: 'success'})
       },
@@ -72,26 +70,28 @@ class GenerateTokens extends Component {
 
   // for parse JSON to XLS
   parseJSONToXLS(jsonData) {
+      var jsonData1 = '';
+       var dataUri1 = '';
       jsonData = JSON.parse(jsonData)
-      var jsonData1 = jsonData["tokenwords"]
-      var xlsStr = '';
-      for (var i = 0; i < jsonData1.length; i++) {
-        xlsStr += jsonData1[i] + '\n' ;
-      }
-      return encodeURIComponent(xlsStr);
+      $.each(jsonData, function(key, value) {
+        var newLine = JSON.parse(JSON.stringify(jsonData[key])).split(/[\n\r]/g);
+        var newLineLength = newLine.length;
+        var newLineBefore = '';
+        for( var i = 0; i < newLineLength; i++) {
+          newLineBefore = newLineBefore + newLine[i];
+        }
+        jsonData1 = key + '\t \t' + JSON.stringify(newLineBefore)  + '\n'
+        dataUri1 = jsonData1 + dataUri1;
+      });
+        let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(dataUri1);
+        let exportFileDefaultName = this.state.language + this.state.version + 'Tokens.xls';    
+        let linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
   }
 
-// for export to XLS file
-  exportToXlsFile(jsonData) {
-      let xlsStr = this.parseJSONToXLS(jsonData);
-      let dataUri = 'data:text/csv;charset=utf-8,'+ xlsStr;      
-      let exportFileDefaultName = this.state.language + this.state.version + 'Tokens.xls';    
-      let linkElement = document.createElement('a');
-      linkElement.setAttribute('href', dataUri);
-      linkElement.setAttribute('download', exportFileDefaultName);
-      linkElement.click();
-  }
-  
+
   render() {
     return(
       <div className="container">
