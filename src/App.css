@@ -3,13 +3,13 @@
 }
 
 .col-md-8 {
-  margin: 9% 0% 0% 17%;
-  background-color: lightcyan;
+  margin: 9% 0% 43% 17%;
+  background-color: aliceblue;
   color: black;
 }
 
 .col-md-6 {
-  background-color: lightcyan;
+  background-color: aliceblue;
   color: black;
 }
 
@@ -30,9 +30,16 @@ input.active:invalid {
 .control-lable {
 	font-family: sans-serif;
 }
+
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+    margin-left: -15px;
+    color: white;
+}
+
 .navbar-fixed-bottom {
 	text-align: center;
 }
+
 
 .signup-header {
   margin: 90px 100px -5px;
@@ -82,6 +89,7 @@ input.active:invalid {
   line-height: 1.42857143;
   color: blue;
 }
+
 .floatLeft { width: 41%; float: left; margin: 16px; background: azure; border: groove;}
 .floatRight {width: 43%; float: right; margin: 16px; background: azure; border: groove;}
 .container { overflow: hidden; }
