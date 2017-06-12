@@ -1,5 +1,5 @@
 /**
- * @module src/GenerateTokens
+ * @module src/DownloadTokens
  *
  * Component that display SourceDocument
  * Accepts the following properties:
@@ -18,7 +18,7 @@ import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 
 
-class GenerateTokens extends Component {
+class DownloadTokens extends Component {
   constructor(props) {
     super(props);
 
@@ -132,4 +132,4 @@ class GenerateTokens extends Component {
     }
 }
 
-export default GenerateTokens;
+export default DownloadTokens;
