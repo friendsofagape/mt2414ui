@@ -16,9 +16,9 @@ class Header extends Component {
             <NavItem eventKey={2} ><Link to={'/getlanguages'}>Get Languages</Link></NavItem>
             <NavItem eventKey={3} ><Link to={'/uploadsource'}>Upload Source </Link></NavItem>
             <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Tokens</Link> </NavItem>
-            <NavItem eventKey={5} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
             <NavItem eventKey={6} ><Link to={'/generateconcordance'}>Generate Concordance</Link></NavItem>
             <NavItem eventKey={7} ><Link to={'/getconcordances'}>Get Concordances</Link> </NavItem>
+            <NavItem eventKey={5} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
             <NavItem eventKey={8} ><Link to={'/gettranslationdraft'}>Get Translation Draft</Link> </NavItem>
             <NavItem eventKey={9} ><Link to={'/uitranslation'}>UI</Link></NavItem>
           </Nav>
