@@ -46,7 +46,7 @@ class DownloadTokens extends Component {
     var _this = this
     var data = { 
         "language": this.state.language, "version": this.state.version, "revision": this.state.revision 
-      }
+    }
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/autotokens",
@@ -78,7 +78,7 @@ class DownloadTokens extends Component {
         var newLineLength = newLine.length;
         var newLineBefore = '';
         for( var i = 0; i < newLineLength; i++) {
-          newLineBefore = newLineBefore + newLine[i];
+          newLineBefore += newLine[i];
         }
         jsonData1 = key + '\t \t' + JSON.stringify(newLineBefore)  + '\n'
         dataUri1 = jsonData1 + dataUri1;
