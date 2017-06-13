@@ -13,6 +13,11 @@
   color: black;
 }
 
+.col-lg-4 {
+  background-color: aliceblue;
+  color: black;
+}
+
 input.active:valid {
 	box-shadow: 0 0 5px 1px green;
 }
@@ -52,7 +57,7 @@ input.active:invalid {
 }
 
 .source-header {
- 	margin: 90px 77px 5px 86px;
+ 	margin: 120px 77px 5px 86px;
  	font-size: 20px;
 }
 
@@ -93,3 +98,12 @@ input.active:invalid {
 .floatLeft { width: 41%; float: left; margin: 16px; background: azure; border: groove;}
 .floatRight {width: 43%; float: right; margin: 16px; background: azure; border: groove;}
 .container { overflow: hidden; }
+
+.tokenWords {
+    width: 24%;
+    max-width: 100%;
+    margin-bottom: 21px;
+    background-color: antiquewhite;
+    margin: auto;
+    border: 1px solid #ddd;
+}
