@@ -103,7 +103,7 @@ class UITranslation extends Component {
     return(
       <div className="container">
         <Header/ >
-          <h1 className="source-header">Generate Tokens</h1>&nbsp;
+          <h1 className="source-header">Get Concordance</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
               <strong>{this.state.message}</strong>
             </div>
