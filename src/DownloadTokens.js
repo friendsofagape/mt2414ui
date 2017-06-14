@@ -75,11 +75,6 @@ class DownloadTokens extends Component {
       jsonData = JSON.parse(jsonData)
       $.each(jsonData, function(key, value) {
         var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
-        // var newLineLength = newLine.length;
-        // var newLineBefore = '';
-        // for( var i = 0; i < newLineLength; i++) {
-        //   newLineBefore += newLine[i];
-        // }
         jsonData1 = key + '\t \t' + newLine  + '\n'
         dataUri1 = jsonData1 + dataUri1;
       });
@@ -96,7 +91,7 @@ class DownloadTokens extends Component {
     return(
       <div className="container">
         <Header/ >
-            <h1 className="source-header">Download Tokens & Concordances</h1>&nbsp;
+            <h1 className="source-headerCon">Download Tokens & Concordances</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>{this.state.message}</strong>
             </div>
@@ -126,10 +121,8 @@ class DownloadTokens extends Component {
               </div>
             </form>
             <div className="col-lg-4">
-              <h1>66 Books</h1>
             </div>
             <div className="col-lg-4">
-              <h1>Result of 66 book</h1>
             </div>
           </div>
         <Footer/>
