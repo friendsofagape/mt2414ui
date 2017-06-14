@@ -74,13 +74,13 @@ class DownloadTokens extends Component {
        var dataUri1 = '';
       jsonData = JSON.parse(jsonData)
       $.each(jsonData, function(key, value) {
-        var newLine = JSON.parse(JSON.stringify(jsonData[key])).split(/[\n\r]/g);
-        var newLineLength = newLine.length;
-        var newLineBefore = '';
-        for( var i = 0; i < newLineLength; i++) {
-          newLineBefore += newLine[i];
-        }
-        jsonData1 = key + '\t \t' + JSON.stringify(newLineBefore)  + '\n'
+        var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
+        // var newLineLength = newLine.length;
+        // var newLineBefore = '';
+        // for( var i = 0; i < newLineLength; i++) {
+        //   newLineBefore += newLine[i];
+        // }
+        jsonData1 = key + '\t \t' + newLine  + '\n'
         dataUri1 = jsonData1 + dataUri1;
       });
         let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(dataUri1);
@@ -96,8 +96,6 @@ class DownloadTokens extends Component {
     return(
       <div className="container">
         <Header/ >
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Download Tokens & Concordances</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>{this.state.message}</strong>
@@ -105,6 +103,8 @@ class DownloadTokens extends Component {
             <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
                 <strong>{this.state.message}</strong>
             </div>
+          <div className="row">
+            <form className="col-lg-4 uploader" encType="multipart/form-data">
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
@@ -124,7 +124,13 @@ class DownloadTokens extends Component {
                   <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token & Concordances</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
               </div>
-          </form>
+            </form>
+            <div className="col-lg-4">
+              <h1>66 Books</h1>
+            </div>
+            <div className="col-lg-4">
+              <h1>Result of 66 book</h1>
+            </div>
           </div>
         <Footer/>
       </div>
