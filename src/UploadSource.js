@@ -41,13 +41,16 @@ class UploadSource extends Component {
   }
 
   file_base64(e){
-    var files = document.getElementById('file-input').files;
-    var file = files[0]
+    var files = document.getElementById('file-input').files
+    var file = [];
+    for(var i = 0; i< files.length; i++) {
+      file += files[i];
+    }
     global.base64_arr = [];
     if(files.length > 0){
-      for (var i = 0; i < files.length; i++) {
+        for (i = 0; i < files.length; i++) {
         var reader = new FileReader();
-        reader.readAsDataURL(files[0]);
+        reader.readAsDataURL(files[i]);
         reader.onload = (function (file) {
           return function (e) {
             var data = this.result;
@@ -68,10 +71,8 @@ class UploadSource extends Component {
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['usfm']) === -1) {
-      // alert("File is not valid");
       this.setState({uploaded: 'success'})
     } else {
-      // alert("File is valid");
       this.setState({uploaded: 'failure'}) 
     } 
 
