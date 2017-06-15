@@ -2,6 +2,12 @@
 	text-align: center;
 }
 
+.col-md-12 {
+    width: 100%;
+    background: aliceblue;
+    margin: 36px 1px 1px 1px;
+}
+
 .col-md-8 {
   margin: 9% 0% 43% 17%;
   background-color: aliceblue;
@@ -63,7 +69,7 @@ input.active:invalid {
 }
 
 .source-headerCon {
-  margin: 120px 77px 5px 25px;
+  margin: 120px 77px 12px 384px;
   font-size: 20px;
 }
 
@@ -133,4 +139,22 @@ th, td {
     display: inline-table;
     margin-bottom: 24px;
     margin: 17px;
+}
+
+.Concord1{
+  margin: 4px 1px 1px 148px;
+}
+
+.Concord2{
+  margin: 1px 1px 1px 17px;
+}
+.Concord3{
+  margin: 1px 1px 1px 17px;
+}
+.Concord4{
+  margin: 1px 1px 1px 17px;
+}
+
+.ConcordButton{
+  margin: 1px 1px 1px 436px;
 }
