@@ -16,7 +16,7 @@ import { FormControl } from 'react-bootstrap';
 import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-
+import BookName from './BookName';
 
 class DownloadTokens extends Component {
   constructor(props) {
@@ -91,8 +91,8 @@ class DownloadTokens extends Component {
     return(
       <div className="container">
         <Header/ >
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" encType="multipart/form-data">
+        <div className="row">
+          <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon">Download Tokens & Concordances</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>{this.state.message}</strong>
@@ -100,23 +100,22 @@ class DownloadTokens extends Component {
             <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
                 <strong>{this.state.message}</strong>
             </div>
-              <div className="form-group">
-                <lable className="control-label"> <strong> Language Name </strong> </lable>
+              <div className="form-inline Concord1">
+                <lable className="control-label Concord2"> <strong> Language Name </strong> </lable>&nbsp;
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
                       {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Version </strong> </lable>
+                 <lable className="control-lable Concord3"> <strong> Version </strong> </lable>&nbsp;
                     <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/> 
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Revision </strong> </lable>
+                <lable className="control-lable Concord4"> <strong> Revision </strong> </lable>&nbsp;
                     <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
               </div>&nbsp;
               <div className="form-group">
+                <BookName />
+              </div>
+              <div className="form-group">
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token & Concordances</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token & Concordances</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
               </div>
             </form>
