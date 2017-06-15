@@ -5,7 +5,7 @@
 .col-md-12 {
     width: 100%;
     background: aliceblue;
-    margin: 36px 1px 1px 1px;
+    margin: 26px 1px 1px -28px;
 }
 
 .col-md-8 {
@@ -148,13 +148,18 @@ th, td {
 .Concord2{
   margin: 1px 1px 1px 17px;
 }
-.Concord3{
-  margin: 1px 1px 1px 17px;
-}
-.Concord4{
-  margin: 1px 1px 1px 17px;
-}
 
 .ConcordButton{
   margin: 1px 1px 1px 436px;
+}
+
+.myCheck {
+    width: 89%;
+    height: 231px;
+    overflow-y: scroll;
+    margin: auto;
+}
+
+.bookHeader{
+  margin: 17px 1px 1px 49px;
 }
