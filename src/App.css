@@ -14,8 +14,9 @@
 }
 
 .col-lg-4 {
-  background-color: aliceblue;
   color: black;
+  display: -webkit-box;
+  width: 40%;
 }
 
 input.active:valid {
@@ -59,6 +60,11 @@ input.active:invalid {
 .source-header {
  	margin: 120px 77px 5px 86px;
  	font-size: 20px;
+}
+
+.source-headerCon {
+  margin: 120px 77px 5px 25px;
+  font-size: 20px;
 }
 
 .source-header-lan {
@@ -106,4 +112,25 @@ input.active:invalid {
     background-color: antiquewhite;
     margin: auto;
     border: 1px solid #ddd;
+}
+
+th, td {
+    border: none;
+    text-align: left;
+    padding: 8px;
+}
+
+.Style {
+  overflow-y:auto;
+}
+
+.TranslateUI{
+ margin: 19px; 
+}
+
+.checkbox{
+    position: relative;
+    display: inline-table;
+    margin-bottom: 24px;
+    margin: 17px;
 }
