@@ -104,11 +104,11 @@ class DownloadTokens extends Component {
                 <lable className="control-label Concord2"> <strong> Language Name </strong> </lable>&nbsp;
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
                       {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
-                    </FormControl>
-                 <lable className="control-lable Concord3"> <strong> Version </strong> </lable>&nbsp;
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/> 
-                <lable className="control-lable Concord4"> <strong> Revision </strong> </lable>&nbsp;
-                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
+                    </FormControl>&nbsp;&nbsp;
+                 <lable className="control-lable Concord2"> <strong> Version </strong> </lable>&nbsp;
+                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/>&nbsp;&nbsp; 
+                <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>&nbsp;
+                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> &nbsp;&nbsp;
               </div>&nbsp;
               <div className="form-group">
                 <BookName />

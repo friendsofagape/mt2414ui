@@ -10,6 +10,7 @@ const booksName = [
 
 class BookName extends Component {
   componentWillMount = () => {
+    console.log(new Set())
     this.selectedCheckboxes = new Set();
   }
 
@@ -25,6 +26,7 @@ class BookName extends Component {
     formSubmitEvent.preventDefault();
 
     for (const checkbox of this.selectedCheckboxes) {
+      console.log(this.selectedCheckboxes);
       console.log(checkbox, 'Book is selected.');
     }
   }
@@ -45,12 +47,19 @@ class BookName extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-sm-12">
-
-            <form onSubmit={this.handleFormSubmit}>
+          <div className="col-sm-6">
+            <label className="bookHeader"><strong>Include Books</strong></label>
+            <form className="myCheck" onSubmit={this.handleFormSubmit}>
               {this.createCheckboxes()}
+            <button className="btn btn-default" type="submit">Save</button>
             </form>
-
+          </div>
+          <div className="col-sm-6">
+            <label className="bookHeader"><strong>Exclude Books</strong></label>
+            <form className="myCheck" onSubmit={this.handleFormSubmit}>
+              {this.createCheckboxes()}
+            <button className="btn btn-default" type="submit">Save</button>
+            </form>
           </div>
         </div>
       </div>
