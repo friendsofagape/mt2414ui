@@ -91,6 +91,8 @@ class DownloadTokens extends Component {
     return(
       <div className="container">
         <Header/ >
+        <div className="col-xs-12 col-md-6 col-md-offset-3">
+          <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon">Download Tokens & Concordances</h1>&nbsp;
             <div className={"alert " + this.state.uploaded === 'success'? 'alert-success' : 'invisible'}>
                 <strong>{this.state.message}</strong>
@@ -98,8 +100,6 @@ class DownloadTokens extends Component {
             <div className={"alert " + this.state.uploaded === 'failure'? 'alert-danger': 'invisible' }>
                 <strong>{this.state.message}</strong>
             </div>
-          <div className="row">
-            <form className="col-lg-4 uploader" encType="multipart/form-data">
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
@@ -120,10 +120,6 @@ class DownloadTokens extends Component {
                 </div>
               </div>
             </form>
-            <div className="col-lg-4">
-            </div>
-            <div className="col-lg-4">
-            </div>
           </div>
         <Footer/>
       </div>
