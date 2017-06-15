@@ -53,7 +53,6 @@ class GetConcordances extends Component {
 
 //To get concordances for a particular token
   getConcordances(e){
-    console.log("hello")
     e.preventDefault();
     var _this = this
     var data = {
