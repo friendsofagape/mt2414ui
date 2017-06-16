@@ -130,39 +130,17 @@ class SignupForm extends Component {
             </div>
               <div className="form-group">
                 <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
-                <input className="form-control" 
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  ref="email"
-                  required />
+                <input className="form-control" value={this.state.email} onChange={this.onChange} type="email"  name="email" placeholder="Email" ref="email" required />
                 <div className="error" id="emailError" />
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label" id="passwordLabel"> <strong> Password </strong> </lable>
-                <input className="form-control"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  ref="password"
-                  pattern=".{5,}"
-                  required />
+                <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="Password" ref="password" pattern=".{5,}" required />
                 <div className="error" id="passwordError" />
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label" id="passwordConfirmLabel"> <strong> Confirm Password </strong> </lable>
-                <input className="form-control" 
-                  value={this.state.passwordConfirm}
-                  onChange={this.onChange}
-                  type="password"
-                  name="passwordConfirm"
-                  placeholder="Confirm Password"
-                  ref="passwordConfirm"
-                  required />
+                <input className="form-control" value={this.state.passwordConfirm} onChange={this.onChange} type="password" name="passwordConfirm" placeholder="Confirm Password" ref="passwordConfirm" required />
                 <div className="error" id="passwordConfirmError" />
               </div>&nbsp;
           <div className="form-group">
