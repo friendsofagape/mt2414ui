@@ -142,7 +142,7 @@ th, td {
 }
 
 .Concord1{
-  margin: 4px 1px 1px 148px;
+  margin: 4px 1px 1px 49px;
 }
 
 .Concord2{
@@ -162,4 +162,15 @@ th, td {
 
 .bookHeader{
   margin: 17px 1px 1px 49px;
+}
+
+.form-inline .form-control {
+    display: inline-block;
+    width: 143px;
+    vertical-align: middle;
+}
+
+.msg{
+  margin: 6px 1px 1px 389px;
+  display: -webkit-inline-box;
 }
