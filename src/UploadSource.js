@@ -43,14 +43,11 @@ class UploadSource extends Component {
   file_base64(e){
     var files = document.getElementById('file-input').files
     var file = [];
-    for(var i = 0; i< files.length; i++) {
-      file += files[i];
-    }
     global.base64_arr = [];
     if(files.length > 0){
-        for (i = 0; i < files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
         var reader = new FileReader();
-        reader.readAsDataURL(files[i]);
+        reader.readAsDataURL(files[i] );
         reader.onload = (function (file) {
           return function (e) {
             var data = this.result;
@@ -67,7 +64,6 @@ class UploadSource extends Component {
   }
 
   uploadFile(e){
-
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['usfm']) === -1) {
@@ -77,31 +73,31 @@ class UploadSource extends Component {
     } 
 
     var _this = this
-    var data = { 
-            "language": this.state.language, "version": this.state.version, "content": global.base64_arr
-          }
-
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
-
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/sources",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
-      success: function (result) {
-         result = JSON.parse(result)
-        _this.setState({uploaded: result.success ? 'success' : ''})
-        _this.setState({message: result.message})
-
-      },
-      error: function (error) {
-       _this.setState({message: error.message, uploaded: 'failure'})
-
+    for(var i = 0; i < (global.base64_arr).length; i++){
+      var data = { 
+        "language": this.state.language, "version": this.state.version, "content": [global.base64_arr[i]]
       }
-    });   
-    
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+
+      $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/sources",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data),
+        method : "POST",
+        headers: {
+                  "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+        success: function (result) {
+           result = JSON.parse(result)
+          _this.setState({uploaded: result.success ? 'success' : ''})
+          _this.setState({message: result.message})
+
+        },
+        error: function (error) {
+         _this.setState({message: error.message, uploaded: 'failure'})
+
+        }
+      });   
+    }
   }
 
   render() {
