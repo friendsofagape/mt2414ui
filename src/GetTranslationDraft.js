@@ -76,7 +76,7 @@ class GetTranslationDraft extends Component {
     $.each(jsonData, function(key, value) {
       jsonData1 = jsonData[key]
       let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(jsonData1); 
-      let exportFileDefaultName = key + '.usfm';    
+      let exportFileDefaultName = key + '.usfm'; 
       let linkElement = document.createElement('a');
       linkElement.setAttribute('href', dataUri);
       linkElement.setAttribute('download', exportFileDefaultName);
