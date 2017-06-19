@@ -108,7 +108,6 @@ class DownloadTokens extends Component {
 // For Downloads Token words
   downloadTokenWords(e){
     e.preventDefault();
- 
     global.books = [];
     global.nbooks= [];
     for (const books of this.selectedCheckboxes1) {
@@ -156,7 +155,7 @@ class DownloadTokens extends Component {
         jsonData1 = key + '\t \t' + newLine  + '\n'
         dataUri1 = jsonData1 + dataUri1;
       });
-        let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(dataUri1);
+        let dataUri = 'data:text/xls;charset=utf-8,%EF%BB%BF'+ encodeURIComponent(dataUri1);
         let exportFileDefaultName = this.state.sourcelang + this.state.version + 'Tokens.xls';    
         let linkElement = document.createElement('a');
         linkElement.setAttribute('href', dataUri);
