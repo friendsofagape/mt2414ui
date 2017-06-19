@@ -107,8 +107,24 @@ input.active:invalid {
   color: blue;
 }
 
-.floatLeft { width: 41%; float: left; margin: 16px; background: azure; border: groove;}
-.floatRight {width: 43%; float: right; margin: 16px; background: azure; border: groove;}
+.floatLeft { 
+  width: 41%; 
+  float: left;
+  margin: 16px; 
+  background: azure; 
+  border: groove;
+  height: 391px;
+  overflow-x: scroll;
+}
+.floatRight {
+  width: 43%; 
+  float: right;
+  margin: 16px; 
+  background: azure; 
+  border: groove;
+  height: 391px;
+  overflow-x: scroll;
+}
 .container { overflow: hidden; }
 
 .tokenWords {
@@ -156,7 +172,7 @@ th, td {
 .myCheck {
     width: 89%;
     height: 231px;
-    overflow-y: scroll;
+    overflow-y: visible;
     margin: auto;
 }
 
@@ -173,4 +189,13 @@ th, td {
 .msg{
   margin: 6px 1px 1px 389px;
   display: -webkit-inline-box;
+}
+
+.progress1{
+  background: beige;
+}
+
+.progress2{
+  color: white;
+  background: green;
 }
