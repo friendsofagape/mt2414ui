@@ -151,12 +151,12 @@ class DownloadTokens extends Component {
       var jsonData1 = '';
        var dataUri1 = '';
       $.each(jsonData, function(key, value) {
-        var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
-        jsonData1 = key + '\t \t' + newLine  + '\n'
+        // var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
+        jsonData1 = key + '\n'
         dataUri1 = jsonData1 + dataUri1;
       });
-        let dataUri = 'data:text/xls;charset=utf-8,%EF%BB%BF'+ encodeURIComponent(dataUri1);
-        let exportFileDefaultName = this.state.sourcelang + this.state.version + 'Tokens.xls';    
+        let dataUri = 'data:text/csv;charset=utf-8,%EF%BB%BF'+ encodeURIComponent(dataUri1);
+        let exportFileDefaultName = this.state.sourcelang + this.state.version + 'Tokens.csv';    
         let linkElement = document.createElement('a');
         linkElement.setAttribute('href', dataUri);
         linkElement.setAttribute('download', exportFileDefaultName);
