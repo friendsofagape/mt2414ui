@@ -18,6 +18,9 @@ import SourceLanguages from './SourceLanguages';
 import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import saveAs from 'save-as'
+var JSZip = require("jszip");
+var zip = new JSZip();
 
 class GetTranslationDraft extends Component {
   constructor(props) {
@@ -71,17 +74,19 @@ class GetTranslationDraft extends Component {
   }
 
   exportToUSFMFile(jsonData) {
-    var jsonData1 = '';
+    var _this = this;
     jsonData = JSON.parse(jsonData)
+    let exportFileDefaultName = [];
     $.each(jsonData, function(key, value) {
-      jsonData1 = jsonData[key]
-      let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(jsonData1); 
-      let exportFileDefaultName = key + '.usfm'; 
-      let linkElement = document.createElement('a');
-      linkElement.setAttribute('href', dataUri);
-      linkElement.setAttribute('download', exportFileDefaultName);
-      linkElement.click();
+      zip.file(key + '.usfm', value)
+      exportFileDefaultName.push(key + '.usfm');
     });
+    zip.generateAsync({type:"blob"})
+      .then(function(content) {
+          saveAs(content, _this.state.targetlang + '.zip');
+      }, function(err){
+         _this.setState({uploaded: 'failure'}) 
+      })
   }
 
   render() {
