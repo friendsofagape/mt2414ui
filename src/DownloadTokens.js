@@ -155,8 +155,9 @@ class DownloadTokens extends Component {
         jsonData1 = key + '\n'
         dataUri1 = jsonData1 + dataUri1;
       });
-        let dataUri = 'data:text/xls;charset=utf-8,%EF%BB%BF'+ encodeURIComponent(dataUri1);
-        let exportFileDefaultName = this.state.sourcelang + this.state.version + 'Tokens.xls';    
+        let dataUri = 'data:text/xlsx;charset=utf-8,%EF%BB%BF'+ encodeURIComponent(dataUri1);
+        console.log(dataUri1)
+        let exportFileDefaultName = this.state.sourcelang + this.state.version + 'Tokens.xlsx';    
         let linkElement = document.createElement('a');
         linkElement.setAttribute('href', dataUri);
         linkElement.setAttribute('download', exportFileDefaultName);
