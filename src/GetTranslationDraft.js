@@ -139,7 +139,7 @@ class GetTranslationDraft extends Component {
                 </div>
                 <div className="modal" style={{display: 'none'}}>
                     <div className="center">
-                        <img src={require('./loader.gif')} />
+                        <img alt="" src={require('./loader.gif')} />
                     </div>
                 </div>
           </form>
