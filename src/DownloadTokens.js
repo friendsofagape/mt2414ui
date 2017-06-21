@@ -153,7 +153,8 @@ class DownloadTokens extends Component {
      var dataUri1 = '';
     $.each(jsonData, function(key, value) {
       // var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
-      jsonData1 = key + '\n'
+      jsonData1 = value + '\n'
+      console.log(jsonData1)
       dataUri1 = jsonData1 + dataUri1;
     });
     
