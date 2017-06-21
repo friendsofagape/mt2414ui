@@ -47,7 +47,6 @@ class GetTranslationDraft extends Component {
   }
 
   uploadFile(e){
-
     e.preventDefault();
     var _this = this
     var data = { 
@@ -61,10 +60,19 @@ class GetTranslationDraft extends Component {
       method : "POST",
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+      beforeSend: function () {
+          $(".modal").show();
+      },
+      complete: function () {
+          $(".modal").hide();
+      },
       success: function (result) {
-        _this.setState({uploaded: 'success'})
-        _this.exportToUSFMFile(result)
-
+         if (result.success !== false) {
+          _this.exportToUSFMFile(result)
+          _this.setState({message: result.message, uploaded: 'success'})
+        }else {
+          _this.setState({message: result.message, uploaded: 'failure'})
+          }
       },
       error: function (error) {
         _this.setState({uploaded: 'failure'}) 
@@ -127,7 +135,12 @@ class GetTranslationDraft extends Component {
                     </FormControl>
               </div>&nbsp;
                 <div className="form-group"> 
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}> Translate </button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}> Translate </button>&nbsp;&nbsp;&nbsp;
+                </div>
+                <div className="modal" style={{display: 'none'}}>
+                    <div className="center">
+                        <img src={require('./loader.gif')} />
+                    </div>
                 </div>
           </form>
           </div>
