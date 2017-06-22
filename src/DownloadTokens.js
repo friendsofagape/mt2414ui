@@ -18,7 +18,7 @@ import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import TargetLanguages from './TargetLanguages';
 import Checkbox from './Checkbox';
-import saveAs from 'save-as'
+import { saveAs } from 'file-saver';
 
 const booksName1 = [
   'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB',
