@@ -78,6 +78,8 @@ class UploadSource extends Component {
         "language": this.state.language, "version": this.state.version, "content": [global.base64_arr[i]]
       }
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+      var countSuccess = 0;
+      var countFailure = 0;
 
       $.ajax({
         url: GlobalURL["hostURL"]+"/v1/sources",
@@ -89,25 +91,20 @@ class UploadSource extends Component {
         success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false) {
-          _this.setState({message: result.message, uploaded: 'success'})
-          var elem = document.getElementById("myBar"); 
-          var width = 1;
-          var id = setInterval(frame, 500);
-            function frame() {
-              if (width >= 100) {
-                clearInterval(id);
-              } else {
-                width++; 
-                elem.style.width = width + '%'; 
-                elem.innerHTML = width * 1  + '%';
-              }
-          }
+            countSuccess++;
+          _this.setState({message: "Uploaded " + countSuccess + " files", uploaded: 'success'})
+          if((countSuccess + countFailure) === (global.base64_arr).length){  
+            _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+          }        
         }else {
+          countFailure++;
           _this.setState({message: result.message, uploaded: 'failure'})
-          }
+          if((countSuccess + countFailure) === (global.base64_arr).length){   
+             _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+          }          }
         }
       });
-     }   
+     } 
     }
 
   render() {
@@ -118,13 +115,10 @@ class UploadSource extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                  <div className="progress1">
-                    <div id="myBar" className="progress2" style={{width: '10px', height: '24px'}}>20%</div>
-                  </div>
                 <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-                <strong>{this.state.message}</strong>
+                <strong>No Changes. Existing source is already up-to-date</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
