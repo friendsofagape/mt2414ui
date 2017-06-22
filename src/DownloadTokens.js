@@ -18,7 +18,6 @@ import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import TargetLanguages from './TargetLanguages';
 import Checkbox from './Checkbox';
-import { saveAs } from 'file-saver';
 
 const booksName1 = [
   'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB',
@@ -155,19 +154,18 @@ class DownloadTokens extends Component {
 
   // for parse JSON to XLS
   parseJSONToXLS(jsonData) {
-    var jsonData1 = '';
-     var dataUri1 = '';
-    $.each(jsonData, function(key, value) {
-      // var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
-      jsonData1 = value + '\n'
-      dataUri1 = jsonData1 + dataUri1;
-    });
-    
-    var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), dataUri1], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8" 
-    });
-    let fileName = this.state.sourcelang + this.state.version + 'Tokens.xlsx';
-    saveAs(blob, fileName);
+  var array = [];
+  var str = '';
+  array = typeof jsonData !== 'object' ? JSON.parse(jsonData) : jsonData;
+      for (var i = 0; i < array.length; i++) {
+        str += array[i] + '\n';
+      }
+      str += '\r\n';
+      var a = document.createElement('a');
+      var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
+      a.href = window.URL.createObjectURL(blob);
+      a.download = this.state.sourcelang + this.state.version + 'Tokens.xls';
+      a.click();
   }
 
   render() {
@@ -202,13 +200,13 @@ class DownloadTokens extends Component {
                   <div className="row" >
                     <div className="col-sm-6">
                       <label className="bookHeader"><strong>Include Books</strong></label>
-                      <form className="myCheck" >
+                      <form className="myCheck1" >
                         {this.createCheckboxes1()}
                       </form>
                     </div>
                     <div className="col-sm-6">
                       <label className="bookHeader"><strong>Exclude Books</strong></label>
-                      <form className="myCheck">
+                      <form className="myCheck2">
                         {this.createCheckboxes2()}
                       </form>
                     </div>

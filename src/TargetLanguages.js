@@ -14,5 +14,6 @@ export default [
     {"value":"Oriya","code":"ori"},
     {"value":"Konkani","code":"kon"},
     {"value":"Kashmiri","code":"kas"},
-    {"value":"Kannada","code":"kan"}
+    {"value":"Kannada","code":"kan"},
+    {"value":"Khandesi","code":"kha"}
   ];

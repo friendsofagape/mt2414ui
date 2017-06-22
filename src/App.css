@@ -171,14 +171,21 @@ th, td {
   margin: 1px 1px 1px 436px;
 }
 
-.myCheck {
+.myCheck1 {
     width: 100%;
     height: 405px;
-    margin: -11px 1px 1px 21px;
+    margin: -11px 1px 1px -3px;
+    background: lightblue;
 }
 
+.myCheck2 {
+    width: 100%;
+    height: 405px;
+    margin: -11px 1px 1px -3px;
+    background: gainsboro;
+}
 .bookHeader{
-  margin: 0px 1px 1px 38px;
+  margin: 0px 1px 8px -2px;
 }
 
 .form-inline .form-control {
