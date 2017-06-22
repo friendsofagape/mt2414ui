@@ -214,7 +214,7 @@ class DownloadTokens extends Component {
                 </div>
               </div>
               <div className="form-group">
-                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token & Concordances</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
               </div>
               <div className="modal" style={{display: 'none'}}>
                 <div className="center">
