@@ -5,7 +5,7 @@
 .col-md-12 {
     width: 100%;
     background: aliceblue;
-    margin: 26px 1px 1px -28px;
+    margin: -40px 1px 1px -28px;
 }
 
 .col-md-8 {
@@ -15,8 +15,8 @@
 }
 
 .col-md-6 {
-  background-color: aliceblue;
   color: black;
+  margin-top: -50px;
 }
 
 .col-lg-4 {
@@ -44,7 +44,7 @@ input.active:invalid {
 }
 
 .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-    margin-left: -15px;
+    margin-left: -34px;
     color: white;
 }
 
@@ -59,7 +59,7 @@ input.active:invalid {
 }
 
 .signin-header {
-	margin: 99px 100px -19px;
+	margin: 98px 1px -6px 124px;
 	font-size: 22px;
 }
 
@@ -69,12 +69,12 @@ input.active:invalid {
 }
 
 .source-headerCon {
-  margin: 120px 77px 12px 384px;
+  margin: 120px 77px 12px 484px;
   font-size: 20px;
 }
 
 .source-header-lan {
-  margin: 137px 67px 18px 419px;
+  margin: 100px 67px 18px 419px;
   font-size: 25px;
 }
 
@@ -87,9 +87,11 @@ input.active:invalid {
   display: none;
 }
  
+
 .navbar-nav {
-  float: left;
-  margin: -11px 0px 0px -8px;
+    float: left;
+    margin: 1px 1px 1px 29px;
+    font-size: initial;
 }
 
 .textarea{
@@ -171,13 +173,12 @@ th, td {
 
 .myCheck {
     width: 100%;
-    height: 231px;
-    overflow-y: scroll;
-    margin: auto;
+    height: 405px;
+    margin: -11px 1px 1px 21px;
 }
 
 .bookHeader{
-  margin: 17px 1px 1px 49px;
+  margin: 0px 1px 1px 38px;
 }
 
 .form-inline .form-control {
@@ -230,4 +231,21 @@ th, td {
 {
   height: 128px;
   width: 128px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.customLink{
+  color: blue;
+}
+
+.getLangCustom{
+  margin: inherit;
+}
+
+.signinCustom{
+  margin: 78px 1px 1px 85px;
 }
