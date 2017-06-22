@@ -120,7 +120,7 @@ class SignupForm extends Component {
         <div className="container">
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onRegistration} className="col-md-8">
+        <form onSubmit={this.onRegistration} className="col-md-8 signinCustom">
           <h1 className="signup-header">Sign up</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>Sign-up Successfully !!</strong>
