@@ -97,7 +97,7 @@ class GetLanguages extends Component {
       <div className="container">
         <Header/ >
           <h1 className="source-header-lan">Available Source Texts</h1>&nbsp;
-          <form className="col-md-6 uploader" encType="multipart/form-data">
+          <form className="col-md-6 uploader getLangCustom" encType="multipart/form-data">
             <div className="container">
             <div className="floatLeft">
               <table className="table">
@@ -110,7 +110,7 @@ class GetLanguages extends Component {
                 <tbody>
                   {currentLanguages.map(function(data, index){
                     return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td>
-                            <td><a href="#" data-language={data[0]} data-version={data[1]} onClick={_this.getBooks.bind(this, {"language": data[0], "version": data[1]})}>Show Book</a></td>
+                            <td><a href="#" data-language={data[0]} data-version={data[1]} onClick={_this.getBooks.bind(this, {"language": data[0], "version": data[1]})} className="customLink">Show Book</a></td>
                             </tr>
                             );
                   })}

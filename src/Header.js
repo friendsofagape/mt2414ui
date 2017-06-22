@@ -13,13 +13,10 @@ class Header extends Component {
         <Navbar.Collapse>
           <Nav>
             <NavItem eventKey={1} ><Link to={'/signin'}>Sign in</Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/getlanguages'}>Get Languages</Link></NavItem>
-            <NavItem eventKey={3} ><Link to={'/uploadsource'}>Upload Source </Link></NavItem>
-            <NavItem eventKey={6} ><Link to={'/generateconcordance'}>Generate Concordance</Link></NavItem>
-            <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Tokens & Concordance</Link> </NavItem>
-            <NavItem eventKey={7} ><Link to={'/getconcordances'}>Get Concordances</Link> </NavItem>
+            <NavItem eventKey={2} ><Link to={'/getlanguages'}>Available Source Texts </Link></NavItem>
+            <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Tokens</Link> </NavItem>
             <NavItem eventKey={5} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
-            <NavItem eventKey={8} ><Link to={'/gettranslationdraft'}>Get Translation</Link> </NavItem>
+            <NavItem eventKey={8} ><Link to={'/gettranslationdraft'}>Translation Draft</Link> </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

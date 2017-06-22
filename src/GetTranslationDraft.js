@@ -18,6 +18,9 @@ import SourceLanguages from './SourceLanguages';
 import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import saveAs from 'save-as'
+var JSZip = require("jszip");
+var zip = new JSZip();
 
 class GetTranslationDraft extends Component {
   constructor(props) {
@@ -44,7 +47,6 @@ class GetTranslationDraft extends Component {
   }
 
   uploadFile(e){
-
     e.preventDefault();
     var _this = this
     var data = { 
@@ -58,10 +60,19 @@ class GetTranslationDraft extends Component {
       method : "POST",
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+      beforeSend: function () {
+          $(".modal").show();
+      },
+      complete: function () {
+          $(".modal").hide();
+      },
       success: function (result) {
-        _this.setState({uploaded: 'success'})
-        _this.exportToUSFMFile(result)
-
+         if (result.success !== false) {
+          _this.exportToUSFMFile(result)
+          _this.setState({message: result.message, uploaded: 'success'})
+        }else {
+          _this.setState({message: result.message, uploaded: 'failure'})
+          }
       },
       error: function (error) {
         _this.setState({uploaded: 'failure'}) 
@@ -71,17 +82,19 @@ class GetTranslationDraft extends Component {
   }
 
   exportToUSFMFile(jsonData) {
-    var jsonData1 = '';
+    var _this = this;
     jsonData = JSON.parse(jsonData)
+    let exportFileDefaultName = [];
     $.each(jsonData, function(key, value) {
-      jsonData1 = jsonData[key]
-      let dataUri = 'data:text/csv;charset=utf-8,'+ encodeURIComponent(jsonData1); 
-      let exportFileDefaultName = key + '.usfm';    
-      let linkElement = document.createElement('a');
-      linkElement.setAttribute('href', dataUri);
-      linkElement.setAttribute('download', exportFileDefaultName);
-      linkElement.click();
+      zip.file(key + '.usfm', value)
+      exportFileDefaultName.push(key + '.usfm');
     });
+    zip.generateAsync({type:"blob"})
+      .then(function(content) {
+          saveAs(content, _this.state.targetlang + '.zip');
+      }, function(err){
+         _this.setState({uploaded: 'failure'}) 
+      })
   }
 
   render() {
@@ -122,7 +135,12 @@ class GetTranslationDraft extends Component {
                     </FormControl>
               </div>&nbsp;
                 <div className="form-group"> 
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}> Translate </button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}> Translate </button>&nbsp;&nbsp;&nbsp;
+                </div>
+                <div className="modal" style={{display: 'none'}}>
+                    <div className="center">
+                        <img alt="" src={require('./loader.gif')} />
+                    </div>
                 </div>
           </form>
           </div>

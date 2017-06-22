@@ -108,7 +108,7 @@ import GlobalURL from './GlobalURL';
         <div className="container">
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 ">
+        <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 signinCustom">
           <h1 className="signin-header">Login</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
@@ -145,8 +145,9 @@ import GlobalURL from './GlobalURL';
             <button className="btn btn-success"> {<span className='glyphicon glyphicon-user'></span>}&nbsp; Sign in </button>
           </div>
           <div className="signlink">
-            Create a new account ? &nbsp; &nbsp;<Link to={'/signup'}>Click here !!</Link>
-          </div>
+            Create a new account ? &nbsp; &nbsp;<Link to={'/signup'} className="customLink">Click here !!</Link>
+          </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
         </form>
         </div>
         <Footer />

@@ -18,6 +18,7 @@ import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import TargetLanguages from './TargetLanguages';
 import Checkbox from './Checkbox';
+import saveAs from 'save-as'
 
 const booksName1 = [
   'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB',
@@ -131,6 +132,12 @@ class DownloadTokens extends Component {
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
       },
+       beforeSend: function () {
+          $(".modal").show();
+      },
+      complete: function () {
+          $(".modal").hide();
+      },
       success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false){
@@ -148,19 +155,19 @@ class DownloadTokens extends Component {
 
   // for parse JSON to XLS
   parseJSONToXLS(jsonData) {
-      var jsonData1 = '';
-       var dataUri1 = '';
-      $.each(jsonData, function(key, value) {
-        // var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
-        jsonData1 = key + '\n'
-        dataUri1 = jsonData1 + dataUri1;
-      });
-        let dataUri = 'data:text/xls;charset=utf-8,%EF%BB%BF'+ encodeURIComponent(dataUri1);
-        let exportFileDefaultName = this.state.sourcelang + this.state.version + 'Tokens.xls';    
-        let linkElement = document.createElement('a');
-        linkElement.setAttribute('href', dataUri);
-        linkElement.setAttribute('download', exportFileDefaultName);
-        linkElement.click();
+    var jsonData1 = '';
+     var dataUri1 = '';
+    $.each(jsonData, function(key, value) {
+      // var newLine = JSON.stringify(JSON.parse(JSON.stringify(jsonData[key]))).replace(/(?:\\[rn]|[\r\n]+)+/g, '\n');
+      jsonData1 = value + '\n'
+      dataUri1 = jsonData1 + dataUri1;
+    });
+    
+    var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), dataUri1], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8" 
+    });
+    let fileName = this.state.sourcelang + this.state.version + 'Tokens.xlsx';
+    saveAs(blob, fileName);
   }
 
   render() {
@@ -169,7 +176,7 @@ class DownloadTokens extends Component {
         <Header/ >
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
-            <h1 className="source-headerCon">Download Tokens & Concordances</h1>&nbsp;
+            <h1 className="source-headerCon">Download Tokens</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
@@ -209,8 +216,11 @@ class DownloadTokens extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token & Concordances</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token & Concordances</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+              <div className="modal" style={{display: 'none'}}>
+                <div className="center">
+                    <img alt="" src={require('./loader.gif')} />
                 </div>
               </div>
             </form>

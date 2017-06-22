@@ -87,18 +87,28 @@ class UploadSource extends Component {
         headers: {
                   "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
         success: function (result) {
-           result = JSON.parse(result)
-          _this.setState({uploaded: result.success ? 'success' : ''})
-          _this.setState({message: result.message})
-
-        },
-        error: function (error) {
-         _this.setState({message: error.message, uploaded: 'failure'})
-
+        result = JSON.parse(result)
+        if (result.success !== false) {
+          _this.setState({message: result.message, uploaded: 'success'})
+          var elem = document.getElementById("myBar"); 
+          var width = 1;
+          var id = setInterval(frame, 500);
+            function frame() {
+              if (width >= 100) {
+                clearInterval(id);
+              } else {
+                width++; 
+                elem.style.width = width + '%'; 
+                elem.innerHTML = width * 1  + '%';
+              }
+          }
+        }else {
+          _this.setState({message: result.message, uploaded: 'failure'})
+          }
         }
-      });   
+      });
+     }   
     }
-  }
 
   render() {
     return(
@@ -108,6 +118,9 @@ class UploadSource extends Component {
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+                  <div className="progress1">
+                    <div id="myBar" className="progress2" style={{width: '10px', height: '24px'}}>20%</div>
+                  </div>
                 <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
