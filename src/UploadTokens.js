@@ -88,6 +88,12 @@ class UploadTokens extends Component {
           method : "POST",
           headers: {
                     "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+          beforeSend: function () {
+            $(".modal").show();
+          },
+          complete: function () {
+            $(".modal").hide();
+          },
           success: function (result) {
              result = JSON.parse(result)
             _this.setState({uploaded: result.success ? 'success' : ''})
@@ -145,8 +151,13 @@ class UploadTokens extends Component {
                   <input id="file-input" type="file" className="fileInput" multiple />
                 </div>&nbsp;
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                   </div>
+                  <div className="modal" style={{display: 'none'}}>
+                    <div className="center">
+                        <img alt="" src={require('./loader.gif')} />
+                    </div>
+                </div>
               </div>
           </form>
           </div>
