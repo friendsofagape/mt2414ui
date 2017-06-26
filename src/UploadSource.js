@@ -20,7 +20,6 @@ import GlobalURL from './GlobalURL';
 class UploadSource extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       language:'tam',
       version: '',
@@ -87,7 +86,8 @@ class UploadSource extends Component {
         data : JSON.stringify(data),
         method : "POST",
         headers: {
-                  "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+                  "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
+        },
         success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false) {
@@ -101,7 +101,8 @@ class UploadSource extends Component {
           _this.setState({message: result.message, uploaded: 'failure'})
           if((countSuccess + countFailure) === (global.base64_arr).length){   
              _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
-          }          }
+          } 
+        }
         }
       });
      } 
