@@ -138,7 +138,6 @@ class DownloadTokens extends Component {
           $(".modal").hide();
       },
       success: function (result) {
-        // console.log(result);
         result = JSON.parse(result)
         if (result.success !== false){
          _this.parseJSONToXLS(result);
