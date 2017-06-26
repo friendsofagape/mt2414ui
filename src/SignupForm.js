@@ -12,9 +12,29 @@
 import React, { Component } from 'react';
 import './App.css';
 import $ from 'jquery';
-import Header from './Header';
+import { Link } from 'react-router';
 import Footer from './Footer';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import GlobalURL from './GlobalURL';
+
+class Header extends Component {
+  render() {
+    return (
+        <Navbar inverse collapseOnSelect fixedTop >
+        <Navbar.Header><Navbar.Brand>
+            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
+          </Navbar.Brand><Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse >
+          <Nav className="customHeader">
+            <NavItem eventKey={1} ><Link to={'/signup'}>Sign up</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
+}
 
 class SignupForm extends Component {
     constructor(props) {
@@ -105,7 +125,7 @@ class SignupForm extends Component {
           },
            method : "POST",
          success: function(result) {
-            window.location.href = "./signin";
+            window.location.href = "./homepage";
             _this.setState({uploaded:'success'})
 
            },
@@ -120,7 +140,7 @@ class SignupForm extends Component {
         <div className="container">
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onRegistration} className="col-md-8 signinCustom">
+        <form onSubmit={this.onRegistration} className="col-md-8 signupCustom">
           <h1 className="signup-header">Sign up</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>Sign-up Successfully !!</strong>
@@ -147,7 +167,7 @@ class SignupForm extends Component {
             <button className="btn btn-success" > Sign up </button>
           </div>
         </form>
-        </div>
+          </div>
          <Footer />
         </div>
       );

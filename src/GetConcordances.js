@@ -21,7 +21,7 @@ import GlobalURL from './GlobalURL';
 class GetConcordances extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       language:'tam',
       version: '',

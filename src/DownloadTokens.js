@@ -37,7 +37,7 @@ const booksName2 = [
 class DownloadTokens extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       sourcelang:'tam',
       version: '',
@@ -74,7 +74,6 @@ class DownloadTokens extends Component {
       this.selectedCheckboxes2.add(label);
     }
   }
-
 
   createCheckbox1 = label => (
     <Checkbox
@@ -131,7 +130,8 @@ class DownloadTokens extends Component {
       headers: {
                 "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
       },
-       beforeSend: function () {
+
+      beforeSend: function () {
           $(".modal").show();
       },
       complete: function () {
@@ -154,18 +154,18 @@ class DownloadTokens extends Component {
 
   // for parse JSON to XLS
   parseJSONToXLS(jsonData) {
-  var array = [];
-  var str = '';
-  array = typeof jsonData !== 'object' ? JSON.parse(jsonData) : jsonData;
-      for (var i = 0; i < array.length; i++) {
-        str += array[i] + '\n';
-      }
-      str += '\r\n';
-      var a = document.createElement('a');
-      var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
-      a.href = window.URL.createObjectURL(blob);
-      a.download = this.state.sourcelang + this.state.version + 'Tokens.xls';
-      a.click();
+    var array = [];
+    var str = '';
+    array = typeof jsonData !== 'object' ? JSON.parse(jsonData) : jsonData;
+        for (var i = 0; i < array.length; i++) {
+          str += array[i] + '\n';
+        }
+        str += '\r\n';
+        var a = document.createElement('a');
+        var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
+        a.href = window.URL.createObjectURL(blob);
+        a.download = this.state.sourcelang + this.state.version + 'Tokens.xls';
+        a.click();
   }
 
   render() {

@@ -20,7 +20,6 @@ import GlobalURL from './GlobalURL';
 class GenerateConcordance extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       language: 'tam',
       version: '',
