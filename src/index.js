@@ -12,7 +12,6 @@ import GenerateConcordance from './GenerateConcordance';
 import GetTranslationDraft from './GetTranslationDraft';
 import GetLanguages from './GetLanguages';
 import UploadTokens from './UploadTokens';
-import Testing from './Testing';
 import HomePage from './HomePage';
 
 const store = createStore(
@@ -37,7 +36,6 @@ ReactDOM.render(
             <Route path="/generateconcordance" component={GenerateConcordance}/>
             <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
             <Route path="/signup" component={SignupForm}/>
-            <Route path="/testing" component={Testing}/>
         </Router>
           ) : (
            <Router history={browserHistory}>
