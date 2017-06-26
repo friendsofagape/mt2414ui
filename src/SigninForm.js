@@ -11,9 +11,28 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
 import $ from 'jquery';
-import Header from './Header';
 import Footer from './Footer';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import GlobalURL from './GlobalURL';
+
+  class Header extends Component {
+    render() {
+      return (
+          <Navbar inverse collapseOnSelect fixedTop >
+          <Navbar.Header><Navbar.Brand>
+              <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
+            </Navbar.Brand><Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse >
+            <Nav className="customHeader">
+              <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
+              <NavItem eventKey={2} ><Link to={'/signup'}>Sign up</Link></NavItem>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      );
+    }
+  }
 
   class SigninForm extends Component {
     constructor(props) {
@@ -94,7 +113,12 @@ import GlobalURL from './GlobalURL';
          if (result.success !== false) {
           var auth = JSON.stringify(result);
           window.localStorage.setItem('access_token', auth)
-          window.location.href = "./getlanguages";
+          let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+          if (!accessToken.access_token) {
+            window.location.href = "./homepage";
+          } else {
+            window.location.href = "./getlanguages";
+          }
         }
         else {
           _this.setState({message: result.message, uploaded: 'failure'})
