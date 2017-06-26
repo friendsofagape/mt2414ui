@@ -21,7 +21,6 @@ import GlobalURL from './GlobalURL';
 class UploadTokens extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       language:'tam',
       version: '',
