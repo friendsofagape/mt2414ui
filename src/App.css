@@ -54,12 +54,12 @@ input.active:invalid {
 
 
 .signup-header {
-  margin: 90px 100px -5px;
+  margin: 58px 1px -6px 124px;
   font-size: 22px;
 }
 
 .signin-header {
-	margin: 98px 1px -6px 124px;
+	margin: 58px 1px -6px 124px;
 	font-size: 22px;
 }
 
@@ -254,5 +254,44 @@ a {
 }
 
 .signinCustom{
-  margin: 78px 1px 1px 85px;
+  margin: 110px 1px 1px 482px;
+  background-color: aquamarine;
+}
+
+.signupCustom {
+    margin: 151px 1px 1px 107px;
+    background-color: aquamarine;
+}
+
+.form_bg {
+  background-color:#eee;
+  color:#666;
+  padding:20px;
+  border-radius:10px;
+  position: absolute;
+  border:1px solid #fff;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 320px;
+  height: 280px;
+}
+
+.customHeader{
+  margin: 1px 1px 1px 598px; 
+}
+
+.jumbotron {
+    margin-bottom: -566px;
+    color: inherit;
+    background-color: #EEC;
+    margin-top: 73px;
+    width: 68%;
+    margin-left: -33px;
+}
+
+.customRow{
+  margin: 16px 1px 68px 1px;
 }
