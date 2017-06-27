@@ -9,7 +9,7 @@ class Header extends Component {
     return (
         <Navbar inverse collapseOnSelect fixedTop >
         <Navbar.Header><Navbar.Brand>
-            <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT: Machine Translation Engine</a>
+            <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >
@@ -32,7 +32,7 @@ class HomePage extends Component {
         <div className="container">
           <div className="row customRow">
             <div className="col-sm-8 jumbotron">
-            <h3>&nbsp;&nbsp;&nbsp; Welcome to Autographa MT Machine Translation Engine </h3>
+            <h3>&nbsp;&nbsp;&nbsp; Welcome to AutographaMT Machine Translation Engine </h3>
             <img alt=""  style={{width: '102%', height: '380px'}} src={require('./Bible.jpg')} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
           <SigninForm />
