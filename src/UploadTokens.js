@@ -22,10 +22,10 @@ class UploadTokens extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language:'tam',
+      language:'Tamil',
       version: '',
       revision: '',
-      targetlang: 'tam',
+      targetlang: 'Malayalam',
       tokenwords: {},
       uploaded:'Uploading',
       message: ''
@@ -118,7 +118,7 @@ class UploadTokens extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header">Upload Tokens</h1>&nbsp;
+            <h1 className="source-header2">Upload Tokens</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
@@ -128,7 +128,7 @@ class UploadTokens extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Source Language </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {Language.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
+                      {Language.map((language, i) => <option  key={i} value={language.value}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
@@ -142,7 +142,7 @@ class UploadTokens extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Target Language </strong> </lable>
                     <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
+                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.value}>{targetlang.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
