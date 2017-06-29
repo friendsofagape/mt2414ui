@@ -19,28 +19,115 @@ import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import saveAs from 'save-as'
+import Checkbox from './Checkbox';
+import booksName1 from './BookName';
+import booksName2 from './BookName';
 var JSZip = require("jszip");
 var zip = new JSZip();
+
+var tabData = [
+  { name: 'Select Books', isActive: true }
+];
+
+class Tabs extends Component {
+  render() {
+    return (
+      <ul className="nav nav-tabs customTab">
+        {tabData.map(function(tab, i){
+          return (
+            <Tab key={i} data={tab} isActive={this.props.activeTab === tab} handleClick={this.props.changeTab.bind(this,tab)} />
+          );
+        }.bind(this))}      
+      </ul>
+    );
+  }
+}
+
+class Tab extends Component{
+  render() {
+    return (
+      <li onClick={this.props.handleClick} className={this.props.isActive ? "active" : null}>
+        <a href="#">{this.props.data.name}</a>
+      </li>
+    );
+  }
+}
 
 class GetTranslationDraft extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      sourcelang:'tam',
-      targetlang:'tam',
+      sourcelang:'Tamil',
+      targetlang:'Malayalam',
       version: '',
       revision: '',
       bookName: '',
-      uploaded:'Uploading'
+      uploaded:'Uploading',
+      activeTab: tabData[0],
+      activeTabValue: '',
+      dataDisplay: 'Select Books'
     }
 
       // Upload file specific callback handlers
       this.uploadFile = this.uploadFile.bind(this);
       this.onSelect = this.onSelect.bind(this);
       this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
+      this.handleClick = this.handleClick.bind(this);
+
   }
   
+    handleClick(tab){
+    console.log(tab)  
+    this.setState({
+      activeTab: tab,
+      dataDisplay: tab.name
+    });
+  }
+
+  componentWillMount = () => {
+    this.selectedCheckboxes1 = new Set();
+    this.selectedCheckboxes2 = new Set();
+  }
+
+  toggleCheckbox1 = label => {
+    if (this.selectedCheckboxes1.has(label)) {
+      this.selectedCheckboxes1.delete(label);
+    } else {
+      this.selectedCheckboxes1.add(label);
+    }
+  }
+
+  toggleCheckbox2 = label => {
+    if (this.selectedCheckboxes2.has(label)) {
+      this.selectedCheckboxes2.delete(label);
+    } else {
+      this.selectedCheckboxes2.add(label);
+    }
+  }
+
+  createCheckboxes1 = (obj) => (
+    Object.keys(booksName1[0]).map(function(v, i){
+
+      return (<Checkbox
+            label={booksName1[0][v]}
+            handleCheckboxChange={obj.toggleCheckbox1}
+            bookCode={v}
+    />)
+    })
+
+  )
+
+  createCheckboxes2 = (obj) => (
+    Object.keys(booksName2[0]).map(function(v, i){
+      return (<Checkbox
+            label={booksName2[0][v]}
+            handleCheckboxChange={obj.toggleCheckbox2}
+            bookCode={v}
+    />)
+    })
+
+  )
+
   onSelect(e) {
     this.setState({
       [e.target.name]: e.target.value });
@@ -101,41 +188,37 @@ class GetTranslationDraft extends Component {
     return(
       <div className="container">
         <Header/ >
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header">Translation Draft</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+        <div className="row">
+          <form className="col-md-12 uploader" encType="multipart/form-data">
+            <h1 className="source-headerCon">Download Translation Draft</h1>&nbsp;
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>Translation Done Successfully !!!</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
                 <strong>Failed to Translate Sources !!!</strong>
             </div>
-              <div className="form-group">
-                <lable className="control-label"> <strong> Source Language </strong> </lable>
+             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
+                <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                     <FormControl value={this.state.sourcelang} onChange={this.onSelect} name="sourcelang" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((sourcelang, i) => <option  key={i} value={sourcelang.code}>{sourcelang.value}</option>)}
-                    </FormControl>
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Ethnologue Code </strong> </lable>
-                      <input value={this.state.sourcelang} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Revision </strong> </lable>
-                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-label"> <strong> Target Language </strong> </lable>
+                      {SourceLanguages.map((sourcelang, i) => <option  key={i} value={sourcelang.value}>{sourcelang.value}</option>)}
+                    </FormControl>&nbsp;&nbsp;
+                 <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
+                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/>&nbsp; 
+                <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
+                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> &nbsp;
+                <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
                     <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
-                    </FormControl>
+                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.value}>{targetlang.value}</option>)}
+                    </FormControl>&nbsp;&nbsp;
               </div>&nbsp;
+              <div>
+                <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                  <div className="exclude2">{this.createCheckboxes1(this)}</div>
+                </section>
+              </div>
                 <div className="form-group"> 
-                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}> Translate </button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.uploadFile}><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
                 </div>
                 <div className="modal" style={{display: 'none'}}>
                     <div className="center">
