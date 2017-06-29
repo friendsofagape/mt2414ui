@@ -72,7 +72,6 @@ class UploadSource extends Component {
     } 
 
     var _this = this
-    console.log(this.state.language)
     for(var i = 0; i < (global.base64_arr).length; i++){
       var data = { 
         "language": this.state.language, "version": this.state.version, "content": [global.base64_arr[i]]

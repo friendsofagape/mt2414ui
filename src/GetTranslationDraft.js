@@ -77,7 +77,6 @@ class GetTranslationDraft extends Component {
   }
   
     handleClick(tab){
-    console.log(tab)  
     this.setState({
       activeTab: tab,
       dataDisplay: tab.name
