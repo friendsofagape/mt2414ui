@@ -21,7 +21,7 @@ class UploadSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language:'tam',
+      language:'Tamil',
       version: '',
       base64_arr: [],
       uploaded:'Uploading',
@@ -72,6 +72,7 @@ class UploadSource extends Component {
     } 
 
     var _this = this
+    console.log(this.state.language)
     for(var i = 0; i < (global.base64_arr).length; i++){
       var data = { 
         "language": this.state.language, "version": this.state.version, "content": [global.base64_arr[i]]
@@ -88,6 +89,7 @@ class UploadSource extends Component {
         headers: {
                   "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
         },
+        // eslint-disable-next-line
         success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false) {
@@ -124,12 +126,8 @@ class UploadSource extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
+                      {SourceLanguages.map((language, i) => <option  key={i} value={language.value}>{language.value}</option>)}
                     </FormControl>
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Ethnologue Code </strong> </lable>
-                      <input value={this.state.language} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
