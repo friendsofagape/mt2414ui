@@ -44,8 +44,8 @@ input.active:invalid {
 }
 
 .navbar-fixed-bottom, .navbar-fixed-top, .navbar-static-top {
-    border-radius: 0;
-    background: black;
+  border-radius: 0;
+  background: black;
 }
 
 .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
@@ -112,12 +112,11 @@ a {
     text-decoration: none;
 }
 
-a:hover
-  {
-    color: gray;
-    text-decoration:none;
-    cursor:pointer;
-   }
+a:hover{
+  color: gray;
+  text-decoration:none;
+  cursor:pointer;
+}
 
 .textarea{
   min-height: 150px;
@@ -143,6 +142,7 @@ a:hover
   height: 391px;
   overflow-x: scroll;
 }
+
 .floatRight {
   width: 43%; 
   float: right;
@@ -152,6 +152,7 @@ a:hover
   height: 391px;
   overflow-x: scroll;
 }
+
 .container { overflow: hidden; }
 
 .tokenWords {
@@ -209,6 +210,7 @@ th, td {
   margin: -11px 1px 1px -3px;
   background: gainsboro;
 }
+
 .bookHeader{
   margin: 0px 1px 8px -2px;
 }
@@ -233,8 +235,7 @@ th, td {
   background: green;
 }
 
-.modal
-{
+.modal{
   position: fixed;
   z-index: 999;
   height: 100%;
@@ -247,8 +248,7 @@ th, td {
   -moz-opacity: 0.8;
 }
 
-.center
-{
+.center{
   z-index: 1000;
   margin: 300px auto;
   padding: 10px;
@@ -259,15 +259,14 @@ th, td {
   -moz-opacity: 1;
 }
 
-.center img
-{
+.center img{
   height: 128px;
   width: 128px;
 }
 
-a {
-    color: white;
-    text-decoration: none;
+a{
+  color: white;
+  text-decoration: none;
 }
 
 .customLink{
@@ -328,8 +327,8 @@ ul.nav.nav-tabs {
 }
 
 ul.nav.nav-tabs.customTab {
-    margin: 28px 514px 0px 500px;
-    background: aliceblue;
+  margin: 28px 514px 0px 500px;
+  background: aliceblue;
 }
 
 section {
