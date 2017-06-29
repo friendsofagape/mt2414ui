@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 
 class Checkbox extends Component {
   state = {
-    isChecked: false,
+    isChecked: false
   }
 
   toggleCheckboxChange = () => {
-    const { handleCheckboxChange, label } = this.props;
+    const { handleCheckboxChange, bookCode } = this.props;
 
     this.setState(({ isChecked }) => (
       {
@@ -14,17 +14,16 @@ class Checkbox extends Component {
       }
     ));
     
-    handleCheckboxChange(label);
+    handleCheckboxChange(bookCode);
   }
 
   render() {
-    const { label } = this.props;
+    const { label, bookCode } = this.props;
     const { isChecked } = this.state;
-
     return (
-      <div className="checkbox">
+      <div className="checkbox" >
         <label>
-          <input type="checkbox" value={label} checked={isChecked} onChange={this.toggleCheckboxChange} />
+          <input type="checkbox" value={bookCode} checked={isChecked} onChange={this.toggleCheckboxChange} />
           {label}
         </label>
       </div>
