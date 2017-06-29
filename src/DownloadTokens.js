@@ -18,42 +18,72 @@ import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import TargetLanguages from './TargetLanguages';
 import Checkbox from './Checkbox';
+import booksName1 from './BookName';
+import booksName2 from './BookName';
 
-const booksName1 = [
-  'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB',
-  'PSA', 'PRO', 'ECC', 'SNG', 'ISA', 'JER', 'LAM', 'EZK', 'DAN', 'HOS', 'JOL', 'AMO', 'OBA', 'JON', 'MIC', 'NAM', 'HAB', 'ZEP',
-  'HAG', 'ZEC', 'MAL', 'MAT', 'MRK', 'LUK', 'JHN', 'ACT', 'ROM', '1CO', '2CO', 'GAL', 'EPH', 'PHP', 'COL', '1TH', '2TH', '1TI',
-  '2TI', 'TIT', 'PHM', 'HEB', 'JAS', '1PE', '2PE', '1JN', '2JN', '3JN', 'JUD', 'REV'
+
+var tabData = [
+  { name: 'Include Books', isActive: true },
+  { name: 'Exclude Books', isActive: false }
 ];
 
-const booksName2 = [
-  'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI', '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB',
-  'PSA', 'PRO', 'ECC', 'SNG', 'ISA', 'JER', 'LAM', 'EZK', 'DAN', 'HOS', 'JOL', 'AMO', 'OBA', 'JON', 'MIC', 'NAM', 'HAB', 'ZEP',
-  'HAG', 'ZEC', 'MAL', 'MAT', 'MRK', 'LUK', 'JHN', 'ACT', 'ROM', '1CO', '2CO', 'GAL', 'EPH', 'PHP', 'COL', '1TH', '2TH', '1TI',
-  '2TI', 'TIT', 'PHM', 'HEB', 'JAS', '1PE', '2PE', '1JN', '2JN', '3JN', 'JUD', 'REV'
-];
+class Tabs extends Component {
+  render() {
+    return (
+      <ul className="nav nav-tabs">
+        {tabData.map(function(tab, i){
+          return (
+            <Tab key={i} data={tab} isActive={this.props.activeTab === tab} handleClick={this.props.changeTab.bind(this,tab)} />
+          );
+        }.bind(this))}      
+      </ul>
+    );
+  }
+}
 
+class Tab extends Component{
+  render() {
+    return (
+      <li onClick={this.props.handleClick} className={this.props.isActive ? "active" : null}>
+        <a href="#">{this.props.data.name}</a>
+      </li>
+    );
+  }
+}
 
 class DownloadTokens extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      sourcelang:'tam',
+      sourcelang:'Tamil',
+      bookName: '',
       version: '',
       revision: '',
-      targetlang:'mal',
+      targetlang:'Malayalam',
       books: [],
       nbooks: [],
       uploaded:'uploadingStatus',
-      message: ''
+      message: '',
+      activeTab: tabData[0],
+      activeTabValue: '',
+      dataDisplay: 'Include Books'
     }
       // Upload file specific callback handlers
       this.onSelect = this.onSelect.bind(this);
       this.downloadTokenWords = this.downloadTokenWords.bind(this);
       this.parseJSONToXLS = this.parseJSONToXLS.bind(this);
+      this.handleClick = this.handleClick.bind(this);
   }
-  
+
+  handleClick(tab){
+    console.log(tab)  
+    this.setState({
+      activeTab: tab,
+      dataDisplay: tab.name
+    });
+  }
+
   componentWillMount = () => {
     this.selectedCheckboxes1 = new Set();
     this.selectedCheckboxes2 = new Set();
@@ -75,28 +105,27 @@ class DownloadTokens extends Component {
     }
   }
 
-  createCheckbox1 = label => (
-    <Checkbox
-            label={label}
-            handleCheckboxChange={this.toggleCheckbox1}
-            key={label}
-    />
+  createCheckboxes1 = (obj) => (
+    Object.keys(booksName1[0]).map(function(v, i){
+
+      return (<Checkbox
+            label={booksName1[0][v]}
+            handleCheckboxChange={obj.toggleCheckbox1}
+            bookCode={v}
+    />)
+    })
+
   )
 
-  createCheckbox2 = label => (
-    <Checkbox
-            label={label}
-            handleCheckboxChange={this.toggleCheckbox2}
-            key={label}
-    />
-  )
+  createCheckboxes2 = (obj) => (
+    Object.keys(booksName2[0]).map(function(v, i){
+      return (<Checkbox
+            label={booksName2[0][v]}
+            handleCheckboxChange={obj.toggleCheckbox2}
+            bookCode={v}
+    />)
+    })
 
-  createCheckboxes1 = () => (
-    booksName1.map(this.createCheckbox1)
-  )
-
-  createCheckboxes2 = () => (
-    booksName2.map(this.createCheckbox2)
   )
 
   onSelect(e) {
@@ -109,10 +138,14 @@ class DownloadTokens extends Component {
     e.preventDefault();
     global.books = [];
     global.nbooks= [];
-    for (const books of this.selectedCheckboxes1) {
+
+    // eslint-disable-next-line
+    for (const books of this.selectedCheckboxes1) {  
       global.books = Array.from(this.selectedCheckboxes1);
     }
-    for (const nbooks of this.selectedCheckboxes2) {
+
+    // eslint-disable-next-line
+    for (const nbooks of this.selectedCheckboxes2) { 
       global.nbooks = Array.from(this.selectedCheckboxes2);
     }
 
@@ -174,7 +207,7 @@ class DownloadTokens extends Component {
         <Header/ >
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
-            <h1 className="source-headerCon">Download Tokens</h1>&nbsp;
+            <h1 className="source-headerCon1">Download Wordlist</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
@@ -184,7 +217,7 @@ class DownloadTokens extends Component {
               <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
                 <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                     <FormControl value={this.state.sourcelang} onChange={this.onSelect} name="sourcelang" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((sourcelang, i) => <option  key={i} value={sourcelang.code}>{sourcelang.value}</option>)}
+                      {SourceLanguages.map((sourcelang, i) => <option  key={i} value={sourcelang.value}>{sourcelang.value}</option>)}
                     </FormControl>&nbsp;&nbsp;
                  <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                     <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/>&nbsp; 
@@ -192,29 +225,22 @@ class DownloadTokens extends Component {
                     <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> &nbsp;
                 <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
                     <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
+                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.value}>{targetlang.value}</option>)}
                     </FormControl>&nbsp;&nbsp;
               </div>&nbsp;
-              <div className="form-group">
-                <div className="container">
-                  <div className="row" >
-                    <div className="col-sm-6">
-                      <label className="bookHeader"><strong>Include Books</strong></label>
-                      <form className="myCheck1" >
-                        {this.createCheckboxes1()}
-                      </form>
-                    </div>
-                    <div className="col-sm-6">
-                      <label className="bookHeader"><strong>Exclude Books</strong></label>
-                      <form className="myCheck2">
-                        {this.createCheckboxes2()}
-                      </form>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                  <h4 className="panel-heading">Include Books</h4>
+                  <div className="exclude1">{this.createCheckboxes1(this)}</div>
+                </section>
+                <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
+                  <h4 className="panel-heading">Exclude Books</h4>
+                  <div className="exclude1">{this.createCheckboxes2(this)}</div>
+                </section>
               </div>
               <div className="form-group">
-                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Token</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
               </div>
               <div className="modal" style={{display: 'none'}}>
                 <div className="center">
