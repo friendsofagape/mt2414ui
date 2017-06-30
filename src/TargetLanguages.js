@@ -15,5 +15,18 @@ export default [
     {"value":"Konkani","code":"kon"},
     {"value":"Kashmiri","code":"kas"},
     {"value":"Kannada","code":"kan"},
-    {"value":"Khandesi","code":"kha"}
+    {"value":"Khandesi","code":"kha"},
+    {"value":"Malvi","code":"mav"},
+    {"value":"Dangi","code":"dan"},
+    {"value":"Gamit","code":"gam"},
+    {"value":"Nahali","code":"nah"},
+    {"value":"Rathavi","code":"rat"},
+    {"value":"Ahirani","code":"ahi"},
+    {"value":"Barela Pauri","code":"bpa"},
+    {"value":"Dubli","code":"dub"},
+    {"value":"Gadaba","code":"gad"},
+    {"value":"Varahadi","code":"var"},
+    {"value":"Vasave","code":"vas"},
+    {"value":"Mauchi","code":"mau"},
+    {"value":"Dubli","code":"dub"}
   ];
