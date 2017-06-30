@@ -106,8 +106,6 @@ class DownloadTokens extends Component {
 
   createCheckboxes1 = (obj) => (
     Object.keys(booksName1[0]).map(function(v, i){
-      console.log(booksName1[0][v])
-
       return (<Checkbox
             label={booksName1[0][v]}
             handleCheckboxChange={obj.toggleCheckbox1}
