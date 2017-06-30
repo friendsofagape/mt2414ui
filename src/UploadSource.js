@@ -88,6 +88,7 @@ class UploadSource extends Component {
         headers: {
                   "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
         },
+        // eslint-disable-next-line
         success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false) {
@@ -126,10 +127,6 @@ class UploadSource extends Component {
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
                       {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Ethnologue Code </strong> </lable>
-                      <input value={this.state.language} onChange={this.onSelect} type="text" name="EthnologueCode" placeholder="tam" className="form-control"/>
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>

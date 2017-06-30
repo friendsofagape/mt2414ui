@@ -25,7 +25,7 @@ class UploadTokens extends Component {
       language:'tam',
       version: '',
       revision: '',
-      targetlang: 'tam',
+      targetlang: 'mal',
       tokenwords: {},
       uploaded:'Uploading',
       message: ''
@@ -77,7 +77,7 @@ class UploadTokens extends Component {
         var data = {
             "language": _this.state.language, "version": _this.state.version, "revision": _this.state.revision, "targetlang": _this.state.targetlang, "tokenwords": tokenwords
           }
-     
+        console.log(data)
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
         $.ajax({
@@ -118,7 +118,7 @@ class UploadTokens extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header">Upload Tokens</h1>&nbsp;
+            <h1 className="source-header2">Upload Tokens</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>

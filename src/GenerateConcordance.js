@@ -71,7 +71,7 @@ class GenerateConcordance extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header1">Generate Concordance</h1>&nbsp;
+            <h1 className="source-header1">Generate Concordance</h1>&nbsp
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>

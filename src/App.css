@@ -5,7 +5,7 @@
 .col-md-12 {
   width: 100%;
   background: aliceblue;
-  margin: -40px 1px 1px -28px;
+  margin: -16px 1px 1px -28px;
 }
 
 .col-md-8 {
@@ -43,19 +43,33 @@ input.active:invalid {
 	font-family: sans-serif;
 }
 
+.navbar-fixed-bottom, .navbar-fixed-top, .navbar-static-top {
+  border-radius: 0;
+  background: black;
+}
+
 .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
   margin-left: -34px;
   color: white;
+  font-size: 18px;
 }
 
 .navbar-fixed-bottom {
 	text-align: center;
 }
 
-
 .signup-header {
   margin: 58px 1px -6px 124px;
   font-size: 22px;
+}
+
+.forgot-header {
+  margin: 58px 1px -2px 55px;
+  font-size: 22px;
+}
+
+.textP{
+  margin-left: 55px;
 }
 
 .signin-header {
@@ -64,18 +78,26 @@ input.active:invalid {
 }
 
 .source-header {
- 	margin: 120px 77px 5px 86px;
+ 	margin: 120px 77px 5px 11px;
  	font-size: 20px;
+}
+.source-header2 {
+  margin: 120px 77px 5px 100px;
+  font-size: 20px;
 }
 
 .source-headerCon {
+  margin: 120px 77px 12px 466px;
+  font-size: 20px;
+}
+.source-headerCon1 {
   margin: 120px 77px 12px 484px;
   font-size: 20px;
 }
 
 .source-header-lan {
-  margin: 100px 67px 18px 419px;
-  font-size: 25px;
+  margin: 100px 67px 18px 482px;
+  font-size: 22px;
 }
 
 .source-header1 {
@@ -86,12 +108,21 @@ input.active:invalid {
 .invisible{
   display: none;
 }
- 
 
 .navbar-nav {
   float: left;
-  margin: 1px 1px 1px 29px;
-  font-size: initial;
+  margin: 1px 1px 1px 167px;
+  font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover{
+  color: gray;
+  text-decoration:none;
+  cursor:pointer;
 }
 
 .textarea{
@@ -118,6 +149,7 @@ input.active:invalid {
   height: 391px;
   overflow-x: scroll;
 }
+
 .floatRight {
   width: 43%; 
   float: right;
@@ -127,6 +159,7 @@ input.active:invalid {
   height: 391px;
   overflow-x: scroll;
 }
+
 .container { overflow: hidden; }
 
 .tokenWords {
@@ -160,7 +193,7 @@ th, td {
 }
 
 .Concord1{
-  margin: 4px 1px 1px 49px;
+  margin: 4px 1px 1px 37px;
 }
 
 .Concord2{
@@ -168,7 +201,7 @@ th, td {
 }
 
 .ConcordButton{
-  margin: 1px 1px 1px 505px;
+  margin: 1px 1px 1px 481px;
 }
 
 .myCheck1 {
@@ -184,6 +217,7 @@ th, td {
   margin: -11px 1px 1px -3px;
   background: gainsboro;
 }
+
 .bookHeader{
   margin: 0px 1px 8px -2px;
 }
@@ -195,7 +229,11 @@ th, td {
 }
 
 .msg{
-  margin: 6px 1px 1px 389px;
+  margin: 6px 1px 1px 424px;
+  display: -webkit-inline-box;
+}
+.msg1{
+  margin: 6px 1px 1px 464px;
   display: -webkit-inline-box;
 }
 
@@ -208,8 +246,7 @@ th, td {
   background: green;
 }
 
-.modal
-{
+.modal{
   position: fixed;
   z-index: 999;
   height: 100%;
@@ -222,8 +259,7 @@ th, td {
   -moz-opacity: 0.8;
 }
 
-.center
-{
+.center{
   z-index: 1000;
   margin: 300px auto;
   padding: 10px;
@@ -234,18 +270,22 @@ th, td {
   -moz-opacity: 1;
 }
 
-.center img
-{
+.center img{
   height: 128px;
   width: 128px;
 }
 
-a {
-    color: white;
-    text-decoration: none;
+a{
+  color: white;
+  text-decoration: none;
 }
 
 .customLink{
+  color: blue;
+}
+
+.customLink2{
+  margin-left: 10px;
   color: blue;
 }
 
@@ -280,7 +320,7 @@ a {
 }
 
 .customHeader{
-  margin: 1px 1px 1px 598px; 
+  margin: 1px 1px 1px 515px; 
 }
 
 .jumbotron {
@@ -294,4 +334,43 @@ a {
 
 .customRow{
   margin: 16px 1px 68px 1px;
+}
+
+ul.nav.nav-tabs {
+  background: dimgray;
+  padding: 3px 2px;
+  margin: 25px 859px 1px 27px;
+}
+
+ul.nav.nav-tabs.customTab {
+  margin: 28px 514px 0px 500px;
+  background: aliceblue;
+}
+
+section {
+  margin: 1px 1px 1px 30px;
+}
+
+h4, p {
+  margin: 0;
+}
+
+.panel-heading {
+  padding: 14px 223px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  margin: -69px 1px 1px 280px;
+}
+
+.exclude1 {
+  margin: 14px 1px -6px 31px;
+  display: flow-root;
+  border: ridge;
+}
+
+.exclude2 {
+  margin: -22px 1px -6px 31px;
+  display: flow-root;
+  border: ridge;
 }

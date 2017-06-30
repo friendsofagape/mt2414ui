@@ -110,7 +110,7 @@ class GetLanguages extends Component {
                 <tbody>
                   {currentLanguages.map(function(data, index){
                     return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td>
-                            <td><a href="#" data-language={data[0]} data-version={data[1]} onClick={_this.getBooks.bind(this, {"language": data[0], "version": data[1]})} className="customLink">Show Book</a></td>
+                            <td><a href="#" data-language={data[0]} data-version={data[1]} onClick={_this.getBooks.bind(this, {"language": data[0], "version": data[1]})} className="customLink">Show Books</a></td>
                             </tr>
                             );
                   })}
