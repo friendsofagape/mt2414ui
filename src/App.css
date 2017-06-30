@@ -63,6 +63,15 @@ input.active:invalid {
   font-size: 22px;
 }
 
+.forgot-header {
+  margin: 58px 1px -2px 55px;
+  font-size: 22px;
+}
+
+.textP{
+  margin-left: 55px;
+}
+
 .signin-header {
 	margin: 58px 1px -6px 124px;
 	font-size: 22px;
@@ -225,6 +234,10 @@ th, td {
   margin: 6px 1px 1px 424px;
   display: -webkit-inline-box;
 }
+.msg1{
+  margin: 6px 1px 1px 464px;
+  display: -webkit-inline-box;
+}
 
 .progress1{
   background: beige;
@@ -270,6 +283,11 @@ a{
 }
 
 .customLink{
+  color: blue;
+}
+
+.customLink2{
+  margin-left: 10px;
   color: blue;
 }
 
