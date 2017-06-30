@@ -81,7 +81,11 @@ class GenerateConcordance extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
+                      { 
+                        Object.keys(SourceLanguages[0]).map(function(v, i) {
+                          return(<option  key={i} value={v}>{SourceLanguages[0][v]}</option>)
+                        })
+                      }
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">

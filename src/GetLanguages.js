@@ -11,6 +11,8 @@ import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import SourceLanguages from './SourceLanguages';
+import BookName from './BookName';
 
 class GetLanguages extends Component {
   constructor(props) {
@@ -109,7 +111,7 @@ class GetLanguages extends Component {
                 </thead>
                 <tbody>
                   {currentLanguages.map(function(data, index){
-                    return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td>
+                    return (<tr key={index}><td>{SourceLanguages[0][data[0]]}</td><td>{data[1]}</td>
                             <td><a href="#" data-language={data[0]} data-version={data[1]} onClick={_this.getBooks.bind(this, {"language": data[0], "version": data[1]})} className="customLink">Show Books</a></td>
                             </tr>
                             );
@@ -127,7 +129,7 @@ class GetLanguages extends Component {
                 </thead>
                 <tbody>
                   {currentBooks.map(function(data, index){
-                    return (<tr key={index}><td>{data[0]}</td><td>{data[1]}</td></tr>);
+                    return (<tr key={index}><td>{BookName[0][data[0]]}</td><td>{data[1]}</td></tr>);
                   })}
                 </tbody>
               </table>
