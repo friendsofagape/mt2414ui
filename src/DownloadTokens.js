@@ -106,6 +106,7 @@ class DownloadTokens extends Component {
 
   createCheckboxes1 = (obj) => (
     Object.keys(booksName1[0]).map(function(v, i){
+      console.log(booksName1[0][v])
 
       return (<Checkbox
             label={booksName1[0][v]}
@@ -216,7 +217,11 @@ class DownloadTokens extends Component {
               <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
                 <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                     <FormControl value={this.state.sourcelang} onChange={this.onSelect} name="sourcelang" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((sourcelang, i) => <option  key={i} value={sourcelang.code}>{sourcelang.value}</option>)}
+                      { 
+                        Object.keys(SourceLanguages[0]).map(function(v, i) {
+                          return(<option  key={i} value={v}>{SourceLanguages[0][v]}</option>)
+                        })
+                      }
                     </FormControl>&nbsp;&nbsp;
                  <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                     <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/>&nbsp; 
@@ -224,7 +229,11 @@ class DownloadTokens extends Component {
                     <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> &nbsp;
                 <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
                     <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
+                      { 
+                        Object.keys(TargetLanguages[0]).map(function(v, i) {
+                          return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
+                        })
+                      }    
                     </FormControl>&nbsp;&nbsp;
               </div>&nbsp;
               <div>
