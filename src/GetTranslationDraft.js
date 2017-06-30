@@ -21,7 +21,6 @@ import GlobalURL from './GlobalURL';
 import saveAs from 'save-as'
 import Checkbox from './Checkbox';
 import booksName1 from './BookName';
-import booksName2 from './BookName';
 var JSZip = require("jszip");
 var zip = new JSZip();
 
@@ -86,7 +85,6 @@ class GetTranslationDraft extends Component {
 
   componentWillMount = () => {
     this.selectedCheckboxes1 = new Set();
-    this.selectedCheckboxes2 = new Set();
   }
 
   toggleCheckbox1 = label => {
@@ -97,31 +95,12 @@ class GetTranslationDraft extends Component {
     }
   }
 
-  toggleCheckbox2 = label => {
-    if (this.selectedCheckboxes2.has(label)) {
-      this.selectedCheckboxes2.delete(label);
-    } else {
-      this.selectedCheckboxes2.add(label);
-    }
-  }
-
   createCheckboxes1 = (obj) => (
     Object.keys(booksName1[0]).map(function(v, i){
 
       return (<Checkbox
             label={booksName1[0][v]}
             handleCheckboxChange={obj.toggleCheckbox1}
-            bookCode={v}
-    />)
-    })
-
-  )
-
-  createCheckboxes2 = (obj) => (
-    Object.keys(booksName2[0]).map(function(v, i){
-      return (<Checkbox
-            label={booksName2[0][v]}
-            handleCheckboxChange={obj.toggleCheckbox2}
             bookCode={v}
     />)
     })
