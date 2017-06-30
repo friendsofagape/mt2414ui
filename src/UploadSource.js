@@ -21,7 +21,7 @@ class UploadSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language:'Tamil',
+      language:'tam',
       version: '',
       base64_arr: [],
       uploaded:'Uploading',
@@ -125,7 +125,7 @@ class UploadSource extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((language, i) => <option  key={i} value={language.value}>{language.value}</option>)}
+                      {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">

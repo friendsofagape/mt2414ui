@@ -22,10 +22,10 @@ class UploadTokens extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language:'Tamil',
+      language:'tam',
       version: '',
       revision: '',
-      targetlang: 'Malayalam',
+      targetlang: 'mal',
       tokenwords: {},
       uploaded:'Uploading',
       message: ''
@@ -77,7 +77,7 @@ class UploadTokens extends Component {
         var data = {
             "language": _this.state.language, "version": _this.state.version, "revision": _this.state.revision, "targetlang": _this.state.targetlang, "tokenwords": tokenwords
           }
-     
+        console.log(data)
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
         $.ajax({
@@ -128,7 +128,7 @@ class UploadTokens extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Source Language </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {Language.map((language, i) => <option  key={i} value={language.value}>{language.value}</option>)}
+                      {Language.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
@@ -142,7 +142,7 @@ class UploadTokens extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Target Language </strong> </lable>
                     <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.value}>{targetlang.value}</option>)}
+                      {TargetLanguages.map((targetlang, i) => <option  key={i} value={targetlang.code}>{targetlang.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">

@@ -21,7 +21,7 @@ class GenerateConcordance extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: 'Tamil',
+      language: 'tam',
       version: '',
       uploaded:'uploadingStatus',
       message: ''
@@ -71,7 +71,7 @@ class GenerateConcordance extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header1">Generate Concordance</h1>&nbsp;
+            <h1 className="source-header1">Generate Concordance</h1>&nbsp
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
@@ -81,7 +81,7 @@ class GenerateConcordance extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                     <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      {SourceLanguages.map((language, i) => <option  key={i} value={language.value}>{language.value}</option>)}
+                      {SourceLanguages.map((language, i) => <option  key={i} value={language.code}>{language.value}</option>)}
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
