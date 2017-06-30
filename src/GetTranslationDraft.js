@@ -62,6 +62,7 @@ class GetTranslationDraft extends Component {
       version: '',
       revision: '',
       bookName: '',
+      books: [],
       uploaded:'Uploading',
       activeTab: tabData[0],
       activeTabValue: '',
@@ -134,10 +135,18 @@ class GetTranslationDraft extends Component {
 
   uploadFile(e){
     e.preventDefault();
+    global.books = [];
+
+    // eslint-disable-next-line
+    for (const books of this.selectedCheckboxes1) {  
+      global.books = Array.from(this.selectedCheckboxes1);
+    }
+
     var _this = this
     var data = { 
-            "sourcelang": this.state.sourcelang, "version": this.state.version, "revision": this.state.revision,  "targetlang": this.state.targetlang
-          }
+            "sourcelang": this.state.sourcelang, "version": this.state.version, "revision": this.state.revision,  "targetlang": this.state.targetlang, "books": global.books
+    }
+
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/translations",
@@ -190,10 +199,10 @@ class GetTranslationDraft extends Component {
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon">Download Translation Draft</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg1' : 'invisible')}>
                 <strong>Translation Done Successfully !!!</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg1': 'invisible')}>
                 <strong>Failed to Translate Sources !!!</strong>
             </div>
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
