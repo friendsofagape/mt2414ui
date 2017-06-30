@@ -22,7 +22,7 @@ import saveAs from 'save-as'
 import Checkbox from './Checkbox';
 import booksName1 from './BookName';
 var JSZip = require("jszip");
-var zip = new JSZip();
+var zip;
 
 var tabData = [
   { name: 'Select Books', isActive: true }
@@ -64,8 +64,7 @@ class GetTranslationDraft extends Component {
       books: [],
       uploaded:'Uploading',
       activeTab: tabData[0],
-      activeTabValue: '',
-      dataDisplay: 'Select Books'
+      activeTabValue: ''
     }
 
       // Upload file specific callback handlers
@@ -78,8 +77,7 @@ class GetTranslationDraft extends Component {
   
     handleClick(tab){
     this.setState({
-      activeTab: tab,
-      dataDisplay: tab.name
+      activeTab: tab
     });
   }
 
@@ -141,6 +139,7 @@ class GetTranslationDraft extends Component {
           $(".modal").hide();
       },
       success: function (result) {
+        result = JSON.parse(result)
          if (result.success !== false) {
           _this.exportToUSFMFile(result)
           _this.setState({message: result.message, uploaded: 'success'})
@@ -157,11 +156,9 @@ class GetTranslationDraft extends Component {
 
   exportToUSFMFile(jsonData) {
     var _this = this;
-    jsonData = JSON.parse(jsonData)
-    let exportFileDefaultName = [];
+    zip = new JSZip();
     $.each(jsonData, function(key, value) {
       zip.file(key + '.usfm', value)
-      exportFileDefaultName.push(key + '.usfm');
     });
     zip.generateAsync({type:"blob"})
       .then(function(content) {
@@ -182,7 +179,7 @@ class GetTranslationDraft extends Component {
                 <strong>Translation Done Successfully !!!</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg1': 'invisible')}>
-                <strong>Failed to Translate Sources !!!</strong>
+                <strong>{this.state.message}</strong>
             </div>
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
                 <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
