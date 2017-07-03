@@ -123,6 +123,7 @@ class ForgotPassword extends Component {
           result = JSON.parse(result)
           if (result.success !== false) {
           _this.setState({message: result.message, uploaded: 'success'})
+          window.location.href = "./homepage";
           } else {
             _this.setState({message: result.message, uploaded: 'failure'})
           }
@@ -153,16 +154,16 @@ class ForgotPassword extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label" id="passwordLabel"> <strong>New Password </strong> </lable>
-                <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="Password" ref="password" pattern=".{5,}" required />
+                <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="New Password" ref="password" pattern=".{5,}" required />
                 <div className="error" id="passwordError" />
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label" id="passwordConfirmLabel"> <strong> Confirm New Password </strong> </lable>
-                <input className="form-control" value={this.state.passwordConfirm} onChange={this.onChange} type="password" name="passwordConfirm" placeholder="Confirm Password" ref="passwordConfirm" required />
+                <input className="form-control" value={this.state.passwordConfirm} onChange={this.onChange} type="password" name="passwordConfirm" placeholder="Confirm New Password" ref="passwordConfirm" required />
                 <div className="error" id="passwordConfirmError" />
               </div>&nbsp;
           <div className="form-group">
-            <button className="btn btn-success" > Forgot Password </button>
+            <button className="btn btn-success" >Update Password</button>
           </div>
         </form>
           </div>

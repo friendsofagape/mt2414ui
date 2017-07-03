@@ -128,7 +128,7 @@ class ResetPassword extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onResetPassword} className="col-md-8 signupCustom">
           <h1 className="forgot-header"><span className="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Reset Password ?</h1>&nbsp;
-          <p className="textP">You can reset your password here.</p>
+          <p className="textP">Enter your registered email id.</p>
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
