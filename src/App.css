@@ -68,6 +68,11 @@ input.active:invalid {
   font-size: 22px;
 }
 
+.reset-header {
+  margin: 58px 1px 3px 80px;
+  font-size: 22px;
+}
+
 .textP{
   margin-left: 55px;
 }
