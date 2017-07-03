@@ -39,6 +39,7 @@ class ForgotPassword extends Component {
     constructor(props) {
       super(props);
       this.state = {
+        temppassword: '',
         password: '',
         passwordConfirm: '',
         uploaded:'uploadingStatus'
@@ -112,9 +113,10 @@ class ForgotPassword extends Component {
     var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: GlobalURL["hostURL"]+"/v1/forgotpassword/",
+       url: GlobalURL["hostURL"]+"/v1/forgotpassword",
        data: {
-          password : this.state.password
+          password : this.state.password,
+          temp_password : this.state.temppassword,
           },
            method : "POST",
          success: function(result) {
@@ -142,9 +144,9 @@ class ForgotPassword extends Component {
               <strong>Failed to create account !!</strong>
             </div>
               <div className="form-group">
-                <lable className="control-label" id="passwordLabel"> <strong>Current Password </strong> </lable>
-                <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="Password" ref="password" pattern=".{5,}" required />
-                <div className="error" id="passwordError" />
+                <lable className="control-label" id="temppasswordLabel"> <strong>Temporary Password </strong> </lable>
+                <input className="form-control" value={this.state.temppassword} onChange={this.onChange} type="password" name="temppassword" placeholder="Temporary Password" ref="temppassword" pattern=".{1,}" required />
+                <div className="error" id="temppasswordError" />
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-label" id="passwordLabel"> <strong>New Password </strong> </lable>
