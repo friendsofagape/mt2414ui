@@ -13,6 +13,8 @@ import GetTranslationDraft from './GetTranslationDraft';
 import GetLanguages from './GetLanguages';
 import UploadTokens from './UploadTokens';
 import HomePage from './HomePage';
+import ResetPassword from './ResetPassword';
+import ForgotPassword from './ForgotPassword';
 
 const store = createStore(
       (state = {}) => state,
@@ -36,6 +38,8 @@ ReactDOM.render(
             <Route path="/generateconcordance" component={GenerateConcordance}/>
             <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
             <Route path="/signup" component={SignupForm}/>
+            <Route path="/resetpassword" component={ResetPassword}/>
+            <Route path="/forgotpassword" component={ForgotPassword}/>
         </Router>
           ) : (
            <Router history={browserHistory}>
@@ -46,7 +50,9 @@ ReactDOM.render(
             <Route path="/getconcordances" component={HomePage}/>
             <Route path="/generateconcordance" component={HomePage}/>
             <Route path="/gettranslationdraft" component={HomePage}/>
-             <Route path="/signup" component={SignupForm}/>
+            <Route path="/signup" component={SignupForm}/>
+            <Route path="/resetpassword" component={ResetPassword}/>
+            <Route path="/forgotpassword" component={ForgotPassword}/>
            </Router>
           )
         }

@@ -68,8 +68,15 @@ input.active:invalid {
   font-size: 22px;
 }
 
-.textP{
-  margin-left: 55px;
+.reset-header {
+  margin: 58px 1px 8px 80px;
+  font-size: 22px;
+}
+
+.textP {
+  margin-left: 71px;
+  margin-bottom: 17px;
+  margin-top: 16px;
 }
 
 .signin-header {

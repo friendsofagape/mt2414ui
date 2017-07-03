@@ -167,6 +167,7 @@ import GlobalURL from './GlobalURL';
           </div>&nbsp;
           <div className="form-group">
             <button className="btn btn-success"> {<span className='glyphicon glyphicon-user'></span>}&nbsp; Sign in </button>
+            <Link to={'/resetpassword'} className="customLink2">Forgot Password ?</Link>
           </div>
           <div className="signlink">
             Create a new account ? &nbsp; &nbsp;<Link to={'/signup'} className="customLink">Click here !!</Link>
