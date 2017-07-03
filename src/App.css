@@ -73,8 +73,10 @@ input.active:invalid {
   font-size: 22px;
 }
 
-.textP{
-  margin-left: 55px;
+.textP {
+  margin-left: 71px;
+  margin-bottom: 17px;
+  margin-top: 16px;
 }
 
 .signin-header {
