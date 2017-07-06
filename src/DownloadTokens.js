@@ -245,8 +245,9 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "nbooks":global.nbooks, "books": global.books 
     }
-    console.log(data)
+
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+    
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/getbookwiseautotokens",
       contentType: "application/json; charset=utf-8",

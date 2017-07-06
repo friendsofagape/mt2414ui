@@ -162,7 +162,7 @@ class UploadTokens extends Component {
                   </div>
                   <div className="modal" style={{display: 'none'}}>
                     <div className="center">
-                        <img alt="" src={require('./loader.gif')} />
+                        <img alt="" src={require('./Images/loader.gif')} />
                     </div>
                 </div>
               </div>
