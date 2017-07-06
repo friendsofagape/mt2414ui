@@ -25,8 +25,8 @@ import GlobalURL from './GlobalURL';
           </Navbar.Header>
           <Navbar.Collapse >
             <Nav className="customHeader">
-              <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
-              <NavItem eventKey={2} ><Link to={'/signup'}>Sign up</Link></NavItem>
+              <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span>Signin</Link></NavItem>
+              <NavItem eventKey={2} ><Link to={'/signup'}>Signup</Link></NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -133,7 +133,7 @@ import GlobalURL from './GlobalURL';
         <Header />
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 signinCustom">
-          <h1 className="signin-header">Login</h1>&nbsp;
+          <h1 className="signin-header"><span className="glyphicon glyphicon-user"></span>Login</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
@@ -167,7 +167,7 @@ import GlobalURL from './GlobalURL';
           </div>&nbsp;
           <div className="form-group">
             <button className="btn btn-success"> {<span className='glyphicon glyphicon-user'></span>}&nbsp; Sign in </button>
-            <Link to={'/resetpassword'} className="customLink2">Forgot Password ?</Link>
+            <Link to={'/resetpassword'} className="customLink2">I forgot my password ?</Link>
           </div>
           <div className="signlink">
             Create a new account ? &nbsp; &nbsp;<Link to={'/signup'} className="customLink">Click here !!</Link>

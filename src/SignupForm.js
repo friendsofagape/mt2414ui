@@ -27,8 +27,8 @@ class Header extends Component {
         </Navbar.Header>
         <Navbar.Collapse >
           <Nav className="customHeader">
-            <NavItem eventKey={1} ><Link to={'/signup'}>Sign up</Link></NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/signup'}>Signup</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span>Signin</Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
