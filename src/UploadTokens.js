@@ -13,10 +13,12 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import { FormControl } from 'react-bootstrap';
-import Language from './SourceLanguages';
 import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import ListLanguages from './Component/ListLanguages'
+import Versions from './Component/Versions';
+import RevisionNumber from './Component/RevisionNumber';
 
 class UploadTokens extends Component {
   constructor(props) {
@@ -28,13 +30,17 @@ class UploadTokens extends Component {
       targetlang: 'mal',
       tokenwords: {},
       uploaded:'Uploading',
-      message: ''
+      message: '',
+      getVersions: [],
+      getRevision: [],
+      Sourcelanguage: '',
     }
 
       // Upload file specific callback handlers
       this.uploadTokens = this.uploadTokens.bind(this);
       this.onSelect = this.onSelect.bind(this);
-      this.file_xls = this.file_xls.bind(this);
+      this.onSelectVersion = this.onSelectVersion.bind(this);
+      this.onSelectSource = this.onSelectSource.bind(this);
   }
   
   onSelect(e) {
@@ -42,122 +48,145 @@ class UploadTokens extends Component {
       [e.target.name]: e.target.value });
   }
 
-  file_xls(e, files){
-    var _this = this;
-    var file = files[0];
-    var allRows = [];
-    if (file) {
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (evt) {
-         allRows = evt.target.result.split(/\r?\n|\r/);
+  //onSelectSource for Dynamic Versions
+  onSelectSource(e) {
 
+      this.setState({ Sourcelanguage: e.target.value });
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      var data = { 
+        "language": e.target.value
       }
-      reader.onerror = function (evt) {
-          allRows = []
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/version",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getVer = JSON.parse(result);
+        _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+      },
+      error: function (error) {
       }
-    }
-    return allRows;
+    });
   }
 
-  uploadTokens(e){
+  //onSelectVersion for Dynamic Revision
+  onSelectVersion(e) {
+
+      this.setState({ Version: e.target.value });
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      var data = { 
+        "language": this.state.Sourcelanguage, "version" : e.target.value
+      }
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/revision",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getRev = JSON.parse(result);
+        _this.setState({getRevision: getRev.length > 0 ? getRev : []})
+      },
+      error: function (error) {
+      }
+    });
+  }
+
+  uploadTokens(){
     var _this = this;
-    let file = document.getElementById('file-input').files[0];
-    var allRows = [];
-    var tokenwords = {};
-    if (file) {
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (evt) {
-        allRows = evt.target.result.split(/\r?\n|\r/);
-        for(var singleRow = 0; singleRow < allRows.length; singleRow++) {
-          let token = allRows[singleRow].split(",");
-            tokenwords[token[0]] = token[1];
-        }
-        var data = {
-            "language": _this.state.language, "version": _this.state.version, "revision": _this.state.revision, "targetlang": _this.state.targetlang, "tokenwords": tokenwords
-          }
-          
-        let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-        $.ajax({
-          url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
-          contentType: "application/json; charset=utf-8",
-          data : JSON.stringify(data),
-          method : "POST",
-          headers: {
-                    "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
-          beforeSend: function () {
-            $(".modal").show();
-          },
-          complete: function () {
-            $(".modal").hide();
-          },
-          success: function (result) {
-             result = JSON.parse(result)
-            _this.setState({uploaded: result.success ? 'success' : ''})
-            _this.setState({message: result.message})
-
-          },
-          error: function (error) {
-           _this.setState({message: error.message, uploaded: 'failure'})
-          }
-        });      
-      }
-      reader.onerror = function (evt) {
-          allRows = []
-      }
-    }
-    e.preventDefault();
     
+    let file = document.getElementById('file-input').files[0];
+
+    var data = {
+      "language": _this.state.Sourcelanguage, "version": _this.state.Version, "revision": _this.state.getRevision[0] , "targetlang": _this.state.targetlang, "tokenwords": file
+    }
+  
+    console.log(data);
+
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      beforeSend: function () {
+        $(".modal").show();
+      },
+      complete: function () {
+        $(".modal").hide();
+      },
+      success: function (result) {
+         result = JSON.parse(result)
+         console.log(result)
+        _this.setState({uploaded: result.success ? 'success' : ''})
+        _this.setState({message: result.message})
+
+      },
+      error: function (error) {
+       _this.setState({message: error.message, uploaded: 'failure'})
+      }
+    });      
   }
+
 
   render() {
     return(
       <div className="container">
         <Header/ >
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header2">Upload Tokens</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>{this.state.message}</strong>
+        <div className="row">
+          <form className="col-md-12 uploader" encType="multipart/form-data">
+            <h1 className="source-headerCon1">Upload Tokens</h1>&nbsp;
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+              <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-                <strong>{this.state.message}</strong>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+              <strong>{this.state.message}</strong>
             </div>
-              <div className="form-group">
-                <lable className="control-label"> <strong> Source Language </strong> </lable>
-                    <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      { 
-                        Object.keys(Language[0]).map(function(v, i) {
-                          return(<option  key={i} value={v}>{Language[0][v]}</option>)
-                        })
-                      }
-                    </FormControl>
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Revision </strong> </lable>
-                    <input value={this.state.revision} onChange={this.onSelect} name="revision" type="text" placeholder="revision" className="form-control"/> 
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-label"> <strong> Target Language </strong> </lable>
-                    <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      { 
-                        Object.keys(TargetLanguages[0]).map(function(v, i) {
-                          return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
-                        })
-                      }
-                    </FormControl>
-              </div>&nbsp;
-              <div className="form-group">
+            <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
+                <ListLanguages 
+                  onChange={this.onSelectSource} 
+                />
+              <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
+                <Versions 
+                  version={this.state.getVersions} 
+                  onChange={this.onSelectVersion} 
+                />
+              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
+                <RevisionNumber
+                  revision={this.state.getRevision}  
+                  Sourcelanguage={this.state.Sourcelanguage} 
+                  Version={this.state.Version} 
+                  onChange={this.onSelectRevision}
+                />
+              <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
+                <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
+                  <option>Choose</option>
+                  { 
+                    Object.keys(TargetLanguages[0]).map(function(v, i) {
+                      return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
+                    })
+                  }    
+                </FormControl>&nbsp;&nbsp;
+            </div>&nbsp;
+              <div className="form-group customUpload">
                 <div className="form-control">
                   <input id="file-input" type="file" className="fileInput" multiple />
                 </div>&nbsp;
-                <div className="form-group">
+              </div>
+                <div className="form-group customUpload">
                   <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                   </div>
                   <div className="modal" style={{display: 'none'}}>
@@ -165,7 +194,6 @@ class UploadTokens extends Component {
                         <img alt="" src={require('./Images/loader.gif')} />
                     </div>
                 </div>
-              </div>
           </form>
           </div>
         <Footer/>
