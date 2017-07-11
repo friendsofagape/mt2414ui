@@ -64,7 +64,7 @@ class DownloadTokens extends Component {
       sourcelang:'',
       version: '',
       revision: '',
-      targetlang:'',
+      targetlang:'tam',
       books: [],
       nbooks: [],
       uploaded:'uploadingStatus',
@@ -72,8 +72,8 @@ class DownloadTokens extends Component {
       activeTab: tabData[0],
       activeTabValue: '',
       dataDisplay: 'Include Books',
-      getVersions: [''],
-      getRevision: [''],
+      getVersions: [],
+      getRevision: [],
       Sourcelanguage: '',
       getAllBooks: [],
     }
@@ -120,11 +120,13 @@ class DownloadTokens extends Component {
   createCheckboxes1 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
+        <p>
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
             bookCode={books[v]}
           />
+        </p>
       );
     })
   )
@@ -133,13 +135,15 @@ class DownloadTokens extends Component {
   createCheckboxes2 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
+        <p>
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox2}
             bookCode={books[v]}
           />
+        </p>
       );
-     })
+    })
   )
 
   //onSelect for Target Language
@@ -164,7 +168,7 @@ class DownloadTokens extends Component {
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-        "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
+        "Authorization": "bearer " + accessToken
       },
       success: function (result) {
         var getVer = JSON.parse(result);
@@ -190,7 +194,7 @@ class DownloadTokens extends Component {
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-        "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
+        "Authorization": "bearer " + accessToken
       },
       success: function (result) {
         var getRev = JSON.parse(result);
@@ -206,15 +210,16 @@ class DownloadTokens extends Component {
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
-        "language": this.state.Sourcelanguage, "version" : this.state.Version, "revision": e.target.value
+        "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
       }
+      console.log(data)
       $.ajax({
       url: GlobalURL["hostURL"]+"/v1/book",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-        "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
+        "Authorization": "bearer " + accessToken
       },
       success: function (result) {
         var getAllBook = JSON.parse(result);
@@ -245,7 +250,7 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "nbooks":global.nbooks, "books": global.books 
     }
-
+    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     
     $.ajax({
@@ -254,7 +259,7 @@ class DownloadTokens extends Component {
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-        "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
+        "Authorization": "bearer " + accessToken
       },
 
       beforeSend: function () {
@@ -340,6 +345,7 @@ class DownloadTokens extends Component {
                 <h4 className="panel-heading">Include Books</h4>
                 <div className="exclude1" >{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
               </section>
+
               <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Exclude Books</h4>
                 <div className="exclude1">{this.createCheckboxes2(this, this.state.getAllBooks)}</div>
