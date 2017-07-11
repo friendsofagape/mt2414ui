@@ -111,15 +111,25 @@ import GlobalURL from './GlobalURL';
       success: function(result){
          result = JSON.parse(result)
          if (result.success !== false) {
-          var auth = JSON.stringify(result);
-          window.localStorage.setItem('access_token', auth)
+          // var auth = JSON.stringify(result);
+          window.localStorage.setItem('access_token', JSON.stringify(result.access_token))
+          window.localStorage.setItem('role', JSON.stringify(result.role))
           let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-          if (!accessToken.access_token) {
+          let userRole = JSON.parse(window.localStorage.getItem('role'))
+          if (!accessToken) {
             window.location.href = "./homepage";
           } else {
-            window.location.href = "./getlanguages";
-          }
-        }
+                if(!userRole){
+                   window.location.href = "./homepage";
+                }else if (userRole === "superadmin") {
+                   window.location.href = "./superadmin";
+                }else if (userRole === "admin"){
+                  window.location.href = "./admin";
+                }else{
+                  window.location.href = "./getlanguages";
+                }
+              }
+            }
         else {
           _this.setState({message: result.message, uploaded: 'failure'})
         }
