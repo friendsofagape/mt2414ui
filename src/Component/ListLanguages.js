@@ -29,7 +29,8 @@ class ListLanguages extends Component {
       contentType: "application/json; charset=utf-8",
       method : "POST",
       headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+        "Authorization": "bearer " + accessToken
+      },
       success: function (result) {
         var getLang = JSON.parse(result);
         _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
