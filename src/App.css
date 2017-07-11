@@ -9,7 +9,7 @@
 }
 
 .col-md-8 {
-  margin: 9% 0% 43% 17%;
+  margin: 100px 1px 43px 72px;
   background-color: aliceblue;
   color: black;
 }
@@ -23,6 +23,12 @@
   color: black;
   display: -webkit-box;
   width: 40%;
+}
+
+.chart {
+  height: 310px;
+  width: 999px;
+  padding: 1px 1px 1px 125px;
 }
 
 input.active:valid {
@@ -74,7 +80,7 @@ input.active:invalid {
 }
 
 .textP {
-  margin-left: 71px;
+  margin-left: 17px;
   margin-bottom: 17px;
   margin-top: 16px;
 }
@@ -85,11 +91,11 @@ input.active:invalid {
 }
 
 .source-header {
- 	margin: 120px 77px 5px 11px;
+ 	margin: 53px 74px 35px 82px;
  	font-size: 20px;
 }
 .source-header2 {
-  margin: 120px 77px 5px 100px;
+  margin: 53px 77px 35px 90px;
   font-size: 20px;
 }
 
@@ -104,6 +110,11 @@ input.active:invalid {
 
 .source-header-lan {
   margin: 100px 67px 18px 482px;
+  font-size: 22px;
+}
+.source-header-email {
+  background: aquamarine;
+  margin: 100px 67px 18px 10px;
   font-size: 22px;
 }
 
@@ -244,6 +255,11 @@ th, td {
   display: -webkit-inline-box;
 }
 
+.msg2{
+  margin: 6px 1px 1px 277px;
+  display: -webkit-inline-box;
+}
+
 .progress1{
   background: beige;
 }
@@ -298,8 +314,13 @@ a{
 
 .getLangCustom{
   margin: inherit;
+  background: azure;
 }
 
+.getEmailCustom{
+  margin: 46px 2px 2px 263px;
+  background: azure;
+}
 .signinCustom{
   margin: 110px 1px 1px 482px;
   background-color: aquamarine;
@@ -330,6 +351,13 @@ a{
   margin: 1px 1px 1px 515px; 
 }
 
+ul.customHeaderSuperAdmin.nav.navbar-nav {
+    margin: 1px 1px 1px 812px;
+}
+
+ul.customHeaderAdmin.nav.navbar-nav {
+    margin: 1px 1px 1px 681px;
+}
 .jumbotron {
   margin-bottom: -566px;
   color: inherit;
@@ -377,7 +405,31 @@ h4, p {
 }
 
 .exclude2 {
-  margin: -22px 1px -6px 31px;
+  margin: 128px 0px 0px 0px;
   display: flow-root;
   border: ridge;
+  background-color: aliceblue;
+}
+
+.glyphicon-user:before {
+    content: "\e008";
+    padding: 6px;
+}
+
+.emailTable {
+  width: 47%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+canvas {
+    background-color: antiquewhite;
+}
+
+p{
+  display: -webkit-inline-box;
+}
+
+.customUpload{
+  margin: 44px 74px 4px 186px;
 }
