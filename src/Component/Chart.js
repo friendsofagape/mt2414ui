@@ -13,7 +13,6 @@ class Chart extends Component{
     displayTitle:true,
     displayLegend: true,
     legendPosition:'left',
-    location:'City',
   }
 
   render(){
@@ -24,7 +23,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:'Token Count:  '+this.props.location,
+              text:'Remaining Tokens to be translated',
               fontSize:15
             },
             legend:{
