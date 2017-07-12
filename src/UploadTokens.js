@@ -27,7 +27,7 @@ class UploadTokens extends Component {
       language:'tam',
       version: '',
       revision: '',
-      targetlang: 'mal',
+      targetlang: 'Choose',
       tokenwords: {},
       uploaded:'Uploading',
       message: '',
@@ -100,44 +100,57 @@ class UploadTokens extends Component {
     });
   }
 
-  uploadTokens(){
+  //for upload tokens
+  uploadTokens(e){
     var _this = this;
-    
     let file = document.getElementById('file-input').files[0];
+    var allRows = [];
+    var tokenwords = {};
+    if (file) {
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = function (evt) {
+        allRows = evt.target.result.split(/\r?\n|\r/);
+        for(var singleRow = 0; singleRow < allRows.length; singleRow++) {
+          let token = allRows[singleRow].split(",");
+            tokenwords[token[0]] = token[1];
+        }
+        var data = {
+            "language": _this.state.Sourcelanguage, "version": _this.state.Version, "revision": _this.state.getRevision[0] , "targetlang": _this.state.targetlang, "tokenwords": tokenwords
+          }
+          
+        let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
-    var data = {
-      "language": _this.state.Sourcelanguage, "version": _this.state.Version, "revision": _this.state.getRevision[0] , "targetlang": _this.state.targetlang, "tokenwords": file
-    }
-  
-    console.log(data);
+        $.ajax({
+          url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
+          contentType: "application/json; charset=utf-8",
+          data : JSON.stringify(data),
+          method : "POST",
+          headers: {
+            "Authorization": "bearer " + accessToken
+          },
+          beforeSend: function () {
+            $(".modal").show();
+          },
+          complete: function () {
+            $(".modal").hide();
+          },
+          success: function (result) {
+             result = JSON.parse(result)
+            _this.setState({uploaded: result.success ? 'success' : ''})
+            _this.setState({message: result.message})
 
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      beforeSend: function () {
-        $(".modal").show();
-      },
-      complete: function () {
-        $(".modal").hide();
-      },
-      success: function (result) {
-         result = JSON.parse(result)
-         console.log(result)
-        _this.setState({uploaded: result.success ? 'success' : ''})
-        _this.setState({message: result.message})
-
-      },
-      error: function (error) {
-       _this.setState({message: error.message, uploaded: 'failure'})
+          },
+          error: function (error) {
+           _this.setState({message: error.message, uploaded: 'failure'})
+          }
+        });      
       }
-    });      
+      reader.onerror = function (evt) {
+          allRows = []
+      }
+    }
+    e.preventDefault();    
   }
 
 
@@ -181,19 +194,21 @@ class UploadTokens extends Component {
                   }    
                 </FormControl>&nbsp;&nbsp;
             </div>&nbsp;
-              <div className="form-group customUpload">
+            <section style={this.state.targetlang === 'Choose' ? {display:'none'} : {display: 'inline'} }>
+              <div className="form-group customUpload1" >
                 <div className="form-control">
                   <input id="file-input" type="file" className="fileInput" multiple />
                 </div>&nbsp;
               </div>
+            </section>
                 <div className="form-group customUpload">
                   <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
-                  </div>
+                </div>
                   <div className="modal" style={{display: 'none'}}>
                     <div className="center">
                         <img alt="" src={require('./Images/loader.gif')} />
                     </div>
-                </div>
+                  </div>
           </form>
           </div>
         <Footer/>
