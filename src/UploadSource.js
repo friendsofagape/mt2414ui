@@ -166,7 +166,7 @@ class UploadSource extends Component {
                   <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} multiple />
                 </div>&nbsp;
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
                   </div>
                   <div className="modal" style={{display: 'none'}}>
                     <div className="center">
