@@ -125,12 +125,18 @@ class SignupForm extends Component {
           },
            method : "POST",
          success: function(result) {
-            window.location.href = "./homepage";
-            _this.setState({uploaded:'success'})
 
-           },
-         error: function(error){
-        _this.setState({uploaded:'failure'})
+             result = JSON.parse(result)
+             if(result.success !== false){
+            _this.setState({uploaded: result.success ? 'success' : ''})
+            _this.setState({message: result.message})
+            window.location.href = "./homepage";
+             }else {
+               _this.setState({message: result.message, uploaded: 'failure'})
+             }
+          },
+          error: function (error) {
+           _this.setState({message: error.message, uploaded: 'failure'})
           }
      });
   }
@@ -143,10 +149,10 @@ class SignupForm extends Component {
         <form onSubmit={this.onRegistration} className="col-md-8 signupCustom">
           <h1 className="signup-header">Sign up</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>Sign-up Successfully !!</strong>
+                <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-              <strong>Failed to create account !!</strong>
+              <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
