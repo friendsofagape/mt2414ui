@@ -282,7 +282,7 @@ class GetTranslationDraft extends Component {
         _this.setState({uploaded: getRev.success ? 'success' : ''})
         // eslint-disable-next-line
         Object.keys(getRev).map(function(v, i) {
-          labelsRes.push(v)
+          labelsRes.push(booksName2[0][v])
           datasetsRes.push(getRev[v])
         })
         _this.setState({
