@@ -25,6 +25,10 @@
   width: 40%;
 }
 
+.myButton{
+  margin: 1px 1px 1px 55px;
+}
+
 .chart {
   height: 310px;
   width: 999px;
@@ -219,7 +223,7 @@ th, td {
 }
 
 .ConcordButton{
-  margin: 1px 1px 1px 481px;
+  margin: 69px 1px 1px 487px;
 }
 
 .myCheck1 {
@@ -378,7 +382,7 @@ ul.nav.nav-tabs {
 }
 
 ul.nav.nav-tabs.customTab {
-  margin: 28px 514px 0px 500px;
+  margin: 139px 514px -1px 30px;
   background: aliceblue;
 }
 
@@ -405,7 +409,7 @@ h4, p {
 }
 
 .exclude2 {
-  margin: 128px 0px 0px 0px;
+  margin: -2px 0px 0px 26px;
   display: flow-root;
   border: ridge;
   background-color: aliceblue;
@@ -423,7 +427,7 @@ h4, p {
 }
 
 canvas {
-    background-color: antiquewhite;
+  background-color: antiquewhite;
 }
 
 p{
@@ -431,5 +435,29 @@ p{
 }
 
 .customUpload{
-  margin: 44px 74px 4px 186px;
+  margin: 44px 315px 3px 395px;
+}
+.customUpload1{
+  margin: 44px 463px -15px 384px;
+}
+.dropzone{
+  width: 326px;
+  height: 200px;
+  border-width: 2px;
+  border-color: cornsilk;
+  border-style: groove;
+  border-radius: 5px;
+  background-color: beige;
+}
+
+.sourcefooter{
+  margin: 10px 1px 1px 84px;
+}
+
+.textDrop{
+  margin: 63px 1px 1px 2px;
+}
+
+.customStrong {
+  margin: 1px 1px 1px 520px;
 }
