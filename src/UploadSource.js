@@ -10,9 +10,9 @@
 
 import React, { Component } from 'react';
 import './App.css';
+import Footer from './Footer';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router';
-import Footer from './Footer';
 import { FormControl } from 'react-bootstrap';
 import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
@@ -113,7 +113,7 @@ class UploadSource extends Component {
         result = JSON.parse(result)
         if (result.success !== false) {
             countSuccess++;
-          _this.setState({message: "Uploaded " + countSuccess + " files", uploaded: 'success'})
+          _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
           if((countSuccess + countFailure) === (global.base64_arr).length){  
             _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
           }        
