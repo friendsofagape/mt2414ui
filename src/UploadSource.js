@@ -10,12 +10,32 @@
 
 import React, { Component } from 'react';
 import './App.css';
-import Header from './Header';
 import Footer from './Footer';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Link } from 'react-router';
 import { FormControl } from 'react-bootstrap';
 import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+
+class Header extends Component {
+  render() {
+    return (
+        <Navbar inverse collapseOnSelect fixedTop >
+        <Navbar.Header><Navbar.Brand>
+            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
+          </Navbar.Brand><Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse >
+          <Nav className="customHeaderAdmin">
+            <NavItem eventKey={1} ><Link to={'/admin'}>Upload Source</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}>Log out</Link></NavItem>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    );
+  }
+}
 
 class UploadSource extends Component {
   constructor(props) {
@@ -86,22 +106,27 @@ class UploadSource extends Component {
         data : JSON.stringify(data),
         method : "POST",
         headers: {
-                  "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)
+                  "Authorization": "bearer " + accessToken
         },
+      beforeSend: function () {
+          $(".modal").show();
+      },
         // eslint-disable-next-line
         success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false) {
             countSuccess++;
-          _this.setState({message: "Uploaded " + countSuccess + " files", uploaded: 'success'})
+          _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
           if((countSuccess + countFailure) === (global.base64_arr).length){  
             _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+            $(".modal").hide();
           }        
         }else {
           countFailure++;
           _this.setState({message: result.message, uploaded: 'failure'})
           if((countSuccess + countFailure) === (global.base64_arr).length){   
              _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+             $(".modal").hide();
           } 
         }
         }
@@ -120,7 +145,7 @@ class UploadSource extends Component {
                 <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-                <strong>No Changes. Existing source is already up-to-date</strong>
+                <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
@@ -142,6 +167,11 @@ class UploadSource extends Component {
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div className="modal" style={{display: 'none'}}>
+                    <div className="center">
+                        <img alt="" src={require('./Images/loader.gif')} />
+                    </div>
                   </div>
               </div>
           </form>
