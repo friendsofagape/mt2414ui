@@ -108,6 +108,9 @@ class UploadSource extends Component {
         headers: {
                   "Authorization": "bearer " + accessToken
         },
+      beforeSend: function () {
+          $(".modal").show();
+      },
         // eslint-disable-next-line
         success: function (result) {
         result = JSON.parse(result)
@@ -116,12 +119,14 @@ class UploadSource extends Component {
           _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
           if((countSuccess + countFailure) === (global.base64_arr).length){  
             _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+            $(".modal").hide();
           }        
         }else {
           countFailure++;
           _this.setState({message: result.message, uploaded: 'failure'})
           if((countSuccess + countFailure) === (global.base64_arr).length){   
              _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+             $(".modal").hide();
           } 
         }
         }
@@ -140,7 +145,7 @@ class UploadSource extends Component {
                 <strong>{this.state.message}</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-                <strong>No Changes. Existing source is already up-to-date</strong>
+                <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
@@ -162,6 +167,11 @@ class UploadSource extends Component {
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div className="modal" style={{display: 'none'}}>
+                    <div className="center">
+                        <img alt="" src={require('./Images/loader.gif')} />
+                    </div>
                   </div>
               </div>
           </form>
