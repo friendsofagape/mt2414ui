@@ -60,14 +60,12 @@ class SuperAdmin extends Component {
           _this.setState({getAllEmails: getEmail.length > 0 ? getEmail: []})
         },
         error: function (error) {
-          console.log(error)
         }
       });
   }
   
   //for Approve as Admin
   approveAdmin(obj){
-    console.log(obj)
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
@@ -80,7 +78,6 @@ class SuperAdmin extends Component {
     success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false){
-          console.log(result.message)
           _this.setState({message: result.message, uploaded: 'success'})
         }
         else {
@@ -96,7 +93,6 @@ class SuperAdmin extends Component {
 
   //for set Member
   setMember(obj){
-    console.log(obj)
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
@@ -109,7 +105,6 @@ class SuperAdmin extends Component {
     success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false){
-          console.log(result.message)
           _this.setState({message: result.message, uploaded: 'success'})
         }
         else {
@@ -149,7 +144,7 @@ class SuperAdmin extends Component {
                     return (
                       <tr key={index}>
                         <td>
-                          <li key={index}>{data}</li>
+                          <li key={index}><i className="fa fa-envelope fa-fw"></i>{data}</li>
                         </td>
                         <td>
                           <a href="#" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
