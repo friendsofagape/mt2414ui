@@ -40,7 +40,7 @@ class Tabs extends Component {
       <ul className="nav nav-tabs customTab">
         {tabData.map(function(tab, i){
           return (
-            <Tab key={i} data={tab} isActive={this.props.activeTab === tab} handleClick={this.props.changeTab.bind(this,tab)} />
+            <Tab key={i} data={tab} isActive={this.props.activeTab === tab} />
           );
         }.bind(this))}      
       </ul>
@@ -53,7 +53,7 @@ class Tabs extends Component {
 class Tab extends Component{
   render() {
     return (
-      <li onClick={this.props.handleClick} className={this.props.isActive ? "active" : null}>
+      <li  className={this.props.isActive ? "active" : null}>
         <a href="#">{this.props.data.name}</a>
       </li>
     );
@@ -66,7 +66,7 @@ class GetTranslationDraft extends Component {
     super(props);
     this.state = {
       sourcelang:'tam',
-      targetlang:'mal',
+      targetlang:'Choose',
       version: 'ULB',
       revision: '',
       bookName: '',
@@ -89,17 +89,8 @@ class GetTranslationDraft extends Component {
       this.onSelectVersion = this.onSelectVersion.bind(this);
       this.onSelectRevision = this.onSelectRevision.bind(this);
       this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
-      this.handleClick = this.handleClick.bind(this);
-
   }
   
-    handleClick(tab){
-    this.setState({
-      activeTab: tab,
-      dataDisplay: tab.name
-    });
-  }
-
   componentWillMount = () => {
     this.selectedCheckboxes1 = new Set();
   }
@@ -198,6 +189,7 @@ class GetTranslationDraft extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
+        _this.getChartData();
         var getAllBook = JSON.parse(result);
         _this.setState({getAllBooks: getAllBook.length > 0 ? getAllBook : []})
       },
@@ -240,7 +232,6 @@ class GetTranslationDraft extends Component {
         result = JSON.parse(result)
           if (result.success !== false) {
           _this.exportToUSFMFile(result)
-          _this.getChartData()
           _this.setState({message: result.message, uploaded: 'success'})
         }else {
           _this.setState({message: result.message, uploaded: 'failure'})
@@ -273,7 +264,7 @@ class GetTranslationDraft extends Component {
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang
     }
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/tokencount",
@@ -325,7 +316,7 @@ class GetTranslationDraft extends Component {
           <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon">Download Translation Draft</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg1' : 'invisible')}>
-                <strong>{this.state.message}</strong>
+                <strong>Translation Generated Successfully</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg1': 'invisible')}>
                 <strong>{this.state.message}</strong>
@@ -335,40 +326,39 @@ class GetTranslationDraft extends Component {
                 <ListLanguages 
                   onChange={this.onSelectSource} 
                 />
+              <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
+              <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
+                <option>Choose</option>
+                { 
+                  Object.keys(TargetLanguages[0]).map(function(v, i) {
+                    return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
+                  })
+                }    
+              </FormControl>&nbsp;&nbsp;
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
                   version={this.state.getVersions} 
                   onChange={this.onSelectVersion} 
                 />
               <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
+                
                 <RevisionNumber
                   revision={this.state.getRevision}  
                   Sourcelanguage={this.state.Sourcelanguage} 
                   Version={this.state.Version} 
                   onChange={this.onSelectRevision}
                 />
-                <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-                    <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                      { 
-                        Object.keys(TargetLanguages[0]).map(function(v, i) {
-                          return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
-                        })
-                      }    
-                    </FormControl>&nbsp;&nbsp;
               </div>&nbsp;
               <div>
-                <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-                <section className="panel panel-success" >
-              <div style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} } >
-              <Chart 
-                chartData={this.state.chartData}
-                revision={this.state.getRevision}  
-                Sourcelanguage={this.state.Sourcelanguage} 
-                Version={this.state.Version} 
-                location="Bar Chart" legendPosition="bottom"
-              />
-              </div>
-                  <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
+               
+                <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} } >
+                <Chart 
+                  chartData={this.state.chartData}
+                  targetlang={this.state.targetlang}
+                  location="Bar Chart" legendPosition="bottom"
+                />
+                <Tabs activeTab={this.state.activeTab}/>
+                <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
                 </section>
               </div>
                 <div className="form-group"> 
