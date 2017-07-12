@@ -27,7 +27,7 @@ class UploadTokens extends Component {
       language:'tam',
       version: '',
       revision: '',
-      targetlang: 'Choose',
+      targetlang: '',
       tokenwords: {},
       uploaded:'Uploading',
       message: '',
@@ -194,7 +194,7 @@ class UploadTokens extends Component {
                   }    
                 </FormControl>&nbsp;&nbsp;
             </div>&nbsp;
-            <section style={this.state.targetlang === 'Choose' ? {display:'none'} : {display: 'inline'} }>
+            <section style={this.state.targetlang === '' ? {display:'none'} : {display: 'inline'} }>
               <div className="form-group customUpload1" >
                 <div className="form-control">
                   <input id="file-input" type="file" className="fileInput" multiple />
@@ -202,7 +202,7 @@ class UploadTokens extends Component {
               </div>
             </section>
                 <div className="form-group customUpload">
-                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens}><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                 </div>
                   <div className="modal" style={{display: 'none'}}>
                     <div className="center">

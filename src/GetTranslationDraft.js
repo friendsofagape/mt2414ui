@@ -362,7 +362,7 @@ class GetTranslationDraft extends Component {
                 </section>
               </div>
                 <div className="form-group"> 
-                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.DowloadDraft}><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.DowloadDraft} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
                 </div>
                 <div className="modal" style={{display: 'none'}}>
                     <div className="center">

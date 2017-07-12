@@ -64,7 +64,7 @@ class DownloadTokens extends Component {
       sourcelang:'',
       version: '',
       revision: '',
-      targetlang:'Choose',
+      targetlang:'',
       books: [],
       nbooks: [],
       uploaded:'uploadingStatus',
@@ -352,7 +352,7 @@ class DownloadTokens extends Component {
             </section>
             </div>
             <div className="form-group">
-              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}   ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div className="modal" style={{display: 'none'}}>
               <div className="center">
