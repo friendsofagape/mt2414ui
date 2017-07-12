@@ -64,7 +64,7 @@ class DownloadTokens extends Component {
       sourcelang:'',
       version: '',
       revision: '',
-      targetlang:'tam',
+      targetlang:'Choose',
       books: [],
       nbooks: [],
       uploaded:'uploadingStatus',
@@ -75,7 +75,7 @@ class DownloadTokens extends Component {
       getVersions: [],
       getRevision: [],
       Sourcelanguage: '',
-      getAllBooks: [],
+      getAllBooks: '',
     }
 
     // Upload file specific callback handlers
@@ -163,20 +163,20 @@ class DownloadTokens extends Component {
         "language": e.target.value
       }
       $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/version",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      success: function (result) {
-        var getVer = JSON.parse(result);
-        _this.setState({getVersions: getVer.length > 0 ? getVer : []})
-      },
-      error: function (error) {
-      }
-    });
+        url: GlobalURL["hostURL"]+"/v1/version",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data),
+        method : "POST",
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getVer = JSON.parse(result);
+          _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+        },
+        error: function (error) {
+        }
+      });
   }
 
   //onSelectVersion for Dynamic Revision
@@ -189,20 +189,20 @@ class DownloadTokens extends Component {
         "language": this.state.Sourcelanguage, "version" : e.target.value
       }
       $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/revision",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      success: function (result) {
-        var getRev = JSON.parse(result);
-        _this.setState({getRevision: getRev.length > 0 ? getRev : []})
-      },
-      error: function (error) {
-      }
-    });
+        url: GlobalURL["hostURL"]+"/v1/revision",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data),
+        method : "POST",
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getRev = JSON.parse(result);
+          _this.setState({getRevision: getRev.length > 0 ? getRev : []})
+        },
+        error: function (error) {
+        }
+      });
   }
 
   //onSelectRevision for Dynamic list of the books
@@ -212,22 +212,21 @@ class DownloadTokens extends Component {
       var data = { 
         "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
       }
-      console.log(data)
       $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/book",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      success: function (result) {
-        var getAllBook = JSON.parse(result);
-        _this.setState({getAllBooks: getAllBook.length > 0 ? getAllBook : []})
-      },
-      error: function (error) {
-      }
-    });
+        url: GlobalURL["hostURL"]+"/v1/book",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data),
+        method : "POST",
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getAllBook = JSON.parse(result);
+          _this.setState({getAllBooks: getAllBook.length > 0 ? getAllBook : []})
+        },
+        error: function (error) {
+        }
+      });
   }
 
 // For Downloads Token words
@@ -250,7 +249,6 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "nbooks":global.nbooks, "books": global.books 
     }
-    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     
     $.ajax({
@@ -340,6 +338,7 @@ class DownloadTokens extends Component {
                 </FormControl>&nbsp;&nbsp;
             </div>&nbsp;
             <div>
+            <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
              <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
               <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Include Books</h4>
@@ -350,6 +349,7 @@ class DownloadTokens extends Component {
                 <h4 className="panel-heading">Exclude Books</h4>
                 <div className="exclude1">{this.createCheckboxes2(this, this.state.getAllBooks)}</div>
               </section>
+            </section>
             </div>
             <div className="form-group">
               <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
