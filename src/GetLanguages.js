@@ -25,7 +25,6 @@ class GetLanguages extends Component {
       version: ''
     }
       // Upload file specific callback handlers
-      this.getLanguages = this.getLanguages.bind(this);
       this.getBooks = this.getBooks.bind(this);
   }
   
@@ -37,7 +36,8 @@ class GetLanguages extends Component {
       contentType: "application/json; charset=utf-8",
       method : "POST",
       headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+                "Authorization": "bearer " + accessToken
+      },
       success: function (result) {
         var getLang = JSON.parse(result);
         _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
@@ -45,28 +45,6 @@ class GetLanguages extends Component {
       error: function (error) {
       }
     });
-  }
-  
-  getLanguages(e){
-    e.preventDefault();
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-    
-    var _this = this;
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/get_languages",
-      contentType: "application/json; charset=utf-8",
-      method : "POST",
-      headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
-      success: function (result) {
-        var getLang = JSON.parse(result);
-        _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
-      },
-      error: function (error) {
-
-      }
-    });   
-    
   }
 
   getBooks(obj){        
@@ -78,7 +56,8 @@ class GetLanguages extends Component {
       data: JSON.stringify(obj),
       method : "POST",
       headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1)},
+        "Authorization": "bearer " + accessToken
+      },
       success: function (result) {
         var getBook = JSON.parse(result);
         _this.setState({getBooks: getBook.length > 0 ? getBook : []})

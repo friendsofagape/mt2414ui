@@ -52,7 +52,7 @@ class GenerateConcordance extends Component {
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-                "Authorization": "bearer " + JSON.stringify(accessToken['access_token']).slice(1,-1),
+                "Authorization": "bearer " + accessToken
       },
       success: function (result) {
         result = JSON.parse(result)
