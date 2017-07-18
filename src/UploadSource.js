@@ -13,10 +13,10 @@ import './App.css';
 import Footer from './Footer';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router';
-import { FormControl } from 'react-bootstrap';
-import SourceLanguages from './SourceLanguages';
+import ListLanguages from './Component/ListLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import Versions from './Component/Versions';
 
 class Header extends Component {
   render() {
@@ -28,8 +28,9 @@ class Header extends Component {
         </Navbar.Header>
         <Navbar.Collapse >
           <Nav className="customHeaderAdmin">
-            <NavItem eventKey={1} ><Link to={'/admin'}>Upload Source</Link></NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Log out</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/createsource'}>Create Source</Link></NavItem>
+            <NavItem eventKey={2} ><Link to={'/admin'}>Upload Source</Link></NavItem>
+            <NavItem eventKey={3} ><Link to={'/homepage'}>Log out</Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -41,19 +42,22 @@ class UploadSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language:'tam',
+      sourcelang:'tam',
       version: '',
+      getVersions: [],
       base64_arr: [],
       uploaded:'Uploading',
       message: ''
     }
 
-      // Upload file specific callback handlers
-      this.uploadFile = this.uploadFile.bind(this);
-      this.onSelect = this.onSelect.bind(this);
-      this.file_base64 = this.file_base64.bind(this);
+    // Upload file specific callback handlers
+    this.uploadFile = this.uploadFile.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.file_base64 = this.file_base64.bind(this);
+    this.onSelectSource = this.onSelectSource.bind(this);
+
   }
-  
+
   onSelect(e) {
     this.setState({
       [e.target.name]: e.target.value });
@@ -82,6 +86,32 @@ class UploadSource extends Component {
     
   }
 
+  //onSelectSource for Dynamic Versions
+  onSelectSource(e) {
+
+      this.setState({ Sourcelanguage: e.target.value });
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      var data = { 
+        "language": e.target.value
+      }
+      $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/version",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data),
+        method : "POST",
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getVer = JSON.parse(result);
+          _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+        },
+        error: function (error) {
+        }
+      });
+  }
+
   uploadFile(e){
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
@@ -94,7 +124,7 @@ class UploadSource extends Component {
     var _this = this
     for(var i = 0; i < (global.base64_arr).length; i++){
       var data = { 
-        "language": this.state.language, "version": this.state.version, "content": [global.base64_arr[i]]
+        "language": this.state.sourcelang, "version": this.state.getVersions[0], "content": [global.base64_arr[i]]
       }
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       var countSuccess = 0;
@@ -149,24 +179,22 @@ class UploadSource extends Component {
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
-                    <FormControl value={this.state.language} onChange={this.onSelect} name="language" componentClass="select" placeholder="select">
-                      { 
-                        Object.keys(SourceLanguages[0]).map(function(v, i) {
-                          return(<option  key={i} value={v}>{SourceLanguages[0][v]}</option>)
-                        })
-                      }
-                    </FormControl>
+                <ListLanguages 
+                  onChange={this.onSelectSource} 
+                />
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
+                <Versions 
+                  version={this.state.getVersions} 
+                />
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
                   <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} multiple />
                 </div>&nbsp;
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
+                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
                   </div>
                   <div className="modal" style={{display: 'none'}}>
                     <div className="center">
