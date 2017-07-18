@@ -28,7 +28,7 @@ class Header extends Component {
         <Navbar.Collapse >
           <Nav className="customHeader">
             <NavItem eventKey={1} ><Link to={'/signup'}>Sign up</Link></NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span> Sign in</Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -128,7 +128,7 @@ class ResetPassword extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onResetPassword} className="col-md-8 signupCustom">
           <h1 className="forgot-header"><span className="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Reset Password ?</h1>&nbsp;
-          <p className="textP">Enter your registered email id.</p>
+          <p className="textP">Enter your registered email Id, we'll send you a password reset email</p>
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
