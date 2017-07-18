@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import SignupForm from './SignupForm';
 import UploadSource from './UploadSource';
+import CreateSource from './CreateSource';
 import DownloadTokens from './DownloadTokens';
 import GetConcordances from './GetConcordances';
 import GenerateConcordance from './GenerateConcordance';
@@ -16,6 +17,7 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
+
 
 const store = createStore(
       (state = {}) => state,
@@ -34,6 +36,7 @@ ReactDOM.render(
           <Router history={browserHistory}>
             <Route path="/superadmin" component={SuperAdmin}/>
             <Route path="/admin" component={HomePage} />
+            <Route path="/createsource" component={HomePage}/>
             <Route path="/getlanguages" component={HomePage}/>
             <Route path="/downloadtokens" component={HomePage}/>
             <Route path="/uploadtokens" component={HomePage}/>
@@ -43,11 +46,13 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
+            
           </Router>
           ) : (
           (accessToken && userRole === 'admin') ? (
           <Router history={browserHistory}>
             <Route path="/admin" component={UploadSource} />
+            <Route path="/createsource" component={CreateSource}/>
             <Route path="/superadmin" component={HomePage}/>
             <Route path="/getlanguages" component={HomePage}/>
             <Route path="/downloadtokens" component={HomePage}/>
@@ -64,6 +69,7 @@ ReactDOM.render(
             <Router history={browserHistory}>
               <Route path="/superadmin" component={HomePage}/>
               <Route path="/admin" component={HomePage} />
+              <Route path="/createsource" component={HomePage}/>
               <Route path="/getlanguages" component={GetLanguages}/>
               <Route path="/downloadtokens" component={DownloadTokens}/>
               <Route path="/uploadtokens" component={UploadTokens}/>
@@ -78,6 +84,7 @@ ReactDOM.render(
            <Router history={browserHistory}>
             <Route path="/superadmin" component={HomePage}/>
             <Route path="/admin" component={HomePage} />
+            <Route path="/createsource" component={HomePage}/>
             <Route path="/getlanguages" component={HomePage}/>
             <Route path="/downloadtokens" component={HomePage}/>
             <Route path="/uploadtokens" component={HomePage}/>
