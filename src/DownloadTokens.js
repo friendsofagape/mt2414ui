@@ -75,7 +75,7 @@ class DownloadTokens extends Component {
       getVersions: [],
       getRevision: [],
       Sourcelanguage: '',
-      getAllBooks: '',
+      getAllBooks: ''
     }
 
     // Upload file specific callback handlers
@@ -222,6 +222,7 @@ class DownloadTokens extends Component {
         },
         success: function (result) {
           var getAllBook = JSON.parse(result);
+
           _this.setState({getAllBooks: getAllBook.length > 0 ? getAllBook : []})
         },
         error: function (error) {
@@ -237,6 +238,7 @@ class DownloadTokens extends Component {
 
     // eslint-disable-next-line
     for (const books of this.selectedCheckboxes1) {  
+      console.log(this.selectedCheckboxes1)
       global.books = Array.from(this.selectedCheckboxes1);
     }
 
@@ -249,6 +251,7 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "nbooks":global.nbooks, "books": global.books 
     }
+    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     
     $.ajax({
@@ -297,6 +300,20 @@ class DownloadTokens extends Component {
         a.click();
   }
 
+  allSelect(obj1, obj2) {
+    console.log(obj1)
+    console.log(obj2)
+    var bookSelectAll = document.getElementsByClassName("bookList");
+    for(var i=0; i< bookSelectAll.length; i++){
+        // console.log(bookSelectAll[i].value)
+       if(bookSelectAll[i].checked === false){
+        bookSelectAll[i].checked = true;
+      } else {
+         bookSelectAll[i].checked = false;
+      }
+   }
+  }
+
   render() {
     return(
       <div className="container">
@@ -342,17 +359,23 @@ class DownloadTokens extends Component {
              <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
               <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Include Books</h4>
-                <div className="exclude1" >{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
+                <div className="exclude1" >
+                <input type="checkbox" name="check_all" onClick={this.allSelect.bind(this, this.state.getAllBooks)}  /> Select All<br/>
+                  {this.createCheckboxes1(this, this.state.getAllBooks)}
+                </div>
               </section>
 
               <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Exclude Books</h4>
-                <div className="exclude1">{this.createCheckboxes2(this, this.state.getAllBooks)}</div>
+                <div className="exclude1">
+                <input type="checkbox" name="check_all" onClick={this.allSelect.bind(this, this.state.getAllBooks)}  /> Select All<br/>
+                   {this.createCheckboxes2(this, this.state.getAllBooks)}
+                </div>
               </section>
             </section>
             </div>
             <div className="form-group">
-              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}   ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div className="modal" style={{display: 'none'}}>
               <div className="center">
