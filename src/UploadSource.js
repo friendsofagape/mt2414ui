@@ -42,7 +42,7 @@ class UploadSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sourcelang:'tam',
+      sourcelang:'',
       version: '',
       getVersions: [],
       base64_arr: [],
@@ -124,8 +124,9 @@ class UploadSource extends Component {
     var _this = this
     for(var i = 0; i < (global.base64_arr).length; i++){
       var data = { 
-        "language": this.state.sourcelang, "version": this.state.getVersions[0], "content": [global.base64_arr[i]]
+        "language": this.state.Sourcelanguage, "version": this.state.getVersions[0], "content": [global.base64_arr[i]]
       }
+      
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       var countSuccess = 0;
       var countFailure = 0;
