@@ -36,11 +36,11 @@ class UploadTokens extends Component {
       Sourcelanguage: '',
     }
 
-      // Upload file specific callback handlers
-      this.uploadTokens = this.uploadTokens.bind(this);
-      this.onSelect = this.onSelect.bind(this);
-      this.onSelectVersion = this.onSelectVersion.bind(this);
-      this.onSelectSource = this.onSelectSource.bind(this);
+    // Upload file specific callback handlers
+    this.uploadTokens = this.uploadTokens.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.onSelectVersion = this.onSelectVersion.bind(this);
+    this.onSelectSource = this.onSelectSource.bind(this);
   }
   
   onSelect(e) {
@@ -100,66 +100,52 @@ class UploadTokens extends Component {
     });
   }
 
-  //for upload tokens
-  uploadTokens(e){
-    var _this = this;
-    let file = document.getElementById('file-input').files[0];
-    var allRows = [];
-    var tokenwords = {};
-    if (file) {
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (evt) {
-        allRows = evt.target.result.split(/\r?\n|\r/);
-        for(var singleRow = 0; singleRow < allRows.length; singleRow++) {
-          let token = allRows[singleRow].split(",");
-            tokenwords[token[0]] = token[1];
-        }
-        var data = {
-            "language": _this.state.Sourcelanguage, "version": _this.state.Version, "revision": _this.state.getRevision[0] , "targetlang": _this.state.targetlang, "tokenwords": tokenwords
-          }
-          
-        let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-        $.ajax({
-          url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
-          contentType: "application/json; charset=utf-8",
-          data : JSON.stringify(data),
-          method : "POST",
-          headers: {
-            "Authorization": "bearer " + accessToken
-          },
-          beforeSend: function () {
-            $(".modal").show();
-          },
-          complete: function () {
-            $(".modal").hide();
-          },
-          success: function (result) {
-             result = JSON.parse(result)
-            _this.setState({uploaded: result.success ? 'success' : ''})
-            _this.setState({message: result.message})
-
-          },
-          error: function (error) {
-           _this.setState({message: error.message, uploaded: 'failure'})
-          }
-        });      
-      }
-      reader.onerror = function (evt) {
-          allRows = []
-      }
-    }
+  //for upload tokens using FormData
+  uploadTokens(e){   
     e.preventDefault();    
-  }
+    var _this = this;
+    var uploadForm = document.getElementById("upload_form");
+    var formData = new FormData(uploadForm);
+    formData.append('tokenwords', $('input[type=file]')[0].files[0]);
+    formData.append('language', _this.state.Sourcelanguage)
+    formData.append('version', _this.state.Version)
+    formData.append('revision', _this.state.getRevision[0])
+    formData.append('targetlang', _this.state.targetlang)
+    
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
+      processData: false,
+      contentType: false,
+      data : formData,
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      beforeSend: function () {
+        $(".modal").show();
+      },
+      complete: function () {
+        $(".modal").hide();
+      },
+      success: function (result) {
+         result = JSON.parse(result)
+        _this.setState({uploaded: result.success ? 'success' : ''})
+        _this.setState({message: result.message})
+      },
+      error: function (error) {
+       _this.setState({message: error.message, uploaded: 'failure'})
+      }
+    });      
+  }
 
   render() {
     return(
       <div className="container">
         <Header/ >
         <div className="row">
-          <form className="col-md-12 uploader" encType="multipart/form-data">
+          <form className="col-md-12 uploader" id="upload_form" encType="multipart/form-data">
             <h1 className="source-headerCon1">Upload Tokens</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
@@ -170,19 +156,19 @@ class UploadTokens extends Component {
             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                  onChange={this.onSelectSource} 
+                              onChange={this.onSelectSource} 
                 />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
-                  version={this.state.getVersions} 
-                  onChange={this.onSelectVersion} 
+                          version={this.state.getVersions} 
+                          onChange={this.onSelectVersion} 
                 />
               <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
                 <RevisionNumber
-                  revision={this.state.getRevision}  
-                  Sourcelanguage={this.state.Sourcelanguage} 
-                  Version={this.state.Version} 
-                  onChange={this.onSelectRevision}
+                              revision={this.state.getRevision}  
+                              Sourcelanguage={this.state.Sourcelanguage} 
+                              Version={this.state.Version} 
+                              onChange={this.onSelectRevision}
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
                 <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
@@ -197,7 +183,7 @@ class UploadTokens extends Component {
             <section style={this.state.targetlang === '' ? {display:'none'} : {display: 'inline'} }>
               <div className="form-group customUpload1" >
                 <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" multiple />
+                  <input className="input-file" type="file" id="fileInput" multiple />
                 </div>&nbsp;
               </div>
             </section>
@@ -206,7 +192,7 @@ class UploadTokens extends Component {
                 </div>
                   <div className="modal" style={{display: 'none'}}>
                     <div className="center">
-                        <img alt="" src={require('./Images/loader.gif')} />
+                      <img alt="" src={require('./Images/loader.gif')} />
                     </div>
                   </div>
           </form>
