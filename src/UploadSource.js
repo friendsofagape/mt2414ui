@@ -126,7 +126,6 @@ class UploadSource extends Component {
       var data = { 
         "language": this.state.Sourcelanguage, "version": this.state.getVersions[0], "content": [global.base64_arr[i]]
       }
-      
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       var countSuccess = 0;
       var countFailure = 0;
