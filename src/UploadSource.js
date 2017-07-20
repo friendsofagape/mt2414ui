@@ -5,6 +5,7 @@
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
  *  - version: version of source language
+ *  - source_id: source_id also pass in request
  *  - base64_arr: file in the form of base64
 */
 
@@ -21,6 +22,7 @@ import Versions from './Component/Versions';
 class Header extends Component {
   render() {
     return (
+      <div>
         <Navbar inverse collapseOnSelect fixedTop >
         <Navbar.Header><Navbar.Brand>
             <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
@@ -34,6 +36,7 @@ class Header extends Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+    </div>
     );
   }
 }
@@ -45,6 +48,7 @@ class UploadSource extends Component {
       sourcelang:'',
       version: '',
       getVersions: [],
+      allSourceID: '',
       base64_arr: [],
       uploaded:'Uploading',
       message: ''
@@ -55,7 +59,7 @@ class UploadSource extends Component {
     this.onSelect = this.onSelect.bind(this);
     this.file_base64 = this.file_base64.bind(this);
     this.onSelectSource = this.onSelectSource.bind(this);
-
+    this.onSelectVersion = this.onSelectVersion.bind(this);
   }
 
   onSelect(e) {
@@ -88,15 +92,39 @@ class UploadSource extends Component {
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
+    this.setState({ Sourcelanguage: e.target.value });
+    var _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    var data = { 
+      "language": e.target.value
+    }
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/version",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getVer = JSON.parse(result);
+        _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+      },
+      error: function (error) {
+      }
+    });
+  }
 
-      this.setState({ Sourcelanguage: e.target.value });
+  //onSelectVersion for Dynamic Revision
+  onSelectVersion(e) {
+      this.setState({ Version: e.target.value });
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
-        "language": e.target.value
+        "language": this.state.Sourcelanguage, "version" : e.target.value
       }
       $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/version",
+        url: GlobalURL["hostURL"]+"/v1/sourceid",
         contentType: "application/json; charset=utf-8",
         data : JSON.stringify(data),
         method : "POST",
@@ -104,14 +132,15 @@ class UploadSource extends Component {
           "Authorization": "bearer " + accessToken
         },
         success: function (result) {
-          var getVer = JSON.parse(result);
-          _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+          var sourceID = JSON.parse(result);
+          _this.setState({allSourceID: sourceID})
         },
         error: function (error) {
         }
       });
   }
 
+//upload file with SourceID
   uploadFile(e){
     e.preventDefault();
     var ext = $('#file-input').val().split('.').pop().toLowerCase();
@@ -124,7 +153,7 @@ class UploadSource extends Component {
     var _this = this
     for(var i = 0; i < (global.base64_arr).length; i++){
       var data = { 
-        "language": this.state.Sourcelanguage, "version": this.state.getVersions[0], "content": [global.base64_arr[i]]
+        "source_id": this.state.allSourceID, "content": [global.base64_arr[i]]
       }
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       var countSuccess = 0;
@@ -180,13 +209,14 @@ class UploadSource extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                 <ListLanguages 
-                  onChange={this.onSelectSource} 
+                              onChange={this.onSelectSource} 
                 />
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
                 <Versions 
-                  version={this.state.getVersions} 
+                         version={this.state.getVersions} 
+                         onChange={this.onSelectVersion}
                 />
               </div>&nbsp;
               <div className="form-group">
