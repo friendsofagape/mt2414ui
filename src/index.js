@@ -17,6 +17,7 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
+var jwtDecode = require('jwt-decode');
 
 
 const store = createStore(
@@ -25,14 +26,16 @@ const store = createStore(
 );
 
 let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-let userRole = JSON.parse(window.localStorage.getItem('role'))
+if(accessToken){
+  var decoded = jwtDecode(accessToken);
+}
 
 ReactDOM.render(
   <Provider path="/" store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={HomePage} />
       <Route path="/homepage" component={HomePage} />
-       { (accessToken && userRole === 'superadmin') ? (
+       { (accessToken && decoded.role === 'superadmin') ? (
           <Router history={browserHistory}>
             <Route path="/superadmin" component={SuperAdmin}/>
             <Route path="/admin" component={HomePage} />
@@ -49,7 +52,7 @@ ReactDOM.render(
             
           </Router>
           ) : (
-          (accessToken && userRole === 'admin') ? (
+          (accessToken && decoded.role === 'admin') ? (
           <Router history={browserHistory}>
             <Route path="/admin" component={UploadSource} />
             <Route path="/createsource" component={CreateSource}/>
@@ -65,7 +68,7 @@ ReactDOM.render(
             <Route path="/forgotpassword" component={ForgotPassword}/>
           </Router>
           ) : (
-          (accessToken && userRole === 'member') ? (
+          (accessToken && decoded.role === 'member') ? (
             <Router history={browserHistory}>
               <Route path="/superadmin" component={HomePage}/>
               <Route path="/admin" component={HomePage} />
