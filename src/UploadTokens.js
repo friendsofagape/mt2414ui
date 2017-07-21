@@ -76,7 +76,6 @@ class UploadTokens extends Component {
 
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
-
       this.setState({ Version: e.target.value });
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
