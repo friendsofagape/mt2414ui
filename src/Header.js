@@ -13,7 +13,7 @@ class Header extends Component {
         <Navbar.Collapse>
           <Nav>
             <NavItem eventKey={2} ><Link to={'/getlanguages'}>Available Source Texts</Link></NavItem>
-            <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Wordlist</Link> </NavItem>
+            <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Tokens</Link> </NavItem>
             <NavItem eventKey={5} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
             <NavItem eventKey={8} ><Link to={'/gettranslationdraft'}>Download Translation Draft</Link> </NavItem>
             <NavItem eventKey={1} ><Link to={'/homepage'}>Log out</Link></NavItem>

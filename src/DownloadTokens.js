@@ -21,6 +21,9 @@ import booksName2 from './BookName';
 import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
+import BookNameforCheckBox from './BookNameforCheckBox';
+
+console.log(BookNameforCheckBox[0].OT[0].OT_Narratives[0]);
 
 var tabData = [
   { name: 'Include Books', isActive: true },
@@ -236,16 +239,26 @@ class DownloadTokens extends Component {
     global.books = [];
     global.nbooks= [];
 
+    var bookSelectAll = document.getElementsByClassName("bookList");
+    var allSelectedCheckbox = [];
+    for (var i = 0; i < bookSelectAll.length; i++) {
+      allSelectedCheckbox.push(bookSelectAll[i].value)
+    }
+
     // eslint-disable-next-line
     for (const books of this.selectedCheckboxes1) {  
-      console.log(this.selectedCheckboxes1)
       global.books = Array.from(this.selectedCheckboxes1);
+
     }
+  
+    global.books = allSelectedCheckbox;
 
     // eslint-disable-next-line
     for (const nbooks of this.selectedCheckboxes2) { 
       global.nbooks = Array.from(this.selectedCheckboxes2);
     }
+
+    global.nbooks = allSelectedCheckbox;
 
     var _this = this
     var data = { 
@@ -289,27 +302,34 @@ class DownloadTokens extends Component {
     var array = [];
     var str = '';
     array = typeof jsonData !== 'object' ? JSON.parse(jsonData) : jsonData;
-        for (var i = 0; i < array.length; i++) {
-          str += array[i] + '\n';
-        }
-        str += '\r\n';
-        var a = document.createElement('a');
-        var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
-        a.href = window.URL.createObjectURL(blob);
-        a.download = this.state.Sourcelanguage + this.state.Version + 'Tokens.xls';
-        a.click();
+    for (var i = 0; i < array.length; i++) {
+      str += array[i] + '\n';
+    }
+    str += '\r\n';
+    var a = document.createElement('a');
+    var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
+    a.href = window.URL.createObjectURL(blob);
+    a.download = this.state.Sourcelanguage + this.state.Version + 'Tokens.xls';
+    a.click();
   }
 
-  allSelect(obj1, obj2) {
-    console.log(obj1)
-    console.log(obj2)
+  allSelect() {
     var bookSelectAll = document.getElementsByClassName("bookList");
+    var checkboxes = document.getElementsByClassName("checkbox")
+    console.log(checkboxes);
+    
+    // bookSelectAll.addEventListener("change", function(e){
+    //   for (vari = 0; i < checkboxes.length; i++) { 
+    //       checkboxes[i].checked = bookSelectAll.checked;
+    //       console.log(checkboxes[i].checked)
+    //   }
+    // });
+
     for(var i=0; i< bookSelectAll.length; i++){
-        // console.log(bookSelectAll[i].value)
-       if(bookSelectAll[i].checked === false){
+      if(bookSelectAll[i].checked === false){
         bookSelectAll[i].checked = true;
       } else {
-         bookSelectAll[i].checked = false;
+        bookSelectAll[i].checked = false;
       }
    }
   }
@@ -320,7 +340,7 @@ class DownloadTokens extends Component {
         <Header/ >
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
-            <h1 className="source-headerCon1">Download Wordlist</h1>&nbsp;
+            <h1 className="source-headerCon1">Download Tokens</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
@@ -360,7 +380,7 @@ class DownloadTokens extends Component {
               <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Include Books</h4>
                 <div className="exclude1" >
-                <input type="checkbox" name="check_all" onClick={this.allSelect.bind(this, this.state.getAllBooks)}  /> Select All<br/>
+                <input className="customSelectAll" type="checkbox" name="check_all" onClick={this.allSelect.bind(this)}  /> <b>Select All Books</b><br/>
                   {this.createCheckboxes1(this, this.state.getAllBooks)}
                 </div>
               </section>
@@ -368,14 +388,14 @@ class DownloadTokens extends Component {
               <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Exclude Books</h4>
                 <div className="exclude1">
-                <input type="checkbox" name="check_all" onClick={this.allSelect.bind(this, this.state.getAllBooks)}  /> Select All<br/>
+                  <input className="customSelectAll" type="checkbox" name="check_all" onClick={this.allSelect.bind(this)}  /> <b>Select All Books</b><br/>
                    {this.createCheckboxes2(this, this.state.getAllBooks)}
                 </div>
               </section>
             </section>
             </div>
             <div className="form-group">
-              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div className="modal" style={{display: 'none'}}>
               <div className="center">
