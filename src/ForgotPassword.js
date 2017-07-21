@@ -19,6 +19,7 @@ import GlobalURL from './GlobalURL';
 class Header extends Component {
   render() {
     return (
+      <div>
         <Navbar inverse collapseOnSelect fixedTop >
         <Navbar.Header><Navbar.Brand>
             <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
@@ -31,6 +32,7 @@ class Header extends Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+    </div>
     );
   }
 }
@@ -79,7 +81,6 @@ class ForgotPassword extends Component {
   }
 
 //Showing input error for each field 
-
   showInputError(refName) {
     const validity = this.refs[refName].validity;
     const label = document.getElementById(`${refName}Label`).textContent;
