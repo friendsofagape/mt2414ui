@@ -183,7 +183,7 @@ class UploadTokens extends Component {
             <section style={this.state.targetlang === '' ? {display:'none'} : {display: 'inline'} }>
               <div className="form-group customUpload1" >
                 <div className="form-control">
-                  <input className="input-file" type="file" id="fileInput" multiple />
+                  <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
                 </div>&nbsp;
               </div>
             </section>
