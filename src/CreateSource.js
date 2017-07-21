@@ -20,6 +20,7 @@ import GlobalURL from './GlobalURL';
 class Header extends Component {
   render() {
     return (
+      <div>
         <Navbar inverse collapseOnSelect fixedTop >
         <Navbar.Header><Navbar.Brand>
             <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
@@ -33,6 +34,7 @@ class Header extends Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+    </div>
     );
   }
 }
