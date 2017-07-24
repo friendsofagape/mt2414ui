@@ -296,7 +296,7 @@ class DownloadTokens extends Component {
     var a = document.createElement('a');
     var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
     a.href = window.URL.createObjectURL(blob);
-    a.download = this.state.Sourcelanguage + this.state.Version + Array.from(this.selectedCheckboxes1) + '.xls';
+    a.download = this.state.Sourcelanguage + this.state.Version + Array.from(this.selectedCheckboxes1) + 'Tokens.xls';
     a.click();
   }
 
