@@ -68,7 +68,7 @@ class DownloadTokens extends Component {
       targetlang:'',
       books: [],
       nbooks: [],
-      uploaded:'uploadingStatus',
+      uploaded:'Uploading',
       message: '',
       activeTab: tabData[0],
       activeTabValue: '',
@@ -253,7 +253,6 @@ class DownloadTokens extends Component {
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-    var value = "bearer " + accessToken;
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>2){
       var fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'to'+ bookCode[(bookCode.length)-1]+'Tokens.xlsx';
@@ -261,35 +260,35 @@ class DownloadTokens extends Component {
       fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'Tokens.xlsx';
     }
 
-   function beforeSend() {
-      document.getElementById("loading").style.display = "block";
+  function beforeSend() {
+    document.getElementById("loading").style.display = "inline";
+  }
+
+  function complete() {
+    document.getElementById("loading").style.display = "none";
+  }
+
+  var xhr = new XMLHttpRequest();
+  beforeSend();
+  xhr.open('POST', GlobalURL["hostURL"]+"/v1/getbookwiseautotokens", true);
+  xhr.responseType = 'blob';
+  xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  xhr.setRequestHeader('Authorization', "bearer " + accessToken);
+  xhr.onload = function(e) {
+    complete();
+    if (this.status === 200) {
+      var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+      var downloadUrl = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+    } 
+    else {
+      _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
     }
-
-   function complete() {
-      document.getElementById("loading").style.display = "none";
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', GlobalURL["hostURL"]+"/v1/getbookwiseautotokens", true);
-    xhr.responseType = 'blob';
-    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    xhr.setRequestHeader('Authorization', value);
-    xhr.onload = function(e) {
-      beforeSend();
-        if (this.status === 200) {
-            complete();
-            var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
-            var downloadUrl = URL.createObjectURL(blob);
-            var a = document.createElement("a");
-            a.href = downloadUrl;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-        } else {
-            alert('Unable to download excel.')
-        }
-    };
-
+  };   
     xhr.send(JSON.stringify(data)); 
   }
 
@@ -353,7 +352,7 @@ class DownloadTokens extends Component {
             <div className="form-group">
               <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
-            <div id="loading" style={{display: 'none'}}>
+            <div id="loading" className="modal">
               <div className="center">
                 <img alt="" src={require('./Images/loader.gif')} />
               </div>
