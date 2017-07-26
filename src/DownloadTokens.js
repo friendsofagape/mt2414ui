@@ -22,6 +22,7 @@ import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 
+
 var tabData = [
   { name: 'Include Books', isActive: true },
   { name: 'Exclude Books', isActive: false }
@@ -67,7 +68,7 @@ class DownloadTokens extends Component {
       targetlang:'',
       books: [],
       nbooks: [],
-      uploaded:'uploadingStatus',
+      uploaded:'Uploading',
       message: '',
       activeTab: tabData[0],
       activeTabValue: '',
@@ -75,7 +76,7 @@ class DownloadTokens extends Component {
       getVersions: [],
       getRevision: [],
       Sourcelanguage: '',
-      getAllBooks: '',
+      getAllBooks: ''
     }
 
     // Upload file specific callback handlers
@@ -84,7 +85,6 @@ class DownloadTokens extends Component {
     this.onSelectVersion = this.onSelectVersion.bind(this);
     this.onSelectRevision = this.onSelectRevision.bind(this);
     this.downloadTokenWords = this.downloadTokenWords.bind(this);
-    this.parseJSONToXLS = this.parseJSONToXLS.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -222,6 +222,7 @@ class DownloadTokens extends Component {
         },
         success: function (result) {
           var getAllBook = JSON.parse(result);
+
           _this.setState({getAllBooks: getAllBook.length > 0 ? getAllBook : []})
         },
         error: function (error) {
@@ -236,10 +237,11 @@ class DownloadTokens extends Component {
     global.nbooks= [];
 
     // eslint-disable-next-line
-    for (const books of this.selectedCheckboxes1) {  
+    for (const books of this.selectedCheckboxes1) {
       global.books = Array.from(this.selectedCheckboxes1);
-    }
 
+    }
+  
     // eslint-disable-next-line
     for (const nbooks of this.selectedCheckboxes2) { 
       global.nbooks = Array.from(this.selectedCheckboxes2);
@@ -249,52 +251,45 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "nbooks":global.nbooks, "books": global.books 
     }
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-    
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/getbookwiseautotokens",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
 
-      beforeSend: function () {
-          $(".modal").show();
-      },
-      complete: function () {
-          $(".modal").hide();
-      },
-      success: function (result) {
-        result = JSON.parse(result)
-        if (result.success !== false){
-         _this.parseJSONToXLS(result);
-        }
-        else {
-          _this.setState({message: result.message, uploaded: 'failure'})
-        }
-      },
-      error: function (error) {
-       _this.setState({message: error.message, uploaded: 'failure'})
-      }
-    });  
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+    var bookCode = Array.from(this.selectedCheckboxes1);
+    if(bookCode.length>2){
+      var fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'to'+ bookCode[(bookCode.length)-1]+'Tokens.xlsx';
+    } else {
+      fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'Tokens.xlsx';
+    }
+
+  function beforeSend() {
+    document.getElementById("loading").style.display = "inline";
   }
 
-  // for parse JSON to XLS
-  parseJSONToXLS(jsonData) {
-    var array = [];
-    var str = '';
-    array = typeof jsonData !== 'object' ? JSON.parse(jsonData) : jsonData;
-        for (var i = 0; i < array.length; i++) {
-          str += array[i] + '\n';
-        }
-        str += '\r\n';
-        var a = document.createElement('a');
-        var blob = new Blob([ new Uint8Array([0xEF, 0xBB, 0xBF]), str], {'type':'application/vnd.ms-excel;charset=utf-8'});
-        a.href = window.URL.createObjectURL(blob);
-        a.download = this.state.Sourcelanguage + this.state.Version + 'Tokens.xls';
-        a.click();
+  function complete() {
+    document.getElementById("loading").style.display = "none";
+  }
+
+  var xhr = new XMLHttpRequest();
+  beforeSend();
+  xhr.open('POST', GlobalURL["hostURL"]+"/v1/getbookwiseautotokens", true);
+  xhr.responseType = 'blob';
+  xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  xhr.setRequestHeader('Authorization', "bearer " + accessToken);
+  xhr.onload = function(e) {
+    complete();
+    if (this.status === 200) {
+      var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+      var downloadUrl = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+    } 
+    else {
+      _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
+    }
+  };   
+    xhr.send(JSON.stringify(data)); 
   }
 
   render() {
@@ -303,7 +298,7 @@ class DownloadTokens extends Component {
         <Header/ >
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
-            <h1 className="source-headerCon1">Download Wordlist</h1>&nbsp;
+            <h1 className="source-headerCon1">Download Tokens</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
@@ -342,19 +337,22 @@ class DownloadTokens extends Component {
              <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
               <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Include Books</h4>
-                <div className="exclude1" >{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
+                <div className="exclude1" >
+                  {this.createCheckboxes1(this, this.state.getAllBooks)}
+                </div>
               </section>
-
               <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
                 <h4 className="panel-heading">Exclude Books</h4>
-                <div className="exclude1">{this.createCheckboxes2(this, this.state.getAllBooks)}</div>
+                <div className="exclude1">
+                   {this.createCheckboxes2(this, this.state.getAllBooks)}
+                </div>
               </section>
             </section>
             </div>
             <div className="form-group">
-              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords}   ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Wordlist</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
-            <div className="modal" style={{display: 'none'}}>
+            <div id="loading" className="modal">
               <div className="center">
                 <img alt="" src={require('./Images/loader.gif')} />
               </div>

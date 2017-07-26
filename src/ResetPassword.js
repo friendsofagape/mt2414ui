@@ -137,7 +137,7 @@ class ResetPassword extends Component {
             </div>
               <div className="form-group">
                 <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
-                <input className="form-control" value={this.state.email} onChange={this.onChange} type="email"  name="email" placeholder="Email" ref="email" required />
+                <input className="form-control" value={this.state.email} onChange={this.onChange} type="email" name="email"  placeholder="Email" ref="email" required />
                 <div className="error" id="emailError" />
               </div>&nbsp;
           <div className="form-group">

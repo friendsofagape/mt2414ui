@@ -7,8 +7,8 @@
 
 import React, { Component } from 'react';
 import './App.css';
-import Header from './Header';
 import Footer from './Footer';
+import Header from './Header';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import SourceLanguages from './SourceLanguages';
@@ -72,11 +72,10 @@ class GetLanguages extends Component {
   render() {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
     let currentBooks = this.state.getBooks.length > 0 ?  this.state.getBooks : [];
-
     var _this = this;
     return(
       <div className="container">
-        <Header/ >
+        <Header / >
           <h1 className="source-header-lan">Available Source Texts</h1>&nbsp;
           <form className="col-md-6 uploader getLangCustom" encType="multipart/form-data">
             <div className="container">

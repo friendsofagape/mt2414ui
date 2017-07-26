@@ -11,28 +11,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Footer from './Footer';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-
-class Header extends Component {
-  render() {
-    return (
-        <Navbar inverse collapseOnSelect fixedTop >
-        <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
-          </Navbar.Brand><Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse >
-          <Nav className="customHeaderSuperAdmin">
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Log out</Link></NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    );
-  }
-}
+import Header from './Header';
 
 class SuperAdmin extends Component {
   constructor(props){

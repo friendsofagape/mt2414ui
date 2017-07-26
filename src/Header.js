@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router';
+import HeaderforSuperAdmin from './Component/HeaderforSuperAdmin';
+import HeaderforAdmin from './Component/HeaderforAdmin';
+import HeaderforMember from './Component/HeaderforMember';
+import {Route } from 'react-router';
+import HomePage from './HomePage';
+var jwtDecode = require('jwt-decode');
+
+let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+if(accessToken){
+  var decoded = jwtDecode(accessToken);
+}
 
 class Header extends Component {
   render() {
     return (
-        <Navbar inverse collapseOnSelect fixedTop>
-        <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
-          </Navbar.Brand><Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav>
-            <NavItem eventKey={2} ><Link to={'/getlanguages'}>Available Source Texts</Link></NavItem>
-            <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Wordlist</Link> </NavItem>
-            <NavItem eventKey={5} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
-            <NavItem eventKey={8} ><Link to={'/gettranslationdraft'}>Download Translation Draft</Link> </NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Log out</Link></NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <div>
+      {
+        (accessToken && decoded.role === 'superadmin') ? ( <HeaderforSuperAdmin /> ) : (
+
+          (accessToken && decoded.role === 'admin') ? ( <HeaderforAdmin />) : (
+
+            (accessToken && decoded.role === 'member') ?( < HeaderforMember />) : (
+              <Route path="/" component={HomePage} />
+            )
+          )
+        ) 
+      }
+      </div>
     );
   }
 }

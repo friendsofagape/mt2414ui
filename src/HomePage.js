@@ -7,6 +7,7 @@ import SigninForm from './SigninForm';
 class Header extends Component {
   render() {
     return (
+      <div>
         <Navbar inverse collapseOnSelect fixedTop >
         <Navbar.Header><Navbar.Brand>
             <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
@@ -19,27 +20,28 @@ class Header extends Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+    </div>
     );
   }
 }
 
 class HomePage extends Component {
   render() {
-      window.localStorage.clear(); 
+    window.localStorage.clear(); 
     return (
-        <div>
-        <Header />
-        <div className="container">
-          <div className="row customRow">
-            <div className="col-sm-8 jumbotron">
-            <h3>&nbsp;&nbsp;&nbsp; Welcome to Autographa MT: Machine Translation Engine </h3>
-            <img alt=""  style={{width: '102%', height: '380px'}} src={require('./Images/Bible.jpg')} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-          <SigninForm />
+      <div>
+      <Header />
+      <div className="container">
+        <div className="row customRow">
+          <div className="col-sm-8 jumbotron">
+          <h3>&nbsp;&nbsp;&nbsp; Welcome to Autographa MT: Machine Translation Engine </h3>
+          <img alt=""  style={{width: '102%', height: '380px'}} src={require('./Images/Bible.jpg')} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
+        <SigninForm />
         </div>
-        <Footer />
-        </div>
+      </div>
+      <Footer />
+      </div>
     );
   }
 }
