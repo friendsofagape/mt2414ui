@@ -10,34 +10,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Footer from './Footer';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router';
 import { FormControl } from 'react-bootstrap';
 import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-
-class Header extends Component {
-  render() {
-    return (
-      <div>
-        <Navbar inverse collapseOnSelect fixedTop >
-        <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
-          </Navbar.Brand><Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse >
-          <Nav className="customHeaderAdmin">
-            <NavItem eventKey={1} ><Link to={'/admin'}>Upload Source</Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/createsource'}>Create Source</Link></NavItem>
-            <NavItem eventKey={3} ><Link to={'/homepage'}>Log out</Link></NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </div>
-    );
-  }
-}
+import Header from './Header';
 
 class CreateSource extends Component {
   constructor(props) {

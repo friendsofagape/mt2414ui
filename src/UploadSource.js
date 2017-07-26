@@ -12,34 +12,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Footer from './Footer';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router';
 import ListLanguages from './Component/ListLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import Versions from './Component/Versions';
-
-class Header extends Component {
-  render() {
-    return (
-      <div>
-        <Navbar inverse collapseOnSelect fixedTop >
-        <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;Autographa MT</a>
-          </Navbar.Brand><Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse >
-          <Nav className="customHeaderAdmin">
-            <NavItem eventKey={1} ><Link to={'/createsource'}>Create Source</Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/admin'}>Upload Source</Link></NavItem>
-            <NavItem eventKey={3} ><Link to={'/homepage'}>Log out</Link></NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </div>
-    );
-  }
-}
+import Header from './Header';
 
 class UploadSource extends Component {
   constructor(props) {
@@ -196,7 +173,7 @@ class UploadSource extends Component {
   render() {
     return(
       <div className="container">
-        <Header/ >
+        <Header / >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
