@@ -265,7 +265,7 @@ class DownloadTokens extends Component {
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
-    if(bookCode.length>2){
+    if(bookCode.length>1){
       var fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'to'+ bookCode[(bookCode.length)-1]+'Tokens.xlsx';
     } else {
       fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'Tokens.xlsx';
