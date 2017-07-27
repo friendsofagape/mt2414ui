@@ -279,6 +279,21 @@ class GetTranslationDraft extends Component {
     var data = { 
       "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang
     }
+
+    //Dynamic color for chart
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF'.split('');
+      var color66 = [];
+      for(var j = 0; j<66; j++){
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+        color66.push(color);
+      }
+      return color66;
+    }
+
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/tokencount",
       contentType: "application/json; charset=utf-8",
@@ -288,6 +303,7 @@ class GetTranslationDraft extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
+      var DynamicColor = getRandomColor();
         var labelsRes = [];
         var datasetsRes = [];
         var getRev = JSON.parse(result);
@@ -305,9 +321,7 @@ class GetTranslationDraft extends Component {
               {
                 label:'Token Count',
                 data: datasetsRes,
-                backgroundColor: ['aqua', 'blueviolet', 'burlywood', 'chartreuse', 'cadetblue', 'darkgreen', 'darkcyan',
-                  'beige', 'aquamarine', 'brown', 'crimson', 'darkorchid', 'hotpink', 'goldenrod', 'gold', 'indigo'
-                ],
+                backgroundColor: DynamicColor,
               }
             ]
           }
