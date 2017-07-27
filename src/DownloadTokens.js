@@ -22,11 +22,14 @@ import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 
-
 var tabData = [
   { name: 'Include Books', isActive: true },
   { name: 'Exclude Books', isActive: false }
 ];
+
+//Bookarray for canonical order
+var BookArray = ["GEN" : "Genesis", "EXO" : "Exodus", "LEV" : "Leviticus", "NUM" : "Numbers", "DEU" : "Deuteronomy", "JOS" : "Joshua", "JDG" : "Judges", "RUT" : "Ruth", "1SA" : "1 Samuel", "2SA" : "2 Samuel", "1KI" : "1 Kings", "2KI" : "2 Kings", "1CH" : "1 Chronicles", "2CH" : "2 Chronicles", "EZR" : "Ezra", "NEH" : "Nehemiah", "EST" : "Esther", "JOB" : "Job", "PSA" : "Psalms", "PRO" : "Proverbs", "ECC" : "Ecclesiastes", "SNG" : "Songs of Solomon", "ISA" : "Isaiah", "JER" : "Jeremiah", "LAM" : "Lamentations", "EZE" : "Ezekiel", "DAN" : "Daniel", "HOS" : "Hosea", "JOL" : "Joel", "AMO" : "Amos", "OBA" : "Obadiah", "JON" : "Jonah", "MIC" : "Micah", "NAM" : "Nahum", "HAB" : "Habakkuk", "ZEP" : "Zephaniah", "HAG" : "Haggai", "ZEC" : "Zechariah", "MAL" : "Malachi", "MAT" : "Matthew", "MRK" : "Mark", "LUK" : "Luke", "JHN" : "John", "ACT" : "Acts", "ROM" : "Romans", "1CO" : "1 Corinthians", "2CO" : "2 Corinthians", "GAL" : "Galatians", "EPH" : "Ephesians", "PHP" : "Philippians", "COL" : "Colossians", "1TH" : "1 Thessalonians", "2TH" : "2 Thessalonians", "1TI" : "1 Timothy", "2TI" : "2 Timothy", "TIT" : "Titus", "PHM" : "Philemon", "HEB" : "Hebrews", "JAS" : "James", "1PE" : "1 Peter", "2PE" : "2 Peter", "1JN" : "1 John", "2JN" : "2 John", "3JN" : "3 John", "JUD" : "Jude", "REV" : "Revelations"];
+
 
 class Tabs extends Component {
   render() {
@@ -222,8 +225,16 @@ class DownloadTokens extends Component {
         },
         success: function (result) {
           var getAllBook = JSON.parse(result);
-
-          _this.setState({getAllBooks: getAllBook.length > 0 ? getAllBook : []})
+          //for canonical sorting
+          var booksCollection = [];
+          for (var i = 0; i < BookArray.length; i++) {
+          for( var j = 0; j < getAllBook.length; j++) {
+              if(BookArray[i] === getAllBook[j]){
+                booksCollection.push(getAllBook[j]);
+              }
+            }
+          }
+          _this.setState({getAllBooks: booksCollection.length > 0 ? booksCollection : []})
         },
         error: function (error) {
         }
@@ -260,35 +271,35 @@ class DownloadTokens extends Component {
       fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'Tokens.xlsx';
     }
 
-  function beforeSend() {
-    document.getElementById("loading").style.display = "inline";
-  }
-
-  function complete() {
-    document.getElementById("loading").style.display = "none";
-  }
-
-  var xhr = new XMLHttpRequest();
-  beforeSend();
-  xhr.open('POST', GlobalURL["hostURL"]+"/v1/getbookwiseautotokens", true);
-  xhr.responseType = 'blob';
-  xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-  xhr.setRequestHeader('Authorization', "bearer " + accessToken);
-  xhr.onload = function(e) {
-    complete();
-    if (this.status === 200) {
-      var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
-      var downloadUrl = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-    } 
-    else {
-      _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
+    function beforeSend() {
+      document.getElementById("loading").style.display = "inline";
     }
-  };   
+
+    function complete() {
+      document.getElementById("loading").style.display = "none";
+    }
+
+    var xhr = new XMLHttpRequest();
+    beforeSend();
+    xhr.open('POST', GlobalURL["hostURL"]+"/v1/getbookwiseautotokens", true);
+    xhr.responseType = 'blob';
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.setRequestHeader('Authorization', "bearer " + accessToken);
+    xhr.onload = function(e) {
+      complete();
+      if (this.status === 200) {
+        var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+        var downloadUrl = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+      } 
+      else {
+        _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
+      }
+    };   
     xhr.send(JSON.stringify(data)); 
   }
 
