@@ -198,7 +198,7 @@ class UploadSource extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} multiple />
+                  <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} accept=".usfm" multiple />
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;

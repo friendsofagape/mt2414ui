@@ -14,6 +14,11 @@ import GlobalURL from './GlobalURL';
 import SourceLanguages from './SourceLanguages';
 import BookName from './BookName';
 
+
+//Bookarray for canonical order
+var BookArray = ["GEN" : "Genesis", "EXO" : "Exodus", "LEV" : "Leviticus", "NUM" : "Numbers", "DEU" : "Deuteronomy", "JOS" : "Joshua", "JDG" : "Judges", "RUT" : "Ruth", "1SA" : "1 Samuel", "2SA" : "2 Samuel", "1KI" : "1 Kings", "2KI" : "2 Kings", "1CH" : "1 Chronicles", "2CH" : "2 Chronicles", "EZR" : "Ezra", "NEH" : "Nehemiah", "EST" : "Esther", "JOB" : "Job", "PSA" : "Psalms", "PRO" : "Proverbs", "ECC" : "Ecclesiastes", "SNG" : "Songs of Solomon", "ISA" : "Isaiah", "JER" : "Jeremiah", "LAM" : "Lamentations", "EZE" : "Ezekiel", "DAN" : "Daniel", "HOS" : "Hosea", "JOL" : "Joel", "AMO" : "Amos", "OBA" : "Obadiah", "JON" : "Jonah", "MIC" : "Micah", "NAM" : "Nahum", "HAB" : "Habakkuk", "ZEP" : "Zephaniah", "HAG" : "Haggai", "ZEC" : "Zechariah", "MAL" : "Malachi", "MAT" : "Matthew", "MRK" : "Mark", "LUK" : "Luke", "JHN" : "John", "ACT" : "Acts", "ROM" : "Romans", "1CO" : "1 Corinthians", "2CO" : "2 Corinthians", "GAL" : "Galatians", "EPH" : "Ephesians", "PHP" : "Philippians", "COL" : "Colossians", "1TH" : "1 Thessalonians", "2TH" : "2 Thessalonians", "1TI" : "1 Timothy", "2TI" : "2 Timothy", "TIT" : "Titus", "PHM" : "Philemon", "HEB" : "Hebrews", "JAS" : "James", "1PE" : "1 Peter", "2PE" : "2 Peter", "1JN" : "1 John", "2JN" : "2 John", "3JN" : "3 John", "JUD" : "Jude", "REV" : "Revelations"];
+
+
 class GetLanguages extends Component {
   constructor(props) {
     super(props);
@@ -59,6 +64,7 @@ class GetLanguages extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
+
         var getBook = JSON.parse(result);
         _this.setState({getBooks: getBook.length > 0 ? getBook : []})
 
@@ -72,7 +78,18 @@ class GetLanguages extends Component {
   render() {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
     let currentBooks = this.state.getBooks.length > 0 ?  this.state.getBooks : [];
-    var _this = this;
+
+    //for canonical sorting
+    var booksCollection = {}
+    for (var i = 0; i < BookArray.length; i++) {
+      for( var j = 0; j < currentBooks.length; j++) {
+          if(BookArray[i] === currentBooks[j][0]){
+            booksCollection[currentBooks[j][0]] = currentBooks[j][1];
+          }
+        }
+      }
+
+    var _this = this; 
     return(
       <div className="container">
         <Header / >
@@ -106,9 +123,11 @@ class GetLanguages extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentBooks.map(function(data, index){
-                    return (<tr key={index}><td>{BookName[0][data[0]]}</td><td>{data[1]}</td></tr>);
-                  })}
+                  {
+                    Object.keys(booksCollection).map(function(key, index){
+                      return(<tr key={index}><td>{BookName[0][key]}</td><td>{booksCollection[key]}</td></tr>)
+                    })
+                  }
                 </tbody>
               </table>
             </div>
