@@ -26,7 +26,6 @@ class UploadSource extends Component {
       version: '',
       getVersions: [],
       allSourceID: '',
-      base64_arr: [],
       uploaded:'Uploading',
       message: ''
     }
@@ -34,7 +33,6 @@ class UploadSource extends Component {
     // Upload file specific callback handlers
     this.uploadFile = this.uploadFile.bind(this);
     this.onSelect = this.onSelect.bind(this);
-    this.file_base64 = this.file_base64.bind(this);
     this.onSelectSource = this.onSelectSource.bind(this);
     this.onSelectVersion = this.onSelectVersion.bind(this);
   }
@@ -42,29 +40,6 @@ class UploadSource extends Component {
   onSelect(e) {
     this.setState({
       [e.target.name]: e.target.value });
-  }
-
-  file_base64(e){
-    var files = document.getElementById('file-input').files
-    var file = [];
-    global.base64_arr = [];
-    if(files.length > 0){
-        for (var i = 0; i < files.length; i++) {
-        var reader = new FileReader();
-        reader.readAsDataURL(files[i] );
-        reader.onload = (function (file) {
-          return function (e) {
-            var data = this.result;
-            var unwantedData = "data:;base64,";
-            data = data.replace(unwantedData, "");
-            global.base64_arr.push(data);
-          }
-        })(file);
-        reader.onerror = function (error) {
-        };
-      }
-    }
-    
   }
 
   //onSelectSource for Dynamic Versions
@@ -120,29 +95,27 @@ class UploadSource extends Component {
 //upload file with SourceID
   uploadFile(e){
     e.preventDefault();
-    var ext = $('#file-input').val().split('.').pop().toLowerCase();
-    if($.inArray(ext, ['usfm']) === -1) {
-      this.setState({uploaded: 'success'})
-    } else {
-      this.setState({uploaded: 'failure'}) 
-    } 
-
     var _this = this
-    for(var i = 0; i < (global.base64_arr).length; i++){
-      var data = { 
-        "source_id": this.state.allSourceID, "content": [global.base64_arr[i]]
-      }
+
+    for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+
+      var uploadForm = document.getElementById("upload_form");
+      var formData = new FormData(uploadForm);
+      formData.append('content', $('input[type=file]')[0].files[i]);
+      formData.append('source_id', this.state.allSourceID)
+
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       var countSuccess = 0;
       var countFailure = 0;
 
       $.ajax({
         url: GlobalURL["hostURL"]+"/v1/sources",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data),
+        processData: false,
+        contentType: false,
+        data : formData,
         method : "POST",
         headers: {
-                  "Authorization": "bearer " + accessToken
+          "Authorization": "bearer " + accessToken
         },
       beforeSend: function () {
           $(".modal").show();
@@ -153,14 +126,14 @@ class UploadSource extends Component {
         if (result.success !== false) {
             countSuccess++;
           _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
-          if((countSuccess + countFailure) === (global.base64_arr).length){  
+          if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){  
             _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
             $(".modal").hide();
           }        
         }else {
           countFailure++;
           _this.setState({message: result.message, uploaded: 'failure'})
-          if((countSuccess + countFailure) === (global.base64_arr).length){   
+          if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){   
              _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
              $(".modal").hide();
           } 
@@ -175,7 +148,7 @@ class UploadSource extends Component {
       <div className="container">
         <Header / >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" encType="multipart/form-data">
+          <form className="col-md-8 uploader"  id="upload_form" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
@@ -198,7 +171,7 @@ class UploadSource extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" onChange={this.file_base64} accept=".usfm" multiple />
+                  <input id="file-input" type="file" className="fileInput" accept=".usfm" multiple />
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
