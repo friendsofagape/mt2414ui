@@ -303,8 +303,7 @@ class GetTranslationDraft extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
-      var BenVar = getRandomColor();
-      console.log(BenVar)
+      var DynamicColor = getRandomColor();
         var labelsRes = [];
         var datasetsRes = [];
         var getRev = JSON.parse(result);
@@ -322,7 +321,7 @@ class GetTranslationDraft extends Component {
               {
                 label:'Token Count',
                 data: datasetsRes,
-                backgroundColor: BenVar,
+                backgroundColor: DynamicColor,
               }
             ]
           }
