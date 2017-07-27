@@ -27,8 +27,7 @@ class GetLanguages extends Component {
       getLanguages: '',
       getBooks: '',
       language: '',
-      version: '',
-      CanonicalOrder: '',
+      version: ''
     }
       // Upload file specific callback handlers
       this.getBooks = this.getBooks.bind(this);
