@@ -326,7 +326,7 @@ a{
 }
 
 .getEmailCustom{
-  margin: 46px 2px 2px 263px;
+  margin: 46px 2px 2px 202px;
   background: azure;
 }
 .signinCustom{
@@ -425,7 +425,7 @@ h4, p {
 }
 
 .emailTable {
-  width: 47%;
+  width: 61%;
   max-width: 100%;
   margin-bottom: 20px;
 }

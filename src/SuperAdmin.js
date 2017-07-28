@@ -22,6 +22,7 @@ class SuperAdmin extends Component {
       getAllEmails: '',
       message: '',
       uploaded:'',
+      getAllRoles: ''
     }
     this.approveAdmin = this.approveAdmin.bind(this);
     this.setMember = this.setMember.bind(this);
@@ -38,7 +39,11 @@ class SuperAdmin extends Component {
         },
         success: function (result) {
           var getEmail = JSON.parse(result);
-          _this.setState({getAllEmails: getEmail.length > 0 ? getEmail: []})
+          Object.keys(getEmail).map(function(key, value){
+            return _this.setState({getAllEmails: key.length > 0 ? key: [], getAllRoles: getEmail[key].length > 0 ? getEmail[key]: []});
+
+          })
+          
         },
         error: function (error) {
         }
@@ -60,6 +65,9 @@ class SuperAdmin extends Component {
         result = JSON.parse(result)
         if (result.success !== false){
           _this.setState({message: result.message, uploaded: 'success'})
+          setTimeout(function(){
+            location.reload();
+          },2000);
         }
         else {
           _this.setState({message: result.message, uploaded: 'failure'})
@@ -87,6 +95,9 @@ class SuperAdmin extends Component {
         result = JSON.parse(result)
         if (result.success !== false){
           _this.setState({message: result.message, uploaded: 'success'})
+          setTimeout(function(){
+            location.reload();
+          },2000);
         }
         else {
           _this.setState({message: result.message, uploaded: 'failure'})
@@ -101,6 +112,9 @@ class SuperAdmin extends Component {
 
   render() {
     let currentEmail = this.state.getAllEmails.length > 0 ?  this.state.getAllEmails : [];
+    var currentRoles = [];
+    currentRoles[currentEmail] = this.state.getAllRoles.length > 0 ?  this.state.getAllRoles : [];
+
     var _this = this;
     return(
       <div className="container">
@@ -112,26 +126,34 @@ class SuperAdmin extends Component {
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg2': 'invisible') }>
               <strong>{this.state.message}</strong>
             </div>
-          <form className="col-md-6 uploader getEmailCustom" encType="multipart/form-data">
+          <form className="col-md-8 uploader getEmailCustom" encType="multipart/form-data">
             <div className="container">
               <table className="table emailTable">
                 <thead>
                   <tr>
                     <th>List of registered e-mails</th>
+                    <th>User Role</th>
+                    <th>Assign Role</th>
+
                   </tr>
                 </thead>
                 <tbody>
-                  {currentEmail.map(function(data, index){
+                  {Object.keys(currentRoles).map(function(data, index){
                     return (
                       <tr key={index}>
                         <td>
                           <li key={index}><i className="fa fa-envelope fa-fw"></i>{data}</li>
                         </td>
                         <td>
-                          <a href="#" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
+                          <p>{currentRoles[data]}</p>
                         </td>
                         <td>
+                        {
+                          (currentRoles[data] === 'admin')?(
                           <a href="#" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
+                          ):(
+                          <a href="#" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>)
+                        } 
                         </td>
                       </tr>
                     );
