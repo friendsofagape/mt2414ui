@@ -70,7 +70,7 @@ class GetTranslationDraft extends Component {
     this.state = {
       sourcelang:'tam',
       targetlang:'Choose',
-      version: 'ULB',
+      version: '',
       revision: '',
       bookName: '',
       books: [],
@@ -83,6 +83,7 @@ class GetTranslationDraft extends Component {
       getAllBooks: '',
       chartData:{},
       dataDisplay: 'Exclude Books',
+      autoLoad: false,
     }
 
       // Upload file specific callback handlers
@@ -203,6 +204,7 @@ class GetTranslationDraft extends Component {
             }
           }
         }
+
         _this.getChartData();
         _this.setState({getAllBooks: booksCollection.length > 0 ? booksCollection : []})
       },
@@ -308,7 +310,7 @@ class GetTranslationDraft extends Component {
         var datasetsRes = [];
         var getRev = JSON.parse(result);
         if (getRev.success !== false){
-        _this.setState({uploaded: getRev.success ? 'success' : ''})
+        _this.setState({uploaded: getRev.success ? 'success' : '', autoLoad: true})
         // eslint-disable-next-line
         Object.keys(getRev).map(function(v, i) {
           labelsRes.push(booksName2[0][v])
@@ -327,7 +329,11 @@ class GetTranslationDraft extends Component {
           }
         });
         }else {
+
           _this.setState({message: getRev.message, uploaded: 'failure'})
+          setTimeout(function(){
+            location.reload();
+          },1000);
         }
         },
       error: function (error) {
@@ -377,13 +383,13 @@ class GetTranslationDraft extends Component {
                 />
               </div>&nbsp;
               <div>
-               
                 <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} } >
-                <Chart 
+                {(this.state.autoLoad === false)?(this.autoLoad=false):(<Chart 
                   chartData={this.state.chartData}
                   targetlang={this.state.targetlang}
                   location="Bar Chart" legendPosition="bottom"
-                />
+                />) }
+
                 <Tabs activeTab={this.state.activeTab}/>
                 <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
                 </section>
