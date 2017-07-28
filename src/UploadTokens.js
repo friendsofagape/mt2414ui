@@ -103,40 +103,44 @@ class UploadTokens extends Component {
   uploadTokens(e){   
     e.preventDefault();    
     var _this = this;
-    var uploadForm = document.getElementById("upload_form");
-    var formData = new FormData(uploadForm);
-    formData.append('tokenwords', $('input[type=file]')[0].files[0]);
-    formData.append('language', _this.state.Sourcelanguage)
-    formData.append('version', _this.state.Version)
-    formData.append('revision', _this.state.getRevision[0])
-    formData.append('targetlang', _this.state.targetlang)
-    
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
-      processData: false,
-      contentType: false,
-      data : formData,
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      beforeSend: function () {
-        $(".modal").show();
-      },
-      complete: function () {
-        $(".modal").hide();
-      },
-      success: function (result) {
-         result = JSON.parse(result)
-        _this.setState({uploaded: result.success ? 'success' : ''})
-        _this.setState({message: result.message})
-      },
-      error: function (error) {
-       _this.setState({message: error.message, uploaded: 'failure'})
-      }
-    });      
+    for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+
+      var uploadForm = document.getElementById("upload_form");
+      var formData = new FormData(uploadForm);
+      formData.append('tokenwords', $('input[type=file]')[0].files[i]);
+      formData.append('language', _this.state.Sourcelanguage)
+      formData.append('version', _this.state.Version)
+      formData.append('revision', _this.state.getRevision[0])
+      formData.append('targetlang', _this.state.targetlang)
+      
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+
+      $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
+        processData: false,
+        contentType: false,
+        data : formData,
+        method : "POST",
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        beforeSend: function () {
+          $(".modal").show();
+        },
+        complete: function () {
+          $(".modal").hide();
+        },
+        success: function (result) {
+           result = JSON.parse(result)
+          _this.setState({uploaded: result.success ? 'success' : ''})
+          _this.setState({message: result.message})
+        },
+        error: function (error) {
+         _this.setState({message: error.message, uploaded: 'failure'})
+        }
+      }); 
+    }    
   }
 
   render() {
