@@ -1,34 +1,34 @@
 /**
- * @module src/GenerateConcordance
+ * @module src/CreateSource
  *
  * Component that display SourceDocument
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
- *  - version: version of the source language
+ *  - version: version of source language
 */
 
 import React, { Component } from 'react';
 import './App.css';
-import Header from './Header';
 import Footer from './Footer';
 import { FormControl } from 'react-bootstrap';
 import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import Header from './Header';
 
-
-class GenerateConcordance extends Component {
+class CreateSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: 'tam',
+      language:'',
       version: '',
-      uploaded:'uploadingStatus',
+      uploaded:'Uploading',
       message: ''
     }
-      // Upload file specific callback handlers
-      this.onSelect = this.onSelect.bind(this);
-      this.generateConcordance = this.generateConcordance.bind(this);
+
+    // Upload file specific callback handlers
+    this.createSource = this.createSource.bind(this);
+    this.onSelect = this.onSelect.bind(this);
   }
   
   onSelect(e) {
@@ -36,34 +36,38 @@ class GenerateConcordance extends Component {
       [e.target.name]: e.target.value });
   }
 
-// For Generating Concordance
-  generateConcordance(e){
-    e.preventDefault();
+  createSource(e){
     var _this = this
-    var data = {
-      "language": this.state.language, "version": this.state.version
-    }
-    
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/generateconcordance",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-                "Authorization": "bearer " + accessToken
+      var data = { 
+        "language": this.state.language, "version": this.state.version
+      }
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+      $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/createsources",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(data),
+        method : "POST",
+        async: false,
+        headers: {
+                  "Authorization": "bearer " + accessToken
+        },
+      beforeSend: function () {
+          $(".modal").show();
       },
-      success: function (result) {
+        // eslint-disable-next-line
+        success: function (result) {
         result = JSON.parse(result)
-        _this.setState({message: result.message, uploaded: 'success'})
-
+          if (result.success !== false) {
+          _this.setState({message: result.message, uploaded: 'success'})
+        }else {
+          _this.setState({message: result.message, uploaded: 'failure'})
+          }
       },
       error: function (error) {
-       _this.setState({message: error.message, uploaded: 'failure'})
+        _this.setState({uploaded: 'failure'}) 
       }
-    });  
-  }
+      });
+    }
 
   render() {
     return(
@@ -71,11 +75,11 @@ class GenerateConcordance extends Component {
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
-            <h1 className="source-header1">Generate Concordance</h1>&nbsp
+            <h1 className="source-header">Create Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible') }>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
@@ -90,12 +94,10 @@ class GenerateConcordance extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control"/> 
+                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
               </div>&nbsp;
               <div className="form-group">
-                <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success" onClick={this.generateConcordance}>Generating Concordance</button>
-                </div>
+                <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
               </div>
           </form>
           </div>
@@ -105,4 +107,4 @@ class GenerateConcordance extends Component {
     }
 }
 
-export default GenerateConcordance;
+export default CreateSource;

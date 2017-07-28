@@ -7,6 +7,7 @@ import SigninForm from './SigninForm';
 class Header extends Component {
   render() {
     return (
+      <div>
         <Navbar inverse collapseOnSelect fixedTop >
         <Navbar.Header><Navbar.Brand>
             <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
@@ -14,32 +15,33 @@ class Header extends Component {
         </Navbar.Header>
         <Navbar.Collapse >
           <Nav className="customHeader">
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/signup'}>Sign up</Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Signin</Link></NavItem>
+            <NavItem eventKey={2} ><Link to={'/signup'}>Signup</Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+    </div>
     );
   }
 }
 
 class HomePage extends Component {
   render() {
-      window.localStorage.clear(); 
+    window.localStorage.clear(); 
     return (
-        <div>
-        <Header />
-        <div className="container">
-          <div className="row customRow">
-            <div className="col-sm-8 jumbotron">
-            <h3>&nbsp;&nbsp;&nbsp; Welcome to Autographa MT: Machine Translation Engine </h3>
-            <img alt=""  style={{width: '102%', height: '380px'}} src={require('./Bible.jpg')} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-          <SigninForm />
+      <div>
+      <Header />
+      <div className="container">
+        <div className="row customRow">
+          <div className="col-sm-8 jumbotron">
+          <h3>&nbsp;&nbsp;&nbsp; Welcome to Autographa MT: Machine Translation Engine </h3>
+          <img alt=""  style={{width: '102%', height: '380px'}} src={require('./Images/Bible.jpg')} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
+        <SigninForm />
         </div>
-        <Footer />
-        </div>
+      </div>
+      <Footer />
+      </div>
     );
   }
 }
