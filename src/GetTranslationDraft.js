@@ -84,6 +84,7 @@ class GetTranslationDraft extends Component {
       chartData:{},
       dataDisplay: 'Exclude Books',
       autoLoad: false,
+      BookTokensCount: {}
     }
 
       // Upload file specific callback handlers
@@ -306,23 +307,44 @@ class GetTranslationDraft extends Component {
       },
       success: function (result) {
       var DynamicColor = getRandomColor();
-        var labelsRes = [];
-        var datasetsRes = [];
         var getRev = JSON.parse(result);
+
+        Object.keys(getRev).map(function(key, value){
+          return _this.state.BookTokensCount[key] = getRev[key];
+        });
+
+        _this.setState({BookTokensCount: _this.state.BookTokensCount})
+        
+        var BookTokensCount = _this.state.BookTokensCount;
+        var booksTokenCollection = [];
+        var booksTokenCountCollection = [];
+        var keyArray = [];
+        var keyValue = [];
+        Object.keys(BookTokensCount).map(function(key, value){
+          return (keyArray.push(key), keyValue.push(BookTokensCount[key]));
+        })
+
+        var keyArraylength = keyArray.length;
+         for(var i=0; i<BookArray.length; i++){
+          for(var j=0; j<keyArraylength; j++){
+            if(BookArray[i] === keyArray[j]){
+              booksTokenCollection.push(booksName2[0][keyArray[j]]);
+              booksTokenCountCollection.push(keyValue[j])
+
+            }
+          }
+         }
+
         if (getRev.success !== false){
         _this.setState({uploaded: getRev.success ? 'success' : '', autoLoad: true})
-        // eslint-disable-next-line
-        Object.keys(getRev).map(function(v, i) {
-          labelsRes.push(booksName2[0][v])
-          datasetsRes.push(getRev[v])
-        })
+
         _this.setState({
           chartData:{
-            labels: labelsRes,
+            labels: booksTokenCollection,
             datasets:[
               {
                 label:'Token Count',
-                data: datasetsRes,
+                data: booksTokenCountCollection,
                 backgroundColor: DynamicColor,
               }
             ]

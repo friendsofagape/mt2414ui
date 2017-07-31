@@ -22,13 +22,17 @@ class SuperAdmin extends Component {
       getAllEmails: '',
       message: '',
       uploaded:'',
-      getAllRoles: ''
+      getAllRoles: '',
+      tableRows: [],
+      currentRoles: {}
     }
+
     this.approveAdmin = this.approveAdmin.bind(this);
     this.setMember = this.setMember.bind(this);
+
   }
   
-  componentWillMount = () => {
+  componentWillMount(){
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       $.ajax({
@@ -40,10 +44,9 @@ class SuperAdmin extends Component {
         success: function (result) {
           var getEmail = JSON.parse(result);
           Object.keys(getEmail).map(function(key, value){
-            return _this.setState({getAllEmails: key.length > 0 ? key: [], getAllRoles: getEmail[key].length > 0 ? getEmail[key]: []});
-
+            return _this.state.currentRoles[key] = getEmail[key];
           })
-          
+          _this.setState({currentRoles: _this.state.currentRoles})
         },
         error: function (error) {
         }
@@ -53,6 +56,7 @@ class SuperAdmin extends Component {
   //for Approve as Admin
   approveAdmin(obj){
     var _this = this;
+    _this.state.tableRows = [];
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/superadminapproval",
@@ -60,14 +64,15 @@ class SuperAdmin extends Component {
       method : "POST",
       headers: {
         "Authorization": "bearer " + accessToken
-    },
+      },
     success: function (result) {
         result = JSON.parse(result)
         if (result.success !== false){
           _this.setState({message: result.message, uploaded: 'success'})
           setTimeout(function(){
             location.reload();
-          },2000);
+          }, 2000);
+
         }
         else {
           _this.setState({message: result.message, uploaded: 'failure'})
@@ -83,6 +88,7 @@ class SuperAdmin extends Component {
   //for set Member
   setMember(obj){
     var _this = this;
+    _this.state.tableRows = [];
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/superadminapproval",
@@ -92,16 +98,16 @@ class SuperAdmin extends Component {
         "Authorization": "bearer " + accessToken
     },
     success: function (result) {
-        result = JSON.parse(result)
-        if (result.success !== false){
-          _this.setState({message: result.message, uploaded: 'success'})
-          setTimeout(function(){
-            location.reload();
-          },2000);
-        }
-        else {
-          _this.setState({message: result.message, uploaded: 'failure'})
-        }
+      result = JSON.parse(result)
+      if (result.success !== false){
+        _this.setState({message: result.message, uploaded: 'success'})
+        setTimeout(function(){
+          location.reload();
+        }, 2000);
+      }
+      else {
+        _this.setState({message: result.message, uploaded: 'failure'})
+      }
     },
     error: function (error) {
       _this.setState({message: error.message, uploaded: 'failure'})
@@ -111,15 +117,33 @@ class SuperAdmin extends Component {
   }
 
   render() {
-    let currentEmail = this.state.getAllEmails.length > 0 ?  this.state.getAllEmails : [];
-    var currentRoles = [];
-    currentRoles[currentEmail] = this.state.getAllRoles.length > 0 ?  this.state.getAllRoles : [];
-
     var _this = this;
+    var currentRoles = this.state.currentRoles;
+    Object.keys(currentRoles).map(function(data, index){
+     return _this.state.tableRows.push(
+        <tr>
+          <td>{data}</td>
+          <td>
+            <p>{(currentRoles[data] === 'member')?("Member"):("Administrator")}</p>
+          </td>
+          <td>
+          {
+            (currentRoles[data] === 'admin')?(
+            // eslint-disable-next-line
+            <a href="javascript:void(0);" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
+            ):(
+            // eslint-disable-next-line
+            <a href="javascript:void(0);" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
+            )
+          } 
+          </td>
+        </tr>
+      )
+    })
     return(
       <div className="container">
         <Header/ >
-          <h1 className="source-header-email"></h1>&nbsp;
+          <h1 className="source-headerCon">List of AutographaMT users</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg2' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
@@ -131,33 +155,13 @@ class SuperAdmin extends Component {
               <table className="table emailTable">
                 <thead>
                   <tr>
-                    <th>List of registered e-mails</th>
+                    <th>Users</th>
                     <th>User Role</th>
                     <th>Assign Role</th>
-
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(currentRoles).map(function(data, index){
-                    return (
-                      <tr key={index}>
-                        <td>
-                          <li key={index}><i className="fa fa-envelope fa-fw"></i>{data}</li>
-                        </td>
-                        <td>
-                          <p>{currentRoles[data]}</p>
-                        </td>
-                        <td>
-                        {
-                          (currentRoles[data] === 'admin')?(
-                          <a href="#" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
-                          ):(
-                          <a href="#" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>)
-                        } 
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {this.state.tableRows}
                 </tbody>
               </table>
             </div>
