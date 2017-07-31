@@ -129,8 +129,10 @@ class SuperAdmin extends Component {
           <td>
           {
             (currentRoles[data] === 'admin')?(
+            // eslint-disable-next-line
             <a href="javascript:void(0);" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
             ):(
+            // eslint-disable-next-line
             <a href="javascript:void(0);" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
             )
           } 
