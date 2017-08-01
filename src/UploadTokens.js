@@ -132,9 +132,13 @@ class UploadTokens extends Component {
           $(".modal").hide();
         },
         success: function (result) {
+
            result = JSON.parse(result)
-          _this.setState({uploaded: result.success ? 'success' : ''})
-          _this.setState({message: result.message})
+           if(result.success !== false) {
+              _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+           }else {
+              _this.setState({message: result.message, uploaded: 'failure'})
+           }
         },
         error: function (error) {
          _this.setState({message: error.message, uploaded: 'failure'})
