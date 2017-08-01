@@ -133,7 +133,7 @@ input.active:invalid {
 
 .navbar-nav {
   float: left;
-  margin: 1px 1px 1px 50px;
+  margin: 1px 1px 1px 186px;
   font-size: 16px;
 }
 
@@ -172,8 +172,6 @@ a:hover{
   margin: 16px; 
   background: azure; 
   border: groove;
-  height: 391px;
-  overflow-x: scroll;
 }
 
 .floatRight {
@@ -182,8 +180,6 @@ a:hover{
   margin: 16px; 
   background: azure; 
   border: groove;
-  height: 391px;
-  overflow-x: scroll;
 }
 
 .container { overflow: hidden; }
@@ -322,12 +318,12 @@ a{
 
 .getLangCustom{
   margin: inherit;
-  background: azure;
 }
 
 .getEmailCustom{
   margin: 46px 2px 2px 202px;
   background: azure;
+  border: groove;
 }
 .signinCustom{
   margin: 110px 1px 1px 482px;
@@ -428,6 +424,9 @@ h4, p {
   width: 61%;
   max-width: 100%;
   margin-bottom: 20px;
+  margin: 17px 3px 2px 226px;
+  border: groove;
+  background-color: aliceblue;
 }
 
 canvas {
@@ -467,5 +466,29 @@ p{
 }
 
 input.customSelectAll {
-    margin-left: 17px;
+  margin-left: 17px;
+}
+
+tbody {
+  height: 324px;
+  overflow: auto;
+}
+
+thead > tr, tbody{
+  display:block;
+}
+
+th {
+  background-color: darkseagreen;
+  width: 242px;
+}
+
+td, th {
+  width: 645px;
+}
+
+tr:hover{
+  background-color: #ddd;
+  cursor:pointer;
+  cursor:hand;
 }
