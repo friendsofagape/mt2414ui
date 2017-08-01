@@ -130,10 +130,10 @@ class SuperAdmin extends Component {
           {
             (currentRoles[data] === 'admin')?(
             // eslint-disable-next-line
-            <a href="javascript:void(0);" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
+            <a title="Set as Member" href="javascript:void(0);" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
             ):(
             // eslint-disable-next-line
-            <a href="javascript:void(0);" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
+            <a title="Approve as Administrator" href="javascript:void(0);" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
             )
           } 
           </td>
@@ -150,14 +150,14 @@ class SuperAdmin extends Component {
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg2': 'invisible') }>
               <strong>{this.state.message}</strong>
             </div>
-          <form className="col-md-8 uploader getEmailCustom" encType="multipart/form-data">
+          <form encType="multipart/form-data">
             <div className="container">
               <table className="table emailTable">
                 <thead>
                   <tr>
                     <th>Users</th>
-                    <th>User Role</th>
-                    <th>Assign Role</th>
+                    <th> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;User Role</th>
+                    <th>  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Assign Role</th>
                   </tr>
                 </thead>
                 <tbody>
