@@ -13,7 +13,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
-import { FormControl, Tooltip, OverlayTrigger, ButtonToolbar} from 'react-bootstrap';
+import { FormControl, ButtonToolbar} from 'react-bootstrap';
 import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
@@ -36,10 +36,9 @@ var BookArray = ["GEN" : "Genesis", "EXO" : "Exodus", "LEV" : "Leviticus", "NUM"
 
 class Tabs extends Component {
   render() {
-    const tooltip = (<Tooltip id="tooltip"><strong>Select Books !! </strong> Click for Token Count Bar Chart </Tooltip>);
     return (
+    <div>
     <ButtonToolbar>
-    <OverlayTrigger placement="left" overlay={tooltip}>
       <ul className="nav nav-tabs customTab">
         {tabData.map(function(tab, i){
           return (
@@ -47,8 +46,8 @@ class Tabs extends Component {
           );
         }.bind(this))}      
       </ul>
-    </OverlayTrigger>
     </ButtonToolbar>
+    </div>
     );
   }
 }
@@ -84,7 +83,9 @@ class GetTranslationDraft extends Component {
       chartData:{},
       dataDisplay: 'Exclude Books',
       autoLoad: false,
-      BookTokensCount: {}
+      BookTokensCount: {},
+      displayPercentage: [],
+      displayTokenCount: [],
     }
 
       // Upload file specific callback handlers
@@ -94,6 +95,7 @@ class GetTranslationDraft extends Component {
       this.onSelectVersion = this.onSelectVersion.bind(this);
       this.onSelectRevision = this.onSelectRevision.bind(this);
       this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
+      this.DowloadRemainingTokens = this.DowloadRemainingTokens.bind(this);
   }
   
   componentWillMount = () => {
@@ -108,13 +110,15 @@ class GetTranslationDraft extends Component {
     }
   }
 
-  createCheckboxes1 = (obj, books) => (
+  createCheckboxes1 = (obj, books, displayPercentage, displayTokenCount) => (
     Object.keys(books).map(function(v, i){
       return (
         <p><Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
             bookCode={books[v]}
+            p={displayPercentage[i]}
+            tc={displayTokenCount[i]}
           />
         </p>
       );
@@ -194,6 +198,7 @@ class GetTranslationDraft extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
+
         var getAllBook = JSON.parse(result);
 
         //for canonical sorting
@@ -259,7 +264,63 @@ class GetTranslationDraft extends Component {
     });      
   }
 
-//for Download Zip file
+  //Download Remaining Tokens
+  DowloadRemainingTokens(e){
+    e.preventDefault();
+    global.books = [];
+    // eslint-disable-next-line
+    for (const books of this.selectedCheckboxes1) {
+      global.books = Array.from(this.selectedCheckboxes1);
+
+    }
+
+    var _this = this
+    var data = { 
+        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "book_list": global.books 
+    }
+
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+    var bookCode = Array.from(this.selectedCheckboxes1);
+    if(bookCode.length>1){
+      var fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'to'+ bookCode[(bookCode.length)-1]+'Tokens.xlsx';
+    } else {
+      fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'Tokens.xlsx';
+    }
+
+    function beforeSend() {
+      document.getElementById("loading").style.display = "inline";
+    }
+
+    function complete() {
+      document.getElementById("loading").style.display = "none";
+    }
+
+    var xhr = new XMLHttpRequest();
+    beforeSend();
+    xhr.open('POST', GlobalURL["hostURL"]+"/v1/tokenlist", true);
+    xhr.responseType = 'blob';
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.setRequestHeader('Authorization', "bearer " + accessToken);
+    xhr.onload = function(e) {
+      complete();
+      if (this.status === 200) {
+        var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+        var downloadUrl = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+      } 
+      else {
+        _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
+      }
+    };   
+    xhr.send(JSON.stringify(data)); 
+  }
+
+
+  //for Download Zip file
   exportToUSFMFile(jsonData) {
     var _this = this;
     zip = new JSZip();
@@ -275,7 +336,7 @@ class GetTranslationDraft extends Component {
   }
 
 
-//for Bar chart
+  //for Bar chart
   getChartData(){
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
@@ -302,13 +363,18 @@ class GetTranslationDraft extends Component {
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
       method : "POST",
+      beforeSend: function () {
+          $(".modal").show();
+      },
+      complete: function () {
+          $(".modal").hide();
+      },
       headers: {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
       var DynamicColor = getRandomColor();
         var getRev = JSON.parse(result);
-
         Object.keys(getRev).map(function(key, value){
           return _this.state.BookTokensCount[key] = getRev[key];
         });
@@ -317,9 +383,11 @@ class GetTranslationDraft extends Component {
         
         var BookTokensCount = _this.state.BookTokensCount;
         var booksTokenCollection = [];
-        var booksTokenCountCollection = [];
+        var tokenCount = [];
+        var totalTokenCount = [];
         var keyArray = [];
         var keyValue = [];
+        var remainingPercentage = [];
         Object.keys(BookTokensCount).map(function(key, value){
           return (keyArray.push(key), keyValue.push(BookTokensCount[key]));
         })
@@ -329,12 +397,20 @@ class GetTranslationDraft extends Component {
           for(var j=0; j<keyArraylength; j++){
             if(BookArray[i] === keyArray[j]){
               booksTokenCollection.push(booksName2[0][keyArray[j]]);
-              booksTokenCountCollection.push(keyValue[j])
-
+              tokenCount.push(keyValue[j][0]);
+              totalTokenCount.push(keyValue[j][1]);
             }
           }
          }
 
+        for(i = 0; i < tokenCount.length; i++ ){      
+          var calculatedPercentage =Math.round((1 - (tokenCount[i]/totalTokenCount[i]))*100 + "e+2")/100;
+          remainingPercentage.push(calculatedPercentage+ '%');
+        }
+
+      _this.setState({displayPercentage: remainingPercentage.length > 0 ? remainingPercentage : []}) 
+      _this.setState({displayTokenCount: tokenCount.length > 0 ? tokenCount : []})  
+     
         if (getRev.success !== false){
         _this.setState({uploaded: getRev.success ? 'success' : '', autoLoad: true})
 
@@ -344,7 +420,7 @@ class GetTranslationDraft extends Component {
             datasets:[
               {
                 label:'Token Count',
-                data: booksTokenCountCollection,
+                data: tokenCount,
                 backgroundColor: DynamicColor,
               }
             ]
@@ -413,16 +489,17 @@ class GetTranslationDraft extends Component {
                 />) }
 
                 <Tabs activeTab={this.state.activeTab}/>
-                <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks)}</div>
+                <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks, this.state.displayPercentage, this.state.displayTokenCount)}</div>
                 </section>
               </div>
                 <div className="form-group"> 
-                  <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.DowloadDraft} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButtonLeft" onClick={this.DowloadDraft} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success ConcordButtonRight" onClick={this.DowloadRemainingTokens} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Remaining Tokens </button>&nbsp;&nbsp;&nbsp;
                 </div>
-                <div className="modal" style={{display: 'none'}}>
-                    <div className="center">
-                        <img alt="" src={require('./Images/loader.gif')} />
-                    </div>
+                <div id="loading" className="modal" style={{display: 'none'}}>
+                  <div className="center">
+                      <img alt="" src={require('./Images/loader.gif')} />
+                  </div>
                 </div>
           </form>
           </div>
