@@ -59,6 +59,9 @@ class CreateSource extends Component {
         result = JSON.parse(result)
           if (result.success !== false) {
           _this.setState({message: result.message, uploaded: 'success'})
+          setTimeout(function(){
+            window.location.href = "./admin";
+          },2000)
         }else {
           _this.setState({message: result.message, uploaded: 'failure'})
           }
@@ -94,7 +97,13 @@ class CreateSource extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
+                    <input className="form-control" 
+                      value={this.state.version}
+                      onChange={this.onSelect}
+                      name="version" 
+                      type="text"  
+                      placeholder="version" 
+                      required />
               </div>&nbsp;
               <div className="form-group">
                 <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
