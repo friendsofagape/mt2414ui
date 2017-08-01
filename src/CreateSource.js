@@ -32,9 +32,52 @@ class CreateSource extends Component {
   }
   
   onSelect(e) {
+    e.target.classList.add('active');
     this.setState({
       [e.target.name]: e.target.value });
+    this.showInputError(e.target.name);
   }
+
+  // Checking signup form error
+  showFormErrors() {
+    const inputs = document.querySelectorAll('input');
+    let isFormValid = true;
+    
+    inputs.forEach(input => {
+      input.classList.add('active');
+      
+      const isInputValid = this.showInputError(input.name);
+      
+      if (!isInputValid) {
+        isFormValid = false;
+      }
+    });
+    
+    return isFormValid;
+  }
+
+//Showing input error for each field 
+  showInputError(refName) {
+    console.log(refName)
+    const validity = this.refs[refName].validity;
+    const label = document.getElementById(`${refName}Label`).textContent;
+    console.log(label)
+    const error = document.getElementById(`${refName}Error`);
+    const isPassword = refName.indexOf('textContent') !== -1;
+          
+      if (!validity.valid) {
+        if (validity.valueMissing) {
+          error.textContent = `${label} is a required field`; 
+        } else if (isPassword && validity.patternMismatch) {
+          error.textContent = `${label} should be longer than 4 chars`; 
+        }
+        return false;
+      }
+      
+      error.textContent = ' ';
+      return true;
+  }
+
 
   createSource(e){
     var _this = this
@@ -59,6 +102,9 @@ class CreateSource extends Component {
         result = JSON.parse(result)
           if (result.success !== false) {
           _this.setState({message: result.message, uploaded: 'success'})
+          setTimeout(function(){
+            window.location.href = "./admin";
+          },2000)
         }else {
           _this.setState({message: result.message, uploaded: 'failure'})
           }
@@ -93,8 +139,17 @@ class CreateSource extends Component {
                     </FormControl>
               </div>&nbsp;
               <div className="form-group">
-                <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input value={this.state.version} onChange={this.onSelect} name="version" type="text"  placeholder="version" className="form-control" /> 
+                <lable className="control-lable" id="versionLabel"> <strong> Version </strong> </lable>
+                    <input className="form-control" 
+                      value={this.state.version}
+                      onChange={this.onSelect}
+                      name="version" 
+                      type="version"  
+                      placeholder="version" 
+                      pattern=".{3,}"
+                      ref="version"
+                      required />
+                    <div className="error" id="versionError" />
               </div>&nbsp;
               <div className="form-group">
                 <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
