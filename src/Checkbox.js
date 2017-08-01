@@ -18,11 +18,15 @@ class Checkbox extends Component {
 
   render() {
     return (
-      <div className="checkbox" >
+      <div className="checkbox" title={this.props.tc + ' Tokens Remaining'}  >
         <label>
           <input type="checkbox" className="bookList" value={this.props.bookCode} checked={this.state.isChecked} onChange={this.toggleCheckboxChange} />
           {this.props.label}
         </label>
+        &nbsp;
+        <b >
+          {this.props.p}
+        </b>
       </div>
     );
   }

@@ -29,6 +29,7 @@ class GetLanguages extends Component {
     }
       // Upload file specific callback handlers
       this.getBooks = this.getBooks.bind(this);
+      this.onSelect = this.onSelect.bind(this);
   }
   
   componentWillMount() {
@@ -47,6 +48,13 @@ class GetLanguages extends Component {
       },
       error: function (error) {
       }
+    });
+  }
+
+  onSelect(){
+    $('#data tr').click(function(e) {
+      $('#data tr').removeClass('highlight');
+      $(this).addClass('highlight');
     });
   }
 
@@ -95,7 +103,7 @@ class GetLanguages extends Component {
           <form className="col-md-6 uploader getLangCustom" encType="multipart/form-data">
             <div className="container">
             <div className="floatLeft">
-              <table className="table">
+              <table className="table" id="data" onClick={_this.onSelect} >
                 <thead>
                   <tr>
                     <th>Language</th>
