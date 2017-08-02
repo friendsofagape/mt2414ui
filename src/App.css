@@ -5,7 +5,7 @@
 .col-md-12 {
   width: 100%;
   background: honeydew;
-  margin: 62px 1px 1px 1px;
+  margin: 62px 1px 1px 0px;
   border: solid;
 }
 
@@ -105,7 +105,7 @@ input.active:invalid {
 }
 
 .source-headerCon {
-  margin: 80px 79px 14px 425px;
+  margin: 80px 79px 14px 447px;
   font-size: 20px;
 }
 
@@ -394,7 +394,7 @@ ul.customHeaderAdmin.nav.navbar-nav {
 ul.nav.nav-tabs {
   background: dimgray;
   padding: 3px 2px;
-  margin: 25px 854px 1px 27px;
+  margin: 25px 824px 1px 27px;
 }
 
 ul.nav.nav-tabs.customTab {
@@ -415,7 +415,7 @@ h4, p {
   border-bottom: 1px solid transparent;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  margin: -69px 1px 1px 280px;
+  margin: -69px 1px 1px 310px;
 }
 
 .exclude1 {
@@ -456,21 +456,21 @@ p{
 .customUpload{
   margin: 46px 319px 37px 395px;
 }
+
 .customUpload1{
   margin: 44px 463px -15px 384px;
 }
-.dropzone{
-  width: 326px;
-  height: 200px;
-  border-width: 2px;
-  border-color: cornsilk;
-  border-style: groove;
-  border-radius: 5px;
-  background-color: beige;
+
+.customUpload2 {
+    margin: 7px 1px 1px 144px;
+}
+
+.customUpload3 {
+    margin: 7px 1px 1px 211px;
 }
 
 .sourcefooter{
-  margin: 10px 1px 1px 84px;
+  margin: 26px 1px 1px 84px;
 }
 
 .textDrop{
@@ -495,7 +495,7 @@ thead > tr, tbody{
 }
 
 th {
-  background-color: darkseagreen;
+  background-color: aquamarine;
   width: 242px;
 }
 
