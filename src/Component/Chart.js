@@ -23,7 +23,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:'Remaining Tokens to be translated',
+              text:' Untranslated Token Count',
               fontSize:15
             },
             legend:{

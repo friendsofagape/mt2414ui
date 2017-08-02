@@ -143,7 +143,7 @@ class SuperAdmin extends Component {
     return(
       <div className="container">
         <Header/ >
-          <h1 className="source-headerCon">List of AutographaMT users</h1>&nbsp;
+          <h1 className="source-headerConSuperAdmin">List of AutographaMT users</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg2' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
@@ -157,7 +157,7 @@ class SuperAdmin extends Component {
                   <tr>
                     <th>Users</th>
                     <th> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;User Role</th>
-                    <th>  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Assign Role</th>
+                    <th> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Assign Role</th>
                   </tr>
                 </thead>
                 <tbody>

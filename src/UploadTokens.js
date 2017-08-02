@@ -191,6 +191,9 @@ class UploadTokens extends Component {
               <div className="form-group customUpload1" >
                 <div className="form-control">
                   <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
+                  <div className="customUpload2">
+                  <b>(.xlsx / .xls only)</b>
+                  </div>
                 </div>&nbsp;
               </div>
             </section>

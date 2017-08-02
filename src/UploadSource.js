@@ -173,6 +173,9 @@ class UploadSource extends Component {
               <div className="form-group">
                 <div className="form-control">
                   <input id="file-input" type="file" className="fileInput" accept=".usfm" multiple />
+                  <div className="customUpload3">
+                    <b>(.usfm only)</b>
+                  </div>
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
