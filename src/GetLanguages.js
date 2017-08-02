@@ -99,7 +99,7 @@ class GetLanguages extends Component {
     return(
       <div className="container">
         <Header / >
-          <h1 className="source-header-lan">Available Source Texts</h1>&nbsp;
+          <h1 className="source-headerConSuperAdmin">Available Source Texts</h1>&nbsp;
           <form className="col-md-6 uploader getLangCustom" encType="multipart/form-data">
             <div className="container">
             <div className="floatLeft">
