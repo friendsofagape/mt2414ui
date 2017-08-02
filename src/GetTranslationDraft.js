@@ -388,7 +388,7 @@ class GetTranslationDraft extends Component {
         var keyArray = [];
         var keyValue = [];
         var remainingPercentage = [];
-        
+
         Object.keys(BookTokensCount).map(function(key, value){
           return (keyArray.push(key), keyValue.push(BookTokensCount[key]));
         })
@@ -489,7 +489,7 @@ class GetTranslationDraft extends Component {
                 />) }
                 <Tabs activeTab={this.state.activeTab} />
                 <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks, this.state.displayPercentage, this.state.displayTokenCount)}</div>
-                <div className="tandc" > * % means how much translation has been completed</div>
+                <div className="tandc" > * % means how much translation has been completed. Hover over it to view remaining token count.</div>
                 </section>
               </div>
                 <div className="form-group"> 
