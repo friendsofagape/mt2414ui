@@ -4,13 +4,14 @@
 
 .col-md-12 {
   width: 100%;
-  background: aliceblue;
-  margin: -16px 1px 1px -28px;
+  background: honeydew;
+  margin: 62px 1px 1px 1px;
+  border: solid;
 }
 
 .col-md-8 {
-  margin: 100px 1px 43px 72px;
-  background-color: aliceblue;
+  margin: 147px 1px 43px 72px;
+  background-color: aquamarine;
   color: black;
 }
 
@@ -95,7 +96,7 @@ input.active:invalid {
 }
 
 .source-header {
- 	margin: 53px 74px 35px 82px;
+ 	margin: 53px 74px 35px 89px;
  	font-size: 20px;
 }
 .source-header2 {
@@ -104,16 +105,22 @@ input.active:invalid {
 }
 
 .source-headerCon {
-  margin: 120px 77px 12px 466px;
+  margin: 80px 79px 14px 425px;
   font-size: 20px;
 }
+
+.source-headerConSuperAdmin {
+  margin: 124px 83px 14px 439px;
+  font-size: 20px;
+}
+
 .source-headerCon1 {
-  margin: 120px 77px 12px 484px;
+  margin: 81px 77px 20px 491px;
   font-size: 20px;
 }
 
 .source-header-lan {
-  margin: 100px 67px 18px 482px;
+  margin: 100px 67px 18px 446px;
   font-size: 22px;
 }
 .source-header-email {
@@ -169,17 +176,17 @@ a:hover{
 .floatLeft { 
   width: 41%; 
   float: left;
-  margin: 16px; 
+  margin: 19px 1px 1px 26px; 
   background: azure; 
-  border: groove;
+  border: solid;
 }
 
 .floatRight {
   width: 43%; 
   float: right;
-  margin: 16px; 
+  margin: 19px 78px 11px 23px; 
   background: azure; 
-  border: groove;
+  border: solid;
 }
 
 .container { overflow: hidden; }
@@ -215,7 +222,7 @@ th, td {
 }
 
 .Concord1{
-  margin: 4px 1px 1px 37px;
+  margin: 23px 1px 1px 24px;
 }
 
 .Concord2{
@@ -223,15 +230,15 @@ th, td {
 }
 
 .ConcordButton{
-  margin: 69px 1px 1px 487px;
+  margin: 64px 1px 13px 488px;
 }
 
 .ConcordButtonLeft{
-  margin: 69px 1px 1px 353px;
+  margin: 51px 1px 1px 367px;
 }
 
 .ConcordButtonRight{
-  margin: -58px 1px 1px 604px;
+  margin: -58px 1px 1px 542px;
 }
 
 
@@ -387,7 +394,7 @@ ul.customHeaderAdmin.nav.navbar-nav {
 ul.nav.nav-tabs {
   background: dimgray;
   padding: 3px 2px;
-  margin: 25px 859px 1px 27px;
+  margin: 25px 854px 1px 27px;
 }
 
 ul.nav.nav-tabs.customTab {
@@ -433,8 +440,8 @@ h4, p {
   width: 61%;
   max-width: 100%;
   margin-bottom: 20px;
-  margin: 17px 3px 2px 226px;
-  border: groove;
+  margin: 17px 3px 2px 206px;
+  border: solid;
   background-color: aliceblue;
 }
 
@@ -447,7 +454,7 @@ p{
 }
 
 .customUpload{
-  margin: 44px 315px 3px 395px;
+  margin: 46px 319px 37px 395px;
 }
 .customUpload1{
   margin: 44px 463px -15px 384px;
@@ -504,4 +511,8 @@ tr:hover{
 
 tr.highlight td {
   background: darkgray;
+}
+
+.averagePercentage {
+  margin: 164px 1px -174px 152px;
 }
