@@ -86,8 +86,6 @@ class GetTranslationDraft extends Component {
       BookTokensCount: {},
       displayPercentage: [],
       displayTokenCount: [],
-      averagePercentage: '',
-      totalTokenNo: '',
     }
 
       // Upload file specific callback handlers
@@ -390,8 +388,6 @@ class GetTranslationDraft extends Component {
         var keyArray = [];
         var keyValue = [];
         var remainingPercentage = [];
-        var totalPercentage = 0,
-            totalToken = 0;
 
         Object.keys(BookTokensCount).map(function(key, value){
           return (keyArray.push(key), keyValue.push(BookTokensCount[key]));
@@ -411,16 +407,10 @@ class GetTranslationDraft extends Component {
         for(i = 0; i < tokenCount.length; i++ ){      
           var calculatedPercentage = Math.round((1 - (tokenCount[i]/totalTokenCount[i]))*100 + "e+2")/100;
           remainingPercentage.push(calculatedPercentage+ '%');
-          totalPercentage += calculatedPercentage;
-          totalToken += tokenCount[i];
         }
 
-      totalPercentage = Math.round((totalPercentage/tokenCount.length)+"e+2")/100;
-      
       _this.setState({displayPercentage: remainingPercentage.length > 0 ? remainingPercentage : []}) 
       _this.setState({displayTokenCount: tokenCount.length > 0 ? tokenCount : []})  
-      _this.setState({averagePercentage: totalPercentage});
-      _this.setState({totalTokenNo: totalToken});
         if (getRev.success !== false){
         _this.setState({uploaded: getRev.success ? 'success' : '', autoLoad: true})
 
@@ -497,9 +487,9 @@ class GetTranslationDraft extends Component {
                   targetlang={this.state.targetlang}
                   location="Bar Chart" legendPosition="bottom"
                 />) }
-                <div className="averagePercentage"><mark>Translations Remaining: <b>{this.state.averagePercentage}% &nbsp;({this.state.totalTokenNo} Tokens)</b></mark></div>
                 <Tabs activeTab={this.state.activeTab} />
                 <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks, this.state.displayPercentage, this.state.displayTokenCount)}</div>
+                <div className="tandc" > * % means how much translation has been completed. Hover over it to view remaining token count.</div>
                 </section>
               </div>
                 <div className="form-group"> 

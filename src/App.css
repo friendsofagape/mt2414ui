@@ -513,6 +513,7 @@ tr.highlight td {
   background: darkgray;
 }
 
-.averagePercentage {
-  margin: 164px 1px -174px 152px;
+.tandc {
+  margin: 1px 1px 1px 28px;
+  font-style: italic;
 }
