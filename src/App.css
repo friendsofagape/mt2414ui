@@ -266,9 +266,12 @@ th, td {
   vertical-align: middle;
 }
 
-.msg{
-  margin: 6px 1px 1px 424px;
-  display: -webkit-inline-box;
+.msg {
+  margin: auto;
+  display: block;
+  max-width: 570px;
+  text-align: center;
+  align-self: unset;
 }
 .msg1{
   margin: 6px 1px 1px 464px;

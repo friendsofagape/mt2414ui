@@ -477,10 +477,10 @@ onSelectTargetLanguage(e){
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon">Download Translation Draft</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg1' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>Translation Generated Successfully</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg1': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;

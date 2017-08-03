@@ -144,10 +144,10 @@ class SuperAdmin extends Component {
       <div className="container">
         <Header/ >
           <h1 className="source-headerConSuperAdmin">List of AutographaMT users</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg2' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg2': 'invisible') }>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
               <strong>{this.state.message}</strong>
             </div>
           <form encType="multipart/form-data">

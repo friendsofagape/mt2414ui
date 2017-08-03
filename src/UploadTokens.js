@@ -22,7 +22,9 @@ import RevisionNumber from './Component/RevisionNumber';
 var jwtDecode = require('jwt-decode');
 
 let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-var decoded = jwtDecode(accessToken);
+if(accessToken){
+  var decoded = jwtDecode(accessToken);
+}
 
 class UploadTokens extends Component {
   constructor(props) {
