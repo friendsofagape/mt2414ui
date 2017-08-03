@@ -13,14 +13,16 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
-import { FormControl, ButtonToolbar} from 'react-bootstrap';
-import TargetLanguages from './TargetLanguages';
+import {ButtonToolbar} from 'react-bootstrap';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import saveAs from 'save-as'
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
-import ListLanguages from './Component/ListLanguages'
+import TargetLanguages from './TargetLanguages';
+import SourceLanguages from './SourceLanguages';
+import ListLanguages from './Component/ListLanguages';
+import ListTargetLanguage from './Component/ListTargetLanguage';
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 import Chart from './Component/Chart';
@@ -77,8 +79,10 @@ class GetTranslationDraft extends Component {
       activeTab: tabData[0],
       activeTabValue: '',
       getVersions: [''],
+      getTargetLang: [''],
       getRevision: [''],
       Sourcelanguage: '',
+      Targetlanguage: '',
       getAllBooks: '',
       chartData:{},
       dataDisplay: 'Exclude Books',
@@ -92,6 +96,7 @@ class GetTranslationDraft extends Component {
       this.DowloadDraft = this.DowloadDraft.bind(this);
       this.onSelect = this.onSelect.bind(this);
       this.onSelectSource = this.onSelectSource.bind(this);
+      this.onSelectTargetLanguage = this.onSelectTargetLanguage.bind(this);
       this.onSelectVersion = this.onSelectVersion.bind(this);
       this.onSelectRevision = this.onSelectRevision.bind(this);
       this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
@@ -126,15 +131,15 @@ class GetTranslationDraft extends Component {
   )
 
   onSelect(e) {
-    this.setState({
-      [e.target.name]: e.target.value });
+    this.setState({ Targetlanguage: e.target.value });
   }
+
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
-
       this.setState({ Sourcelanguage: e.target.value });
       var _this = this;
+      _this.setState({getVersions: ['']})
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
         "language": e.target.value
@@ -155,6 +160,31 @@ class GetTranslationDraft extends Component {
       }
     });
   }
+
+//onSelectTargetLanguage for Dynamic Target Language
+onSelectTargetLanguage(e){
+
+    var _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    var data = { 
+      "language": e.target.value
+    }
+    $.ajax({
+    url: GlobalURL["hostURL"]+"/v1/targetlang",
+    contentType: "application/json; charset=utf-8",
+    data : JSON.stringify(data),
+    method : "POST",
+    headers: {
+      "Authorization": "bearer " + accessToken
+    },
+    success: function (result) {
+      var getTargetLanguage = JSON.parse(result);
+      _this.setState({getTargetLang: getTargetLanguage.length > 0 ? getTargetLanguage : []})
+    },
+    error: function (error) {
+    }
+  });
+}
 
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
@@ -184,6 +214,8 @@ class GetTranslationDraft extends Component {
 
   //onSelectRevision for Dynamic list of the boosk
   onSelectRevision(e) {
+       
+      this.setState({ Revision: e.target.value });
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
@@ -231,9 +263,8 @@ class GetTranslationDraft extends Component {
 
     var _this = this
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "books": global.books 
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "books": global.books 
     }
-
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/translations",
@@ -276,15 +307,15 @@ class GetTranslationDraft extends Component {
 
     var _this = this
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "book_list": global.books 
+        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "book_list": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>1){
-      var fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'to'+ bookCode[(bookCode.length)-1]+'Tokens.xlsx';
+      var fileName = SourceLanguages[0][this.state.Sourcelanguage] + this.state.Version + booksName2[0][bookCode[0]] +'to'+ booksName2[0][bookCode[(bookCode.length)-1]]+'Tokens.xlsx';
     } else {
-      fileName = this.state.Sourcelanguage + this.state.Version + bookCode[0] +'Tokens.xlsx';
+      fileName = SourceLanguages[0][this.state.Sourcelanguage] + this.state.Version + booksName2[0][bookCode[0]] +'Tokens.xlsx';
     }
 
     function beforeSend() {
@@ -329,7 +360,7 @@ class GetTranslationDraft extends Component {
     });
     zip.generateAsync({type:"blob"})
       .then(function(content) {
-          saveAs(content, _this.state.targetlang + '.zip');
+          saveAs(content, SourceLanguages[0][_this.state.Sourcelanguage] + 'To' + TargetLanguages[0][_this.state.Targetlanguage] + '.zip');
       }, function(err){
          _this.setState({uploaded: 'failure'}) 
       })
@@ -341,8 +372,8 @@ class GetTranslationDraft extends Component {
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang
-    }
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage
+  }
 
     //Dynamic color for chart
     function getRandomColor() {
@@ -455,28 +486,21 @@ class GetTranslationDraft extends Component {
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                  onChange={this.onSelectSource} 
+                  onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-              <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                <option>Choose</option>
-                { 
-                  Object.keys(TargetLanguages[0]).map(function(v, i) {
-                    return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
-                  })
-                }    
-              </FormControl>&nbsp;&nbsp;
+              <ListTargetLanguage
+                Targetlanguage={this.state.getTargetLang}
+                onChange={this.onSelect}
+              />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
                   version={this.state.getVersions} 
                   onChange={this.onSelectVersion} 
                 />
-              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
-                
+              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>               
                 <RevisionNumber
                   revision={this.state.getRevision}  
-                  Sourcelanguage={this.state.Sourcelanguage} 
-                  Version={this.state.Version} 
                   onChange={this.onSelectRevision}
                 />
               </div>&nbsp;

@@ -41,11 +41,11 @@ class UploadTokens extends Component {
     this.onSelect = this.onSelect.bind(this);
     this.onSelectVersion = this.onSelectVersion.bind(this);
     this.onSelectSource = this.onSelectSource.bind(this);
+    this.onSelectRevision = this.onSelectRevision.bind(this);
   }
   
   onSelect(e) {
-    this.setState({
-      [e.target.name]: e.target.value });
+    this.setState({targetlang: e.target.value });
   }
 
   //onSelectSource for Dynamic Versions
@@ -99,6 +99,10 @@ class UploadTokens extends Component {
     });
   }
 
+  onSelectRevision(e){
+    this.setState({Revision: e.target.value });
+  }
+
   //for upload tokens using FormData
   uploadTokens(e){   
     e.preventDefault();    
@@ -111,9 +115,9 @@ class UploadTokens extends Component {
       formData.append('tokenwords', $('input[type=file]')[0].files[i]);
       formData.append('language', _this.state.Sourcelanguage)
       formData.append('version', _this.state.Version)
-      formData.append('revision', _this.state.getRevision[0])
+      formData.append('revision', _this.state.Revision)
       formData.append('targetlang', _this.state.targetlang)
-      
+
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
       $.ajax({
@@ -163,19 +167,17 @@ class UploadTokens extends Component {
             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                              onChange={this.onSelectSource} 
+                  onChange={this.onSelectSource} 
                 />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
-                          version={this.state.getVersions} 
-                          onChange={this.onSelectVersion} 
+                  version={this.state.getVersions} 
+                  onChange={this.onSelectVersion} 
                 />
               <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
                 <RevisionNumber
-                              revision={this.state.getRevision}  
-                              Sourcelanguage={this.state.Sourcelanguage} 
-                              Version={this.state.Version} 
-                              onChange={this.onSelectRevision}
+                  revision={this.state.getRevision}
+                  onChange={this.onSelectRevision} 
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
                 <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
