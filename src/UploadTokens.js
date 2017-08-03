@@ -46,7 +46,7 @@ class UploadTokens extends Component {
     this.onSelectVersion = this.onSelectVersion.bind(this);
     this.onSelectSource = this.onSelectSource.bind(this);
     this.onSelectRevision = this.onSelectRevision.bind(this);
-    this.uploadTokensWithAddTargetLanguage = this.uploadTokensWithAddTargetLanguage.bind(this);
+    this.updateTokens = this.updateTokens.bind(this);
   }
   
   onSelect(e) {
@@ -156,7 +156,8 @@ class UploadTokens extends Component {
     }    
   }
 
-  uploadTokensWithAddTargetLanguage(e) {
+  //for update tokens using FormData
+  updateTokens(e) {
     e.preventDefault();    
     var _this = this;
 
@@ -251,20 +252,22 @@ class UploadTokens extends Component {
                 </div>&nbsp;
               </div>
             </section>
-              {(decoded.role === 'admin' || decoded.role === 'superadmin') ?  (
+              {
+                (decoded.role === 'admin' || decoded.role === 'superadmin') ?  (
                 <div className="form-group customUpload">
-                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokensWithAddTargetLanguage} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.updateTokens} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                 </div>
                 ):(
                   <div className="form-group customUpload">
                     <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                   </div>
-                  )}
-                  <div className="modal" style={{display: 'none'}}>
-                    <div className="center">
-                      <img alt="" src={require('./Images/loader.gif')} />
-                    </div>
+                  )
+                }
+                <div className="modal" style={{display: 'none'}}>
+                  <div className="center">
+                    <img alt="" src={require('./Images/loader.gif')} />
                   </div>
+                </div>
           </form>
           </div>
         <Footer/>
