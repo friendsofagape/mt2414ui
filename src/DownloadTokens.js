@@ -12,10 +12,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
-import { FormControl } from 'react-bootstrap';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-import TargetLanguages from './TargetLanguages';
+import ListTargetLanguage from './Component/ListTargetLanguage';
 import SourceLanguages from './SourceLanguages';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
@@ -79,6 +78,8 @@ class DownloadTokens extends Component {
       dataDisplay: 'Include Books',
       getVersions: [],
       getRevision: [],
+      Targetlanguage: '',
+      getTargetLang: [''],
       Sourcelanguage: '',
       getAllBooks: ''
     }
@@ -86,6 +87,7 @@ class DownloadTokens extends Component {
     // Upload file specific callback handlers
     this.onSelect = this.onSelect.bind(this);
     this.onSelectSource = this.onSelectSource.bind(this);
+    this.onSelectTargetLanguage = this.onSelectTargetLanguage.bind(this);
     this.onSelectVersion = this.onSelectVersion.bind(this);
     this.onSelectRevision = this.onSelectRevision.bind(this);
     this.downloadTokenWords = this.downloadTokenWords.bind(this);
@@ -152,8 +154,7 @@ class DownloadTokens extends Component {
 
   //onSelect for Target Language
   onSelect(e) {
-        this.setState({
-      [e.target.name]: e.target.value });    
+    this.setState({ Targetlanguage: e.target.value });
   }
   
 
@@ -181,6 +182,31 @@ class DownloadTokens extends Component {
         error: function (error) {
         }
       });
+  }
+
+  //onSelectTargetLanguage for Dynamic Target Language
+  onSelectTargetLanguage(e){
+
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      var data = { 
+        "language": e.target.value
+      }
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/targetlang",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getTargetLanguage = JSON.parse(result);
+        _this.setState({getTargetLang: getTargetLanguage.length > 0 ? getTargetLanguage : []})
+      },
+      error: function (error) {
+      }
+    });
   }
 
   //onSelectVersion for Dynamic Revision
@@ -211,6 +237,7 @@ class DownloadTokens extends Component {
 
   //onSelectRevision for Dynamic list of the books
   onSelectRevision(e) {
+      this.setState({ Revision: e.target.value });
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
@@ -261,7 +288,7 @@ class DownloadTokens extends Component {
 
     var _this = this
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "nbooks":global.nbooks, "books": global.books 
+        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -320,7 +347,7 @@ class DownloadTokens extends Component {
             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                  onChange={this.onSelectSource} 
+                  onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
                 />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
@@ -330,19 +357,13 @@ class DownloadTokens extends Component {
               <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
                 <RevisionNumber
                   revision={this.state.getRevision}  
-                  Sourcelanguage={this.state.Sourcelanguage} 
-                  Version={this.state.Version} 
                   onChange={this.onSelectRevision}
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-                <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                  <option>Choose</option>
-                  { 
-                    Object.keys(TargetLanguages[0]).map(function(v, i) {
-                      return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
-                    })
-                  }    
-                </FormControl>&nbsp;&nbsp;
+              <ListTargetLanguage
+                Targetlanguage={this.state.getTargetLang}
+                onChange={this.onSelect}
+              />
             </div>&nbsp;
             <div>
             <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
@@ -362,7 +383,7 @@ class DownloadTokens extends Component {
             </section>
             </div>
             <div className="form-group">
-              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div id="loading" className="modal">
               <div className="center">

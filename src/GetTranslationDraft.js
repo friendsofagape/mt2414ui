@@ -131,16 +131,15 @@ class GetTranslationDraft extends Component {
   )
 
   onSelect(e) {
-    this.setState({
-      [e.target.name]: e.target.value });
+    this.setState({ Targetlanguage: e.target.value });
   }
 
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
-
       this.setState({ Sourcelanguage: e.target.value });
       var _this = this;
+      _this.setState({getVersions: ['']})
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
         "language": e.target.value
@@ -165,7 +164,6 @@ class GetTranslationDraft extends Component {
 //onSelectTargetLanguage for Dynamic Target Language
 onSelectTargetLanguage(e){
 
-    this.setState({ Targetlanguage: e.target.value });
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
     var data = { 
@@ -216,6 +214,8 @@ onSelectTargetLanguage(e){
 
   //onSelectRevision for Dynamic list of the boosk
   onSelectRevision(e) {
+       
+      this.setState({ Revision: e.target.value });
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
@@ -263,9 +263,8 @@ onSelectTargetLanguage(e){
 
     var _this = this
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.targetlang, "books": global.books 
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "books": global.books 
     }
-
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/translations",
@@ -308,7 +307,7 @@ onSelectTargetLanguage(e){
 
     var _this = this
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.getTargetLang[0], "book_list": global.books 
+        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "book_list": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -361,7 +360,7 @@ onSelectTargetLanguage(e){
     });
     zip.generateAsync({type:"blob"})
       .then(function(content) {
-          saveAs(content, SourceLanguages[0][_this.state.Sourcelanguage] + 'To' + TargetLanguages[0][_this.state.getTargetLang[0]] + '.zip');
+          saveAs(content, SourceLanguages[0][_this.state.Sourcelanguage] + 'To' + TargetLanguages[0][_this.state.Targetlanguage] + '.zip');
       }, function(err){
          _this.setState({uploaded: 'failure'}) 
       })
@@ -373,7 +372,7 @@ onSelectTargetLanguage(e){
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.getRevision[0] , "targetlang": this.state.getTargetLang[0]
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage
   }
 
     //Dynamic color for chart
@@ -461,9 +460,9 @@ onSelectTargetLanguage(e){
         }else {
 
           _this.setState({message: getRev.message, uploaded: 'failure'})
-          // setTimeout(function(){
-          //   location.reload();
-          // },1000);
+          setTimeout(function(){
+            location.reload();
+          },1000);
         }
         },
       error: function (error) {
@@ -487,11 +486,12 @@ onSelectTargetLanguage(e){
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
+                  onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
               <ListTargetLanguage
                 Targetlanguage={this.state.getTargetLang}
+                onChange={this.onSelect}
               />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
@@ -501,8 +501,6 @@ onSelectTargetLanguage(e){
               <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>               
                 <RevisionNumber
                   revision={this.state.getRevision}  
-                  Sourcelanguage={this.state.Sourcelanguage} 
-                  Version={this.state.Version} 
                   onChange={this.onSelectRevision}
                 />
               </div>&nbsp;
