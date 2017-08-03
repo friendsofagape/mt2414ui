@@ -129,10 +129,10 @@ class ResetPassword extends Component {
         <form onSubmit={this.onResetPassword} className="col-md-8 signupCustom">
           <h1 className="forgot-header"><span className="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Reset Password ?</h1>&nbsp;
           <p className="textP">Enter your registered email Id, we'll send you a password reset email</p>
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">

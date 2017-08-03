@@ -151,10 +151,10 @@ class UploadSource extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader"  id="upload_form" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
