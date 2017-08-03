@@ -453,6 +453,13 @@ p{
   display: -webkit-inline-box;
 }
 
+.uploadButtonLeft{
+  margin: 3px 1px 1px 16px;
+}
+
+.uploadButtonRight{
+  margin: 51px 1px 1px 367px;
+}
 .customUpload{
   margin: 46px 319px 37px 395px;
 }
