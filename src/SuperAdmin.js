@@ -156,8 +156,8 @@ class SuperAdmin extends Component {
                 <thead>
                   <tr>
                     <th>Users</th>
-                    <th> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;User Role</th>
-                    <th> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Assign Role</th>
+                    <th>User Role</th>
+                    <th>Assign Role</th>
                   </tr>
                 </thead>
                 <tbody>
