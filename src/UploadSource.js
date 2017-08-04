@@ -157,7 +157,7 @@ class UploadSource extends Component {
   render() {
     var style = { 
       color: 'red',
-      margin: '2px 3px 1px -8px'
+      margin: 'auto'
     }; 
     return(
       <div className="container">
