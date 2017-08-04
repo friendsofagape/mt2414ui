@@ -114,99 +114,123 @@ class UploadTokens extends Component {
   uploadTokens(e){   
     e.preventDefault();    
     var _this = this;
+    var lblError = document.getElementById("lblError");
 
-    for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+    if($('input[type=file]')[0].files.length === 0){
+      lblError.innerHTML = "Please select files to upload: <b>.xlsx/.xls</b> only.";
+    } else {
+      for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+        var uploadForm = document.getElementById("upload_form");
+        var formData = new FormData(uploadForm);
+        formData.append('tokenwords', $('input[type=file]')[0].files[i]);
+        formData.append('language', _this.state.Sourcelanguage)
+        formData.append('version', _this.state.Version)
+        formData.append('revision', _this.state.Revision)
+        formData.append('targetlang', _this.state.targetlang)
 
-      var uploadForm = document.getElementById("upload_form");
-      var formData = new FormData(uploadForm);
-      formData.append('tokenwords', $('input[type=file]')[0].files[i]);
-      formData.append('language', _this.state.Sourcelanguage)
-      formData.append('version', _this.state.Version)
-      formData.append('revision', _this.state.Revision)
-      formData.append('targetlang', _this.state.targetlang)
+        let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
-        processData: false,
-        contentType: false,
-        data : formData,
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        beforeSend: function () {
-          $(".modal").show();
-        },
-        complete: function () {
+        if(formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx' && formData.get('tokenwords')['name'].slice(-4, ) !== '.xls'){
+          lblError.innerHTML = "Please upload files with extension: <b>.xlsx/.xls</b> only.";
+          i = $('input[type=file]')[0].files.length;
           $(".modal").hide();
-        },
-        success: function (result) {
+          break;
+        } else {
+          $.ajax({
+            url: GlobalURL["hostURL"]+"/v1/uploadtokentranslation",
+            processData: false,
+            contentType: false,
+            data : formData,
+            method : "POST",
+            headers: {
+              "Authorization": "bearer " + accessToken
+            },
+            beforeSend: function () {
+              $(".modal").show();
+            },
+            complete: function () {
+              $(".modal").hide();
+            },
+            success: function (result) {
 
-           result = JSON.parse(result)
-           if(result.success !== false) {
-              _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
-           }else {
-              _this.setState({message: result.message, uploaded: 'failure'})
-           }
-        },
-        error: function (error) {
-         _this.setState({message: error.message, uploaded: 'failure'})
+               result = JSON.parse(result)
+               if(result.success !== false) {
+                  _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+               }else {
+                  _this.setState({message: result.message, uploaded: 'failure'})
+               }
+            },
+            error: function (error) {
+             _this.setState({message: "File Format Error", uploaded: 'failure'})
+            }
+          });
         }
-      }); 
-    }    
+      }
+    }   
   }
 
   //for update tokens using FormData
   updateTokens(e) {
     e.preventDefault();    
     var _this = this;
+    var lblError = document.getElementById("lblError");
 
-    for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
-
-      var uploadForm = document.getElementById("upload_form");
-      var formData = new FormData(uploadForm);
-      formData.append('tokenwords', $('input[type=file]')[0].files[i]);
-      formData.append('language', _this.state.Sourcelanguage)
-      formData.append('version', _this.state.Version)
-      formData.append('revision', _this.state.Revision)
-      formData.append('targetlang', _this.state.targetlang)
-
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/updatetokentranslation",
-        processData: false,
-        contentType: false,
-        data : formData,
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        beforeSend: function () {
-          $(".modal").show();
-        },
-        complete: function () {
+    if($('input[type=file]')[0].files.length === 0){
+      lblError.innerHTML = "Please select files to upload: <b>.xlsx/.xls</b> only";
+    } else {
+        for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+        var uploadForm = document.getElementById("upload_form");
+        var formData = new FormData(uploadForm);
+        formData.append('tokenwords', $('input[type=file]')[0].files[i]);
+        formData.append('language', _this.state.Sourcelanguage)
+        formData.append('version', _this.state.Version)
+        formData.append('revision', _this.state.Revision)
+        formData.append('targetlang', _this.state.targetlang)
+        let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+        if((formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx') && (formData.get('tokenwords')['name'].slice(-4, ) !== '.xls')){
+          lblError.innerHTML = "Please upload files with extension: <b>.xlsx/.xls</b> only";
+          i = $('input[type=file]')[0].files.length;
           $(".modal").hide();
-        },
-        success: function (result) {
+          break;
+        } else {
+          $.ajax({
+            url: GlobalURL["hostURL"]+"/v1/updatetokentranslation",
+            processData: false,
+            contentType: false,
+            data : formData,
+            method : "POST",
+            headers: {
+              "Authorization": "bearer " + accessToken
+            },
+            beforeSend: function () {
+              $(".modal").show();
+            },
+            complete: function () {
+              $(".modal").hide();
+            },
+            success: function (result) {
 
-           result = JSON.parse(result)
-           if(result.success !== false) {
-              _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
-           }else {
-              _this.setState({message: result.message, uploaded: 'failure'})
-           }
-        },
-        error: function (error) {
-         _this.setState({message: error.message, uploaded: 'failure'})
-        }
-      }); 
-    }    
+               result = JSON.parse(result)
+               if(result.success !== false) {
+                  _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+               }else {
+                  _this.setState({message: result.message, uploaded: 'failure'})
+               }
+            },
+            error: function (error) {
+             _this.setState({message: "File Format Error", uploaded: 'failure'})
+            }
+          }); 
+        }    
+      }
+    }
   }
 
   render() {
+    var style = { 
+      color: 'red',
+      margin: 'auto'
+    };
     return(
       <div className="container">
         <Header/ >
@@ -248,9 +272,7 @@ class UploadTokens extends Component {
               <div className="form-group customUpload1" >
                 <div className="form-control">
                   <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
-                  <div className="customUpload2">
-                  <b>(.xlsx / .xls only)</b>
-                  </div>
+                  <span id="lblError" style={style}></span>
                 </div>&nbsp;
               </div>
             </section>

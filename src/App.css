@@ -273,15 +273,6 @@ th, td {
   text-align: center;
   align-self: unset;
 }
-.msg1{
-  margin: 6px 1px 1px 464px;
-  display: -webkit-inline-box;
-}
-
-.msg2{
-  margin: 6px 1px 1px 277px;
-  display: -webkit-inline-box;
-}
 
 .progress1{
   background: beige;
@@ -473,10 +464,6 @@ p{
 
 .customUpload2 {
     margin: 7px 1px 1px 144px;
-}
-
-.customUpload3 {
-    margin: 7px 1px 1px 211px;
 }
 
 .sourcefooter{
