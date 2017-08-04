@@ -104,12 +104,14 @@ class UploadSource extends Component {
       var formData = new FormData(uploadForm);
       formData.append('content', $('input[type=file]')[0].files[i]);
       formData.append('source_id', this.state.allSourceID)
-
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       var countSuccess = 0;
       var countFailure = 0;
-
-      $.ajax({
+      var lblError = document.getElementById("lblError");
+      if(formData.get('content')['name'].slice(-5, ) !== '.usfm'){
+        lblError.innerHTML = "Please upload files having extensions: <b> .usfm </b> only.";
+      }else{
+        $.ajax({
         url: GlobalURL["hostURL"]+"/v1/sources",
         processData: false,
         contentType: false,
@@ -142,9 +144,14 @@ class UploadSource extends Component {
         }
       });
      } 
+      }
     }
 
   render() {
+    var style = { 
+      color: 'red',
+      margin: '2px 3px 1px -8px'
+    }; 
     return(
       <div className="container">
         <Header / >
@@ -172,10 +179,8 @@ class UploadSource extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" accept=".usfm" multiple />
-                  <div className="customUpload3">
-                    <b>(.usfm only)</b>
-                  </div>
+                  <input id="file-input" type="file" className="fileInput" multiple/><br />
+                  <span id="lblError" style={style}></span>
                 </div>&nbsp;
                 <div className="form-group">
                   <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
