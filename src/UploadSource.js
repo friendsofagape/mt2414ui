@@ -97,55 +97,62 @@ class UploadSource extends Component {
   uploadFile(e){
     e.preventDefault();
     var _this = this
-
-    for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
-
-      var uploadForm = document.getElementById("upload_form");
-      var formData = new FormData(uploadForm);
-      formData.append('content', $('input[type=file]')[0].files[i]);
-      formData.append('source_id', this.state.allSourceID)
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
-      var countSuccess = 0;
-      var countFailure = 0;
-      var lblError = document.getElementById("lblError");
-      if(formData.get('content')['name'].slice(-5, ) !== '.usfm'){
-        lblError.innerHTML = "Please upload files having extensions: <b> .usfm </b> only.";
-      }else{
-        $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/sources",
-        processData: false,
-        contentType: false,
-        data : formData,
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-      beforeSend: function () {
-          $(".modal").show();
-      },
-        // eslint-disable-next-line
-        success: function (result) {
-        result = JSON.parse(result)
-        if (result.success !== false) {
-            countSuccess++;
-          _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
-          if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){  
-            _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+    var lblError = document.getElementById("lblError");
+    
+    if($('input[type=file]')[0].files.length === 0){
+      lblError.innerHTML = "Please select a files to upload: <b> .usfm </b> only.";
+    } else {
+        for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+          var uploadForm = document.getElementById("upload_form");
+          var formData = new FormData(uploadForm);
+          formData.append('content', $('input[type=file]')[0].files[i]);
+          formData.append('source_id', this.state.allSourceID)
+          let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+          var countSuccess = 0;
+          var countFailure = 0;
+          if(formData.get('content')['name'].slice(-5, ) !== '.usfm'){
+            lblError.innerHTML = "Please upload files having extensions: <b> .usfm </b> only.";
+            i = $('input[type=file]')[0].files.length;
             $(".modal").hide();
-          }        
-        }else {
-          countFailure++;
-          _this.setState({message: result.message, uploaded: 'failure'})
-          if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){   
-             _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
-             $(".modal").hide();
-          } 
-        }
-        }
-      });
-     } 
+            break;
+          }else{
+            lblError.innerHTML = " ";
+            $.ajax({
+            url: GlobalURL["hostURL"]+"/v1/sources",
+            processData: false,
+            contentType: false,
+            data : formData,
+            method : "POST",
+            headers: {
+              "Authorization": "bearer " + accessToken
+            },
+            beforeSend: function () {
+                $(".modal").show();
+            },
+            // eslint-disable-next-line
+            success: function (result) {
+            result = JSON.parse(result)
+              if (result.success !== false) {
+                  countSuccess++;
+                _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
+                if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){  
+                  _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+                  $(".modal").hide();
+                }        
+              }else {
+                countFailure++;
+                _this.setState({message: result.message, uploaded: 'failure'})
+                if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){   
+                   _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+                   $(".modal").hide();
+                } 
+              }
+            }
+          });
+        } 
       }
     }
+  }
 
   render() {
     var style = { 
