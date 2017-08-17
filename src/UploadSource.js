@@ -11,13 +11,14 @@
 
 import React, { Component } from 'react';
 import './App.css';
-import Footer from './Footer';
 import ListLanguages from './Component/ListLanguages';
+import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import Versions from './Component/Versions';
 import Header from './Header';
 import { Link } from 'react-router';
+import { Parallax, Background } from 'react-parallax';
 
 class UploadSource extends Component {
   constructor(props) {
@@ -163,6 +164,10 @@ class UploadSource extends Component {
       <div className="container">
         <Header / >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
+        <Parallax>
+        <Background>
+            <img alt="" src={require('./Images/heroBible.jpg')}/>
+        </Background>
           <form className="col-md-8 uploader"  id="upload_form" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
@@ -202,8 +207,9 @@ class UploadSource extends Component {
                   </div>
               </div>
           </form>
+        </Parallax>
           </div>
-        <Footer/>
+        <Footer />
       </div>
       );
     }
