@@ -1,7 +1,6 @@
 .App {
 	text-align: center;
 }
-
 .col-md-12 {
   width: 100%;
   background: honeydew;
@@ -11,8 +10,8 @@
 
 .col-md-8 {
   margin: 147px 1px 43px 72px;
-  background-color: aquamarine;
   color: black;
+  background: space;
 }
 
 .col-md-6 {
@@ -520,4 +519,14 @@ tr.highlight td {
   display: inline-block;
   padding: 10px 15px;
   margin-bottom: -1px;
+}
+
+.react-parallax-background-children{
+  position: fixed !important;  
+  left: 50% !important;  
+  transform: translate3d(-50%, 102.8182px, 0px) !important; 
+  transform-style: preserve-3d !important;  
+  backface-visibility: hidden !important;  
+  height: auto !important;  
+  width: auto !important;  
 }
