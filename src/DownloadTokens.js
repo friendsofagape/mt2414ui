@@ -14,7 +14,6 @@ import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-import ListTargetLanguage from './Component/ListTargetLanguage';
 import SourceLanguages from './SourceLanguages';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
@@ -30,8 +29,6 @@ var tabData = [
 
 //Bookarray for canonical order
 var BookArray = ["GEN" : "Genesis", "EXO" : "Exodus", "LEV" : "Leviticus", "NUM" : "Numbers", "DEU" : "Deuteronomy", "JOS" : "Joshua", "JDG" : "Judges", "RUT" : "Ruth", "1SA" : "1 Samuel", "2SA" : "2 Samuel", "1KI" : "1 Kings", "2KI" : "2 Kings", "1CH" : "1 Chronicles", "2CH" : "2 Chronicles", "EZR" : "Ezra", "NEH" : "Nehemiah", "EST" : "Esther", "JOB" : "Job", "PSA" : "Psalms", "PRO" : "Proverbs", "ECC" : "Ecclesiastes", "SNG" : "Songs of Solomon", "ISA" : "Isaiah", "JER" : "Jeremiah", "LAM" : "Lamentations", "EZE" : "Ezekiel", "DAN" : "Daniel", "HOS" : "Hosea", "JOL" : "Joel", "AMO" : "Amos", "OBA" : "Obadiah", "JON" : "Jonah", "MIC" : "Micah", "NAM" : "Nahum", "HAB" : "Habakkuk", "ZEP" : "Zephaniah", "HAG" : "Haggai", "ZEC" : "Zechariah", "MAL" : "Malachi", "MAT" : "Matthew", "MRK" : "Mark", "LUK" : "Luke", "JHN" : "John", "ACT" : "Acts", "ROM" : "Romans", "1CO" : "1 Corinthians", "2CO" : "2 Corinthians", "GAL" : "Galatians", "EPH" : "Ephesians", "PHP" : "Philippians", "COL" : "Colossians", "1TH" : "1 Thessalonians", "2TH" : "2 Thessalonians", "1TI" : "1 Timothy", "2TI" : "2 Timothy", "TIT" : "Titus", "PHM" : "Philemon", "HEB" : "Hebrews", "JAS" : "James", "1PE" : "1 Peter", "2PE" : "2 Peter", "1JN" : "1 John", "2JN" : "2 John", "3JN" : "3 John", "JUD" : "Jude", "REV" : "Revelations"];
-
-
 
 class Tabs extends Component {
   render() {
@@ -93,6 +90,7 @@ class DownloadTokens extends Component {
     this.onSelectVersion = this.onSelectVersion.bind(this);
     this.onSelectRevision = this.onSelectRevision.bind(this);
     this.downloadTokenWords = this.downloadTokenWords.bind(this);
+    this.showHideCheckBox = this.showHideCheckBox.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -101,6 +99,8 @@ class DownloadTokens extends Component {
       activeTab: tab,
       dataDisplay: tab.name
     });
+
+    this.showHideCheckBox();
   }
 
   componentWillMount = () => {
@@ -162,7 +162,6 @@ class DownloadTokens extends Component {
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
-
       this.setState({ Sourcelanguage: e.target.value });
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
@@ -271,8 +270,29 @@ class DownloadTokens extends Component {
       });
   }
 
+//Show & Hide for the Checkbox
+showHideCheckBox(){
+  var SelectValue = document.getElementsByClassName("bookList");
+  var SelectLength = SelectValue.length;
+  var BooleanValue = [];
+  var i;
+  for(i = 0; i < SelectLength; i++){
+    BooleanValue.push(SelectValue[i].checked);
+  }
+
+  for(i = 0; i < SelectLength; i++){
+    if(BooleanValue[i] === 'false'){
+      console.log('I m false');
+    } else {
+      console.log('I m true');
+    }
+  }
+  
+}
+
 // For Downloads Token words
   downloadTokenWords(e){
+
     e.preventDefault();
     global.books = [];
     global.nbooks= [];
@@ -292,7 +312,7 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
-
+    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>1){
@@ -361,11 +381,6 @@ class DownloadTokens extends Component {
                   revision={this.state.getRevision}  
                   onChange={this.onSelectRevision}
                 />
-              <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-              <ListTargetLanguage
-                Targetlanguage={this.state.getTargetLang}
-                onChange={this.onSelect}
-              />
             </div>&nbsp;
             <div>
             <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
