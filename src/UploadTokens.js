@@ -19,6 +19,7 @@ import GlobalURL from './GlobalURL';
 import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
+import SourceLanguages from './SourceLanguages';
 var jwtDecode = require('jwt-decode');
 
 let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -112,7 +113,17 @@ class UploadTokens extends Component {
 
   //for upload tokens using FormData
   uploadTokens(e){   
-    e.preventDefault();    
+    e.preventDefault();
+    
+    var txt;
+    if (confirm("Confirm for upload token ! \n Source Language : " + SourceLanguages[0][this.state.Sourcelanguage] + "\n Version : " + this.state.Version) === true) {
+        txt = "You pressed OK!";
+    } else {
+        txt = "You pressed Cancel!";
+    }
+
+    alert(txt)
+
     var _this = this;
     var lblError = document.getElementById("lblError");
 
