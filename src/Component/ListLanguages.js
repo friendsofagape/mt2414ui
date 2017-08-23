@@ -9,7 +9,6 @@ import React, { Component } from 'react';
 import '../App.css';
 import $ from 'jquery';
 import GlobalURL from '../GlobalURL';
-import SourceLanguages from '../SourceLanguages';
 import { FormControl } from 'react-bootstrap';
 
 class ListLanguages extends Component {
@@ -42,12 +41,26 @@ class ListLanguages extends Component {
   
   render() {
     let currentLanguages = this.state.getLanguages;
+    let { Language } = this.props;
+    var LanguagesWithCode = [];
+    if(Language != null){
+        Object.keys(Language).map(function(data, index){
+        for(var i=0; i<currentLanguages.length;i++){
+          if(Language[data] === currentLanguages[i]){
+            LanguagesWithCode[currentLanguages[i]] = data;
+          }
+        }
+        return (<h1>{null}</h1>);
+      })
+    }
     return(
           <FormControl onChange={this.props.onChange} componentClass="select" placeholder="select">
             <option>Choose</option>
-            {currentLanguages.map(function(data, index){
-              return (<option key={index} value={data}>{SourceLanguages[0][data]}</option>);
-            })}
+            {
+              Object.keys(LanguagesWithCode).map(function(data, index){
+                return(<option key={index} value={data}>{LanguagesWithCode[data]}</option>);
+              })
+            }
           </FormControl>
         );
     }
