@@ -15,7 +15,6 @@ import SourceLanguages from './SourceLanguages';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import Header from './Header';
-import { Parallax, Background } from 'react-parallax';
 
 class CreateSource extends Component {
   constructor(props) {
@@ -78,10 +77,6 @@ class CreateSource extends Component {
       <div className="container">
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <Parallax>
-        <Background>
-            <img alt="" src={require('./Images/heroBible.jpg')}/>
-        </Background>
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Create Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
@@ -114,7 +109,6 @@ class CreateSource extends Component {
                 <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
               </div>
           </form>
-          </Parallax>
           </div>
         <Footer/>
       </div>
