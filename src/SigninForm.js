@@ -104,7 +104,7 @@ var jwtDecode = require('jwt-decode');
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/auth",
       data :{
-        username : this.state.email,
+        email : this.state.email,
         password : this.state.password
       },
       method : "POST",
