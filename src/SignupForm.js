@@ -118,7 +118,7 @@ class SignupForm extends Component {
     var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: GlobalURL["hostURL"]+"/v1/registrations",
+       url: GlobalURL["hostURL"]+"/v1/registration",
        data: {
           email : this.state.email,
           password : this.state.password
