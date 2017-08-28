@@ -28,7 +28,8 @@ class UploadSource extends Component {
       getVersions: [],
       allSourceID: '',
       uploaded:'Uploading',
-      message: ''
+      message: '',
+      getTargetLanguages: ''
     }
 
     // Upload file specific callback handlers
@@ -36,6 +37,25 @@ class UploadSource extends Component {
     this.onSelect = this.onSelect.bind(this);
     this.onSelectSource = this.onSelectSource.bind(this);
     this.onSelectVersion = this.onSelectVersion.bind(this);
+  }
+
+  componentWillMount() {
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/languagelist",
+      contentType: "application/json; charset=utf-8",
+      method : "GET",
+      headers: {
+                "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getTargetLang = JSON.parse(result);
+        _this.setState({getTargetLanguages: getTargetLang})
+      },
+      error: function (error) {
+      }
+    });
   }
 
   onSelect(e) {
@@ -174,7 +194,8 @@ class UploadSource extends Component {
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
                 <ListLanguages 
-                              onChange={this.onSelectSource} 
+                  onChange={this.onSelectSource}
+                  Language={this.state.getTargetLanguages}
                 />
               </div>&nbsp;
               <div className="form-group">
