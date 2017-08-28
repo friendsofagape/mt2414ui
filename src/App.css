@@ -221,12 +221,12 @@ th, td {
 }
 
 .Concord1{
-  margin:  1px 1px 1px -24px;;
+  margin:  auto;
   text-align: center;
 }
 
 .Concord2{
-  margin: 1px 1px 1px 17px;
+  margin: 1px 1px 1px 17px;;
 }
 
 .ConcordButton{
@@ -520,4 +520,15 @@ tr.highlight td {
   display: inline-block;
   padding: 10px 15px;
   margin-bottom: -1px;
+}
+
+.cutomSelect{
+  width: 18%;
+  float: right;
+  margin-right: 34px;
+}
+
+.dropselect{
+  float: right;
+  margin: 0.5% -20% 2% 0%;
 }
