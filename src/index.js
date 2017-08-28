@@ -8,8 +8,6 @@ import SignupForm from './SignupForm';
 import UploadSource from './UploadSource';
 import CreateSource from './CreateSource';
 import DownloadTokens from './DownloadTokens';
-import GetConcordances from './GetConcordances';
-import GenerateConcordance from './GenerateConcordance';
 import GetTranslationDraft from './GetTranslationDraft';
 import GetLanguages from './GetLanguages';
 import UploadTokens from './UploadTokens';
@@ -44,8 +42,6 @@ ReactDOM.render(
             <Route path="/getlanguages" component={GetLanguages}/>
             <Route path="/downloadtokens" component={DownloadTokens}/>
             <Route path="/uploadtokens" component={UploadTokens}/>
-            <Route path="/getconcordances" component={GetConcordances}/>
-            <Route path="/generateconcordance" component={GenerateConcordance}/>
             <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
@@ -61,8 +57,6 @@ ReactDOM.render(
             <Route path="/getlanguages" component={GetLanguages}/>
             <Route path="/downloadtokens" component={DownloadTokens}/>
             <Route path="/uploadtokens" component={UploadTokens}/>
-            <Route path="/getconcordances" component={GetConcordances}/>
-            <Route path="/generateconcordance" component={GenerateConcordance}/>
             <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
@@ -77,8 +71,6 @@ ReactDOM.render(
               <Route path="/getlanguages" component={GetLanguages}/>
               <Route path="/downloadtokens" component={DownloadTokens}/>
               <Route path="/uploadtokens" component={UploadTokens}/>
-              <Route path="/getconcordances" component={GetConcordances}/>
-              <Route path="/generateconcordance" component={GenerateConcordance}/>
               <Route path="/gettranslationdraft" component={GetTranslationDraft}/>
               <Route path="/signup" component={SignupForm}/>
               <Route path="/resetpassword" component={ResetPassword}/>
@@ -92,8 +84,6 @@ ReactDOM.render(
             <Route path="/getlanguages" component={HomePage}/>
             <Route path="/downloadtokens" component={HomePage}/>
             <Route path="/uploadtokens" component={HomePage}/>
-            <Route path="/getconcordances" component={HomePage}/>
-            <Route path="/generateconcordance" component={HomePage}/>
             <Route path="/gettranslationdraft" component={HomePage}/>
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
