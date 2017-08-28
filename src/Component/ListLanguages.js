@@ -50,7 +50,7 @@ class ListLanguages extends Component {
             LanguagesWithCode[currentLanguages[i]] = data;
           }
         }
-        return (<h1>{null}</h1>);
+        return null;
       })
     }
     return(
