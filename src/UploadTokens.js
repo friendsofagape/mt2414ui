@@ -13,11 +13,15 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
+import VirtualizedSelect from 'react-virtualized-select'
+import 'react-select/dist/react-select.css'
+import 'react-virtualized/styles.css'
+import 'react-virtualized-select/styles.css'
 import GlobalURL from './GlobalURL';
-import { FormControl } from 'react-bootstrap';
 import ListLanguages from './Component/ListLanguages';
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
+
 var jwtDecode = require('jwt-decode');
 
 let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -41,7 +45,9 @@ class UploadTokens extends Component {
       getRevision: [],
       Sourcelanguage: '',
       disabled: false,
-      Language: []
+      Language: [],
+      getTargetLangJson: ''
+
     }
 
     // Upload file specific callback handlers
@@ -180,6 +186,7 @@ class UploadTokens extends Component {
 
   //for upload tokens using FormData
   uploadTokens(e){   
+
     e.preventDefault();
     var _this = this;
     var lblError = document.getElementById("lblError");
@@ -194,8 +201,7 @@ class UploadTokens extends Component {
         formData.append('language', _this.state.Sourcelanguage)
         formData.append('version', _this.state.Version)
         formData.append('revision', _this.state.Revision)
-        formData.append('targetlang', _this.state.targetlang)
-
+        formData.append('targetlang', _this.state.selectValue.value)
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
         if(formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx' && formData.get('tokenwords')['name'].slice(-4, ) !== '.xls'){
@@ -220,7 +226,6 @@ class UploadTokens extends Component {
               $(".modal").hide();
             },
             success: function (result) {
-
                result = JSON.parse(result)
                if(result.success !== false) {
                   _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
@@ -253,7 +258,8 @@ class UploadTokens extends Component {
         formData.append('language', _this.state.Sourcelanguage)
         formData.append('version', _this.state.Version)
         formData.append('revision', _this.state.Revision)
-        formData.append('targetlang', _this.state.targetlang)
+        formData.append('targetlang', _this.state.selectValue.value)
+        
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
         if((formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx') && (formData.get('tokenwords')['name'].slice(-4, ) !== '.xls')){
           lblError.innerHTML = "Please upload files with extension: <b>.xlsx/.xls</b> only";
@@ -296,6 +302,16 @@ class UploadTokens extends Component {
 
   render() {
     
+    var myTarget = this.state.getTargetLanguages;
+    var options = {};
+    var myOptions = [];
+
+    Object.keys(myTarget).map(function(data, index){
+      options = {label: data, value: myTarget[data]};
+      myOptions.push(options);
+      return (myOptions);
+    });
+
     var style = { 
       color: 'red',
       margin: 'auto'
@@ -314,7 +330,9 @@ class UploadTokens extends Component {
               <a className="close" data-dismiss="alert" aria-label="close">×</a>
               <strong>{this.state.message}</strong>
             </div>&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <div className="form-inline">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
                   onChange={this.onSelectSource}
@@ -331,16 +349,18 @@ class UploadTokens extends Component {
                   onChange={this.onSelectRevision} 
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-              <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                <option>Choose</option>
-                { 
-                  Object.keys(this.state.getTargetLanguages).map(function(v, i) {
-                    return(<option  key={i} value={v}>{v}</option>)
-                  })
-                }    
-              </FormControl>
-              <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2"></span></a>
+              <div className="cutomSelect">
+              <VirtualizedSelect
+                options={myOptions}
+                onChange={(selectValue) => this.setState({ selectValue })}
+                value={this.state.selectValue}
+              />
+              </div>
+              <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2 dropselect"></span></a>
             </div>&nbsp;
+
+
+
             <section style={this.state.Revision === '' ? {display:'none'} : {display: 'inline'} }>
               <div className="form-group customUpload1" >
                 <div className="form-control">
@@ -352,13 +372,13 @@ class UploadTokens extends Component {
               {
                 (decoded.role === 'admin' || decoded.role === 'superadmin') ?  (
                 <div className="form-group customUpload">
-                  <button id="btnGet" type="button" className="btn btn-success uploadButtonLeft" onClick={this.uploadTokens} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
-                  <button id="btnGet" type="button" className="btn btn-success updateButtonRight" onClick={this.updateTokens} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Update Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success uploadButtonLeft" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success updateButtonRight" onClick={this.updateTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Update Tokens</button>&nbsp;&nbsp;&nbsp;
                 </div>
 
                 ):(
                   <div className="form-group customUpload">
-                    <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                    <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                   </div>
                   )
                 }
