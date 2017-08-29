@@ -142,10 +142,12 @@ class ForgotPassword extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onForgotPassword} className="col-md-8 signupCustom">
           <h1 className="reset-header">Enter Password</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable': 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
                 <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
               <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">

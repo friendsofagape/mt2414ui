@@ -118,7 +118,7 @@ class SignupForm extends Component {
     var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: GlobalURL["hostURL"]+"/v1/registration",
+       url: GlobalURL["hostURL"]+"/v1/registrations",
        data: {
           email : this.state.email,
           password : this.state.password
@@ -148,10 +148,12 @@ class SignupForm extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
         <form onSubmit={this.onRegistration} className="col-md-8 signupCustom">
           <h1 className="signup-header">Sign up</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>{this.state.message}</strong>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                               
+              <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                                             
               <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
