@@ -11,7 +11,6 @@ import Footer from './Footer';
 import Header from './Header';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-import SourceLanguages from './SourceLanguages';
 import BookName from './BookName';
 
 //Bookarray for canonical order
@@ -25,7 +24,8 @@ class GetLanguages extends Component {
       getLanguages: '',
       getBooks: '',
       language: '',
-      version: ''
+      version: '',
+      getTargetLanguages: ''
     }
       // Upload file specific callback handlers
       this.getBooks = this.getBooks.bind(this);
@@ -46,6 +46,21 @@ class GetLanguages extends Component {
         var getLang = JSON.parse(result);
         _this.setState({getLanguages: getLang.length > 0 ? getLang : []})
       },
+      error: function (error) {
+      }
+    });
+
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/languagelist",
+      contentType: "application/json; charset=utf-8",
+      method : "GET",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+      var getTargetLang = JSON.parse(result);
+      _this.setState({getTargetLanguages: getTargetLang})
+     },
       error: function (error) {
       }
     });
@@ -85,7 +100,20 @@ class GetLanguages extends Component {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
     let currentBooks = this.state.getBooks.length > 0 ?  this.state.getBooks : [];
 
-    //for canonical sorting
+    var ListofLanguage = this.state.getTargetLanguages;
+    
+    var LanguagesWithCode = [];
+    if(ListofLanguage != null){
+      Object.keys(ListofLanguage).map(function(data, index){
+        for(var i=0; i<currentLanguages.length; i++){
+          if(ListofLanguage[data]  === currentLanguages[i][0]){
+            LanguagesWithCode[data] = currentLanguages[i][1];
+          }
+        }
+        return null;
+      })
+    }
+
     var booksCollection = {}
     for (var i = 0; i < BookArray.length; i++) {
       for( var j = 0; j < currentBooks.length; j++) {
@@ -111,18 +139,20 @@ class GetLanguages extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentLanguages.map(function(data, index){
-                    return (
-                      <tr title="Show Books" onClick={_this.getBooks.bind(this, {"language": data[0], "version": data[1]})} >
+                  {
+                    Object.keys(LanguagesWithCode).map(function(data, index){
+                      return (
+                      <tr title="Show Books" onClick={_this.getBooks.bind(this, {"language": ListofLanguage[data], "version": LanguagesWithCode[data]})} >
                         <td>
-                          {SourceLanguages[0][data[0]]}
+                          {data}
                         </td>
                         <td>
-                          {data[1]}
+                          {LanguagesWithCode[data]}
                         </td>
                       </tr>
                     );
-                  })}
+                  })
+                }
                 </tbody>
               </table>
             </div>

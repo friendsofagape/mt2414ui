@@ -12,13 +12,16 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
-import { FormControl } from 'react-bootstrap';
-import TargetLanguages from './TargetLanguages';
 import $ from 'jquery';
+import VirtualizedSelect from 'react-virtualized-select'
+import 'react-select/dist/react-select.css'
+import 'react-virtualized/styles.css'
+import 'react-virtualized-select/styles.css'
 import GlobalURL from './GlobalURL';
-import ListLanguages from './Component/ListLanguages'
+import ListLanguages from './Component/ListLanguages';
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
+
 var jwtDecode = require('jwt-decode');
 
 let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -30,6 +33,7 @@ class UploadTokens extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      getTargetLanguages: '',
       language:'tam',
       version: '',
       revision: '',
@@ -40,6 +44,10 @@ class UploadTokens extends Component {
       getVersions: [],
       getRevision: [],
       Sourcelanguage: '',
+      disabled: false,
+      Language: [],
+      getTargetLangJson: ''
+
     }
 
     // Upload file specific callback handlers
@@ -49,10 +57,35 @@ class UploadTokens extends Component {
     this.onSelectSource = this.onSelectSource.bind(this);
     this.onSelectRevision = this.onSelectRevision.bind(this);
     this.updateTokens = this.updateTokens.bind(this);
+    this.updateLanguageList = this.updateLanguageList.bind(this);
+
+  }
+
+  componentWillMount() {
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/languagelist",
+      contentType: "application/json; charset=utf-8",
+      method : "GET",
+      headers: {
+                "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getTargetLang = JSON.parse(result);
+        _this.setState({getTargetLanguages: getTargetLang})
+      },
+      error: function (error) {
+      }
+    });
   }
   
   onSelect(e) {
     this.setState({targetlang: e.target.value });
+  }
+
+  focusStateSelect () {
+    this.refs.stateSelect.focus();
   }
 
   //onSelectSource for Dynamic Versions
@@ -110,9 +143,51 @@ class UploadTokens extends Component {
     this.setState({Revision: e.target.value });
   }
 
+  //update language list
+  updateLanguageList(e){
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/updatelanguagelist",
+      contentType: "application/json; charset=utf-8",
+      method : "GET",
+      headers: {
+                "Authorization": "bearer " + accessToken
+      },
+      beforeSend: function () {
+        $(".modal").show();
+      },
+      complete: function () {
+        $(".modal").hide();
+      },
+      success: function (result) {
+        $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/languagelist",
+        contentType: "application/json; charset=utf-8",
+        method : "GET",
+        headers: {
+                  "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getTargetLang = JSON.parse(result);
+          _this.setState({getTargetLanguages: getTargetLang})
+        },
+        error: function (error) {
+        }
+        });
+          var resultMes = JSON.parse(result);
+        _this.setState({message: resultMes.message, uploaded: 'success'})
+      },
+      error: function (error) {
+      }
+    });
+  }
+
+
   //for upload tokens using FormData
   uploadTokens(e){   
-    e.preventDefault();    
+
+    e.preventDefault();
     var _this = this;
     var lblError = document.getElementById("lblError");
 
@@ -126,8 +201,7 @@ class UploadTokens extends Component {
         formData.append('language', _this.state.Sourcelanguage)
         formData.append('version', _this.state.Version)
         formData.append('revision', _this.state.Revision)
-        formData.append('targetlang', _this.state.targetlang)
-
+        formData.append('targetlang', _this.state.selectValue.value)
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
         if(formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx' && formData.get('tokenwords')['name'].slice(-4, ) !== '.xls'){
@@ -152,7 +226,6 @@ class UploadTokens extends Component {
               $(".modal").hide();
             },
             success: function (result) {
-
                result = JSON.parse(result)
                if(result.success !== false) {
                   _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
@@ -185,7 +258,8 @@ class UploadTokens extends Component {
         formData.append('language', _this.state.Sourcelanguage)
         formData.append('version', _this.state.Version)
         formData.append('revision', _this.state.Revision)
-        formData.append('targetlang', _this.state.targetlang)
+        formData.append('targetlang', _this.state.selectValue.value)
+        
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
         if((formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx') && (formData.get('tokenwords')['name'].slice(-4, ) !== '.xls')){
           lblError.innerHTML = "Please upload files with extension: <b>.xlsx/.xls</b> only";
@@ -227,6 +301,17 @@ class UploadTokens extends Component {
   }
 
   render() {
+    
+    var myTarget = this.state.getTargetLanguages;
+    var options = {};
+    var myOptions = [];
+
+    Object.keys(myTarget).map(function(data, index){
+      options = {label: data, value: myTarget[data]};
+      myOptions.push(options);
+      return (myOptions);
+    });
+
     var style = { 
       color: 'red',
       margin: 'auto'
@@ -237,16 +322,21 @@ class UploadTokens extends Component {
         <div className="row">
           <form className="col-md-12 uploader" id="upload_form" encType="multipart/form-data">
             <h1 className="source-headerCon1">Upload Tokens</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible') }>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>
               <strong>{this.state.message}</strong>
-            </div>
-            <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <div className="form-inline">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                  onChange={this.onSelectSource} 
+                  onChange={this.onSelectSource}
+                  Language={this.state.getTargetLanguages}
                 />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
@@ -259,16 +349,19 @@ class UploadTokens extends Component {
                   onChange={this.onSelectRevision} 
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-                <FormControl value={this.state.targetlang} onChange={this.onSelect} name="targetlang" componentClass="select" placeholder="select">
-                  <option>Choose</option>
-                  { 
-                    Object.keys(TargetLanguages[0]).map(function(v, i) {
-                      return(<option  key={i} value={v}>{TargetLanguages[0][v]}</option>)
-                    })
-                  }    
-                </FormControl>&nbsp;&nbsp;
+              <div className="cutomSelect">
+              <VirtualizedSelect
+                options={myOptions}
+                onChange={(selectValue) => this.setState({ selectValue })}
+                value={this.state.selectValue}
+              />
+              </div>
+              <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2 dropselect"></span></a>
             </div>&nbsp;
-            <section style={this.state.targetlang === '' ? {display:'none'} : {display: 'inline'} }>
+
+
+
+            <section style={this.state.Revision === '' ? {display:'none'} : {display: 'inline'} }>
               <div className="form-group customUpload1" >
                 <div className="form-control">
                   <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
@@ -279,13 +372,13 @@ class UploadTokens extends Component {
               {
                 (decoded.role === 'admin' || decoded.role === 'superadmin') ?  (
                 <div className="form-group customUpload">
-                  <button id="btnGet" type="button" className="btn btn-success uploadButtonLeft" onClick={this.uploadTokens} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
-                  <button id="btnGet" type="button" className="btn btn-success updateButtonRight" onClick={this.updateTokens} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Update Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success uploadButtonLeft" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                  <button id="btnGet" type="button" className="btn btn-success updateButtonRight" onClick={this.updateTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Update Tokens</button>&nbsp;&nbsp;&nbsp;
                 </div>
 
                 ):(
                   <div className="form-group customUpload">
-                    <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.targetlang} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                    <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
                   </div>
                   )
                 }

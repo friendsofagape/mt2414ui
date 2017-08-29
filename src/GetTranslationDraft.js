@@ -19,8 +19,6 @@ import GlobalURL from './GlobalURL';
 import saveAs from 'save-as'
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
-import TargetLanguages from './TargetLanguages';
-import SourceLanguages from './SourceLanguages';
 import ListLanguages from './Component/ListLanguages';
 import ListTargetLanguage from './Component/ListTargetLanguage';
 import Versions from './Component/Versions';
@@ -79,7 +77,6 @@ class GetTranslationDraft extends Component {
       activeTab: tabData[0],
       activeTabValue: '',
       getVersions: [''],
-      getTargetLang: [''],
       getRevision: [''],
       Sourcelanguage: '',
       Targetlanguage: '',
@@ -90,6 +87,8 @@ class GetTranslationDraft extends Component {
       BookTokensCount: {},
       displayPercentage: [],
       displayTokenCount: [],
+      getTargetLanguages: '',
+      getTargetLangList: ['']
     }
 
       // Upload file specific callback handlers
@@ -105,6 +104,23 @@ class GetTranslationDraft extends Component {
   
   componentWillMount = () => {
     this.selectedCheckboxes1 = new Set();
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/languagelist",
+      contentType: "application/json; charset=utf-8",
+      method : "GET",
+      headers: {
+                "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getTargetLang = JSON.parse(result);
+        _this.setState({getTargetLanguages: getTargetLang})
+      },
+      error: function (error) {
+      }
+    });
+
   }
 
   toggleCheckbox1 = label => {
@@ -179,7 +195,7 @@ onSelectTargetLanguage(e){
     },
     success: function (result) {
       var getTargetLanguage = JSON.parse(result);
-      _this.setState({getTargetLang: getTargetLanguage.length > 0 ? getTargetLanguage : []})
+      _this.setState({getTargetLangList: getTargetLanguage.length > 0 ? getTargetLanguage : []})
     },
     error: function (error) {
     }
@@ -306,6 +322,19 @@ onSelectTargetLanguage(e){
     }
 
     var _this = this
+
+    // For file name changes
+    var ListofLanguage = _this.state.getTargetLanguages;
+    var FileNameSlanguage = '';
+    if(ListofLanguage != null){
+      Object.keys(ListofLanguage).map(function(data, index){
+          if(ListofLanguage[data]  === _this.state.Sourcelanguage){
+            FileNameSlanguage = data;
+          }
+        return null;
+      })
+    }
+
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "book_list": global.books 
     }
@@ -313,9 +342,9 @@ onSelectTargetLanguage(e){
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>1){
-      var fileName = SourceLanguages[0][this.state.Sourcelanguage] + this.state.Version + booksName2[0][bookCode[0]] +'to'+ booksName2[0][bookCode[(bookCode.length)-1]]+'Tokens.xlsx';
+      var fileName = FileNameSlanguage + this.state.Version + booksName2[0][bookCode[0]] +'to'+ booksName2[0][bookCode[(bookCode.length)-1]]+'Tokens.xlsx';
     } else {
-      fileName = SourceLanguages[0][this.state.Sourcelanguage] + this.state.Version + booksName2[0][bookCode[0]] +'Tokens.xlsx';
+      fileName = FileNameSlanguage + this.state.Version + booksName2[0][bookCode[0]] +'Tokens.xlsx';
     }
 
     function beforeSend() {
@@ -354,13 +383,29 @@ onSelectTargetLanguage(e){
   //for Download Zip file
   exportToUSFMFile(jsonData) {
     var _this = this;
+
+    var ListofLanguage = _this.state.getTargetLanguages;
+    var FileNameSlanguage = '';
+    var FileNameTlanguage = '';
+    if(ListofLanguage != null){
+      Object.keys(ListofLanguage).map(function(data, index){
+          if(ListofLanguage[data]  === _this.state.Sourcelanguage){
+            FileNameSlanguage = data;
+          }
+          if(ListofLanguage[data] === _this.state.Targetlanguage){
+            FileNameTlanguage = data;
+          }
+        return null;
+      })
+    }
+
     zip = new JSZip();
     $.each(jsonData, function(key, value) {
       zip.file(key + '.usfm', value)
     });
     zip.generateAsync({type:"blob"})
       .then(function(content) {
-          saveAs(content, SourceLanguages[0][_this.state.Sourcelanguage] + 'To' + TargetLanguages[0][_this.state.Targetlanguage] + '.zip');
+          saveAs(content, FileNameSlanguage + 'To' + FileNameTlanguage + '.zip');
       }, function(err){
          _this.setState({uploaded: 'failure'}) 
       })
@@ -486,11 +531,13 @@ onSelectTargetLanguage(e){
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                  onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
+                onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
+                 Language={this.state.getTargetLanguages}
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
               <ListTargetLanguage
-                Targetlanguage={this.state.getTargetLang}
+                Tar={this.state.getTargetLangList}
+                Language={this.state.getTargetLanguages}
                 onChange={this.onSelect}
               />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
