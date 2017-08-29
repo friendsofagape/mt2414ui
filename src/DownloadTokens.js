@@ -202,30 +202,6 @@ class DownloadTokens extends Component {
       });
   }
 
-  //onSelectTargetLanguage for Dynamic Target Language
-  onSelectTargetLanguage(e){
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": e.target.value
-      }
-      $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/targetlang",
-      contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      success: function (result) {
-        var getTargetLanguage = JSON.parse(result);
-        _this.setState({getTargetLangList: getTargetLanguage.length > 0 ? getTargetLanguage : []})
-      },
-      error: function (error) {
-      }
-    });
-  }
-
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
 
@@ -284,6 +260,31 @@ class DownloadTokens extends Component {
         error: function (error) {
         }
       });
+  }
+
+  //onSelectTargetLanguage for Dynamic Target Language
+  onSelectTargetLanguage(e){
+      var _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      var data = { 
+        "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
+      }
+      $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/targetlang",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        console.log(result);
+        var getTargetLanguage = JSON.parse(result);
+        _this.setState({getTargetLangList: getTargetLanguage.length > 0 ? getTargetLanguage : []})
+      },
+      error: function (error) {
+      }
+    });
   }
 
 // For Downloads Token words
@@ -369,16 +370,18 @@ class DownloadTokens extends Component {
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon1">Download Tokens</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                              
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible') }>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
               <strong>{this.state.message}</strong>
             </div>
             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                  onChange={ (e) => { this.onSelectSource(e); this.onSelectTargetLanguage(e) } }
+                  onChange={ this.onSelectSource}
                   Language={this.state.getTargetLanguages}
                 />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
@@ -389,7 +392,7 @@ class DownloadTokens extends Component {
               <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
                 <RevisionNumber
                   revision={this.state.getRevision}  
-                  onChange={this.onSelectRevision}
+                  onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
                 />
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
               <ListTargetLanguage
