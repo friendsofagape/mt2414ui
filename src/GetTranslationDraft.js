@@ -203,14 +203,18 @@ class GetTranslationDraft extends Component {
     });
   }
 
-  //onSelectRevision for Dynamic list of the boosk
+  //onSelectRevision for set value of the revision
   onSelectRevision(e) {
-       
-      this.setState({ Revision: e.target.value });
+    this.setState({ Revision: e.target.value });
+  }
+
+  //OnSelectbook for the list of the book
+  onSelectBook(e){
+
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
-        "language": this.state.Sourcelanguage, "version" : this.state.Version, "revision": e.target.value, "targetlang": this.state.targetlang,
+        "language": this.state.Sourcelanguage, "version" : this.state.Version, "revision": this.state.Revision, "targetlang": e.target.value
       }
       $.ajax({
       url: GlobalURL["hostURL"]+"/v1/book",
@@ -238,7 +242,6 @@ class GetTranslationDraft extends Component {
       error: function (error) {
       }
      });
-
   }
 
   //onSelectTargetLanguage for Dynamic Target Language
@@ -276,8 +279,9 @@ class GetTranslationDraft extends Component {
 
     var _this = this
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "books": global.books 
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": e.target.value, "books": global.books 
     }
+
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/translations",
@@ -333,7 +337,7 @@ class GetTranslationDraft extends Component {
     }
 
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "book_list": global.books 
+        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": e.target.value, "book_list": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -375,7 +379,6 @@ class GetTranslationDraft extends Component {
     };   
     xhr.send(JSON.stringify(data)); 
   }
-
 
   //for Download Zip file
   exportToUSFMFile(jsonData) {
@@ -500,7 +503,6 @@ class GetTranslationDraft extends Component {
           }
         });
         }else {
-
           _this.setState({message: getRev.message, uploaded: 'failure'})
           setTimeout(function(){
             location.reload();
@@ -547,7 +549,7 @@ class GetTranslationDraft extends Component {
               <ListTargetLanguage
                 Tar={this.state.getTargetLangList}
                 Language={this.state.getTargetLanguages}
-                onChange={ (e) => { this.onSelect(e); this.getChartData(e) } }
+                onChange={ (e) => { this.onSelect(e); this.getChartData(e); this.onSelectBook(e)} }
               />
               </div>&nbsp;
               <div>
