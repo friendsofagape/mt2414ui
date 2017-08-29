@@ -139,15 +139,18 @@ class SuperAdmin extends Component {
           </td>
         </tr>
       )
-    })
+    });
+
     return(
       <div className="container">
         <Header/ >
           <h1 className="source-headerConSuperAdmin">List of AutographaMT users</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible') }>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
               <strong>{this.state.message}</strong>
             </div>
           <form encType="multipart/form-data">

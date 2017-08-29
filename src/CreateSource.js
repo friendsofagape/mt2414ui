@@ -106,7 +106,7 @@ class CreateSource extends Component {
     Object.keys(myTarget).map(function(data, index){
       options = {label: data, value: myTarget[data]};
       myOptions.push(options);
-      return <h1>Hello</h1>
+      return null;
     });
 
     return(
@@ -115,11 +115,13 @@ class CreateSource extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Create Sources</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
-                <strong>{this.state.message}</strong>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
+              <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-                <strong>{this.state.message}</strong>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable' : 'invisible')}>
+              <a className="close" data-dismiss="alert" aria-label="close">×</a>               
+              <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">
                 <lable className="control-label"> <strong> Language Name </strong> </lable>
