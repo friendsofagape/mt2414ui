@@ -278,7 +278,6 @@ class DownloadTokens extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
-        console.log(result);
         var getTargetLanguage = JSON.parse(result);
         _this.setState({getTargetLangList: getTargetLanguage.length > 0 ? getTargetLanguage : []})
       },
