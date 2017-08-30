@@ -234,7 +234,7 @@ class UploadTokens extends Component {
                }
             },
             error: function (error) {
-             _this.setState({message: "File Format Error", uploaded: 'failure'})
+             _this.setState({message: error.message, uploaded: 'failure'})
             }
           });
         }
@@ -292,7 +292,7 @@ class UploadTokens extends Component {
                }
             },
             error: function (error) {
-             _this.setState({message: "File Format Error", uploaded: 'failure'})
+             _this.setState({message: error.message, uploaded: 'failure'})
             }
           }); 
         }    
