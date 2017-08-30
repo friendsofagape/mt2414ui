@@ -25,9 +25,9 @@ class Header extends Component {
   }
 }
 
-class HomePage extends Component {
+class HomePage extends Component {  
   render() {
-    window.localStorage.clear(); 
+    window.localStorage.clear();
     return (
       <div>
       <Header />
