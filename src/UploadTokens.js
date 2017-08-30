@@ -356,11 +356,14 @@ class UploadTokens extends Component {
                 value={this.state.selectValue}
               />
               </div>
-              <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2 dropselect"></span></a>
+            {
+              (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
+                <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2 dropselect"></span></a> 
+              ):(
+                <div></div>
+                )
+            }
             </div>&nbsp;
-
-
-
             <section style={this.state.Revision === '' ? {display:'none'} : {display: 'inline'} }>
               <div className="form-group customUpload1" >
                 <div className="form-control">
