@@ -393,7 +393,7 @@ class DownloadTokens extends Component {
                   revision={this.state.getRevision}  
                   onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
                 />
-              <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
+              <lable className="control-label Concord2"> <strong> Target Language *</strong> </lable>
               <ListTargetLanguage
                 Tar={this.state.getTargetLangList}
                 Language={this.state.getTargetLanguages}
@@ -415,6 +415,7 @@ class DownloadTokens extends Component {
                    {this.createCheckboxes2(this, this.state.getAllBooks)}
                 </div>
               </section>
+              <div className="tandc1" > * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
             </section>
             </div>
             <div className="form-group">

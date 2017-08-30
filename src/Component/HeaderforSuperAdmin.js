@@ -7,7 +7,7 @@ class HeaderforSuperAdmin extends Component {
    return (
        <Navbar inverse collapseOnSelect fixedTop>
        <Navbar.Header><Navbar.Brand>
-           <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span></a>
+           <a href="/getlanguages">&nbsp;<span className='glyphicon glyphicon-home'></span></a>
        </Navbar.Brand><Navbar.Toggle />
        </Navbar.Header>
        <Navbar.Collapse>
@@ -18,7 +18,7 @@ class HeaderforSuperAdmin extends Component {
            <NavItem eventKey={4} ><Link to={'/downloadtokens'}>Download Tokens</Link> </NavItem>
            <NavItem eventKey={5} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
            <NavItem eventKey={6} ><Link to={'/gettranslationdraft'}>Download Draft</Link> </NavItem>
-           <NavItem eventKey={7} ><Link to={'/homepage'}>Log out</Link></NavItem>
+           <NavItem eventKey={7} ><Link to={'/logout'}>Log out</Link></NavItem>
          </Nav>
        </Navbar.Collapse>
      </Navbar>

@@ -15,6 +15,7 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
+import LogOut from './LogOut';
 var jwtDecode = require('jwt-decode');
 
 
@@ -38,6 +39,7 @@ ReactDOM.render(
             <Route path="/superadmin" component={SuperAdmin}/>
             <Route path="/admin" component={UploadSource} />
             <Route path="/createsource" component={CreateSource}/>
+            <Route path="/logout" component={LogOut}/>
             <Route path="/superadmin" component={HomePage}/>
             <Route path="/getlanguages" component={GetLanguages}/>
             <Route path="/downloadtokens" component={DownloadTokens}/>
@@ -52,6 +54,7 @@ ReactDOM.render(
           (accessToken && decoded.role === 'admin') ? (
           <Router history={browserHistory}>
             <Route path="/admin" component={UploadSource} />
+            <Route path="/logout" component={LogOut}/>
             <Route path="/createsource" component={CreateSource}/>
             <Route path="/superadmin" component={HomePage}/>
             <Route path="/getlanguages" component={GetLanguages}/>
@@ -67,6 +70,7 @@ ReactDOM.render(
             <Router history={browserHistory}>
               <Route path="/superadmin" component={HomePage}/>
               <Route path="/admin" component={HomePage} />
+              <Route path="/logout" component={LogOut}/>
               <Route path="/createsource" component={HomePage}/>
               <Route path="/getlanguages" component={GetLanguages}/>
               <Route path="/downloadtokens" component={DownloadTokens}/>
@@ -80,6 +84,7 @@ ReactDOM.render(
            <Router history={browserHistory}>
             <Route path="/superadmin" component={HomePage}/>
             <Route path="/admin" component={HomePage} />
+            <Route path="/logout" component={LogOut}/>
             <Route path="/createsource" component={HomePage}/>
             <Route path="/getlanguages" component={HomePage}/>
             <Route path="/downloadtokens" component={HomePage}/>

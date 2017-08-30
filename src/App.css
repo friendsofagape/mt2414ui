@@ -226,7 +226,7 @@ th, td {
 }
 
 .Concord2{
-  margin: 1px 1px 1px 17px;
+  margin: 1px 1px 1px 10px;
 }
 
 .ConcordButton{
@@ -512,6 +512,11 @@ tr.highlight td {
 
 .tandc {
   margin: 1px 1px 1px 28px;
+  font-style: italic;
+}
+
+.tandc1 {
+  margin: -9px 1px 1px 32px;
   font-style: italic;
 }
 
