@@ -62,7 +62,6 @@ class Tab extends Component{
   }
 }
 
-
 class GetTranslationDraft extends Component {
   constructor(props) {
     super(props);
@@ -111,7 +110,7 @@ class GetTranslationDraft extends Component {
       contentType: "application/json; charset=utf-8",
       method : "GET",
       headers: {
-                "Authorization": "bearer " + accessToken
+        "Authorization": "bearer " + accessToken
       },
       success: function (result) {
         var getTargetLang = JSON.parse(result);
@@ -120,7 +119,6 @@ class GetTranslationDraft extends Component {
       error: function (error) {
       }
     });
-
   }
 
   toggleCheckbox1 = label => {
@@ -279,9 +277,9 @@ class GetTranslationDraft extends Component {
 
     var _this = this
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": e.target.value, "books": global.books 
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "books": global.books 
     }
-
+    
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/translations",
@@ -337,7 +335,7 @@ class GetTranslationDraft extends Component {
     }
 
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": e.target.value, "book_list": global.books 
+        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang":this.state.Targetlanguage, "book_list": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -364,7 +362,7 @@ class GetTranslationDraft extends Component {
     xhr.setRequestHeader('Authorization', "bearer " + accessToken);
     xhr.onload = function(e) {
       complete();
-      if (this.status === 200) {
+      if (this.response.type === 'xlsx') {
         var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
         var downloadUrl = URL.createObjectURL(blob);
         var a = document.createElement("a");
@@ -374,7 +372,10 @@ class GetTranslationDraft extends Component {
         a.click();
       } 
       else {
-        _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
+        _this.setState({message: xhr.response.message, uploaded: 'failure'})
+        setTimeout(function(){
+          _this.setState({uploaded: 'fail'})
+        }, 5000);
       }
     };   
     xhr.send(JSON.stringify(data)); 
@@ -419,7 +420,7 @@ class GetTranslationDraft extends Component {
     var data = { 
       "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": e.target.value
     }
-
+    
     //Dynamic color for chart
     function getRandomColor() {
       var letters = '0123456789ABCDEF'.split('');
@@ -521,19 +522,17 @@ class GetTranslationDraft extends Component {
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon">Download Translation Draft</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
-                <a className="close" data-dismiss="alert" aria-label="close">×</a>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>Translation Generated Successfully</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible')}>
-                <a className="close" data-dismiss="alert" aria-label="close">×</a>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
                 <strong>{this.state.message}</strong>
             </div>
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
-                onChange={this.onSelectSource}
-                 Language={this.state.getTargetLanguages}
+                  Language={this.state.getTargetLanguages}
+                  onChange={this.onSelectSource}
                 />
               <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
                 <Versions 
