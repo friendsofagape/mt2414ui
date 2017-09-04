@@ -89,10 +89,16 @@ class CreateSource extends Component {
           },2000)
         }else {
           _this.setState({message: result.message, uploaded: 'failure'})
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          },5000);
           }
       },
       error: function (error) {
-        _this.setState({uploaded: 'failure'}) 
+        _this.setState({uploaded: 'failure'})
+        setTimeout(function(){
+          _this.setState({uploaded: 'fail'})
+        },5000);
       }
       });
     }
@@ -115,12 +121,10 @@ class CreateSource extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader" encType="multipart/form-data">
             <h1 className="source-header">Create Sources</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>               
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">

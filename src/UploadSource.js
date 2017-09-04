@@ -159,6 +159,9 @@ class UploadSource extends Component {
                     _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
                     if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){  
                       _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+                      setTimeout(function(){
+                        _this.setState({uploaded: 'fail'})
+                      },5000);
                       $(".modal").hide();
                     }        
                   }else {
@@ -166,6 +169,9 @@ class UploadSource extends Component {
                     _this.setState({message: result.message, uploaded: 'failure'})
                     if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){   
                        _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+                      setTimeout(function(){
+                        _this.setState({uploaded: 'fail'})
+                      },5000);
                        $(".modal").hide();
                     } 
                   }
@@ -190,12 +196,10 @@ class UploadSource extends Component {
         <div className="col-xs-12 col-md-6 col-md-offset-3">
           <form className="col-md-8 uploader"  id="upload_form" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
               <div className="form-group">

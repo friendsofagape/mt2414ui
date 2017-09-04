@@ -130,13 +130,22 @@ class SignupForm extends Component {
              if(result.success !== false){
             _this.setState({uploaded: result.success ? 'success' : ''})
             _this.setState({message: result.message})
+            setTimeout(function(){
+              _this.setState({uploaded: 'fail'})
+            },5000);
             window.location.href = "./homepage";
              }else {
                _this.setState({message: result.message, uploaded: 'failure'})
+                setTimeout(function(){
+                  _this.setState({uploaded: 'fail'})
+                },5000);
              }
           },
           error: function (error) {
            _this.setState({message: error.message, uploaded: 'failure'})
+            setTimeout(function(){
+              _this.setState({uploaded: 'fail'})
+            },5000);
           }
      });
   }

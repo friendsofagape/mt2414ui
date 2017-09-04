@@ -130,6 +130,9 @@ var jwtDecode = require('jwt-decode');
             }
         else {
           _this.setState({message: result.message, uploaded: 'failure'})
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          },5000);
         }
       }
     });
@@ -142,12 +145,10 @@ var jwtDecode = require('jwt-decode');
       <div className="col-xs-12 col-md-6 col-md-offset-3">
       <form onSubmit={this.onLogin} onClick={this.getLanguages} className="col-md-8 signinCustom">
         <h1 className="signin-header"><span className="glyphicon glyphicon-user"></span>Login</h1>&nbsp;
-          <div className={"alert " + (this.state.uploaded === 'success' ? 'alert-success dismissable' : 'invisible')}>
-            <a className="close" data-dismiss="alert" aria-label="close">×</a>                               
+          <div className={"alert " + (this.state.uploaded === 'success' ? 'alert-success' : 'invisible')}>
             <strong>{this.state.message}</strong>
           </div>
-          <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')}>
-            <a className="close" data-dismiss="alert" aria-label="close">×</a>                                           
+          <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
             <strong>{this.state.message}</strong>
           </div>
           <div className="form-group"><br/>

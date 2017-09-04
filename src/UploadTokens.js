@@ -177,6 +177,9 @@ class UploadTokens extends Component {
         });
           var resultMes = JSON.parse(result);
         _this.setState({message: resultMes.message, uploaded: 'success'})
+        setTimeout(function(){
+          _this.setState({ uploaded: 'fail'})
+        }, 5000);
       },
       error: function (error) {
       }
@@ -186,7 +189,6 @@ class UploadTokens extends Component {
 
   //for upload tokens using FormData
   uploadTokens(e){   
-
     e.preventDefault();
     var _this = this;
     var lblError = document.getElementById("lblError");
@@ -229,12 +231,21 @@ class UploadTokens extends Component {
                result = JSON.parse(result)
                if(result.success !== false) {
                   _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+                  setTimeout(function(){
+                    _this.setState({uploaded: 'fail'})
+                  },5000);
                }else {
                   _this.setState({message: result.message, uploaded: 'failure'})
+                  setTimeout(function(){
+                    _this.setState({uploaded: 'fail'})
+                  },5000);
                }
             },
             error: function (error) {
              _this.setState({message: error.message, uploaded: 'failure'})
+              setTimeout(function(){
+                _this.setState({uploaded: 'fail'})
+              },5000);             
             }
           });
         }
@@ -287,12 +298,22 @@ class UploadTokens extends Component {
                result = JSON.parse(result)
                if(result.success !== false) {
                   _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+                  setTimeout(function(){
+                    _this.setState({uploaded:'fail'})
+                  }, 5000);
+
                }else {
                   _this.setState({message: result.message, uploaded: 'failure'})
+                  setTimeout(function(){
+                    _this.setState({uploaded:'fail'})
+                  }, 5000);
                }
             },
             error: function (error) {
              _this.setState({message: error.message, uploaded: 'failure'})
+              setTimeout(function(){
+                _this.setState({uploaded:'fail'})
+              }, 5000);
             }
           }); 
         }    
@@ -322,12 +343,10 @@ class UploadTokens extends Component {
         <div className="row">
           <form className="col-md-12 uploader" id="upload_form" encType="multipart/form-data">
             <h1 className="source-headerCon1">Upload Tokens</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible') }>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
               <strong>{this.state.message}</strong>
             </div>&nbsp;&nbsp;&nbsp;&nbsp;
 

@@ -356,7 +356,10 @@ class DownloadTokens extends Component {
         a.click();
       } 
       else {
-        _this.setState({message: xhr.response.message, uploaded: 'failure'}) 
+        _this.setState({message: xhr.response.message, uploaded: 'failure'})
+        setTimeout(function(){
+          _this.setState({uploaded: 'fail'})
+        },5000);
       }
     };   
     xhr.send(JSON.stringify(data)); 
@@ -369,12 +372,10 @@ class DownloadTokens extends Component {
         <div className="row">
           <form className="col-md-12 uploader" encType="multipart/form-data">
             <h1 className="source-headerCon1">Download Tokens</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                              
+            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible') }>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
+            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
               <strong>{this.state.message}</strong>
             </div>
             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;

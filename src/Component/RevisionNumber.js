@@ -15,9 +15,11 @@ class RevisionNumber extends Component {
     return(
         <FormControl componentClass="select" onChange={this.props.onChange} placeholder="select">
             <option>Choose</option>
-            {revision.map(function(data, index){
-              return (<option key={index} value={data}>{data}</option>);
-            })}
+            {
+              revision.map(function(data, index){
+                return (<option key={index} value={data}>{data}</option>);
+              })
+            }
         </FormControl> 
         );
     }
