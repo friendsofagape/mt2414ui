@@ -1,4 +1,4 @@
-/**
+ /**
  * @module src/GetTranslationDraft
  *
  * Component that display GetTranslationDraft
@@ -101,7 +101,7 @@ class GetTranslationDraft extends Component {
       this.DowloadRemainingTokens = this.DowloadRemainingTokens.bind(this);
   }
   
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.selectedCheckboxes1 = new Set();
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
@@ -132,7 +132,7 @@ class GetTranslationDraft extends Component {
   createCheckboxes1 = (obj, books, displayPercentage, displayTokenCount) => (
     Object.keys(books).map(function(v, i){
       return (
-        <p><Checkbox
+        <p key={i}><Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
             bookCode={books[v]}
@@ -177,9 +177,8 @@ class GetTranslationDraft extends Component {
 
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
-
-      this.setState({ Version: e.target.value });
       var _this = this;
+      this.setState({ Version: e.target.value });
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
         "language": this.state.Sourcelanguage, "version" : e.target.value
@@ -362,7 +361,7 @@ class GetTranslationDraft extends Component {
     xhr.setRequestHeader('Authorization', "bearer " + accessToken);
     xhr.onload = function(e) {
       complete();
-      if (this.response.type === 'xlsx') {
+      if (this.status === 200) {
         var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
         var downloadUrl = URL.createObjectURL(blob);
         var a = document.createElement("a");
