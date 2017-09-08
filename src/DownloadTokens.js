@@ -102,7 +102,7 @@ class DownloadTokens extends Component {
     });
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.selectedCheckboxes1 = new Set();
     this.selectedCheckboxes2 = new Set();
 

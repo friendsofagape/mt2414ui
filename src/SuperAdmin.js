@@ -32,7 +32,7 @@ class SuperAdmin extends Component {
 
   }
   
-  componentWillMount(){
+  componentDidMount(){
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       $.ajax({

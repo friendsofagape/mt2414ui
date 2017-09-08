@@ -25,5 +25,4 @@ class HeaderforAdmin extends Component {
   }
 }
 
-
 export default HeaderforAdmin;
