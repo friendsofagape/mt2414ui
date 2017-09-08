@@ -36,7 +36,7 @@ class CreateSource extends Component {
     this.onSelect = this.onSelect.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       $.ajax({
