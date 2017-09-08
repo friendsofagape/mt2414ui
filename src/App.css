@@ -7,7 +7,6 @@
   margin: 62px 1px 1px 0px;
   border: solid;
 }
-
 .col-md-8 {
   margin: 147px 1px 43px 72px;
   color: black;
@@ -158,11 +157,10 @@ a:hover{
 }
 
 .textarea{
-  min-height: 150px;
+  min-height: 250px;
   overflow-y: auto;
   word-wrap: inherit;
-  background-color: lightcyan;
-  border-color: indigo;
+  border-color: black;
   font-family: monospace;
 }
 
@@ -226,6 +224,10 @@ th, td {
 }
 
 .Concord2{
+  margin: 1px 1px 1px 10px;
+}
+
+.Concord1{
   margin: 1px 1px 1px 10px;
 }
 
