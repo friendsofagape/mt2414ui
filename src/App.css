@@ -539,3 +539,13 @@ tr.highlight td {
   float: right;
   margin: 0.5% -20% 2% 0%;
 }
+
+.tokenHighLight{
+  height: 250px;
+  overflow-y: scroll;
+  word-wrap: inherit;
+  border-color: black;
+  background-color: white;
+  font-family: monospace;
+  border: groove;
+}
