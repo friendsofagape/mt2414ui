@@ -61,7 +61,7 @@ class UploadTokens extends Component {
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       $.ajax({
@@ -349,8 +349,7 @@ class UploadTokens extends Component {
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
               <strong>{this.state.message}</strong>
             </div>&nbsp;&nbsp;&nbsp;&nbsp;
-
-
+            
             <div className="form-inline">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
@@ -367,6 +366,7 @@ class UploadTokens extends Component {
                   revision={this.state.getRevision}
                   onChange={this.onSelectRevision} 
                 />
+                
               <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
               <div className="cutomSelect">
               <VirtualizedSelect
