@@ -39,7 +39,7 @@ class UploadSource extends Component {
     this.onSelectVersion = this.onSelectVersion.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       $.ajax({
