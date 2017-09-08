@@ -15,6 +15,7 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
+import GetConcordances from './GetConcordances';
 import LogOut from './LogOut';
 var jwtDecode = require('jwt-decode');
 
@@ -48,6 +49,7 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
+            <Route path="/concordance" component={GetConcordances}/>
             
           </Router>
           ) : (
@@ -64,6 +66,7 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
+            <Route path="/concordance" component={GetConcordances}/>
           </Router>
           ) : (
           (accessToken && decoded.role === 'member') ? (
@@ -79,6 +82,7 @@ ReactDOM.render(
               <Route path="/signup" component={SignupForm}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/forgotpassword" component={ForgotPassword}/>
+              <Route path="/concordance" component={GetConcordances}/>
             </Router>
           ): (
            <Router history={browserHistory}>
@@ -93,6 +97,7 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
+            <Route path="/concordance" component={HomePage}/>
           </Router>
           )
           )
