@@ -180,7 +180,6 @@ class GetTranslationDraft extends Component {
       var _this = this;
       _this.setState({ Version: e.target.value });
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      console.log(this.state.Sourcelanguage);
       var data = { 
         "language": this.state.Sourcelanguage, "version" : e.target.value
       }
@@ -214,7 +213,6 @@ class GetTranslationDraft extends Component {
       var data = { 
         "language": _this.state.Sourcelanguage, "version" : _this.state.Version, "revision": _this.state.Revision, "targetlang": e.target.value
       }
-      console.log(data);
       $.ajax({
       url: GlobalURL["hostURL"]+"/v1/book",
       contentType: "application/json; charset=utf-8",
