@@ -32,7 +32,7 @@ class GetLanguages extends Component {
       this.onSelect = this.onSelect.bind(this);
   }
   
-  componentWillMount() {
+  componentDidMount() {
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       $.ajax({
@@ -142,7 +142,7 @@ class GetLanguages extends Component {
                   {
                     Object.keys(LanguagesWithCode).map(function(data, index){
                       return (
-                      <tr title="Show Books" onClick={_this.getBooks.bind(this, {"language": ListofLanguage[data], "version": LanguagesWithCode[data]})} >
+                      <tr key={index} title="Show Books" onClick={_this.getBooks.bind(this, {"language": ListofLanguage[data], "version": LanguagesWithCode[data]})} >
                         <td>
                           {data}
                         </td>
@@ -168,7 +168,7 @@ class GetLanguages extends Component {
                   {
                     Object.keys(booksCollection).map(function(key, index){
                       return(
-                        <tr>
+                        <tr key={index}>
                           <td>
                             {BookName[0][key]}
                           </td>
