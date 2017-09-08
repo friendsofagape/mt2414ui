@@ -151,8 +151,8 @@ class GetTranslationDraft extends Component {
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
-      this.setState({ Sourcelanguage: e.target.value });
       var _this = this;
+      _this.setState({ Sourcelanguage: e.target.value });
       _this.setState({getVersions: ['']})
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
@@ -178,8 +178,9 @@ class GetTranslationDraft extends Component {
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
       var _this = this;
-      this.setState({ Version: e.target.value });
+      _this.setState({ Version: e.target.value });
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      console.log(this.state.Sourcelanguage);
       var data = { 
         "language": this.state.Sourcelanguage, "version" : e.target.value
       }
@@ -211,8 +212,9 @@ class GetTranslationDraft extends Component {
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
-        "language": this.state.Sourcelanguage, "version" : this.state.Version, "revision": this.state.Revision, "targetlang": e.target.value
+        "language": _this.state.Sourcelanguage, "version" : _this.state.Version, "revision": _this.state.Revision, "targetlang": e.target.value
       }
+      console.log(data);
       $.ajax({
       url: GlobalURL["hostURL"]+"/v1/book",
       contentType: "application/json; charset=utf-8",
@@ -299,6 +301,9 @@ class GetTranslationDraft extends Component {
           if (result.success !== false) {
           _this.exportToUSFMFile(result)
           _this.setState({message: result.message, uploaded: 'success'})
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          }, 5000);
         }else {
           _this.setState({message: result.message, uploaded: 'failure'})
           }
