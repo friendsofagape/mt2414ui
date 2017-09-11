@@ -17,6 +17,8 @@ import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
 import Concordances from './Concordances';
 import LogOut from './LogOut';
+import HomeConcordacne from './HomeConcordacne';
+import NotFound from './NotFound';
 var jwtDecode = require('jwt-decode');
 
 
@@ -50,7 +52,8 @@ ReactDOM.render(
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/concordance" component={Concordances}/>
-            
+            <Route path="/homeconcordance" component={HomeConcordacne}/>
+            <Route path="*" component={NotFound} />
           </Router>
           ) : (
           (accessToken && decoded.role === 'admin') ? (
@@ -67,6 +70,8 @@ ReactDOM.render(
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/concordance" component={Concordances}/>
+            <Route path="/homeconcordance" component={HomeConcordacne}/>
+            <Route path="*" component={NotFound} />
           </Router>
           ) : (
           (accessToken && decoded.role === 'member') ? (
@@ -83,6 +88,8 @@ ReactDOM.render(
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/forgotpassword" component={ForgotPassword}/>
               <Route path="/concordance" component={Concordances}/>
+              <Route path="/homeconcordance" component={HomeConcordacne}/>
+              <Route path="*" component={NotFound} />
             </Router>
           ): (
            <Router history={browserHistory}>
@@ -98,6 +105,8 @@ ReactDOM.render(
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
             <Route path="/concordance" component={HomePage}/>
+            <Route path="/homeconcordance" component={HomeConcordacne}/>
+            <Route path="*" component={NotFound} />
           </Router>
           )
           )
