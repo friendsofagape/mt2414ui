@@ -1,6 +1,7 @@
 .App {
 	text-align: center;
 }
+
 .col-md-12 {
   width: 100%;
   background: honeydew;
@@ -48,8 +49,8 @@ input.active:invalid {
 	margin-top: 5px;
 }
 
-.control-lable {
-	font-family: sans-serif;
+.Notfound {
+  text-align: center;
 }
 
 .navbar-fixed-bottom, .navbar-fixed-top, .navbar-static-top {
@@ -345,6 +346,10 @@ a{
 .signupCustom {
   margin: 151px 1px 1px 107px;
   background-color: aquamarine;
+}
+
+.uploadCustom {
+  margin: 71px 1px 1px 107px;
 }
 
 .form_bg {
