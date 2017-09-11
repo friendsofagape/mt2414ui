@@ -194,7 +194,7 @@ class UploadSource extends Component {
       <div className="container">
         <Header / >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader"  id="upload_form" encType="multipart/form-data">
+          <form className="col-md-8 uploader" id="upload_form" encType="multipart/form-data">
             <h1 className="source-header">Upload Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>

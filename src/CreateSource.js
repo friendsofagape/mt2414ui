@@ -119,7 +119,7 @@ class CreateSource extends Component {
       <div className="container">
         <Header/ >
         <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" encType="multipart/form-data">
+          <form className="col-md-8 uploder"encType="multipart/form-data">
             <h1 className="source-header">Create Sources</h1>&nbsp;
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
               <strong>{this.state.message}</strong>
