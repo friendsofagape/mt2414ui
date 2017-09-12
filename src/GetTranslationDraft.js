@@ -364,7 +364,7 @@ class GetTranslationDraft extends Component {
     xhr.setRequestHeader('Authorization', "bearer " + accessToken);
     xhr.onload = function(e) {
       complete();
-      if (this.status === 200) {
+      if (this.status === 200) {      
         var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
         var downloadUrl = URL.createObjectURL(blob);
         var a = document.createElement("a");
@@ -373,11 +373,19 @@ class GetTranslationDraft extends Component {
         document.body.appendChild(a);
         a.click();
       } 
-      else {
-        _this.setState({message: xhr.response.message, uploaded: 'failure'})
+     if(this.status === 400){
+      const blb    = new Blob([this.response], {type: "text/plain"});
+      const reader = new FileReader();
+      reader.addEventListener('loadend', (e) => {
+        const text = e.srcElement.result;
+        console.log(JSON.parse(text)["message"]);
+        _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
         setTimeout(function(){
           _this.setState({uploaded: 'fail'})
         }, 5000);
+      });
+      reader.readAsText(blb);
+
       }
     };   
     xhr.send(JSON.stringify(data)); 
@@ -528,8 +536,8 @@ class GetTranslationDraft extends Component {
                 <strong>Translation Generated Successfully</strong>
             </div>
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
-                <strong>{this.state.message}</strong>
-            </div>
+              <strong>{this.state.message}</strong>
+            </div>&nbsp;&nbsp;
              <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
               <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
@@ -550,7 +558,7 @@ class GetTranslationDraft extends Component {
               <ListTargetLanguage
                 Tar={this.state.getTargetLangList}
                 Language={this.state.getTargetLanguages}
-                onChange={ (e) => { this.onSelect(e); this.getChartData(e); this.onSelectBook(e)} }
+                onChange={ (e) => { this.onSelect(e);this.onSelectBook(e)} }
               />
               </div>&nbsp;
               <div>
