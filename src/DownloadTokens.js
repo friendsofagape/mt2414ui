@@ -347,6 +347,7 @@ class DownloadTokens extends Component {
     xhr.onload = function(e) {
       complete();
       if (this.status === 200) {
+        console.log(this.statusText)
         var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
         var downloadUrl = URL.createObjectURL(blob);
         var a = document.createElement("a");
@@ -355,11 +356,19 @@ class DownloadTokens extends Component {
         document.body.appendChild(a);
         a.click();
       } 
-      else {
-        _this.setState({message: xhr.response.message, uploaded: 'failure'})
+     if(this.status === 400){
+      const blb    = new Blob([this.response], {type: "text/plain"});
+      const reader = new FileReader();
+      reader.addEventListener('loadend', (e) => {
+        const text = e.srcElement.result;
+        console.log(JSON.parse(text)["message"]);
+        _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
         setTimeout(function(){
           _this.setState({uploaded: 'fail'})
-        },5000);
+        }, 5000);
+      });
+      reader.readAsText(blb);
+
       }
     };   
     xhr.send(JSON.stringify(data)); 
