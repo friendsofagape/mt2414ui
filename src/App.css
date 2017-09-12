@@ -25,6 +25,40 @@
   width: 40%;
 }
 
+.leftpart{
+  margin: 4px 1px 70px 27px !important;
+  background: honeydew;
+  width: fit-content;
+  height: auto;
+}
+
+.rightpart{
+  margin: -396px 1px 1px 302px;
+  background: honeydew;
+  overflow-y: scroll;
+  max-height: 362px;
+  width: 78%;
+}
+
+.bottomPart {
+  margin: -15px 1px 1px 304px;
+  padding: 2px 2px 2px 2px;
+  background: honeydew;
+  width: 1010px;
+}
+
+.bottomPartConcordance{
+  margin: 27px 1px 1px 302px;
+  background: honeydew;
+  width: 1010px;
+}
+
+.bookfortokenlist{
+  margin: 1px 1px 1px -10px;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
 .myButton{
   margin: 1px 1px 1px 55px;
 }
@@ -115,6 +149,10 @@ input.active:invalid {
 
 .source-headerCon1 {
   margin: 81px 77px 20px 491px;
+  font-size: 20px;
+}
+.source-headerCon2{
+  margin: 82px 77px 20px 684px;
   font-size: 20px;
 }
 
@@ -228,6 +266,19 @@ th, td {
   margin: 1px 1px 1px 10px;
 }
 
+.ConcordRightPart{
+  margin: 23px 1px 1px 1px;
+}
+
+.ConcordBottomPart{
+  margin: 8px 1px 1px 1px;
+  width: 954px;
+}
+
+.Concord3{
+  margin: 1px 1px 1px 59px;
+}
+
 .Concord1{
   margin: 1px 1px 1px 10px;
 }
@@ -244,6 +295,9 @@ th, td {
   margin: -58px 1px 1px 542px;
 }
 
+.generateToken{
+  margin: 38px 1px 13px 399px;
+}
 
 .myCheck1 {
   width: 100%;
@@ -395,8 +449,9 @@ ul.customHeaderAdmin.nav.navbar-nav {
 ul.nav.nav-tabs {
   background: dimgray;
   padding: 3px 2px;
-  margin: 25px 853px 1px 27px;
+  margin: 14px 684px 1px 27px;
 }
+
 
 ul.nav.nav-tabs.customTab {
   margin: 139px 514px -1px 30px;
