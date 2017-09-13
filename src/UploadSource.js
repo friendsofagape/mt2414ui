@@ -12,11 +12,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import ListLanguages from './Component/ListLanguages';
+import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import Versions from './Component/Versions';
-import Header from './Header';
 import { Link } from 'react-router';
 
 class UploadSource extends Component {
