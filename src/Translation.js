@@ -21,6 +21,7 @@ import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 import VirtualizedSelect from 'react-virtualized-select'
+var Highlight = require('react-highlighter');
 
 
 var tabData = [
@@ -86,7 +87,8 @@ class Translation extends Component {
       Tar: '',
       token: '',
       translation: '',
-      tokenListState: []
+      tokenListState: [],
+      myToken: ''
     }
 
     // Upload file specific callback handlers
@@ -99,6 +101,7 @@ class Translation extends Component {
     this.tokenList = this.tokenList.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateTokenTranslation = this.updateTokenTranslation.bind(this);
+    this.getConcordances = this.getConcordances.bind(this);
   }
 
   handleClick(tab){
@@ -318,7 +321,6 @@ class Translation extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
-    console.log(data)
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
@@ -343,30 +345,27 @@ class Translation extends Component {
       //if status is OK
       if (this.status === 200) {
       	const blb = new Blob([this.response], {type: "text/plain"});
-	    const reader = new FileReader();
-	    reader.addEventListener('loadend', (e) => {
-	       const text = e.srcElement.result;
-	       const tokenListfromsever = JSON.parse(text);
-	       console.log(tokenListfromsever)
+	      const reader = new FileReader();
+	      reader.addEventListener('loadend', (e) => {
+	        const text = e.srcElement.result;
+	        const tokenListfromsever = JSON.parse(text);
 	       _this.setState({tokenListState: tokenListfromsever});
-
-	        // $("#get_concordances").val(tokenListfromsever);
-	    });
-	    reader.readAsText(blb);
+	      });
+	      reader.readAsText(blb);
       } 
 
      //if status is failure
      if(this.status === 400){
-     	const blb  = new Blob([this.response], {type: "text/plain"});
-     	const reader = new FileReader();
-     	reader.addEventListener('loadend', (e) => {
-	    	const text = e.srcElement.result;
-	        _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
-	        setTimeout(function(){
-	          _this.setState({uploaded: 'fail'})
-	        }, 5000);
+       	const blb  = new Blob([this.response], {type: "text/plain"});
+       	const reader = new FileReader();
+       	reader.addEventListener('loadend', (e) => {
+  	      const text = e.srcElement.result;
+  	      _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          }, 5000);
       	});
-      	reader.readAsText(blb);
+        reader.readAsText(blb);
       }
     };   
     xhr.send(JSON.stringify(data)); 
@@ -431,31 +430,84 @@ class Translation extends Component {
 
   }
 
+//To get concordances for a particular token
+  getConcordances(){
+    var _this = this
+    var myTarget = this.state.tokenListState;
+    var myOptions = [];
+    Object.keys(myTarget).map(function(data, index){
+      myOptions.push(myTarget[data])
+      _this.setState({myToken: myTarget[data]})
+    });
+    
+    var data = {
+      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision, "token": this.state.myToken
+    }
+    console.log(data)
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
+    
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/getconcordance",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+                "Authorization": "bearer " + accessToken
+      },
+      beforeSend: function () {
+        $(".modal").show();
+      },
+      complete: function () {
+        $(".modal").hide();
+      },
+      success: function (result) {
+        result = JSON.parse(result)
+        if(result.success !== false){
+          console.log(result)
+          _this.setState({myResult: result});
+        }else {
+           _this.setState({message: result.message, uploaded: 'failure'})
+            setTimeout(function(){
+              _this.setState({uploaded: 'fail'});
+            }, 5000);
+          }
+      },
+      error: function (error) {
+        _this.setState({uploaded:'failure'}) 
+        setTimeout(function(){
+          _this.setState({uploaded: 'fail'});
+        }, 5000);
+      }
+    });      
+  }
+
+
   render() {
-	var myTarget = this.state.getTargetLanguages;
+	var myTarget = this.state.tokenListState;
+  var myjson = this.state.myResult;
+  console.log(this.state.myToken)
     var options = {};
     var myOptions = [];
 
     Object.keys(myTarget).map(function(data, index){
-      options = {label: data, value: myTarget[data]};
+      options = {label: myTarget[data], value: data};
       myOptions.push(options);
       return (myOptions);
     });
     return(
       <div>
         <Header/ >
-        	<h3 className="source-headerCon1">Translation</h3>
+        	<h3 className="source-headerCon5">Translation</h3>
 			<div className="col-md-4 leftpart">
 			  <lable className="control-label Concord3"><strong><span className="glyphicon glyphicon-search">&nbsp;</span>Search</strong></lable>
-              <div>
-              <VirtualizedSelect
-                options={myOptions}
-                onChange={(selectValue) => this.setState({ selectValue })}
-                value={this.state.selectValue}
-              />
-              </div> 
-              <div className="Concord3"><strong>Token List</strong></div>
-              <textarea value={this.state.tokenListState} type="text" id="get_concordances" name="get concordance" placeholder="List of Tokens" className="form-control textarea" />
+          <div>
+          <VirtualizedSelect
+            options={myOptions}
+            onChange={(selectValue) => this.setState({ selectValue }), this.getConcordances}
+            value={this.state.selectValue}
+          />
+          </div> 
+          <div className="Concord3 textarea"><strong>Token List</strong></div>
 			</div> 
         	<div className="col-md-5 rightpart">
 	        	<form encType="multipart/form-data">
@@ -529,9 +581,12 @@ class Translation extends Component {
 		        </div>
 	        </div> 
 	        <div className="col-md-5 bottomPartConcordance">
-	        <textarea value="" type="text" id="get_concordances" name="get concordance" placeholder="Concordance" className="form-control textarea" />
-	        </div>  
-
+	         <div className="tokenHighLight">
+            <Highlight search={this.state.myToken}>
+              {myjson}
+            </Highlight>
+          </div>
+          </div>  
         <Footer/>
       </div>
     );
