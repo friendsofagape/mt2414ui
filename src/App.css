@@ -26,14 +26,14 @@
 }
 
 .leftpart{
-  margin: 4px 1px 70px 27px !important;
+  margin: 1px 1px 70px 16px !important;
   background: honeydew;
-  width: fit-content;
+  width: 244px;
   height: auto;
 }
 
 .rightpart{
-  margin: -396px 1px 1px 302px;
+  margin: -377px 1px 1px 276px;
   background: honeydew;
   overflow-y: scroll;
   max-height: 362px;
@@ -41,22 +41,20 @@
 }
 
 .bottomPart {
-  margin: -15px 1px 1px 304px;
+  margin: -27px 1px 1px 277px;
   padding: 2px 2px 2px 2px;
   background: honeydew;
-  width: 1010px;
+  width: 1016px;
 }
 
 .bottomPartConcordance{
-  margin: 27px 1px 1px 302px;
+  margin: 11px 1px 1px 278px;
   background: honeydew;
-  width: 1010px;
+  width: 1016px;
 }
 
 .bookfortokenlist{
-  margin: 1px 1px 1px -10px;
-  max-height: 150px;
-  overflow-y: scroll;
+  margin: -39px 1px 1px -27px;
 }
 
 .myButton{
@@ -151,6 +149,12 @@ input.active:invalid {
   margin: 81px 77px 20px 491px;
   font-size: 20px;
 }
+
+.source-headerCon5 {
+  margin: 81px 77px 20px 638px;
+  font-size: 20px;
+}
+
 .source-headerCon2{
   margin: 82px 77px 20px 684px;
   font-size: 20px;
@@ -267,7 +271,8 @@ th, td {
 }
 
 .ConcordRightPart{
-  margin: 23px 1px 1px 1px;
+  margin: auto;
+  padding-top: 12px;
 }
 
 .ConcordBottomPart{
