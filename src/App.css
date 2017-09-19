@@ -216,3 +216,8 @@ tr.highlight td {
   margin-top: 16px;
 }
 
+.formWidth{
+  width: 20%;
+  margin: 0 auto;
+  margin-top: 2%;
+}
