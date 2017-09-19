@@ -191,51 +191,62 @@ class UploadSource extends Component {
       margin: 'auto'
     }; 
     return(
+      <div>
+        <Header/>
       <div className="container">
-        <Header / >
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploader" id="upload_form" encType="multipart/form-data">
-            <h1 className="source-header">Upload Sources</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-              <strong>{this.state.message}</strong>
-            </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
-              <strong>{this.state.message}</strong>
-            </div>
-              <div className="form-group">
-                <lable className="control-label"> <strong> Language Name </strong> </lable>
-                <ListLanguages 
-                  onChange={this.onSelectSource}
-                  Language={this.state.getTargetLanguages}
-                />
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-lable"> <strong> Version </strong> </lable>
-                <Versions 
-                         version={this.state.getVersions} 
-                         onChange={this.onSelectVersion}
-                />
-              </div>&nbsp;
-              <div className="form-group">
-                <div className="form-control">
-                  <input id="file-input" type="file" className="fileInput" multiple/><br />
-                  <span id="lblError" style={style}></span>
-                </div>&nbsp;
+        <div className="row">
+          <div className="col-md-12">
+            <h3>Upload Sources</h3>
+          </div>
+        </div>
+
+        <div className="row">
+            <form className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder" id="upload_form" encType="multipart/form-data">
+              <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                <strong>{this.state.message}</strong>
+              </div>
+              <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
+                <strong>{this.state.message}</strong>
+              </div>
                 <div className="form-group">
-                  <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
+                  <lable className="control-label"> <strong> Language Name </strong> </lable>
+                  <ListLanguages 
+                    onChange={this.onSelectSource}
+                    Language={this.state.getTargetLanguages}
+                  />
                 </div>
+                <div className="form-group">
+                  <lable className="control-lable"> <strong> Version </strong> </lable>
+                  <Versions 
+                    version={this.state.getVersions} 
+                    onChange={this.onSelectVersion}
+                  />
+                </div>
+                <div className="form-group">
+                  <div className="form-control">
+                    <input id="file-input" type="file" className="fileInput" multiple/><br />
+                    <span id="lblError" style={style}></span>
+                  </div>
+                </div>
+                <div className="form-group top9">
+                  <button type="button" className="btn btn-success btn-block center-block" onClick={this.uploadFile} disabled={!this.state.getVersions} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Source</button>&nbsp;&nbsp;&nbsp;
+                </div>
+
                 <div>
                   Can't find your language & version ? &nbsp; &nbsp;<Link to={'/createsource'} className="customLink">Click here !!</Link>
                 </div>
-                  <div className="modal" style={{display: 'none'}}>
-                    <div className="center">
-                        <img alt="" src={require('./Images/loader.gif')} />
-                    </div>
+
+                <div className="modal" style={{display: 'none'}}>
+                  <div className="center">
+                    <img alt="" src={require('./Images/loader.gif')} />
                   </div>
-              </div>
-          </form>
-          </div>
-        <Footer />
+                </div>
+            </form>
+        </div>
+        </div>
+        <div>
+          <Footer/>
+        </div> 
       </div>
       );
     }
