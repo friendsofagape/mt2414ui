@@ -21,7 +21,6 @@ import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 import VirtualizedSelect from 'react-virtualized-select'
-var Highlight = require('react-highlighter');
 
 
 var tabData = [
@@ -35,7 +34,7 @@ var BookArray = ["GEN" : "Genesis", "EXO" : "Exodus", "LEV" : "Leviticus", "NUM"
 class Tabs extends Component {
   render() {
     return (
-      <ul className="nav nav-tabs">
+      <ul className="nav nav-tabs top1">
         {tabData.map(function(tab, i){
           return (
             <Tab 
@@ -51,7 +50,7 @@ class Tabs extends Component {
   }
 }
 
-class Tab extends Component{
+class Tab extends Component {
   render() {
     return (
       <li onClick={this.props.handleClick} className={this.props.isActive ? "active" : null}>
@@ -131,7 +130,6 @@ class Translation extends Component {
       error: function (error) {
       }
     });
-
   }
 
   toggleCheckbox1 = label => {
@@ -154,13 +152,13 @@ class Translation extends Component {
   createCheckboxes1 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
-        <p>
+        <span className="disBook">
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
             bookCode={books[v]}
           />
-        </p>
+        </span>
       );
     })
   )
@@ -169,13 +167,13 @@ class Translation extends Component {
   createCheckboxes2 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
-        <p>
+        <span className="disBook">
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox2}
             bookCode={books[v]}
           />
-        </p>
+        </span>
       );
     })
   )
@@ -319,7 +317,7 @@ class Translation extends Component {
     var _this = this
 
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -361,9 +359,9 @@ class Translation extends Component {
        	reader.addEventListener('loadend', (e) => {
   	      const text = e.srcElement.result;
   	      _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
-          setTimeout(function(){
-            _this.setState({uploaded: 'fail'})
-          }, 5000);
+          // setTimeout(function(){
+          //   _this.setState({uploaded: 'fail'})
+          // }, 5000);
       	});
         reader.readAsText(blb);
       }
@@ -377,7 +375,7 @@ class Translation extends Component {
     var _this = this
 
     var data = { 
-       "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "token": this.state.token, "translation":this.state.translation
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "token": this.state.token, "translation":this.state.translation
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -416,7 +414,6 @@ class Translation extends Component {
       const reader = new FileReader();
       reader.addEventListener('loadend', (e) => {
         const text = e.srcElement.result;
-        console.log(JSON.parse(text)["message"]);
         _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
         setTimeout(function(){
           _this.setState({uploaded: 'fail'})
@@ -431,19 +428,13 @@ class Translation extends Component {
   }
 
 //To get concordances for a particular token
-  getConcordances(){
-    var _this = this
-    var myTarget = this.state.tokenListState;
-    var myOptions = [];
-    Object.keys(myTarget).map(function(data, index){
-      myOptions.push(myTarget[data])
-      _this.setState({myToken: myTarget[data]})
-    });
+  getConcordances(obj){
     
+    var _this = this
     var data = {
-      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision, "token": this.state.myToken
+      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision, "token": obj
     }
-    console.log(data)
+
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     
     $.ajax({
@@ -452,7 +443,7 @@ class Translation extends Component {
       data : JSON.stringify(data),
       method : "POST",
       headers: {
-                "Authorization": "bearer " + accessToken
+        "Authorization": "bearer " + accessToken
       },
       beforeSend: function () {
         $(".modal").show();
@@ -463,7 +454,6 @@ class Translation extends Component {
       success: function (result) {
         result = JSON.parse(result)
         if(result.success !== false){
-          console.log(result)
           _this.setState({myResult: result});
         }else {
            _this.setState({message: result.message, uploaded: 'failure'})
@@ -481,114 +471,160 @@ class Translation extends Component {
     });      
   }
 
-
   render() {
 	var myTarget = this.state.tokenListState;
   var myjson = this.state.myResult;
-  console.log(this.state.myToken)
     var options = {};
     var myOptions = [];
+    var tokenListView = [];
 
     Object.keys(myTarget).map(function(data, index){
       options = {label: myTarget[data], value: data};
       myOptions.push(options);
+      tokenListView.push(myTarget[data]);
       return (myOptions);
     });
+
+    var _this = this; 
     return(
       <div>
-        <Header/ >
-        	<h3 className="source-headerCon5">Translation</h3>
-			<div className="col-md-4 leftpart">
-			  <lable className="control-label Concord3"><strong><span className="glyphicon glyphicon-search">&nbsp;</span>Search</strong></lable>
-          <div>
-          <VirtualizedSelect
-            options={myOptions}
-            onChange={(selectValue) => this.setState({ selectValue }), this.getConcordances}
-            value={this.state.selectValue}
-          />
-          </div> 
-          <div className="Concord3 textarea"><strong>Token List</strong></div>
-			</div> 
-        	<div className="col-md-5 rightpart">
-	        	<form encType="multipart/form-data">
-	            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-	              <strong>{this.state.message}</strong>
-	            </div>
-	            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
-	              <strong>{this.state.message}</strong>
-	            </div>
-	            <div className="form-inline ConcordRightPart">&nbsp;&nbsp;&nbsp;&nbsp;
-	              <lable className="control-label Concord2"> <strong> Language </strong> </lable>
-	                <ListLanguages 
-	                  onChange={ this.onSelectSource}
-	                  Language={this.state.getTargetLanguages}
-	                />
-	              <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
-	                <Versions 
-	                  version={this.state.getVersions} 
-	                  onChange={this.onSelectVersion} 
-	                />
-	              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
-	                <RevisionNumber
-	                  revision={this.state.getRevision}  
-	                  onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
-	                />
-	              <lable className="control-label Concord2"> <strong> Target Language *</strong> </lable>
-	              <ListTargetLanguage
-	                Tar={this.state.getTargetLangList}
-	                Language={this.state.getTargetLanguages}
-	                onChange={this.onSelect}
-	              />
-	            </div>&nbsp;
-	            <div className="bookfortokenlist">
-	            <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
-	             <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-	              <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
-	                <h4 className="panel-heading">Include Books</h4>
-	                <div className="exclude1" >
-	                  {this.createCheckboxes1(this, this.state.getAllBooks)}
-	                </div>
-	              </section>
-	              <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
-	                <h4 className="panel-heading">Exclude Books</h4>
-	                <div className="exclude1">
-	                   {this.createCheckboxes2(this, this.state.getAllBooks)}
-	                </div>
-	              </section>
-	              <div className="tandc1" > * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
-	            </section>
-	            </div>
-	           	<div className="form-group">
-	              <button id="btnGet" type="button" className="btn btn-success generateToken" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
-	            </div>
-	            <div className="form-group">
-	            </div>
-	            <div id="loading" className="modal">
-	              <div className="center">
-	                <img alt="" src={require('./Images/loader.gif')} />
-	              </div>
-	            </div>
-	          </form>
-	        </div>
-
-	        <div className="col-md-5 bottomPart">
-		        <div className="form-inline ConcordBottomPart">&nbsp;&nbsp;&nbsp;&nbsp;
-		            <lable className="control-lable Concord2"> <strong>Token </strong> </lable>
-	                <input value={this.state.token} onChange={this.onSelectInput} name="token" type="text"  placeholder="token" className="form-control"/>
-	               	<lable className="control-lable Concord2"> <strong>Translation </strong> </lable>
-	                <input value={this.state.translation} onChange={this.onSelectInput} name="translation" type="text"  placeholder="translation" className="form-control"/>&nbsp;&nbsp;&nbsp;&nbsp;
-	                <button id="btnGet" type="button" className="btn btn-success" onClick={this.updateTokenTranslation} disabled={!this.state.Targetlanguage} >Update</button>
-		        </div>
-	        </div> 
-	        <div className="col-md-5 bottomPartConcordance">
-	         <div className="tokenHighLight">
-            <Highlight search={this.state.myToken}>
-              {myjson}
-            </Highlight>
+        <Header/>
+      <div className="container">
+          <div className="row">
+            <div className="col-md-10 col-md-5 col-md-offset-4">
+              <h3> Translation</h3>
+            </div>
           </div>
-          </div>  
-        <Footer/>
+        <div className="row bodyColor">
+      			<div className="col-md-3 bodyBorder">
+              <div className="row">
+                <div className="col-md-12" >
+                <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
+                  <VirtualizedSelect
+                    options={myOptions}/* eslint-disable */ 
+                    onChange={(selectValue) => this.setState({ selectValue })}
+                    value={this.state.selectValue}
+                  />
+                &nbsp; &nbsp; &nbsp;
+                <div>
+                  <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Token List</th>
+                    </tr>
+                  </thead>
+                  <tbody className="tbodyColor">
+                    {
+                      Object.keys(tokenListView).map(function(data, index){
+                        return (
+                          <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
+                            <td>
+                              {tokenListView[data]}
+                            </td>
+                          </tr>
+                        );
+                       })
+                    }
+                  </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+    		</div> 
+        	<div className="col-md-9 bodyBorder"> 
+            <div className="row"> 
+              <div className="col-md-12">       
+                  	<form encType="multipart/form-data">
+                      <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                        <strong>{this.state.message}</strong>
+                      </div>&nbsp;&nbsp;
+                      <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+                        <strong>{this.state.message}</strong>
+                      </div>&nbsp;&nbsp;
+                      <div className="form-inline">
+                        <lable className="control-label"> <strong> Language </strong> </lable>
+                          <ListLanguages 
+                            onChange={ this.onSelectSource}
+                            Language={this.state.getTargetLanguages}
+                          />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <lable className="control-lable "> <strong> Version </strong> </lable>
+                          <Versions 
+                            version={this.state.getVersions} 
+                            onChange={this.onSelectVersion} 
+                          />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <lable className="control-lable"> <strong> Revision </strong> </lable>
+                          <RevisionNumber
+                            revision={this.state.getRevision}  
+                            onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
+                          />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <lable className="control-label"> <strong> Target Language *</strong> </lable>
+                        <ListTargetLanguage
+                          Tar={this.state.getTargetLangList}
+                          Language={this.state.getTargetLanguages}
+                          onChange={this.onSelect}
+                        />
+                      </div>
+
+                      <div>
+                        <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                         <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                          <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                            <div className="exclude1" >
+                              {this.createCheckboxes1(this, this.state.getAllBooks)}
+                            </div>
+                          </section>
+                          <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
+                            <div className="exclude1">
+                               {this.createCheckboxes2(this, this.state.getAllBooks)}
+                            </div>
+                          </section>
+                          <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
+                        </section>
+                      </div>
+
+                     	<div className="form-group top10">
+                        <button type="button" className="btn btn-success center-block" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>
+                      </div>
+
+                      <div className="form-group">
+                      </div>
+                      <div id="loading" className="modal">
+                        <div className="center">
+                          <img alt="" src={require('./Images/loader.gif')} />
+                        </div>
+                      </div>
+                    </form>
+              </div>
+            </div>
+            <div className="row top10 bodyBorder">
+              <div className="col-md-12">
+                  <div className="form-inline top10">
+                    <div className="col-md-8">
+                      <lable className="control-lable "> <strong>Token </strong> </lable>
+                        <input value={this.state.token} onChange={this.onSelectInput} name="token" type="text"  placeholder="token" className="form-control"/>
+                        <lable className="control-lable "> <strong>Translation </strong> </lable>
+                        <input value={this.state.translation} onChange={this.onSelectInput} name="translation" type="text"  placeholder="translation" className="form-control"/>
+                      </div>
+                      <div className="col-md-4">       
+                        <button type="button" className="btn btn-success" onClick={this.updateTokenTranslation} disabled={!this.state.Targetlanguage} >Update</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            
+            <div className="row top10">  
+              <div className="col-md-12">
+                <textarea value={myjson} type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
+              </div>  
+            </div>
+            &nbsp;
+          </div>
+        </div>
       </div>
+      <div>
+      <Footer />
+      </div>
+    </div>
     );
   }
 }
