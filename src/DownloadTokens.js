@@ -376,41 +376,46 @@ class DownloadTokens extends Component {
 
   render() {
     return(
+      <div>
+        <Header/>
       <div className="container">
-        <Header/ >
         <div className="row">
-          <form className="col-md-12 uploader" encType="multipart/form-data">
-            <h1 className="source-headerCon1">Download Tokens</h1>&nbsp;
+          <div className="col-md-12">
+            <h3>Download Tokens</h3>
+          </div>
+        </div>
+        <div className="row top5 bodyColor bodyBorder alignCenter">
+          <form className="col-md-12" encType="multipart/form-data">
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
-            </div>
+            </div>&nbsp;&nbsp;
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
               <strong>{this.state.message}</strong>
-            </div>
-            <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
-              <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
+            </div>&nbsp;&nbsp;
+            <div className="form-inline col-md-12">
+              <lable className="control-label"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
                   onChange={ this.onSelectSource}
                   Language={this.state.getTargetLanguages}
-                />
-              <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
+                />&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-lable"> <strong> Version </strong> </lable>
                 <Versions 
                   version={this.state.getVersions} 
                   onChange={this.onSelectVersion} 
-                />
-              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
+                />&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-lable"> <strong> Revision </strong> </lable>
                 <RevisionNumber
                   revision={this.state.getRevision}  
                   onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
-                />
-              <lable className="control-label Concord2"> <strong> Target Language *</strong> </lable>
+                />&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-label"> <strong> Target Language *</strong> </lable>
               <ListTargetLanguage
                 Tar={this.state.getTargetLangList}
                 Language={this.state.getTargetLanguages}
                 onChange={this.onSelect}
               />
-            </div>&nbsp;
-            <div>
+            </div>
+            <div className="col-md-12">
             <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
              <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
               <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
@@ -425,11 +430,11 @@ class DownloadTokens extends Component {
                    {this.createCheckboxes2(this, this.state.getAllBooks)}
                 </div>
               </section>
-              <div className="tandc1" > * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
+              <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
             </section>
             </div>
-            <div className="form-group">
-              <button id="btnGet" type="button" className="btn btn-success ConcordButton" onClick={this.downloadTokenWords} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-group top10">
+              <button id="btnGet" type="button" className="btn btn-success center-block" onClick={this.downloadTokenWords} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div id="loading" className="modal">
               <div className="center">
@@ -438,7 +443,10 @@ class DownloadTokens extends Component {
             </div>
           </form>
         </div>
+      </div>
+      <div>
         <Footer/>
+      </div>
       </div>
     );
   }

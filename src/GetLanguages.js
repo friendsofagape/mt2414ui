@@ -125,12 +125,18 @@ class GetLanguages extends Component {
 
     var _this = this; 
     return(
+      <div>
+        <Header/>
       <div className="container">
-        <Header / >
-          <h1 className="source-headerConSuperAdmin">Available Source Texts</h1>&nbsp;
-          <form className="col-md-6 uploader getLangCustom" encType="multipart/form-data">
-            <div className="container">
-            <div className="floatLeft">
+        <div className="row">
+            <div className="col-md-12">
+              <h3>Available Source Texts</h3>
+            </div>
+        </div>
+
+        <div className="row">
+          <form className="col-md-12 col-md-offset-1" encType="multipart/form-data">
+            <div className="col-md-5 divSpaceGetLang bodyBorder bodyColor  alignCenter">
               <table className="table" id="data" onClick={_this.onSelect} >
                 <thead>
                   <tr>
@@ -156,7 +162,7 @@ class GetLanguages extends Component {
                 </tbody>
               </table>
             </div>
-            <div className="floatRight">
+            <div className="col-md-5 bodyColor  bodyBorder alignCenter divSpaceGetLang">
               <table className="table">
                 <thead>
                   <tr>
@@ -182,9 +188,12 @@ class GetLanguages extends Component {
                 </tbody>
               </table>
             </div>
-          </div>
           </form>
-        <Footer/>
+        </div>
+        </div> 
+        <div>
+          <Footer/>
+        </div> 
       </div>
       );
     }

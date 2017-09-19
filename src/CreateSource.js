@@ -116,11 +116,17 @@ class CreateSource extends Component {
     });
 
     return(
+      <div>
+        <Header/>
       <div className="container">
-        <Header/ >
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-          <form className="col-md-8 uploder"encType="multipart/form-data">
-            <h1 className="source-header">Create Sources</h1>&nbsp;
+        <div className="row">
+          <div className="col-md-12">
+            <h3>Create Sources</h3>
+          </div>
+        </div>
+
+        <div className="row">
+            <form className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder" id="upload_form" encType="multipart/form-data">
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success' : 'invisible')}>
               <strong>{this.state.message}</strong>
             </div>
@@ -137,20 +143,24 @@ class CreateSource extends Component {
               </div>&nbsp;
               <div className="form-group">
                 <lable className="control-lable"> <strong> Version </strong> </lable>
-                    <input className="form-control" 
-                      value={this.state.version}
-                      onChange={this.onSelect}
-                      name="version" 
-                      type="text"  
-                      placeholder="version" 
-                      required />
-              </div>&nbsp;
-              <div className="form-group">
-                <button id="button" type="button" className="btn btn-success sourcefooter" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
+                  <input className="form-control" 
+                    value={this.state.version}
+                    onChange={this.onSelect}
+                    name="version" 
+                    type="text"  
+                    placeholder="version" 
+                    required 
+                  />
+              </div>
+              <div className="form-group top10">
+                <button type="button" className="btn btn-success btn-block center-block" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
               </div>
           </form>
           </div>
+      </div>
+      <div>
         <Footer/>
+      </div>
       </div>
       );
     }
