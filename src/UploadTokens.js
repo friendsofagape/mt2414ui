@@ -398,10 +398,10 @@ class UploadTokens extends Component {
             <div className="col-md-12">
               <section style={this.state.Revision === '' ? {display:'none'} : {display: 'inline'} }>
                 <div className="form-group" >
-                  <div className="form-control">
+                  <div className="form-control formWidth">
                     <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
                     <span id="lblError" style={style}></span>
-                  </div>&nbsp;
+                  </div>
                 </div>
               </section>
              </div>
