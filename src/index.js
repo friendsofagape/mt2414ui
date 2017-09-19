@@ -15,7 +15,6 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
-import Concordances from './Concordances';
 import LogOut from './LogOut';
 import Translation from './Translation';
 import NotFound from './NotFound';
@@ -51,7 +50,6 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/concordance" component={Concordances}/>
             <Route path="/translation" component={Translation}/>
             <Route path="*" component={NotFound} />
           </Router>
@@ -69,7 +67,6 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/concordance" component={Concordances}/>
             <Route path="/translation" component={Translation}/>
             <Route path="*" component={NotFound} />
           </Router>
@@ -87,7 +84,6 @@ ReactDOM.render(
               <Route path="/signup" component={SignupForm}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/forgotpassword" component={ForgotPassword}/>
-              <Route path="/concordance" component={Concordances}/>
               <Route path="/translation" component={Translation}/>
               <Route path="*" component={NotFound} />
             </Router>
@@ -104,7 +100,6 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/concordance" component={HomePage}/>
             <Route path="/translation" component={HomePage}/>
             <Route path="*" component={NotFound} />
           </Router>
