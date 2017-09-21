@@ -145,13 +145,13 @@ class DownloadTokens extends Component {
   createCheckboxes1 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
-        <p>
+        <span key={i} className="disBook">
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
             bookCode={books[v]}
           />
-        </p>
+        </span>
       );
     })
   )
@@ -160,13 +160,13 @@ class DownloadTokens extends Component {
   createCheckboxes2 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
-        <p>
+        <span key={i} className="disBook">
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox2}
             bookCode={books[v]}
           />
-        </p>
+        </span>
       );
     })
   )
@@ -321,7 +321,7 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
-
+    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>1){
