@@ -142,35 +142,48 @@ class SuperAdmin extends Component {
     });
 
     return(
-      <div className="container">
+      <div>
         <Header/ >
-          <h1 className="source-headerConSuperAdmin">List of AutographaMT users</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable msg' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
-              <strong>{this.state.message}</strong>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h3>List of Autographa MT users</h3>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable msg': 'invisible') }>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                
-              <strong>{this.state.message}</strong>
-            </div>
-          <form encType="multipart/form-data">
-            <div className="container">
-              <table className="table emailTable">
-                <thead>
-                  <tr>
-                    <th>Users</th>
-                    <th>User Role</th>
-                    <th>Assign Role</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.tableRows}
-                </tbody>
-              </table>
-            </div>
-          </form>
-        <Footer/>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12">
+              <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success  msg' : 'invisible')}>
+                <strong>{this.state.message}</strong>
+              </div>
+              <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger  msg': 'invisible') }>
+                <strong>{this.state.message}</strong>
+              </div>
+            <form encType="multipart/form-data">
+              <div className="container">
+              <div className="row">
+                <table className="table">
+              
+                  <thead>
+                    <tr>
+                      <th>Users</th>
+                      <th>User Role</th>
+                      <th>Assign Role</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                      {this.state.tableRows}
+                    </tbody>
+                </table>
+              </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
       </div>
+      <Footer/>
+    </div>
       );
     }
 }

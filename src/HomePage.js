@@ -34,7 +34,6 @@ class HomePage extends Component {
         <Header />
       <div className="container">
         <div className="row ">
-          
             <div className="col-md-8 bodyColor divSpace">
               <h3 className="top3 fonth3">Welcome to</h3>
               <h1 className="fonth1">Autographa MT</h1>

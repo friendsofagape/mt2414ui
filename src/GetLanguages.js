@@ -128,72 +128,73 @@ class GetLanguages extends Component {
       <div>
         <Header/>
       <div className="container">
-        <div className="row">
+          <div className="row">
             <div className="col-md-12">
               <h3>Available Source Texts</h3>
             </div>
-        </div>
+          </div>
 
         <div className="row">
-          <form className="col-md-12 col-md-offset-1" encType="multipart/form-data">
-            <div className="col-md-5 divSpaceGetLang bodyBorder bodyColor  alignCenter">
-              <table className="table" id="data" onClick={_this.onSelect} >
-                <thead>
-                  <tr>
-                    <th>Language</th>
-                    <th>Versions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    Object.keys(LanguagesWithCode).map(function(data, index){
-                      return (
-                      <tr key={index} title="Show Books" onClick={_this.getBooks.bind(this, {"language": ListofLanguage[data], "version": LanguagesWithCode[data]})} >
-                        <td>
-                          {data}
-                        </td>
-                        <td>
-                          {LanguagesWithCode[data]}
-                        </td>
-                      </tr>
-                    );
-                  })
-                }
-                </tbody>
-              </table>
-            </div>
-            <div className="col-md-5 bodyColor  bodyBorder alignCenter divSpaceGetLang">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Book Name</th>
-                    <th>Revision</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    Object.keys(booksCollection).map(function(key, index){
-                      return(
-                        <tr key={index}>
-                          <td>
-                            {BookName[0][key]}
-                          </td>
-                          <td>
-                            {booksCollection[key]}
-                          </td>
-                        </tr>
-                      )
-                    })
-                  }
-                </tbody>
-              </table>
-            </div>
-          </form>
+          <div className="col-md-12 col-md-offset-1">
+            <form encType="multipart/form-data">
+              <div className="col-md-5 divSpaceGetLang bodyBorder bodyColor  alignCenter">
+                <table className="table" id="data" onClick={_this.onSelect} >
+                  <thead>
+                    <tr>
+                      <th>Language</th>
+                      <th>Versions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      Object.keys(LanguagesWithCode).map(function(data, index){
+                        return (
+                          <tr key={index} title="Show Books" onClick={_this.getBooks.bind(this, {"language": ListofLanguage[data], "version": LanguagesWithCode[data]})} >
+                            <td>
+                              {data}
+                            </td>
+                            <td>
+                              {LanguagesWithCode[data]}
+                            </td>
+                          </tr>
+                         );
+                      })
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div className="col-md-5 bodyColor  bodyBorder alignCenter divSpaceGetLang">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Book Name</th>
+                      <th>Revision</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      Object.keys(booksCollection).map(function(key, index){
+                        return(
+                          <tr key={index}>
+                            <td>
+                              {BookName[0][key]}
+                            </td>
+                            <td>
+                              {booksCollection[key]}
+                            </td>
+                          </tr>
+                        )
+                      })
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
         </div>
-        </div> 
-        <div>
-          <Footer/>
-        </div> 
+
+      </div> 
+        <Footer/>
       </div>
       );
     }
