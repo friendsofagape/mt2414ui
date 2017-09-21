@@ -101,6 +101,8 @@ class Translation extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.updateTokenTranslation = this.updateTokenTranslation.bind(this);
     this.getConcordances = this.getConcordances.bind(this);
+    this.generateConcordances = this.generateConcordances.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick(tab){
@@ -319,6 +321,8 @@ class Translation extends Component {
     var data = { 
       "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
+    
+    console.log(data);
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
@@ -429,12 +433,11 @@ class Translation extends Component {
 
 //To get concordances for a particular token
   getConcordances(obj){
-    
     var _this = this
     var data = {
       "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision, "token": obj
     }
-
+    console.log(data);
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     
     $.ajax({
@@ -454,6 +457,7 @@ class Translation extends Component {
       success: function (result) {
         result = JSON.parse(result)
         if(result.success !== false){
+          console.log(result)
           _this.setState({myResult: result});
         }else {
            _this.setState({message: result.message, uploaded: 'failure'})
@@ -469,6 +473,39 @@ class Translation extends Component {
         }, 5000);
       }
     });      
+  }
+
+  //Generate Concordance API
+  generateConcordances(){
+    var _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    var data = { 
+      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision
+    }
+    console.log(data)
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/generateconcordance",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+       result = JSON.parse(result)
+       if(result.success !== false) {
+        _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+        }
+      },
+      error: function (error) {
+      }
+    });
+  }
+  
+  handleChange(e){
+    var _this = this;
+    var value = e;
+    _this.setState({selectValue: value})
   }
 
   render() {
@@ -502,7 +539,7 @@ class Translation extends Component {
                 <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
                   <VirtualizedSelect
                     options={myOptions}/* eslint-disable */ 
-                    onChange={(selectValue) => this.setState({ selectValue })}
+                    onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
                     value={this.state.selectValue}
                   />
                 &nbsp; &nbsp; &nbsp;
@@ -565,7 +602,7 @@ class Translation extends Component {
                         />
                       </div>
 
-                      <div>
+                      <div className="bgColor">
                         <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
                          <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
                           <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
@@ -596,9 +633,9 @@ class Translation extends Component {
                     </form>
               </div>
             </div>
-            <div className="row top10 bodyBorder">
+            <div className="row bodyBorder">
               <div className="col-md-12">
-                  <div className="form-inline top10">
+                  <div className="form-inline">
                     <div className="col-md-8">
                       <lable className="control-lable "> <strong>Token </strong> </lable>
                         <input value={this.state.token} onChange={this.onSelectInput} name="token" type="text"  placeholder="token" className="form-control"/>
@@ -611,15 +648,21 @@ class Translation extends Component {
                   </div>
               </div>
             </div>
-            
-            <div className="row top10">  
+          
+            <div className="row ">  
               <div className="col-md-12">
                 <textarea value={myjson} type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
               </div>  
             </div>
-            &nbsp;
+              <div className="form-group ">
+              <button type="button" className="btn btn-success center-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
+            </div>
+
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
         </div>
+
       </div>
       <Footer />
     </div>
