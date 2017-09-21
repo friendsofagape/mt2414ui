@@ -154,7 +154,7 @@ class Translation extends Component {
   createCheckboxes1 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
-        <span className="disBook">
+        <span key={i} className="disBook">
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
@@ -169,7 +169,7 @@ class Translation extends Component {
   createCheckboxes2 = (obj, books) => (
     Object.keys(books).map(function(v, i){
       return (
-        <span className="disBook">
+        <span key={i} className="disBook">
           <Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox2}
