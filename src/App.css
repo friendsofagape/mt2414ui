@@ -7,6 +7,10 @@
   width: 30%;
 }
 
+.bgColor{
+  background-color: white;
+}
+
 .scolor{
   color: white;
 }
@@ -39,6 +43,7 @@ border-color: #080808;
 .top10{padding-top: 3%;}
 .top9{padding-top: 10%; padding-bottom: 9%}
 .top5{padding-top: 2%;}
+.top4{padding-top: 4%;}
 .top20{padding-top:  25%;}
 .top3{padding-top: 10%}
 
@@ -108,39 +113,6 @@ textarea.form-control {
   text-align: center;
 }
 
-.modal-title {
-  margin: 0;
-  line-height: 1.42857143;
-  color: blue;
-}
-
-.modal{
-  position: fixed;
-  z-index: 999;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: white;
-  filter: alpha(opacity=60);
-  opacity: 0.6;
-  -moz-opacity: 0.8;
-}
-
-.scrollTopBtn {
-    display: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    position: fixed;
-    right: 40px;
-    z-index: 10;
-    bottom: 40px;
-    background-color: #4CB96B;
-    color: #fff;
-    cursor: pointer;
-}
-
 .progress1{
   background: beige;
 }
@@ -200,6 +172,7 @@ td, th {
   width: 645px;
 }
 
+
 tr:hover{
   background-color: #ddd;
   cursor:pointer;
@@ -220,4 +193,23 @@ tr.highlight td {
   width: 20%;
   margin: 0 auto;
   margin-top: 2%;
+}
+
+.modal-title {
+  margin: 0;
+  line-height: 1.42857143;
+  color: blue;
+}
+
+.modal{
+  position: fixed;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  -moz-opacity: 0.8;
 }
