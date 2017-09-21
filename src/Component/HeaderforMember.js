@@ -12,12 +12,12 @@ class HeaderforMember extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav className="pull-right">
-            <NavItem eventKey={1} ><Link to={'/getlanguages'}>Available Source Texts</Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/downloadtokens'}>Download Tokens</Link> </NavItem>
-            <NavItem eventKey={3} ><Link to={'/uploadtokens'}>Upload Tokens</Link> </NavItem>
-            <NavItem eventKey={4} ><Link to={'/gettranslationdraft'}>Download Translation Draft</Link> </NavItem>
+            <NavItem eventKey={1} ><Link to={'/getlanguages'}><strong className="scolor">Available Source Texts</strong></Link></NavItem>
+            <NavItem eventKey={2} ><Link to={'/downloadtokens'}><strong className="scolor">Download Tokens</strong></Link> </NavItem>
+            <NavItem eventKey={3} ><Link to={'/uploadtokens'}><strong className="scolor">Upload Tokens</strong></Link> </NavItem>
+            <NavItem eventKey={4} ><Link to={'/gettranslationdraft'}><strong className="scolor">Download Translation Draft</strong></Link> </NavItem>
             <NavItem eventKey={7} ><Link to={'/translation'}><strong className="scolor">Translation </strong></Link></NavItem>
-            <NavItem eventKey={5} ><Link to={'/logout'}>Log out</Link></NavItem>
+            <NavItem eventKey={5} ><Link to={'/logout'}><strong className="scolor">Log out</strong></Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
