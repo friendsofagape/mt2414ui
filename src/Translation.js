@@ -87,7 +87,9 @@ class Translation extends Component {
       token: '',
       translation: '',
       tokenListState: [],
-      myToken: ''
+      myToken: '',
+      showhideboolean: true,
+      TokenUpdateValue: ''
     }
 
     // Upload file specific callback handlers
@@ -103,6 +105,7 @@ class Translation extends Component {
     this.getConcordances = this.getConcordances.bind(this);
     this.generateConcordances = this.generateConcordances.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.ShowHide = this.ShowHide.bind(this);
   }
 
   handleClick(tab){
@@ -322,7 +325,6 @@ class Translation extends Component {
       "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
     
-    console.log(data);
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
 
@@ -363,9 +365,9 @@ class Translation extends Component {
        	reader.addEventListener('loadend', (e) => {
   	      const text = e.srcElement.result;
   	      _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
-          // setTimeout(function(){
-          //   _this.setState({uploaded: 'fail'})
-          // }, 5000);
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          }, 5000);
       	});
         reader.readAsText(blb);
       }
@@ -379,7 +381,7 @@ class Translation extends Component {
     var _this = this
 
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "token": this.state.token, "translation":this.state.translation
+      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "token": this.state.TokenUpdateValue, "translation":this.state.translation
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -433,11 +435,11 @@ class Translation extends Component {
 
 //To get concordances for a particular token
   getConcordances(obj){
+    this.setState({ TokenUpdateValue: obj });
     var _this = this
     var data = {
       "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision, "token": obj
     }
-    console.log(data);
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     
     $.ajax({
@@ -457,7 +459,6 @@ class Translation extends Component {
       success: function (result) {
         result = JSON.parse(result)
         if(result.success !== false){
-          console.log(result)
           _this.setState({myResult: result});
         }else {
            _this.setState({message: result.message, uploaded: 'failure'})
@@ -475,6 +476,20 @@ class Translation extends Component {
     });      
   }
 
+   ShowHide() {
+    var _this = this;
+      var x = document.getElementById('bookDiv');
+      if (x.style.display === 'none') {
+          x.style.display = 'block';
+              _this.setState({showhideboolean:false});
+
+      } else {
+          x.style.display = 'none';
+              _this.setState({showhideboolean:true});
+
+      }
+  }
+
   //Generate Concordance API
   generateConcordances(){
     var _this = this;
@@ -482,7 +497,6 @@ class Translation extends Component {
     var data = { 
       "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision
     }
-    console.log(data)
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/generateconcordance",
       contentType: "application/json; charset=utf-8",
@@ -491,10 +505,19 @@ class Translation extends Component {
       headers: {
         "Authorization": "bearer " + accessToken
       },
+      beforeSend: function () {
+        $(".modal").show();
+      },
+      complete: function () {
+        $(".modal").hide();
+      },
       success: function (result) {
        result = JSON.parse(result)
        if(result.success !== false) {
         _this.setState({uploaded: result.success ? 'success' : '', message: result.message})
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          },5000);
         }
       },
       error: function (error) {
@@ -524,50 +547,53 @@ class Translation extends Component {
 
     var _this = this; 
     return(
-      <div>
-        <Header/>
+    <div>
+      <Header/>
       <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-5 col-md-offset-4">
               <h3> Translation</h3>
             </div>
           </div>
-        <div className="row bodyColor">
-      			<div className="col-md-3 bodyBorder">
+
+          <div className="row bodyColor">
+        		<div className="col-md-3 bodyBorder">
               <div className="row">
-                <div className="col-md-12" >
-                <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
-                  <VirtualizedSelect
-                    options={myOptions}/* eslint-disable */ 
-                    onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
-                    value={this.state.selectValue}
-                  />
-                &nbsp; &nbsp; &nbsp;
-                <div>
-                  <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Token List</th>
-                    </tr>
-                  </thead>
-                  <tbody className="tbodyColor">
-                    {
-                      Object.keys(tokenListView).map(function(data, index){
-                        return (
-                          <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
-                            <td>
-                              {tokenListView[data]}
-                            </td>
-                          </tr>
-                        );
-                       })
-                    }
-                  </tbody>
-                  </table>
+                <div className="col-md-12">
+                    <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
+                    <VirtualizedSelect
+                      options={myOptions}/* eslint-disable */ 
+                      onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
+                      value={this.state.selectValue}
+                    />
                 </div>
+              </div>
+                &nbsp; &nbsp; &nbsp;
+                  <div className="row">
+                    <div className="col-md-12">
+                      <table className="table tbodyColor">
+                      <thead>
+                        <tr>
+                          <th>Token List</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          Object.keys(tokenListView).map(function(data, index){
+                            return (
+                              <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
+                                <td>
+                                  {tokenListView[data]}
+                                </td>
+                              </tr>
+                            );
+                           })
+                        }
+                      </tbody>
+                      </table>
+                    </div>
+                  </div>
             </div>
-          </div>
-    		</div> 
         	<div className="col-md-9 bodyBorder"> 
             <div className="row"> 
               <div className="col-md-12">       
@@ -602,25 +628,32 @@ class Translation extends Component {
                         />
                       </div>
 
-                      <div className="bgColor">
-                        <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
-                         <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-                          <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
-                            <div className="exclude1" >
-                              {this.createCheckboxes1(this, this.state.getAllBooks)}
-                            </div>
-                          </section>
-                          <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
-                            <div className="exclude1">
-                               {this.createCheckboxes2(this, this.state.getAllBooks)}
-                            </div>
-                          </section>
-                          <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
-                        </section>
+                      <div className="form-group col-md-12 top5 alignCenter">
+                          <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
+                          {
+                            (this.state.showhideboolean)?(<button type="button" className=" btn btn-success" onClick={this.ShowHide} disabled={!this.state.Revision} >Hide Books</button>)
+                            :(<button type="button" className=" btn btn-success" onClick={this.ShowHide} >Show Books</button>)
+                          }
                       </div>
-
-                     	<div className="form-group top10">
-                        <button type="button" className="btn btn-success center-block" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>
+                      <div className="row" >
+                        <div className="col-md-12"  style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                          <div className="bgColor" id="bookDiv">
+                            <section>
+                             <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                              <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                                <div className="exclude1" >
+                                  {this.createCheckboxes1(this, this.state.getAllBooks)}
+                                </div>
+                              </section>
+                              <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
+                                <div className="exclude1">
+                                   {this.createCheckboxes2(this, this.state.getAllBooks)}
+                                </div>
+                              </section>
+                              <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
+                            </section>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="form-group">
@@ -638,7 +671,7 @@ class Translation extends Component {
                   <div className="form-inline">
                     <div className="col-md-8">
                       <lable className="control-lable "> <strong>Token </strong> </lable>
-                        <input value={this.state.token} onChange={this.onSelectInput} name="token" type="text"  placeholder="token" className="form-control"/>
+                        <input value={this.state.TokenUpdateValue} onChange={this.onSelectInput} name="token" type="text"  placeholder="token" className="form-control"/>
                         <lable className="control-lable "> <strong>Translation </strong> </lable>
                         <input value={this.state.translation} onChange={this.onSelectInput} name="translation" type="text"  placeholder="translation" className="form-control"/>
                       </div>
@@ -648,23 +681,18 @@ class Translation extends Component {
                   </div>
               </div>
             </div>
-          
-            <div className="row ">  
+            <div className="row top1">  
               <div className="col-md-12">
+                <div className="top1">
+                <button type="button" className=" btn btn-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
+                </div>
                 <textarea value={myjson} type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
               </div>  
             </div>
-              <div className="form-group ">
-              <button type="button" className="btn btn-success center-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
-            </div>
-
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
         </div>
-
       </div>
-      <Footer />
+        <Footer/>
     </div>
     );
   }
