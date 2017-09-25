@@ -9,6 +9,9 @@
 
 .bgColor{
   background-color: white;
+  border: solid;
+  border-width: thin;
+  border-radius: 15px;
 }
 
 .scolor{
@@ -169,7 +172,7 @@ th {
 }
 
 td, th {
-  width: 645px;
+  width: 600px;
 }
 
 
