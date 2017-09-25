@@ -21,6 +21,7 @@ import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 import VirtualizedSelect from 'react-virtualized-select'
+var ReactSafeHtml = require('react-safe-html');
 
 
 var tabData = [
@@ -686,7 +687,14 @@ class Translation extends Component {
                 <div className="top1">
                 <button type="button" className=" btn btn-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
                 </div>
-                <textarea value={myjson} type="text" id="get_concordances" name="get concordance" placeholder="Get Concordance" className="form-control textarea" />
+
+                <div className="row">
+                <div className="col-md-12">
+                  <div className="myConcord">
+                    <ReactSafeHtml html={myjson} />
+                  </div>
+                </div>
+                </div>
               </div>  
             </div>
           </div>
