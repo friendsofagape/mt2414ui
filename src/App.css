@@ -51,7 +51,7 @@ border-color: #080808;
 .top3{padding-top: 10%}
 
 .bottom5{padding-top: 4%; padding-bottom: 9%}
-
+.bottom1{padding-bottom: 1%;}
 .borderfordiv{border: solid;}
 
 .bodyColor{
@@ -104,8 +104,13 @@ th{
   display: inline;
 }
 
-textarea.form-control {
-    height: 174px;
+.myConcord{
+  height: 174px;
+  background: white;
+  overflow-y: scroll;
+  border: solid;
+  border-radius: 7px;
+  border-width: thin;
 }
 
 .firstRowDiv { margin:0px 10px 10px 0px; }
@@ -150,6 +155,10 @@ textarea.form-control {
   overflow-y: scroll;
   max-height: 399px;
   cursor:pointer;
+}
+
+table{
+  display: inline;
 }
 
 .Notfound {
