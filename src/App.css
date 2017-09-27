@@ -3,6 +3,11 @@
   padding: 1%;
 }
 
+.mywidth{
+  margin-left: 1% !important;
+  width: 70%;
+}
+
 .colmd3Width{
   width: 30%;
 }
@@ -26,12 +31,12 @@
 }
 
 .footer {
-position: fixed;
-bottom: 0;
-width: 100%;
-background-color: #222;
-text-align: center;
-border-color: #080808;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #222;
+  text-align: center;
+  border-color: #080808;
 }
 
 .disBook{ 
@@ -42,7 +47,7 @@ border-color: #080808;
 
 .alignCenter{  text-align: center;}
 
-.top1{padding-bottom: 1%; padding-top: 1%;}
+.top1{padding-bottom: 1%;}
 .top10{padding-top: 3%;}
 .top9{padding-top: 10%; padding-bottom: 9%}
 .top5{padding-top: 2%;}
@@ -54,14 +59,30 @@ border-color: #080808;
 .bottom1{padding-bottom: 1%;}
 .borderfordiv{border: solid;}
 
-.bodyColor{
+.bodyColorTrans{
   background-color: #F5F4AB;
-  border-radius: 15px;
+}
+
+.bodyBorderTrans{
+  border-color: dimgray;
+  border: solid;
+  border-width: thin;
 }
 
 .tbodyColor{
   background-color: white;
   height: 333px;
+}
+
+/*.myTable{
+  background-color: white;
+  height: 433px;
+  overflow-x: scroll;
+}*/
+
+.bodyColor{
+  background-color: #F5F4AB;
+  border-radius: 16px;
 }
 
 .bodyBorder{
@@ -74,6 +95,10 @@ border-color: #080808;
 .divSpace{
   margin:0 14px 10px 0;
   height: 537px;
+}
+
+.divSpaceTrans{
+  margin:0 14px 10px 0;
 }
 
 .divSpaceGetLang{
@@ -105,11 +130,10 @@ th{
 }
 
 .myConcord{
-  height: 174px;
+  height: 190px;
   background: white;
   overflow-y: scroll;
   border: solid;
-  border-radius: 7px;
   border-width: thin;
 }
 
@@ -166,8 +190,9 @@ table{
 }
 
 tbody {
-  height: 324px;
+  height: 375px;
   overflow: auto;
+  background-color: white !important;
 }
 
 thead > tr, tbody{
@@ -224,4 +249,24 @@ tr.highlight td {
   filter: alpha(opacity=60);
   opacity: 0.6;
   -moz-opacity: 0.8;
+}
+
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+.highlight {
+    background-color: yellow;
 }
