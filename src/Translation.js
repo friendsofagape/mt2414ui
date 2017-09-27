@@ -21,8 +21,7 @@ import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
 import VirtualizedSelect from 'react-virtualized-select'
-var ReactSafeHtml = require('react-safe-html');
-
+var Highlight = require('react-highlighter');
 
 var tabData = [
   { name: 'Include Books', isActive: true },
@@ -492,7 +491,7 @@ class Translation extends Component {
   }
 
   //Generate Concordance API
-  generateConcordances(){
+  generateConcordances () {
     var _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
     var data = { 
@@ -533,8 +532,8 @@ class Translation extends Component {
   }
 
   render() {
-	var myTarget = this.state.tokenListState;
-  var myjson = this.state.myResult;
+  	var myTarget = this.state.tokenListState;
+    var myjson = this.state.myResult;
     var options = {};
     var myOptions = [];
     var tokenListView = [];
@@ -548,127 +547,126 @@ class Translation extends Component {
 
     var _this = this; 
     return(
-    <div>
-      <Header/>
-      <div className="container">
+      <div>
+        <Header/>
+        <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-5 col-md-offset-4">
               <h3> Translation</h3>
             </div>
           </div>
 
-          <div className="row bodyColor">
-        		<div className="col-md-3 bodyBorder">
+          <div className="row">
+            <div className="col-md-2 divSpaceTrans bodyColorTrans bodyBorderTrans">
               <div className="row">
                 <div className="col-md-12">
-                    <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
-                    <VirtualizedSelect
-                      options={myOptions}/* eslint-disable */ 
-                      onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
-                      value={this.state.selectValue}
-                    />
+                  <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
+                  <VirtualizedSelect
+                    options={myOptions}/* eslint-disable */ 
+                    onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
+                    value={this.state.selectValue}
+                  />
                 </div>
               </div>
-                &nbsp; &nbsp; &nbsp;
-                  <div className="row">
-                    <div className="col-md-12">
-                      <table className="table tbodyColor">
-                      <thead>
-                        <tr>
-                          <th>Token List</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          Object.keys(tokenListView).map(function(data, index){
-                            return (
-                              <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
-                                <td>
-                                  {tokenListView[data]}
-                                </td>
-                              </tr>
-                            );
-                           })
-                        }
-                      </tbody>
-                      </table>
-                    </div>
-                  </div>
-            </div>
-        	<div className="col-md-9 bodyBorder"> 
-            <div className="row"> 
-              <div className="col-md-12">       
-                  	<form encType="multipart/form-data">
-                      <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-                        <strong>{this.state.message}</strong>
-                      </div>&nbsp;&nbsp;
-                      <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
-                        <strong>{this.state.message}</strong>
-                      </div>&nbsp;&nbsp;
-                      <div className="form-inline">
-                        <lable className="control-label"> <strong> Language </strong> </lable>
-                          <ListLanguages 
-                            onChange={ this.onSelectSource}
-                            Language={this.state.getTargetLanguages}
-                          />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <lable className="control-lable "> <strong> Version </strong> </lable>
-                          <Versions 
-                            version={this.state.getVersions} 
-                            onChange={this.onSelectVersion} 
-                          />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <lable className="control-lable"> <strong> Revision </strong> </lable>
-                          <RevisionNumber
-                            revision={this.state.getRevision}  
-                            onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
-                          />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <lable className="control-label"> <strong> Target Language *</strong> </lable>
-                        <ListTargetLanguage
-                          Tar={this.state.getTargetLangList}
-                          Language={this.state.getTargetLanguages}
-                          onChange={this.onSelect}
-                        />
-                      </div>
+              <div className="row">
+                <div className="col-md-12 myTable">
+                  <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Token List</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      Object.keys(tokenListView).map(function(data, index){
+                        return (
+                          <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
+                            <td>
+                              {tokenListView[data]}
+                            </td>
+                          </tr>
+                        );
+                      })
+                    }
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>   
 
-                      <div className="form-group col-md-12 top5 alignCenter">
-                          <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
-                          {
-                            (this.state.showhideboolean)?(<button type="button" className=" btn btn-success" onClick={this.ShowHide} disabled={!this.state.Revision} >Hide Books</button>)
-                            :(<button type="button" className=" btn btn-success" onClick={this.ShowHide} >Show Books</button>)
-                          }
-                      </div>
-                      <div className="row" >
-                        <div className="col-md-12"  style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
-                          <div className="bgColor" id="bookDiv">
-                            <section>
-                             <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-                              <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
-                                <div className="exclude1" >
-                                  {this.createCheckboxes1(this, this.state.getAllBooks)}
-                                </div>
+            <div className="col-md-9 bodyColorTrans bodyBorderTrans"> 
+              <div className="row"> 
+                <div className="col-md-12">       
+                    	<form encType="multipart/form-data">
+                        <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                          <strong>{this.state.message}</strong>
+                        </div>&nbsp;&nbsp;
+                        <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+                          <strong>{this.state.message}</strong>
+                        </div>&nbsp;&nbsp;
+                        <div className="form-inline">
+                          <lable className="control-label"> <strong> Language </strong> </lable>
+                            <ListLanguages 
+                              onChange={ this.onSelectSource}
+                              Language={this.state.getTargetLanguages}
+                            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <lable className="control-lable "> <strong> Version </strong> </lable>
+                            <Versions 
+                              version={this.state.getVersions} 
+                              onChange={this.onSelectVersion} 
+                            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <lable className="control-lable"> <strong> Revision </strong> </lable>
+                            <RevisionNumber
+                              revision={this.state.getRevision}  
+                              onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
+                            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <lable className="control-label"> <strong> Target Language *</strong> </lable>
+                          <ListTargetLanguage
+                            Tar={this.state.getTargetLangList}
+                            Language={this.state.getTargetLanguages}
+                            onChange={this.onSelect}
+                          />
+                        </div>
+
+                        <div className="form-group col-md-12 top5 alignCenter">
+                            <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
+                            {
+                              (this.state.showhideboolean)?(<button type="button" className=" btn btn-success" onClick={this.ShowHide} disabled={!this.state.Revision} >Hide Books</button>)
+                              :(<button type="button" className=" btn btn-success" onClick={this.ShowHide} >Show Books</button>)
+                            }
+                        </div>
+                        <div className="row" >
+                          <div className="col-md-12"  style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                            <div className="bgColor" id="bookDiv">
+                              <section>
+                               <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                                <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                                  <div className="exclude1" >
+                                    {this.createCheckboxes1(this, this.state.getAllBooks)}
+                                  </div>
+                                </section>
+                                <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
+                                  <div className="exclude1">
+                                     {this.createCheckboxes2(this, this.state.getAllBooks)}
+                                  </div>
+                                </section>
+                                <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
                               </section>
-                              <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
-                                <div className="exclude1">
-                                   {this.createCheckboxes2(this, this.state.getAllBooks)}
-                                </div>
-                              </section>
-                              <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
-                            </section>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="form-group">
-                      </div>
-                      <div id="loading" className="modal">
-                        <div className="center">
-                          <img alt="" src={require('./Images/loader.gif')} />
+                        <div className="form-group">
                         </div>
-                      </div>
-                    </form>
+                        <div id="loading" className="modal">
+                          <div className="center">
+                            <img alt="" src={require('./Images/loader.gif')} />
+                          </div>
+                        </div>
+                      </form>
+                </div>
               </div>
-            </div>
-            <div className="row bodyBorder">
-              <div className="col-md-12">
+                <div className="col-md-12 bodyBorderTrans">
                   <div className="form-inline">
                     <div className="col-md-8">
                       <lable className="control-lable "> <strong>Token </strong> </lable>
@@ -680,28 +678,24 @@ class Translation extends Component {
                         <button type="button" className="btn btn-success" onClick={this.updateTokenTranslation} disabled={!this.state.Targetlanguage} >Update</button>
                       </div>
                   </div>
-              </div>
-            </div>
-            <div className="row top1">  
-              <div className="col-md-12">
-                <div className="top1">
-                <button type="button" className=" btn btn-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
                 </div>
-
-                <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-12 top5">
+                  <div className="row">
+                  <div className="col-md-12">
+                  <button type="button" className="btn btn-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
                   <div className="myConcord">
-                    <ReactSafeHtml html={myjson} />
+                    <Highlight search={this.state.TokenUpdateValue}>
+                      {myjson}
+                    </Highlight>
                   </div>
-                </div>
-                </div>
-              </div>  
+                  </div>
+                  </div>
+                </div>  
             </div>
           </div>
         </div>
+          <Footer/>
       </div>
-        <Footer/>
-    </div>
     );
   }
 }
