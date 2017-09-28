@@ -691,7 +691,7 @@ class Translation extends Component {
                                 <Highlight search={_this.state.TokenUpdateValue}>{v}</Highlight>
                             </div>
                             );
-                          })):(<h1>{hello}</h1>)
+                          })):(<h1></h1>)
                       }
                   
                   </div>
@@ -701,7 +701,7 @@ class Translation extends Component {
             </div>
           </div>
         </div>
-          <Footer />
+          <Footer/>
       </div>
     );
   }
