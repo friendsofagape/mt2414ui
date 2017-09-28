@@ -682,12 +682,12 @@ class Translation extends Component {
                 <div className="col-md-12 top5">
                   <div className="row">
                   <div className="col-md-12">
-                  <button type="button" className="btn btn-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
-                  <div className="myConcord">
+                  <button type="button" className="btn btn-block refreshButton" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
+                  <div className="myConcord bodyBorderTrans">
                       
                       {
                         (myjson != null)?(myjson.map(function(v, i){
-                            return (<div key={i} className="top1">
+                            return (<div key={i} className="paddingforConcordtext">
                                 <Highlight search={_this.state.TokenUpdateValue}>{v}</Highlight>
                             </div>
                             );
