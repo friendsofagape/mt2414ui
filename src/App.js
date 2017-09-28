@@ -6,9 +6,10 @@ import Footer from './Footer';
 class App extends Component {
   render() {
     return (
-      <div>
-        <Header />
-        <Footer />
+      <div className="container">
+      <Header />
+      {this.props.children}
+      <Footer />
       </div>
     );
   }
