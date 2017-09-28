@@ -143,11 +143,13 @@ class SuperAdmin extends Component {
 
     return(
       <div>
-        <Header/ >
-        <div className="container">
+          <div className="col-md-12">
+            <Header/>
+          </div>
+          <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h3>List of Autographa MT users</h3>
+              <h3 className="top4">List of Autographa MT users</h3>
             </div>
           </div>
 

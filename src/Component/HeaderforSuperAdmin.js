@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 class HeaderforSuperAdmin extends Component {
  render() {
    return (
-       <Navbar inverse>
+       <Navbar inverse fixedTop>
        <Navbar.Header><Navbar.Brand>
            <a href="/getlanguages"><span className='glyphicon glyphicon-home scolor'></span></a>
        </Navbar.Brand><Navbar.Toggle />

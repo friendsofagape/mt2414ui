@@ -528,11 +528,13 @@ class GetTranslationDraft extends Component {
   render() {
     return(
       <div>
+      <div className="col-md-12">
         <Header/>
+      </div>
       <div className="container" >
         <div className="row">
           <div className="col-md-12">
-            <h3>Download Translation Draft</h3>
+            <h3 className="top4">Download Translation Draft</h3>
           </div>
         </div>
         <div className="row bodyBorder bodyColor">

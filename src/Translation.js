@@ -548,10 +548,12 @@ class Translation extends Component {
     var _this = this; 
     return(
       <div>
-        <Header/>
+        <div className="col-md-12">
+            <Header/>
+        </div>
         <div className="container">
           <div className="row">
-            <div className="col-md-10 col-md-5 col-md-offset-4">
+            <div className="col-md-10 col-md-5 col-md-offset-4 top4">
               <h3> Translation</h3>
             </div>
           </div>
@@ -627,7 +629,7 @@ class Translation extends Component {
                             onChange={this.onSelect}
                           />
                         </div>
-
+                        
                         <div className="form-group col-md-12 top5 alignCenter">
                             <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
                             {
@@ -635,6 +637,7 @@ class Translation extends Component {
                               :(<button type="button" className=" btn btn-success" onClick={this.ShowHide} >Show Books</button>)
                             }
                         </div>
+
                         <div className="row" >
                           <div className="col-md-12"  style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
                             <div className="bgColor" id="bookDiv">

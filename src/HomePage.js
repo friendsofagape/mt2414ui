@@ -1,3 +1,15 @@
+/**
+ * @module src/HomePage
+ *
+ * Component that display Homepage with Login
+ * Accepts the following properties:
+ *  - email: enter email for signin
+ *  - password: enter the same password which you have enter at the time of signup
+ * Also forgot password
+ * Also create account option 
+ *
+*/
+
 import React, {Component} from 'react';
 import { Link } from 'react-router';
 import Footer from './Footer';
@@ -42,17 +54,14 @@ class HomePage extends Component {
                 <img alt="" src={require('./Images/bible.png')} />
               </div>
             </div>
-
           <div className="col-md-3 bodyColor divSpace colmd3Width" >
             <SigninForm />
           </div>
-
         </div>
-
       </div>
-        <div>
-          <Footer/>
-        </div>
+      <div>
+        <Footer/>
+      </div>
     </div>
     );
   }

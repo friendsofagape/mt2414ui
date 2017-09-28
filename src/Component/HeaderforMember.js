@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 class HeaderforMember extends Component {
   render() {
     return (
-        <Navbar inverse>
+        <Navbar inverse fixedTop>
         <Navbar.Header><Navbar.Brand>
             <a href="/getlanguages"><span className='glyphicon glyphicon-home scolor'></span>&nbsp;&nbsp;<strong className="scolor">Autographa MT</strong></a>
         </Navbar.Brand><Navbar.Toggle />

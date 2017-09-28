@@ -127,10 +127,10 @@ class GetLanguages extends Component {
     return(
       <div>
         <Header/>
-      <div className="container">
+        <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h3>Available Source Texts</h3>
+              <h3 className="top4">Available Source Texts</h3>
             </div>
           </div>
 

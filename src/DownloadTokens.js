@@ -34,7 +34,8 @@ class Tabs extends Component {
   render() {
     return (
       <ul className="nav nav-tabs">
-        {tabData.map(function(tab, i){
+        {
+          tabData.map(function(tab, i){
           return (
             <Tab 
               key={i} 
@@ -43,7 +44,8 @@ class Tabs extends Component {
               handleClick={this.props.changeTab.bind(this,tab)} 
             />
           );
-        }.bind(this))}      
+        }.bind(this))
+      }      
       </ul>
     );
   }
@@ -377,11 +379,13 @@ class DownloadTokens extends Component {
   render() {
     return(
       <div>
+      <div className="col-md-12">
         <Header/>
+      </div>
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <h3>Download Tokens</h3>
+            <h3 className="top4">Download Tokens</h3>
           </div>
         </div>
         <div className="row top5 bodyColor bodyBorder alignCenter">

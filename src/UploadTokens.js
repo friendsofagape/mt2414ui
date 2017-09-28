@@ -339,11 +339,13 @@ class UploadTokens extends Component {
     };
     return(
       <div>
-      <Header/>
-      <div className="container">
+        <div className="col-md-12">
+            <Header/>
+        </div>
+        <div className="container">
         <div className="row">
             <div className="col-md-12">
-              <h3>Upload Tokens</h3>
+              <h3 className="top4">Upload Tokens</h3>
             </div>
         </div>
         <div className="row top5  bodyColor bodyBorder">
@@ -386,7 +388,7 @@ class UploadTokens extends Component {
               <div className="col-md-1">
                   {
                     (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
-                      <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2 dropselect"></span></a> 
+                      <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2"></span></a> 
                     ):(
                       <div></div>
                       )
