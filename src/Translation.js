@@ -459,7 +459,7 @@ class Translation extends Component {
       success: function (result) {
         result = JSON.parse(result)
         if(result.success !== false){
-          _this.setState({myResult: result});
+          _this.setState({myResult: result.toString().split('\n')});
         }else {
            _this.setState({message: result.message, uploaded: 'failure'})
             setTimeout(function(){
@@ -557,7 +557,7 @@ class Translation extends Component {
           </div>
 
           <div className="row">
-            <div className="col-md-2 divSpaceTrans bodyColorTrans bodyBorderTrans">
+            <div className="col-md-3 divSpaceTrans bodyColorTrans bodyBorderTrans">
               <div className="row">
                 <div className="col-md-12">
                   <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
@@ -594,7 +594,7 @@ class Translation extends Component {
               </div>
             </div>   
 
-            <div className="col-md-9 bodyColorTrans bodyBorderTrans"> 
+            <div className="col-md-8 translationWidth bodyColorTrans bodyBorderTrans"> 
               <div className="row"> 
                 <div className="col-md-12">       
                     	<form encType="multipart/form-data">
@@ -684,9 +684,16 @@ class Translation extends Component {
                   <div className="col-md-12">
                   <button type="button" className="btn btn-block" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
                   <div className="myConcord">
-                    <Highlight search={this.state.TokenUpdateValue}>
-                      {myjson}
-                    </Highlight>
+                      
+                      {
+                        (myjson != null)?(myjson.map(function(v, i){
+                            return (<div key={i} className="top1">
+                                <Highlight search={_this.state.TokenUpdateValue}>{v}</Highlight>
+                            </div>
+                            );
+                          })):(<h1>{hello}</h1>)
+                      }
+                  
                   </div>
                   </div>
                   </div>
@@ -694,7 +701,7 @@ class Translation extends Component {
             </div>
           </div>
         </div>
-          <Footer/>
+          <Footer />
       </div>
     );
   }
