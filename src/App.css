@@ -11,6 +11,9 @@ body {
 .col-md-12{
   padding: 1%;
 }
+.col-md-1{
+  display: flex;
+}
 
 .mywidth{
   margin-left: 1% !important;
@@ -26,6 +29,10 @@ body {
   border: solid;
   border-width: thin;
   border-radius: 15px;
+}
+
+.tokenForm{
+  margin-left: -1%;
 }
 
 .scolor{

@@ -359,7 +359,7 @@ class UploadTokens extends Component {
             
           <div className="row center-block alignCenter">
              <div className="col-md-8">
-                <div className="form-inline">
+                <div className="form-inline tokenForm">
                   <lable className="control-label"> <strong> Source Language </strong> </lable>
                     <ListLanguages 
                       onChange={this.onSelectSource}

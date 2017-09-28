@@ -629,7 +629,7 @@ class Translation extends Component {
                             onChange={this.onSelect}
                           />
                         </div>
-                        
+
                         <div className="form-group col-md-12 top5 alignCenter">
                             <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
                             {
@@ -671,13 +671,13 @@ class Translation extends Component {
               </div>
                 <div className="col-md-12 bodyBorderTrans">
                   <div className="form-inline">
-                    <div className="col-md-8">
+                    <div className="col-md-9">
                       <lable className="control-lable "> <strong>Token </strong> </lable>
                         <input value={this.state.TokenUpdateValue} onChange={this.onSelectInput} name="token" type="text"  placeholder="token" className="form-control"/>
                         <lable className="control-lable "> <strong>Translation </strong> </lable>
                         <input value={this.state.translation} onChange={this.onSelectInput} name="translation" type="text"  placeholder="translation" className="form-control"/>
                       </div>
-                      <div className="col-md-4">       
+                      <div className="col-md-3">       
                         <button type="button" className="btn btn-success" onClick={this.updateTokenTranslation} disabled={!this.state.Targetlanguage} >Update</button>
                       </div>
                   </div>
