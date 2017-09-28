@@ -39,6 +39,10 @@
   border-color: #080808;
 }
 
+.translationWidth{
+  width: 73%;
+}
+
 .disBook{ 
   display: inline-block;
   padding: 0 0 0 1%;
