@@ -30,6 +30,11 @@
   background-color: #fff;
 }
 
+.refreshButton{
+  border: ridge;
+  border-radius: 8px;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -52,6 +57,11 @@
 .alignCenter{  text-align: center;}
 
 .top1{padding-bottom: 1%;}
+
+.paddingforConcordtext{
+  padding: 0 1% 1% 1%;
+}
+
 .top10{padding-top: 3%;}
 .top9{padding-top: 10%; padding-bottom: 9%}
 .top5{padding-top: 2%;}
@@ -65,12 +75,14 @@
 
 .bodyColorTrans{
   background-color: #F5F4AB;
+  border-radius: 12px;
 }
 
 .bodyBorderTrans{
   border-color: dimgray;
   border: solid;
   border-width: thin;
+  border-radius: 12px;
 }
 
 .tbodyColor{
