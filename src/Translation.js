@@ -1,7 +1,7 @@
 /**
  * @module src/Translation
  *
- * Component that display SourceDocument
+ * Component that display Translation
  * Accepts the following properties:
  *  - language: Ethnologue code of the language
  *  - version: Version of the language
@@ -14,13 +14,14 @@ import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
+import {Modal, ModalHeader, ModalTitle, ModalClose, ModalBody, ModalFooter} from 'react-modal-bootstrap';
+import VirtualizedSelect from 'react-virtualized-select'
 import ListTargetLanguage from './Component/ListTargetLanguage';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
 import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
-import VirtualizedSelect from 'react-virtualized-select'
 var Highlight = require('react-highlighter');
 
 var tabData = [
@@ -89,7 +90,8 @@ class Translation extends Component {
       tokenListState: [],
       myToken: '',
       showhideboolean: true,
-      TokenUpdateValue: ''
+      TokenUpdateValue: '',
+      isOpen: false,
     }
 
     // Upload file specific callback handlers
@@ -285,6 +287,7 @@ class Translation extends Component {
       var data = { 
         "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
       }
+
       $.ajax({
       url: GlobalURL["hostURL"]+"/v1/targetlang",
       contentType: "application/json; charset=utf-8",
@@ -459,7 +462,7 @@ class Translation extends Component {
       success: function (result) {
         result = JSON.parse(result)
         if(result.success !== false){
-          _this.setState({myResult: result.toString().split('\n')});
+          _this.setState({myResult: result.split('\n')});
         }else {
            _this.setState({message: result.message, uploaded: 'failure'})
             setTimeout(function(){
@@ -531,7 +534,23 @@ class Translation extends Component {
     _this.setState({selectValue: value})
   }
 
+  openModal = () => {
+    this.setState({
+      isOpen: true
+    });
+  };
+
+  hideModal = () => {
+    this.setState({
+      isOpen: false
+    });
+  };
+
+
   render() {
+
+    let {isOpen} = this.state;
+
   	var myTarget = this.state.tokenListState;
     var myjson = this.state.myResult;
     var options = {};
@@ -554,7 +573,7 @@ class Translation extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-5 col-md-offset-4 top4">
-              <h3> Translation</h3>
+              <h3>Translation</h3>
             </div>
           </div>
 
@@ -629,36 +648,6 @@ class Translation extends Component {
                             onChange={this.onSelect}
                           />
                         </div>
-
-                        <div className="form-group col-md-12 top5 alignCenter">
-                            <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
-                            {
-                              (this.state.showhideboolean)?(<button type="button" className=" btn btn-success" onClick={this.ShowHide} disabled={!this.state.Revision} >Hide Books</button>)
-                              :(<button type="button" className=" btn btn-success" onClick={this.ShowHide} >Show Books</button>)
-                            }
-                        </div>
-
-                        <div className="row" >
-                          <div className="col-md-12"  style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
-                            <div className="bgColor" id="bookDiv">
-                              <section>
-                               <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-                                <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
-                                  <div className="exclude1" >
-                                    {this.createCheckboxes1(this, this.state.getAllBooks)}
-                                  </div>
-                                </section>
-                                <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
-                                  <div className="exclude1">
-                                     {this.createCheckboxes2(this, this.state.getAllBooks)}
-                                  </div>
-                                </section>
-                                <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
-                              </section>
-                            </div>
-                          </div>
-                        </div>
-
                         <div className="form-group">
                         </div>
                         <div id="loading" className="modal">
@@ -668,6 +657,63 @@ class Translation extends Component {
                         </div>
                       </form>
                 </div>
+
+
+              <div>
+                <div className="form-group col-md-12 top5 alignCenter">
+                  <button className="btn btn-success" onClick={this.openModal}  disabled={!this.state.Revision}>
+                    Show Books / Generate Tokens
+                  </button>
+                </div>
+              </div>
+              <div>
+                <Modal isOpen={isOpen} size="modal-lg"  onRequestHide={this.hideModal}>
+                  <ModalHeader>
+                    <ModalClose onClick={this.hideModal}/>
+                    <ModalTitle>List of the Books</ModalTitle>
+                  </ModalHeader>
+                  <ModalBody>
+                    <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                      <strong>{this.state.message}</strong>
+                    </div>&nbsp;&nbsp;
+                    <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+                      <strong>{this.state.message}</strong>
+                    </div>
+                    <div className="container displayBook">
+                    <div className="row">
+                    <div className="col-md-12 bgColor" id="bookDiv" style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                      <div>
+                      <section>
+                      <div className="topRound">
+                       <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                      </div>  
+                        <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                          <h4 className="panel-heading panelHead">Include Books</h4>
+                          <div className="exclude1" >
+                            {this.createCheckboxes1(this, this.state.getAllBooks)}
+                          </div>
+                        </section>
+                        <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
+                          <h4 className="panel-heading panelHead">Exclude Books</h4>
+                          <div className="exclude1">
+                             {this.createCheckboxes2(this, this.state.getAllBooks)}
+                          </div>
+                        </section>
+                        <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
+                      </section>
+                    </div>
+                      </div>  
+                    </div>
+                  </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <button className="btn btn-default" onClick={this.hideModal}> Close </button>
+                    <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
+                  </ModalFooter>
+                </Modal>
+              </div>
+
+
               </div>
                 <div className="col-md-12 bodyBorderTrans">
                   <div className="form-inline">
