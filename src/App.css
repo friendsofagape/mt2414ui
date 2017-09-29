@@ -8,6 +8,14 @@ body {
 
 }
 
+.layout-main{
+  padding: 30px 0;
+}
+
+.displayBook{
+  display: table-cell;
+}
+
 .col-md-12{
   padding: 1%;
 }
@@ -29,6 +37,7 @@ body {
   border: solid;
   border-width: thin;
   border-radius: 15px;
+  padding: inherit;
 }
 
 .tokenForm{
@@ -71,6 +80,12 @@ body {
   color: black; 
 }
 
+.panelHead{
+  margin: 0 auto;
+  display: inline-block;
+  width: 100%;
+}
+
 .alignCenter{  text-align: center;}
 
 .top1{padding-bottom: 1%;}
@@ -85,7 +100,7 @@ body {
 .top4{padding-top: 4%;}
 .top20{padding-top:  25%;}
 .top3{padding-top: 10%}
-
+.topRound{padding: 1%;}
 .bottom5{padding-top: 4%; padding-bottom: 9%}
 .bottom1{padding-bottom: 1%;}
 .borderfordiv{border: solid;}
@@ -93,6 +108,10 @@ body {
 .bodyColorTrans{
   background-color: #F5F4AB;
   border-radius: 12px;
+}
+
+.modal-body{
+  background-color: #F5F4AB;
 }
 
 .bodyBorderTrans{
