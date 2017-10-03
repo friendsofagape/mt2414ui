@@ -20,15 +20,15 @@ import GlobalURL from './GlobalURL';
 class Header extends Component {
   render() {
     return (
-        <Navbar inverse collapseOnSelect fixedTop >
+        <Navbar inverse>
         <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
+          <a href="/homepage"><span className='glyphicon glyphicon-home scolor'></span>&nbsp; <strong className="scolor">Autographa MT</strong></a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >
-          <Nav className="customHeader">
-            <NavItem eventKey={1} ><Link to={'/signup'}>Sign up</Link></NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span> Sign in</Link></NavItem>
+          <Nav className="pull-right">
+            <NavItem eventKey={2} ><Link to={'/signup'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signup</strong></Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signin</strong></Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -129,31 +129,40 @@ class ResetPassword extends Component {
 
   render() {
       return (
-        <div className="container">
-        <Header />
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onResetPassword} className="col-md-8 signupCustom">
-          <h1 className="forgot-header"><span className="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Reset Password ?</h1>&nbsp;
-          <p className="textP">Enter your registered email Id, we'll send you a password reset email</p>
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-               <strong>{this.state.message}</strong>
+        <div >
+          <Header />
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <h3><span className="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;Reset Password ?</h3>
+                <p className="alignCenter">Enter your registered email Id, we'll send you a password reset email</p>
+              </div>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
-              <strong>{this.state.message}</strong>
+            <div className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder">
+              <form onSubmit={this.onResetPassword}>
+                <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                   <strong>{this.state.message}</strong>
+                </div>
+                <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
+                  <strong>{this.state.message}</strong>
+                </div>
+                <div className="form-group">
+                  <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
+                  <input className="form-control" value={this.state.email} onChange={this.onChange} type="email" name="email"  placeholder="Email" ref="email" required />
+                  <div className="error" id="emailError" />
+                </div>
+                <div className="form-group">
+                  <button className="btn btn-success btn-block" > Reset Password </button>
+                </div>
+              </form>
             </div>
-              <div className="form-group">
-                <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
-                <input className="form-control" value={this.state.email} onChange={this.onChange} type="email" name="email"  placeholder="Email" ref="email" required />
-                <div className="error" id="emailError" />
-              </div>&nbsp;
-          <div className="form-group">
-            <button className="btn btn-success" > Reset Password </button>
           </div>
-        </form>
-          </div>
-         <Footer />
+        <div>
+          <Footer />
+        </div>
         </div>
       );
     }
  }
+
 export default ResetPassword;

@@ -132,14 +132,14 @@ class GetTranslationDraft extends Component {
   createCheckboxes1 = (obj, books, displayPercentage, displayTokenCount) => (
     Object.keys(books).map(function(v, i){
       return (
-        <p key={i}><Checkbox
+        <span key={i} className="disBook"><Checkbox
             label={booksName2[0][books[v]]}
             handleCheckboxChange={obj.toggleCheckbox1}
             bookCode={books[v]}
             p={displayPercentage[i]}
             tc={displayTokenCount[i]}
           />
-        </p>
+        </span>
       );
     })
   )
@@ -364,7 +364,7 @@ class GetTranslationDraft extends Component {
     xhr.setRequestHeader('Authorization', "bearer " + accessToken);
     xhr.onload = function(e) {
       complete();
-      if (this.status === 200) {
+      if (this.status === 200) {      
         var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
         var downloadUrl = URL.createObjectURL(blob);
         var a = document.createElement("a");
@@ -373,11 +373,18 @@ class GetTranslationDraft extends Component {
         document.body.appendChild(a);
         a.click();
       } 
-      else {
-        _this.setState({message: xhr.response.message, uploaded: 'failure'})
+     if(this.status === 400){
+      const blb    = new Blob([this.response], {type: "text/plain"});
+      const reader = new FileReader();
+      reader.addEventListener('loadend', (e) => {
+        const text = e.srcElement.result;
+        _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
         setTimeout(function(){
           _this.setState({uploaded: 'fail'})
         }, 5000);
+      });
+      reader.readAsText(blb);
+
       }
     };   
     xhr.send(JSON.stringify(data)); 
@@ -519,40 +526,47 @@ class GetTranslationDraft extends Component {
 
   render() {
     return(
+      <div>
+      <div className="col-md-12">
+        <Header/>
+      </div>
       <div className="container" >
-        <Header/ >
         <div className="row">
-          <form className="col-md-12 uploader" encType="multipart/form-data">
-            <h1 className="source-headerCon">Download Translation Draft</h1>&nbsp;
+          <div className="col-md-12">
+            <h3 className="top4">Download Translation Draft</h3>
+          </div>
+        </div>
+        <div className="row bodyBorder bodyColor">
+          <form className="col-md-12 alignCenter" encType="multipart/form-data">
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                 <strong>Translation Generated Successfully</strong>
-            </div>
+            </div>&nbsp;&nbsp;
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible')}>
-                <strong>{this.state.message}</strong>
-            </div>
-             <div className="form-inline Concord1">&nbsp;&nbsp;&nbsp;&nbsp;
-              <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
+              <strong>{this.state.message}</strong>
+            </div>&nbsp;&nbsp;
+             <div className="form-inline">
+              <lable className="control-label"> <strong> Source Language </strong> </lable>
                 <ListLanguages 
                   Language={this.state.getTargetLanguages}
                   onChange={this.onSelectSource}
-                />
-              <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
+                />&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-lable"> <strong> Version </strong> </lable>
                 <Versions 
                   version={this.state.getVersions} 
                   onChange={this.onSelectVersion} 
-                />
-              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>               
+                />&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-lable"> <strong> Revision </strong> </lable>               
                 <RevisionNumber
                   revision={this.state.getRevision}  
                   onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
-                />
-              <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
+                />&nbsp;&nbsp;&nbsp;&nbsp;
+              <lable className="control-label"> <strong> Target Language </strong> </lable>
               <ListTargetLanguage
                 Tar={this.state.getTargetLangList}
                 Language={this.state.getTargetLanguages}
-                onChange={ (e) => { this.onSelect(e); this.getChartData(e); this.onSelectBook(e)} }
+                onChange={ (e) => { this.onSelect(e);this.onSelectBook(e); this.getChartData(e)} }
               />
-              </div>&nbsp;
+              </div>
               <div>
                 <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} } >
                 {(this.state.autoLoad === false)?(this.autoLoad=false):(<Chart 
@@ -565,9 +579,9 @@ class GetTranslationDraft extends Component {
                 <div className="tandc" > * % means how much translation has been completed. Hover over it to view remaining token count.</div>
                 </section>
               </div>
-                <div className="form-group"> 
-                  <button id="btnGet" type="button" className="btn btn-success ConcordButtonLeft" onClick={this.DowloadDraft} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
-                  <button id="btnGet" type="button" className="btn btn-success ConcordButtonRight" onClick={this.DowloadRemainingTokens} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Remaining Tokens </button>&nbsp;&nbsp;&nbsp;
+                <div className="form-group top5 center-block"> 
+                  <button type="button" className="btn btn-success" onClick={this.DowloadDraft} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Drafts </button>&nbsp;&nbsp;&nbsp;
+                  <button type="button" className="btn btn-success" onClick={this.DowloadRemainingTokens} disabled={!this.state.getAllBooks} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span> Download Remaining Tokens </button>&nbsp;&nbsp;&nbsp;
                 </div>
                 <div id="loading" className="modal" style={{display: 'none'}}>
                   <div className="center">
@@ -575,8 +589,11 @@ class GetTranslationDraft extends Component {
                   </div>
                 </div>
           </form>
-          </div>
+        </div>
+      </div>
+      <div>
         <Footer/>
+=     </div> 
       </div>
       );
     }

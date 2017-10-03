@@ -338,80 +338,107 @@ class UploadTokens extends Component {
       margin: 'auto'
     };
     return(
-      <div className="container">
-        <Header/ >
+      <div>
+        <div className="col-md-12">
+            <Header/>
+        </div>
+        <div className="container">
         <div className="row">
-          <form className="col-md-12 uploader" id="upload_form" encType="multipart/form-data">
-            <h1 className="source-headerCon1">Upload Tokens</h1>&nbsp;
+            <div className="col-md-12">
+              <h3 className="top4">Upload Tokens</h3>
+            </div>
+        </div>
+        <div className="row top5  bodyColor bodyBorder">
+          <form className="col-md-12" id="upload_form" encType="multipart/form-data">
             <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
               <strong>{this.state.message}</strong>
-            </div>
+            </div>&nbsp;&nbsp;  
             <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
               <strong>{this.state.message}</strong>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>&nbsp;&nbsp;
             
-            <div className="form-inline">&nbsp;&nbsp;&nbsp;&nbsp;
-              <lable className="control-label Concord2"> <strong> Source Language </strong> </lable>
-                <ListLanguages 
-                  onChange={this.onSelectSource}
-                  Language={this.state.getTargetLanguages}
-                />
-              <lable className="control-lable Concord2"> <strong> Version </strong> </lable>
-                <Versions 
-                  version={this.state.getVersions} 
-                  onChange={this.onSelectVersion} 
-                />
-              <lable className="control-lable Concord2"> <strong> Revision </strong> </lable>
-                <RevisionNumber
-                  revision={this.state.getRevision}
-                  onChange={this.onSelectRevision} 
-                />
-                
-              <lable className="control-label Concord2"> <strong> Target Language </strong> </lable>
-              <div className="cutomSelect">
-              <VirtualizedSelect
-                options={myOptions}
-                onChange={(selectValue) => this.setState({ selectValue })}
-                value={this.state.selectValue}
-              />
-              </div>
-            {
-              (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
-                <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2 dropselect"></span></a> 
-              ):(
-                <div></div>
-                )
-            }
-            </div>&nbsp;
-            <section style={this.state.Revision === '' ? {display:'none'} : {display: 'inline'} }>
-              <div className="form-group customUpload1" >
-                <div className="form-control">
-                  <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
-                  <span id="lblError" style={style}></span>
-                </div>&nbsp;
-              </div>
-            </section>
-              {
-                (decoded.role === 'admin' || decoded.role === 'superadmin') ?  (
-                <div className="form-group customUpload">
-                  <button id="btnGet" type="button" className="btn btn-success uploadButtonLeft" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
-                  <button id="btnGet" type="button" className="btn btn-success updateButtonRight" onClick={this.updateTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Update Tokens</button>&nbsp;&nbsp;&nbsp;
+          <div className="row center-block alignCenter">
+             <div className="col-md-8">
+                <div className="form-inline tokenForm">
+                  <lable className="control-label"> <strong> Source Language </strong> </lable>
+                    <ListLanguages 
+                      onChange={this.onSelectSource}
+                      Language={this.state.getTargetLanguages}
+                    />&nbsp;&nbsp;&nbsp;&nbsp;
+                  <lable className="control-lable"> <strong> Version </strong> </lable>
+                    <Versions 
+                      version={this.state.getVersions} 
+                      onChange={this.onSelectVersion} 
+                    />&nbsp;&nbsp;&nbsp;&nbsp;
+                  <lable className="control-lable"> <strong> Revision </strong> </lable>
+                    <RevisionNumber
+                      revision={this.state.getRevision}
+                      onChange={this.onSelectRevision} 
+                    />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <lable className="control-label"> <strong> Target Language </strong> </lable>
                 </div>
+              </div>
+              <div className="col-md-3">             
+                  <VirtualizedSelect
+                    options={myOptions}
+                    onChange={(selectValue) => this.setState({ selectValue })}
+                    value={this.state.selectValue}
+                  />
+              </div>
+              <div className="col-md-1">
+                  {
+                    (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
+                      <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2"></span></a> 
+                    ):(
+                      <div></div>
+                      )
+                  } 
+              </div>
+          </div>
 
-                ):(
-                  <div className="form-group customUpload">
-                    <button id="btnGet" type="button" className="btn btn-success sourcefooter" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+          <div className="row alignCenter">
+            <div className="col-md-12">
+              <section style={this.state.Revision === '' ? {display:'none'} : {display: 'inline'} }>
+                <div className="form-group" >
+                  <div className="form-control formWidth">
+                    <input className="input-file" type="file" id="fileInput"  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"  multiple />
+                    <span id="lblError" style={style}></span>
                   </div>
-                  )
+                </div>
+              </section>
+             </div>
+          </div>
+
+              <div className="row alignCenter">
+                <div className="col-md-12">
+                {
+                  (decoded.role === 'admin' || decoded.role === 'superadmin') ?  (
+                  <div className="form-group center-block">
+                    <button id="btnGet" type="button" className="btn btn-success" onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>Upload Tokens</button>&nbsp;&nbsp;&nbsp;
+                    <button id="btnGet" type="button" className="btn btn-success" onClick={this.updateTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>Update Tokens</button>
+                  </div>
+
+                  ):(
+                    <div className="form-group center-block">
+                      <button type="button" className="btn btn-success " onClick={this.uploadTokens} disabled={!this.state.selectValue} ><span className="glyphicon glyphicon-upload"></span>Upload Tokens</button>
+                    </div>
+                    )
                 }
+              </div>
+            </div>
+
                 <div className="modal" style={{display: 'none'}}>
                   <div className="center">
                     <img alt="" src={require('./Images/loader.gif')} />
                   </div>
                 </div>
+
           </form>
           </div>
+      </div>
+      <div>
         <Footer/>
+      </div> 
       </div>
       );
     }

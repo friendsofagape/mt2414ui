@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
-import SigninForm from './SigninForm';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h1>hello</h1>
-        <Header />
-        <Footer />
+      <div className="container">
+      <Header />
+      {this.props.children}
+      <Footer />
       </div>
     );
   }

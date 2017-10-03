@@ -1,3 +1,15 @@
+/**
+ * @module src/HomePage
+ *
+ * Component that display Homepage with Login
+ * Accepts the following properties:
+ *  - email: enter email for signin
+ *  - password: enter the same password which you have enter at the time of signup
+ * Also forgot password
+ * Also create account option 
+ *
+*/
+
 import React, {Component} from 'react';
 import { Link } from 'react-router';
 import Footer from './Footer';
@@ -8,15 +20,15 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Navbar inverse collapseOnSelect fixedTop >
+        <Navbar inverse>
         <Navbar.Header><Navbar.Brand>
-            <a href="/signin">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
+          <a href="/signin"><span className='glyphicon glyphicon-home scolor'></span>&nbsp; <strong className="scolor">Autographa MT</strong></a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >
-          <Nav className="customHeader">
-            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Signin</Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/signup'}>Signup</Link></NavItem>
+          <Nav className="pull-right">
+            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signin</strong></Link></NavItem>
+            <NavItem eventKey={2} ><Link to={'/signup'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signup</strong></Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -27,21 +39,30 @@ class Header extends Component {
 
 class HomePage extends Component {  
   render() {
+    var Style = { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '229px'};
     window.localStorage.clear();
     return (
       <div>
-      <Header />
+        <Header />
       <div className="container">
-        <div className="row customRow">
-          <div className="col-sm-8 jumbotron">
-          <h3>&nbsp;&nbsp;&nbsp; Welcome to Autographa MT: Machine Translation Engine </h3>
-          <img alt=""  style={{width: '102%', height: '380px'}} src={require('./Images/Bible.jpg')} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="row ">
+            <div className="col-md-8 bodyColor divSpace">
+              <h3 className="top3 fonth3">Welcome to</h3>
+              <h1 className="fonth1">Autographa MT</h1>
+              <h4 className="fonth4">MACHINE TRANSLATION ENGINE</h4>
+              <div style={Style}>
+                <img alt="" src={require('./Images/bible.png')} />
+              </div>
+            </div>
+          <div className="col-md-3 bodyColor divSpace colmd3Width" >
+            <SigninForm />
           </div>
-        <SigninForm />
         </div>
       </div>
-      <Footer />
+      <div>
+        <Footer/>
       </div>
+    </div>
     );
   }
 }

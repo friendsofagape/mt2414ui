@@ -20,18 +20,20 @@ import GlobalURL from './GlobalURL';
 class Header extends Component {
   render() {
     return (
-        <Navbar inverse collapseOnSelect fixedTop >
+      <div>
+        <Navbar inverse>
         <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
+          <a href="/signin"><span className='glyphicon glyphicon-home scolor'></span>&nbsp; <strong className="scolor">Autographa MT</strong></a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >
-          <Nav className="customHeader">
-            <NavItem eventKey={1} ><Link to={'/signup'}>Signup</Link></NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user"></span>Signin</Link></NavItem>
+          <Nav className="pull-right">
+            <NavItem eventKey={1} ><Link to={'/signup'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signup</strong></Link></NavItem>
+            <NavItem eventKey={2} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signin</strong></Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+    </div>
     );
   }
 }
@@ -152,41 +154,52 @@ class SignupForm extends Component {
 
   render() {
       return (
+        <div>
+        <Header/>
         <div className="container">
-        <Header />
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onRegistration} className="col-md-8 signupCustom">
-          <h1 className="signup-header">Sign up</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                               
-              <strong>{this.state.message}</strong>
+          <div className="row">
+            <div className="col-md-12">
+              <h3>Sign up</h3>
             </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')}>
-              <a className="close" data-dismiss="alert" aria-label="close">×</a>                                             
-              <strong>{this.state.message}</strong>
-            </div>
-              <div className="form-group">
-                <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
-                <input className="form-control" value={this.state.email} onChange={this.onChange} type="email"  name="email" placeholder="Email" ref="email" required />
-                <div className="error" id="emailError" />
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-label" id="passwordLabel"> <strong> Password </strong> </lable>
-                <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="Password" ref="password" pattern=".{5,}" required />
-                <div className="error" id="passwordError" />
-              </div>&nbsp;
-              <div className="form-group">
-                <lable className="control-label" id="passwordConfirmLabel"> <strong> Confirm Password </strong> </lable>
-                <input className="form-control" value={this.state.passwordConfirm} onChange={this.onChange} type="password" name="passwordConfirm" placeholder="Confirm Password" ref="passwordConfirm" required />
-                <div className="error" id="passwordConfirmError" />
-              </div>&nbsp;
-          <div className="form-group">
-            <button className="btn btn-success" > Sign up </button>
           </div>
-        </form>
+
+        <div className="row"> 
+          <div className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder">
+            <form encType="multipart/form-data" onSubmit={this.onRegistration}>
+                <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')}>
+                  <a className="close" data-dismiss="alert" aria-label="close">×</a>                               
+                  <strong>{this.state.message}</strong>
+                </div>
+                <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')}>
+                  <a className="close" data-dismiss="alert" aria-label="close">×</a>                                             
+                  <strong>{this.state.message}</strong>
+                </div>
+                <div className="form-group">
+                  <lable className="control-label" id="emailLabel"> <strong> Email </strong> </lable>
+                  <input className="form-control" value={this.state.email} onChange={this.onChange} type="email"  name="email" placeholder="Email" ref="email" required />
+                  <div className="error" id="emailError" />
+                </div>
+                <div className="form-group">
+                  <lable className="control-label" id="passwordLabel"> <strong> Password </strong> </lable>
+                  <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="Password" ref="password" pattern=".{5,}" required />
+                  <div className="error" id="passwordError" />
+                </div>
+                <div className="form-group">
+                  <lable className="control-label" id="passwordConfirmLabel"> <strong> Confirm Password </strong> </lable>
+                  <input className="form-control" value={this.state.passwordConfirm} onChange={this.onChange} type="password" name="passwordConfirm" placeholder="Confirm Password" ref="passwordConfirm" required />
+                  <div className="error" id="passwordConfirmError" />
+                </div>
+                <div className="form-group top5">
+                  <button className="btn btn-success btn-block" > Sign up </button>
+                </div>
+            </form>
           </div>
-         <Footer />
         </div>
+      </div>
+      <div>
+        <Footer/>
+      </div> 
+      </div>
       );
     }
  }

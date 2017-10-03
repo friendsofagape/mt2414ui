@@ -15,8 +15,9 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import SuperAdmin from './SuperAdmin';
-import GetConcordances from './GetConcordances';
 import LogOut from './LogOut';
+import Translation from './Translation';
+import NotFound from './NotFound';
 var jwtDecode = require('jwt-decode');
 
 
@@ -49,8 +50,8 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/concordance" component={GetConcordances}/>
-            
+            <Route path="/translation" component={Translation}/>
+            <Route path="*" component={NotFound} />
           </Router>
           ) : (
           (accessToken && decoded.role === 'admin') ? (
@@ -66,7 +67,8 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/concordance" component={GetConcordances}/>
+            <Route path="/translation" component={Translation}/>
+            <Route path="*" component={NotFound} />
           </Router>
           ) : (
           (accessToken && decoded.role === 'member') ? (
@@ -82,7 +84,8 @@ ReactDOM.render(
               <Route path="/signup" component={SignupForm}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/forgotpassword" component={ForgotPassword}/>
-              <Route path="/concordance" component={GetConcordances}/>
+              <Route path="/translation" component={Translation}/>
+              <Route path="*" component={NotFound} />
             </Router>
           ): (
            <Router history={browserHistory}>
@@ -97,7 +100,8 @@ ReactDOM.render(
             <Route path="/signup" component={SignupForm}/>
             <Route path="/resetpassword" component={ResetPassword}/>
             <Route path="/forgotpassword" component={ForgotPassword}/>
-            <Route path="/concordance" component={HomePage}/>
+            <Route path="/translation" component={HomePage}/>
+            <Route path="*" component={NotFound} />
           </Router>
           )
           )

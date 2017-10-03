@@ -20,15 +20,15 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Navbar inverse collapseOnSelect fixedTop >
+        <Navbar inverse>
         <Navbar.Header><Navbar.Brand>
-            <a href="/homepage">&nbsp;<span className='glyphicon glyphicon-home'></span>&nbsp;&nbsp;AutographaMT: Machine Translation Engine</a>
+            <a href="/homepage"><span className='glyphicon glyphicon-home scolor'></span>&nbsp;&nbsp;<strong className="scolor">Autographa MT</strong></a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >
-          <Nav className="customHeader">
-            <NavItem eventKey={1} ><Link to={'/signup'}>Sign up</Link></NavItem>
-            <NavItem eventKey={1} ><Link to={'/homepage'}>Sign in</Link></NavItem>
+          <Nav className="pull-right">
+            <NavItem eventKey={1} ><Link to={'/signup'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signup</strong></Link></NavItem>
+            <NavItem eventKey={1} ><Link to={'/homepage'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signin</strong></Link></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -143,39 +143,49 @@ class ForgotPassword extends Component {
 
   render() {
       return (
-        <div className="container">
+        <div>
         <Header />
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
-        <form onSubmit={this.onForgotPassword} className="col-md-8 signupCustom">
-          <h1 className="reset-header">Enter Password</h1>&nbsp;
-            <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success': 'invisible')}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h3>Enter Password</h3>
+            </div>
+          </div>
+          <div className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder">       
+            <form onSubmit={this.onForgotPassword}>
+              <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success': 'invisible')}>
                 <strong>{this.state.message}</strong>
-            </div>
-            <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
-              <strong>{this.state.message}</strong>
-            </div>
+              </div>
+              <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger': 'invisible')}>
+                <strong>{this.state.message}</strong>
+              </div>
+
               <div className="form-group">
                 <lable className="control-label" id="temppasswordLabel"> <strong>Temporary Password </strong> </lable>
                 <input className="form-control" value={this.state.temppassword} onChange={this.onChange} type="password" name="temppassword" placeholder="Temporary Password" ref="temppassword" pattern=".{1,}" required />
                 <div className="error" id="temppasswordError" />
-              </div>&nbsp;
+              </div>
               <div className="form-group">
                 <lable className="control-label" id="passwordLabel"> <strong>New Password </strong> </lable>
                 <input className="form-control" value={this.state.password} onChange={this.onChange} type="password" name="password" placeholder="New Password" ref="password" pattern=".{5,}" required />
                 <div className="error" id="passwordError" />
-              </div>&nbsp;
+              </div>
               <div className="form-group">
                 <lable className="control-label" id="passwordConfirmLabel"> <strong> Confirm New Password </strong> </lable>
                 <input className="form-control" value={this.state.passwordConfirm} onChange={this.onChange} type="password" name="passwordConfirm" placeholder="Confirm New Password" ref="passwordConfirm" required />
                 <div className="error" id="passwordConfirmError" />
-              </div>&nbsp;
-          <div className="form-group">
-            <button className="btn btn-success" >Update Password</button>
+              </div>
+
+              <div className="form-group">
+                <button className="btn btn-success btn-block" >Update Password</button>
+              </div>
+            </form>
           </div>
-        </form>
-          </div>
+        </div>
+        <div>
          <Footer />
         </div>
+      </div>
       );
     }
  }
