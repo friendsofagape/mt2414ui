@@ -544,6 +544,7 @@ class Translation extends Component {
     this.setState({
       isOpen: false
     });
+
   };
 
 
@@ -708,7 +709,7 @@ class Translation extends Component {
                   </ModalBody>
                   <ModalFooter>
                     <button className="btn btn-default" onClick={this.hideModal}> Close </button>
-                    <button type="button" className="btn btn-success" onClick={this.tokenList} disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
+                    <button type="button" className="btn btn-success" onClick={(e) => { this.tokenList(e); this.hideModal(e) }}  disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
                   </ModalFooter>
                 </Modal>
               </div>
