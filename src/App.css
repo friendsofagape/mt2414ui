@@ -322,3 +322,21 @@ tr.highlight td {
 .highlight {
     background-color: yellow;
 }
+
+input.active:valid {
+  box-shadow: 0 0 0 1px green;
+}
+
+input.active:invalid {
+  box-shadow: 0 0 0 1px red;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.control-lable {
+  font-family: sans-serif;
+}
