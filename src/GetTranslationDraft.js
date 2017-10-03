@@ -378,7 +378,6 @@ class GetTranslationDraft extends Component {
       const reader = new FileReader();
       reader.addEventListener('loadend', (e) => {
         const text = e.srcElement.result;
-        console.log(JSON.parse(text)["message"]);
         _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
         setTimeout(function(){
           _this.setState({uploaded: 'fail'})

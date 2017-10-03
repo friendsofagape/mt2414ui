@@ -323,7 +323,7 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
-    console.log(data)
+
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>1){
@@ -349,7 +349,6 @@ class DownloadTokens extends Component {
     xhr.onload = function(e) {
       complete();
       if (this.status === 200) {
-        console.log(this.statusText)
         var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
         var downloadUrl = URL.createObjectURL(blob);
         var a = document.createElement("a");
@@ -363,7 +362,6 @@ class DownloadTokens extends Component {
       const reader = new FileReader();
       reader.addEventListener('loadend', (e) => {
         const text = e.srcElement.result;
-        console.log(JSON.parse(text)["message"]);
         _this.setState({message: JSON.parse(text)["message"], uploaded: 'failure'})
         setTimeout(function(){
           _this.setState({uploaded: 'fail'})
