@@ -471,10 +471,10 @@ class Translation extends Component {
           }
       },
       error: function (error) {
-        _this.setState({uploaded:'failure'}) 
+       _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
         setTimeout(function(){
-          _this.setState({uploaded: 'fail'});
-        }, 5000);
+          _this.setState({uploaded: 'fail'})
+        },5000);             
       }
     });      
   }
