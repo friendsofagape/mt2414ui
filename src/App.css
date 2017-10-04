@@ -340,3 +340,8 @@ input.active:invalid {
 .control-lable {
   font-family: sans-serif;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
