@@ -370,6 +370,10 @@ class DownloadTokens extends Component {
       reader.readAsText(blb);
 
       }
+
+     if(this.status === 503){
+      _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
+     }
     };   
     xhr.send(JSON.stringify(data)); 
   }

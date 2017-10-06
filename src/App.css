@@ -182,7 +182,7 @@ th{
 }
 
 .myConcord{
-  height: 190px;
+  height: 230px;
   background: white;
   overflow-y: scroll;
   border: solid;
@@ -339,4 +339,14 @@ input.active:invalid {
 
 .control-lable {
   font-family: sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.targetSelect{
+  display: inline-flex;
+  width: 22%;  
 }

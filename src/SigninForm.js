@@ -107,11 +107,19 @@ var jwtDecode = require('jwt-decode');
               }
             }
         else {
+           
           _this.setState({message: result.message, uploaded: 'failure'})
+
           setTimeout(function(){
             _this.setState({uploaded: 'fail'})
           },5000);
         }
+      },
+      error: function (error) {
+       _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
+        setTimeout(function(){
+          _this.setState({uploaded: 'fail'})
+        },5000);
       }
     });
   }

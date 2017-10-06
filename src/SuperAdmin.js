@@ -79,7 +79,10 @@ class SuperAdmin extends Component {
         }
     },
     error: function (error) {
-      _this.setState({message: error.message, uploaded: 'failure'})
+     _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
+      setTimeout(function(){
+        _this.setState({uploaded: 'fail'})
+      },5000);             
     }
     });  
 

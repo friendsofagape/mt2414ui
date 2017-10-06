@@ -205,7 +205,6 @@ class UploadTokens extends Component {
         formData.append('revision', _this.state.Revision)
         formData.append('targetlang', _this.state.selectValue.value)
         let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
         if(formData.get('tokenwords')['name'].slice(-5, ) !== '.xlsx' && formData.get('tokenwords')['name'].slice(-4, ) !== '.xls'){
           lblError.innerHTML = "Please upload files with extension: <b>.xlsx/.xls</b> only.";
           i = $('input[type=file]')[0].files.length;
@@ -242,7 +241,7 @@ class UploadTokens extends Component {
                }
             },
             error: function (error) {
-             _this.setState({message: error.message, uploaded: 'failure'})
+             _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
               setTimeout(function(){
                 _this.setState({uploaded: 'fail'})
               },5000);             
@@ -310,7 +309,7 @@ class UploadTokens extends Component {
                }
             },
             error: function (error) {
-             _this.setState({message: error.message, uploaded: 'failure'})
+             _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
               setTimeout(function(){
                 _this.setState({uploaded:'fail'})
               }, 5000);
@@ -322,7 +321,6 @@ class UploadTokens extends Component {
   }
 
   render() {
-    
     var myTarget = this.state.getTargetLanguages;
     var options = {};
     var myOptions = [];
@@ -379,20 +377,20 @@ class UploadTokens extends Component {
                 </div>
               </div>
               <div className="col-md-3">             
-                  <VirtualizedSelect
-                    options={myOptions}
-                    onChange={(selectValue) => this.setState({ selectValue })}
-                    value={this.state.selectValue}
-                  />
+                <VirtualizedSelect
+                  options={myOptions}
+                  onChange={(selectValue) => this.setState({ selectValue })}
+                  value={this.state.selectValue}
+                />
               </div>
               <div className="col-md-1">
-                  {
-                    (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
-                      <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2"></span></a> 
-                    ):(
-                      <div></div>
-                      )
-                  } 
+                {
+                  (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
+                    <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2"></span></a> 
+                  ):(
+                    <div></div>
+                    )
+                } 
               </div>
           </div>
 

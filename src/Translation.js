@@ -16,7 +16,6 @@ import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import {Modal, ModalHeader, ModalTitle, ModalClose, ModalBody, ModalFooter} from 'react-modal-bootstrap';
 import VirtualizedSelect from 'react-virtualized-select'
-import ListTargetLanguage from './Component/ListTargetLanguage';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
 import ListLanguages from './Component/ListLanguages'
@@ -471,10 +470,10 @@ class Translation extends Component {
           }
       },
       error: function (error) {
-        _this.setState({uploaded:'failure'}) 
+       _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
         setTimeout(function(){
-          _this.setState({uploaded: 'fail'});
-        }, 5000);
+          _this.setState({uploaded: 'fail'})
+        },5000);             
       }
     });      
   }
@@ -531,7 +530,7 @@ class Translation extends Component {
   handleChange(e){
     var _this = this;
     var value = e;
-    _this.setState({selectValue: value})
+    _this.setState({selectValueforTarget: value})
   }
 
   openModal = () => {
@@ -565,6 +564,16 @@ class Translation extends Component {
       return (myOptions);
     });
 
+    var myTargetLang = this.state.getTargetLanguages;
+    var options1 = {};
+    var myOptions1 = [];
+
+    Object.keys(myTargetLang).map(function(data, index){
+      options1 = {label: data, value: myTargetLang[data]};
+      myOptions1.push(options1);
+      return (myOptions1);
+    });
+
     var _this = this; 
     return(
       <div>
@@ -586,7 +595,7 @@ class Translation extends Component {
                   <VirtualizedSelect
                     options={myOptions}/* eslint-disable */ 
                     onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
-                    value={this.state.selectValue}
+                    value={this.state.selectValueforTarget}
                   />
                 </div>
               </div>
@@ -631,22 +640,23 @@ class Translation extends Component {
                             <ListLanguages 
                               onChange={ this.onSelectSource}
                               Language={this.state.getTargetLanguages}
-                            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            />&nbsp;&nbsp;
                           <lable className="control-lable "> <strong> Version </strong> </lable>
                             <Versions 
                               version={this.state.getVersions} 
                               onChange={this.onSelectVersion} 
-                            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            />&nbsp;&nbsp;
                           <lable className="control-lable"> <strong> Revision </strong> </lable>
                             <RevisionNumber
                               revision={this.state.getRevision}  
                               onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
-                            />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            />&nbsp;&nbsp;
                           <lable className="control-label"> <strong> Target Language *</strong> </lable>
-                          <ListTargetLanguage
-                            Tar={this.state.getTargetLangList}
-                            Language={this.state.getTargetLanguages}
-                            onChange={this.onSelect}
+                          <VirtualizedSelect
+                            className="targetSelect"
+                            options={myOptions1}
+                            onChange={(selectValue) => this.setState({ selectValue })}
+                            value={this.state.selectValue}
                           />
                         </div>
                         <div className="form-group">
@@ -664,7 +674,8 @@ class Translation extends Component {
                 <div className="form-group col-md-12 top5 alignCenter">
                   <button className="btn btn-success" onClick={this.openModal}  disabled={!this.state.Revision}>
                     Show Books / Generate Tokens
-                  </button>
+                  </button>&nbsp;
+                  <button type="button" className="btn btn-success" title="Generate Concordances" onClick={this.generateConcordances} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-refresh"></span></button>
                 </div>
               </div>
               <div>
@@ -725,14 +736,13 @@ class Translation extends Component {
                         <input value={this.state.translation} onChange={this.onSelectInput} name="translation" type="text"  placeholder="translation" className="form-control"/>
                       </div>
                       <div className="col-md-3">       
-                        <button type="button" className="btn btn-success" onClick={this.updateTokenTranslation} disabled={!this.state.Targetlanguage} >Update</button>
+                        <button type="button" className="btn btn-success" onClick={this.updateTokenTranslation} disabled={!this.state.selectValue} >Update</button>
                       </div>
                   </div>
                 </div>
                 <div className="col-md-12 top5">
                   <div className="row">
                   <div className="col-md-12">
-                  <button type="button" className="btn btn-block refreshButton" title="Generate Concordances" onClick={this.generateConcordances} ><span className="glyphicon glyphicon-refresh"></span></button>
                   <div className="myConcord bodyBorderTrans">
                       
                       {

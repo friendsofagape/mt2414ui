@@ -22,7 +22,7 @@ class Header extends Component {
       <div>
         <Navbar inverse>
         <Navbar.Header><Navbar.Brand>
-          <a href="/signin"><span className='glyphicon glyphicon-home scolor'></span>&nbsp; <strong className="scolor">Autographa MT</strong></a>
+          <a href="/homepage"><span className='glyphicon glyphicon-home scolor'></span>&nbsp; <strong className="scolor">Autographa MT</strong></a>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >

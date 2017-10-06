@@ -307,7 +307,10 @@ class GetTranslationDraft extends Component {
           }
       },
       error: function (error) {
-        _this.setState({uploaded: 'failure'}) 
+        _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
+        setTimeout(function(){
+        _this.setState({uploaded: 'fail'})
+        },5000);             
       }
     });      
   }
@@ -519,8 +522,12 @@ class GetTranslationDraft extends Component {
           },1000);
         }
         },
-      error: function (error) {
-      }
+        error: function (error) {
+         _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          },5000);             
+        }
     });
   }
 
