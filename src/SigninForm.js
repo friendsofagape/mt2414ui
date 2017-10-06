@@ -91,7 +91,6 @@ var jwtDecode = require('jwt-decode');
          if (result.success !== false) {
           window.localStorage.setItem('access_token', JSON.stringify(result.access_token))
           let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-          console.log(accessToken);
           var decoded = jwtDecode(accessToken);
           if (!accessToken) {
             window.location.href = "./homepage";
