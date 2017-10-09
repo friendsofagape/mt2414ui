@@ -21,7 +21,7 @@ import booksName2 from './BookName';
 import ListLanguages from './Component/ListLanguages'
 import Versions from './Component/Versions';
 import RevisionNumber from './Component/RevisionNumber';
-var Highlight = require('react-highlighter');
+import TextHighlight from 'react-text-highlight';
 
 var tabData = [
   { name: 'Include Books', isActive: true },
@@ -748,8 +748,11 @@ class Translation extends Component {
                      {
                         (myjson != null)?(myjson.map(function(v, i){
                             return (<div key={i} className="paddingforConcordtext">
-                                <Highlight search={_this.state.TokenUpdateValue}>{v}</Highlight>
-                            </div>
+                                     <TextHighlight
+                                        highlight={_this.state.TokenUpdateValue}
+                                        text={v}
+                                      />
+                                    </div>
                             );
                           })):(<h1></h1>)
                       }
