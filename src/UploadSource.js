@@ -208,7 +208,6 @@ class UploadSource extends Component {
             <h3>Upload Sources</h3>
           </div>
         </div>
-
         <div className="row">
             <form className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder" id="upload_form" encType="multipart/form-data">
               <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>

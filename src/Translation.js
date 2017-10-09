@@ -353,7 +353,7 @@ class Translation extends Component {
       	const blb = new Blob([this.response], {type: "text/plain"});
 	      const reader = new FileReader();
 	      reader.addEventListener('loadend', (e) => {
-	        const text = e.srcElement.result;
+	        const text = e.target.result;
 	        const tokenListfromsever = JSON.parse(text);
 	       _this.setState({tokenListState: tokenListfromsever});
 	      });
@@ -745,7 +745,7 @@ class Translation extends Component {
                   <div className="col-md-12">
                   <div className="myConcord bodyBorderTrans">
                       
-                      {
+                     {
                         (myjson != null)?(myjson.map(function(v, i){
                             return (<div key={i} className="paddingforConcordtext">
                                 <Highlight search={_this.state.TokenUpdateValue}>{v}</Highlight>
