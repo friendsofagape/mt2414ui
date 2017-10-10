@@ -319,8 +319,8 @@ tr.highlight td {
   }
 }
 
-.highlight {
-    background-color: yellow;
+mark {
+  background-color: yellow;
 }
 
 input.active:valid {
