@@ -17,7 +17,7 @@ module.exports = {
         use: [ 'style-loader', 'css-loader' ]
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif|ico)$/,
         loader: 'url-loader'
       }
     ]
@@ -38,5 +38,6 @@ module.exports = {
     hot: true,
     port: 3000,
     historyApiFallback: true
-  }
+  },
+  performance: { hints: false }
 };
