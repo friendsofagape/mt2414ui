@@ -6,9 +6,9 @@
 */
 
 import React, { Component } from 'react';
-import '../App.css';
+import './App.css';
 import $ from 'jquery';
-import GlobalURL from '../GlobalURL';
+import GlobalURL from './GlobalURL';
 import { FormControl } from 'react-bootstrap';
 
 class ListLanguages extends Component {

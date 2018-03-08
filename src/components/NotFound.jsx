@@ -8,7 +8,7 @@ class NotFound extends Component {
       <div className="container Notfound">
         <h2>We are sorry but the page you are looking for does not exist.</h2>
         <div>
-          <img alt="" src={require('./Images/Notfound.jpg')} />
+          <img alt="" src={require('../images/Notfound.jpg')} />
         </div>
         <Link to={'/'} className="customLink"><h3>Back to Home Page</h3></Link>
       </div>

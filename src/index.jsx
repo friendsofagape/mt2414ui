@@ -1,22 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import App from './App';
-import HomePage from './HomePage';
-import SigninForm from './SigninForm';
-import SignupForm from './SignupForm';
-import ForgotPassword from './ForgotPassword';
-import NotFound from './NotFound';
-import UploadSource from './UploadSource';
-import CreateSource from './CreateSource';
-import DownloadTokens from './DownloadTokens';
-import GetTranslationDraft from './GetTranslationDraft';
-import GetLanguages from './GetLanguages';
-import UploadTokens from './UploadTokens';
-import ResetPassword from './ResetPassword';
-import SuperAdmin from './SuperAdmin';
-import LogOut from './LogOut';
-import Translation from './Translation';
+import App from './components/App';
+import HomePage from './components/HomePage';
+import SigninForm from './components/SigninForm';
+import SignupForm from './components/SignupForm';
+import ForgotPassword from './components/ForgotPassword';
+import NotFound from './components/NotFound';
+import UploadSource from './components/UploadSource';
+import CreateSource from './components/CreateSource';
+import DownloadTokens from './components/DownloadTokens';
+import GetTranslationDraft from './components/GetTranslationDraft';
+import GetLanguages from './components/GetLanguages';
+import UploadTokens from './components/UploadTokens';
+import ResetPassword from './components/ResetPassword';
+import SuperAdmin from './components/SuperAdmin';
+import LogOut from './components/LogOut';
+import Translation from './components/Translation';
 
 let jwtDecode = require('jwt-decode');
 let accessToken,

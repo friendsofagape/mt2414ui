@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import HeaderforSuperAdmin from './Component/HeaderforSuperAdmin';
-import HeaderforAdmin from './Component/HeaderforAdmin';
-import HeaderforMember from './Component/HeaderforMember';
+import HeaderforSuperAdmin from './HeaderforSuperAdmin';
+import HeaderforAdmin from './HeaderforAdmin';
+import HeaderforMember from './HeaderforMember';
 import {Route } from 'react-router';
 import HomePage from './HomePage';
 var jwtDecode = require('jwt-decode');

@@ -6,7 +6,7 @@
 */
 
 import React, { Component } from 'react';
-import '../App.css';
+import './App.css';
 import { FormControl } from 'react-bootstrap';
 
 class ListTargetLanguage extends Component {

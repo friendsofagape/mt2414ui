@@ -64,7 +64,7 @@ class HomePage extends Component {
               <h1 className="fonth1">Autographa MT</h1>
               <h4 className="fonth4">MACHINE TRANSLATION ENGINE</h4>
               <div style={Style}>
-                <img alt="" src={require('./Images/bible.png')} />
+                <img alt="" src={require('../images/bible.png')} />
               </div>
             </div>
           <div className="col-md-3 bodyColor divSpace colmd3Width" >

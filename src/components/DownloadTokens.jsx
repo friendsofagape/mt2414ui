@@ -14,12 +14,12 @@ import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-import ListTargetLanguage from './Component/ListTargetLanguage';
+import ListTargetLanguage from './ListTargetLanguage';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
-import ListLanguages from './Component/ListLanguages'
-import Versions from './Component/Versions';
-import RevisionNumber from './Component/RevisionNumber';
+import ListLanguages from './ListLanguages'
+import Versions from './Versions';
+import RevisionNumber from './RevisionNumber';
 
 
 var tabData = [
@@ -323,7 +323,7 @@ class DownloadTokens extends Component {
     var data = { 
         "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
     }
-
+    
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     var bookCode = Array.from(this.selectedCheckboxes1);
     if(bookCode.length>1){
@@ -440,11 +440,20 @@ class DownloadTokens extends Component {
             </section>
             </div>
             <div className="form-group top10">
-              <button id="btnGet" type="button" className="btn btn-success center-block" onClick={this.downloadTokenWords} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-download-alt">&nbsp;</span>Download Tokens</button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <button
+                id="btnGet"
+                type="button"
+                className="btn btn-success center-block"
+                onClick={this.downloadTokenWords}
+                disabled={!this.state.Revision}
+              >
+              <span className="glyphicon glyphicon-download-alt">&nbsp;</span>
+              Download Tokens
+              </button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div id="loading" className="modal">
               <div className="center">
-                <img alt="" src={require('./Images/loader.gif')} />
+                <img alt="" src={require('../images/loader.gif')} />
               </div>
             </div>
           </form>

@@ -18,9 +18,9 @@ import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
 import 'react-virtualized-select/styles.css'
 import GlobalURL from './GlobalURL';
-import ListLanguages from './Component/ListLanguages';
-import Versions from './Component/Versions';
-import RevisionNumber from './Component/RevisionNumber';
+import ListLanguages from './ListLanguages';
+import Versions from './Versions';
+import RevisionNumber from './RevisionNumber';
 
 var jwtDecode = require('jwt-decode');
 
@@ -427,7 +427,7 @@ class UploadTokens extends Component {
 
                 <div className="modal" style={{display: 'none'}}>
                   <div className="center">
-                    <img alt="" src={require('./Images/loader.gif')} />
+                    <img alt="" src={require('../images/loader.gif')} />
                   </div>
                 </div>
 

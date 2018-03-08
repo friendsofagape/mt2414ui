@@ -11,12 +11,12 @@
 
 import React, { Component } from 'react';
 import './App.css';
-import ListLanguages from './Component/ListLanguages';
+import ListLanguages from './ListLanguages';
 import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-import Versions from './Component/Versions';
+import Versions from './Versions';
 import { Link } from 'react-router-dom';
 
 class UploadSource extends Component {
@@ -51,6 +51,7 @@ class UploadSource extends Component {
       },
       success: function (result) {
         var getTargetLang = JSON.parse(result);
+        console.log(getTargetLang);
         _this.setState({getTargetLanguages: getTargetLang})
       },
       error: function (error) {
@@ -246,7 +247,7 @@ class UploadSource extends Component {
 
                 <div className="modal" style={{display: 'none'}}>
                   <div className="center">
-                    <img alt="" src={require('./Images/loader.gif')} />
+                    <img alt="" src={require('../images/loader.gif')} />
                   </div>
                 </div>
             </form>

@@ -18,9 +18,9 @@ import GlobalURL from './GlobalURL';
 import VirtualizedSelect from 'react-virtualized-select'
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
-import ListLanguages from './Component/ListLanguages'
-import Versions from './Component/Versions';
-import RevisionNumber from './Component/RevisionNumber';
+import ListLanguages from './ListLanguages'
+import Versions from './Versions';
+import RevisionNumber from './RevisionNumber';
 import TextHighlight from 'react-text-highlight';
 
 var tabData = [
@@ -663,7 +663,7 @@ class Translation extends Component {
                         </div>
                         <div id="loading" className="modal">
                           <div className="center">
-                            <img alt="" src={require('./Images/loader.gif')} />
+                            <img alt="" src={require('../images/loader.gif')} />
                           </div>
                         </div>
                       </form>
@@ -679,6 +679,7 @@ class Translation extends Component {
                 </div>
               </div>
               <div>
+                {/*
                 <Modal isOpen={isOpen} size="modal-lg"  onRequestHide={this.hideModal}>
                   <ModalHeader>
                     <ModalClose onClick={this.hideModal}/>
@@ -722,7 +723,7 @@ class Translation extends Component {
                     <button className="btn btn-default" onClick={this.hideModal}> Close </button>
                     <button type="button" className="btn btn-success" onClick={(e) => { this.tokenList(e); this.hideModal(e) }}  disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
                   </ModalFooter>
-                </Modal>
+                </Modal> */}
               </div>
 
 

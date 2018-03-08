@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class HeaderforAdmin extends Component {
   render() {
     return (
         <Navbar inverse fixedTop>
         <Navbar.Header><Navbar.Brand>
-            <a href="/getlanguages"><span className='glyphicon glyphicon-home scolor'></span>&nbsp;&nbsp;<strong className="scolor">Autographa MT</strong></a>
+            <Link to="/getlanguages">
+              <span className='glyphicon glyphicon-home scolor'></span>&nbsp;&nbsp;
+              <strong className="scolor">Autographa MT</strong>
+            </Link>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>

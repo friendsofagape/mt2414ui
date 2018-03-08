@@ -102,7 +102,7 @@ var jwtDecode = require('jwt-decode');
                 }else if (decoded.role === "admin"){
                   window.location.href = "./admin";
                 }else{
-                  window.location.href = "./getlanguages";
+                  window.location.href = "./getlanguages"; 
                 }
               }
             }

@@ -1,28 +1,28 @@
 /**
- * @module src/RevisionNumber
+ * @module src/Versions
  *
- * Component that display RevisionNumber
+ * Component that display SourceDocument
  * Accepts the only authentication token in header
 */
 
 import React, { Component } from 'react';
-import '../App.css';
+import './App.css';
 import { FormControl } from 'react-bootstrap';
 
-class RevisionNumber extends Component {
+class Versions extends Component {
   render() {
-    var { revision } = this.props;
+    var { version } = this.props;
     return(
       <FormControl componentClass="select" onChange={this.props.onChange} placeholder="select">
           <option>Choose</option>
           {
-            revision.map(function(data, index){
+            version.map(function(data, index){
               return (<option key={index} value={data}>{data}</option>);
             })
           }
-      </FormControl> 
+      </FormControl>
     );
   }
 }
 
-export default RevisionNumber;
+export default Versions;

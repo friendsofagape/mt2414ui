@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Checkbox extends Component {
   constructor(props){
@@ -10,7 +11,8 @@ class Checkbox extends Component {
 
   toggleCheckboxChange = () => {
     const { handleCheckboxChange, bookCode } = this.props;
-    this.setState(({ isChecked }) => { isChecked: !isChecked });    
+    let toggleCheckbox = this.state.isChecked;
+    this.setState({isChecked: !toggleCheckbox});
     handleCheckboxChange(bookCode);
   }
 
@@ -32,5 +34,10 @@ class Checkbox extends Component {
     );
   }
 }
+
+Checkbox.propTypes = {
+  label: PropTypes.string.isRequired,
+  handleCheckboxChange: PropTypes.func.isRequired,
+};
 
 export default Checkbox;

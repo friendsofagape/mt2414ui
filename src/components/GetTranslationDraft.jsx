@@ -19,11 +19,11 @@ import GlobalURL from './GlobalURL';
 import saveAs from 'save-as'
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
-import ListLanguages from './Component/ListLanguages';
-import ListTargetLanguage from './Component/ListTargetLanguage';
-import Versions from './Component/Versions';
-import RevisionNumber from './Component/RevisionNumber';
-import Chart from './Component/Chart';
+import ListLanguages from './ListLanguages';
+import ListTargetLanguage from './ListTargetLanguage';
+import Versions from './Versions';
+import RevisionNumber from './RevisionNumber';
+import Chart from './Chart';
 var JSZip = require("jszip");
 var zip;
 
@@ -592,7 +592,7 @@ class GetTranslationDraft extends Component {
                 </div>
                 <div id="loading" className="modal" style={{display: 'none'}}>
                   <div className="center">
-                      <img alt="" src={require('./Images/loader.gif')} />
+                      <img alt="" src={require('../images/loader.gif')} />
                   </div>
                 </div>
           </form>
