@@ -1,6 +1,8 @@
 const webpack = require('webpack');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
+  devtool: '#eval-source-map',
   entry: [
     'react-hot-loader/patch',
     './src/index.jsx'
@@ -31,7 +33,8 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new OpenBrowserPlugin({ url: 'http://localhost:3000' })
   ],
   devServer: {
     contentBase: './public',
