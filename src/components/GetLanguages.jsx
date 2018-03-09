@@ -85,7 +85,6 @@ class GetLanguages extends Component {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
-
         var getBook = JSON.parse(result);
         _this.setState({getBooks: getBook.length > 0 ? getBook : []})
 
@@ -99,9 +98,7 @@ class GetLanguages extends Component {
   render() {
     let currentLanguages = this.state.getLanguages.length > 0 ?  this.state.getLanguages : [];
     let currentBooks = this.state.getBooks.length > 0 ?  this.state.getBooks : [];
-
     var ListofLanguage = this.state.getTargetLanguages;
-    
     var LanguagesWithCode = [];
     if(ListofLanguage != null){
       Object.keys(ListofLanguage).map(function(data, index){

@@ -10,7 +10,7 @@
  */
  
 import React, { Component } from 'react';
-// import './App.css';
+import './App.css';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
@@ -23,13 +23,22 @@ class Header extends Component {
       <div>
         <Navbar inverse>
         <Navbar.Header><Navbar.Brand>
-          <Link to="/signin"><span className='glyphicon glyphicon-home scolor'></span>&nbsp; <strong className="scolor">Autographa MT</strong></Link>
+          <Link to="/signin">
+            <span className='glyphicon glyphicon-home scolor'></span>&nbsp;
+            <strong className="scolor">Autographa MT</strong>
+          </Link>
           </Navbar.Brand><Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse >
           <Nav className="pull-right">
-            <NavItem eventKey={1} ><Link to={'/signup'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signup</strong></Link></NavItem>
-            <NavItem eventKey={2} ><Link to={'/'}><span className="glyphicon glyphicon-user scolor"></span><strong className="scolor">Signin</strong></Link></NavItem>
+            <NavItem eventKey={1} componentClass={Link} href="/" to="/signup">
+              <span className="glyphicon glyphicon-user scolor"></span>
+              <strong className="scolor">Signup</strong>
+            </NavItem>
+            <NavItem eventKey={2} componentClass={Link} href="/" to="/signin" >
+              <span className="glyphicon glyphicon-user scolor"></span>
+              <strong className="scolor">Signin</strong>
+            </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -62,8 +71,7 @@ class SignupForm extends Component {
 
   }
 
-// Checking signup form error
-
+  // Checking signup form error
   showFormErrors() {
     const inputs = document.querySelectorAll('input');
     let isFormValid = true;
@@ -81,8 +89,7 @@ class SignupForm extends Component {
     return isFormValid;
   }
 
-//Showing input error for each field 
-
+  //Showing input error for each field 
   showInputError(refName) {
     const validity = this.refs[refName].validity;
     const label = document.getElementById(`${refName}Label`).textContent;
@@ -127,7 +134,6 @@ class SignupForm extends Component {
           },
            method : "POST",
          success: function(result) {
-
              result = JSON.parse(result)
              if(result.success !== false){
             _this.setState({uploaded: result.success ? 'success' : ''})

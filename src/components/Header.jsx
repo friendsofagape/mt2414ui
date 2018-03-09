@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import HeaderforSuperAdmin from './HeaderforSuperAdmin';
 import HeaderforAdmin from './HeaderforAdmin';
 import HeaderforMember from './HeaderforMember';
-import {Route } from 'react-router';
+import { Route } from 'react-router-dom';
 import HomePage from './HomePage';
 var jwtDecode = require('jwt-decode');
 
@@ -20,7 +20,7 @@ class Header extends Component {
 
           (accessToken && decoded.role === 'admin') ? ( <HeaderforAdmin />) : (
 
-            (accessToken && decoded.role === 'member') ?( < HeaderforMember />) : (
+            (accessToken && decoded.role === 'member') ?( <HeaderforMember />) : (
               <Route path="/" component={HomePage} />
             )
           )
@@ -30,6 +30,5 @@ class Header extends Component {
     );
   }
 }
-
 
 export default Header;

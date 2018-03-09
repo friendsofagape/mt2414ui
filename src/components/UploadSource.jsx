@@ -51,7 +51,6 @@ class UploadSource extends Component {
       },
       success: function (result) {
         var getTargetLang = JSON.parse(result);
-        console.log(getTargetLang);
         _this.setState({getTargetLanguages: getTargetLang})
       },
       error: function (error) {

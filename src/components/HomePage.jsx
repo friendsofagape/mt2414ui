@@ -30,17 +30,13 @@ class Header extends Component {
         </Navbar.Header>
         <Navbar.Collapse >
           <Nav className="pull-right">
-            <NavItem eventKey={1} >
-              <Link to='/'>
+            <NavItem eventKey={1}  componentClass={Link} href="/" to="/">
               <span className="glyphicon glyphicon-user scolor"></span>
-                <strong className="scolor">Signin</strong>
-              </Link>
+              <strong className="scolor">Signin</strong>
             </NavItem>
-            <NavItem eventKey={2} >
-              <Link to='/signup'>
-                <span className="glyphicon glyphicon-user scolor"></span>
-                <strong className="scolor">Signup</strong>
-              </Link>
+            <NavItem eventKey={2} componentClass={Link} href="/" to="/signup">
+              <span className="glyphicon glyphicon-user scolor"></span>
+              <strong className="scolor">Signup</strong>
             </NavItem>
           </Nav>
         </Navbar.Collapse>
