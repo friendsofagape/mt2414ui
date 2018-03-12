@@ -1,4 +1,4 @@
-/**
+  /**
  * @module src/Translation
  *
  * Component that display Translation
@@ -15,7 +15,8 @@ import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 // import { Modal, ModalHeader, ModalTitle, ModalClose, ModalBody, ModalFooter } from 'react-modal-bootstrap';
-import VirtualizedSelect from 'react-virtualized-select'
+import VirtualizedSelect from 'react-virtualized-select';
+import Modal from 'react-awesome-modal';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
 import ListLanguages from './ListLanguages'
@@ -91,6 +92,7 @@ class Translation extends Component {
       showhideboolean: true,
       TokenUpdateValue: '',
       isOpen: false,
+      visible: false
     }
 
     // Upload file specific callback handlers
@@ -535,13 +537,15 @@ class Translation extends Component {
 
   openModal = () => {
     this.setState({
-      isOpen: true
+      isOpen: true,
+      visible: true
     });
   };
 
   hideModal = () => {
     this.setState({
-      isOpen: false
+      isOpen: false,
+      visible: false
     });
 
   };
@@ -672,9 +676,13 @@ class Translation extends Component {
 
               <div>
                 <div className="form-group col-md-12 top5 alignCenter">
-                  <button className="btn btn-success" onClick={this.openModal}  disabled={!this.state.Revision}>
-                    Show Books / Generate Tokens
-                  </button>&nbsp;
+                  <input
+                    type="button"
+                    className="btn btn-success"
+                    value="Show Books / Generate Tokens"
+                    disabled={!this.state.Revision}
+                    onClick={() => this.openModal()}
+                  />&nbsp;
                   <button type="button" className="btn btn-success" title="Generate Concordances" onClick={this.generateConcordances} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-refresh"></span></button>
                 </div>
               </div>
@@ -724,9 +732,51 @@ class Translation extends Component {
                     <button type="button" className="btn btn-success" onClick={(e) => { this.tokenList(e); this.hideModal(e) }}  disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
                   </ModalFooter>
                 </Modal> */}
+                <Modal 
+                  visible={this.state.visible}
+                  width="400"
+                  height="300"
+                  effect="fadeInUp"
+                  onClickAway={() => this.closeModal()}
+                >
+                <div>
+                  <h1>List of the Books</h1>
+                    <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                      <strong>{this.state.message}</strong>
+                    </div>&nbsp;&nbsp;
+                    <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+                      <strong>{this.state.message}</strong>
+                    </div>
+                    <div className="container displayBook">
+                    <div className="row">
+                    <div className="col-md-12 bgColor" id="bookDiv" style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                      <div>
+                      <section>
+                      <div className="topRound">
+                       <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
+                      </div>  
+                        <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
+                          <h4 className="panel-heading panelHead">Include Books</h4>
+                          <div className="exclude1" >
+                            {this.createCheckboxes1(this, this.state.getAllBooks)}
+                          </div>
+                        </section>
+                        <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
+                          <h4 className="panel-heading panelHead">Exclude Books</h4>
+                          <div className="exclude1">
+                             {this.createCheckboxes2(this, this.state.getAllBooks)}
+                          </div>
+                        </section>
+                        <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
+                      </section>
+                    </div>
+                      </div>  
+                    </div>
+                  </div>
+                  <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
+                </div>
+                </Modal>
               </div>
-
-
               </div>
                 <div className="col-md-12 bodyBorderTrans">
                   <div className="form-inline">
