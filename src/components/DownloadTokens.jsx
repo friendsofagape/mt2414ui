@@ -368,7 +368,6 @@ class DownloadTokens extends Component {
         }, 5000);
       });
       reader.readAsText(blb);
-
       }
 
      if(this.status === 503){

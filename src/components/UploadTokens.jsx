@@ -47,7 +47,6 @@ class UploadTokens extends Component {
       disabled: false,
       Language: [],
       getTargetLangJson: ''
-
     }
 
     // Upload file specific callback handlers
