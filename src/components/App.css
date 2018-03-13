@@ -110,6 +110,7 @@ body {
 
 .modal-body{
   background-color: #F5F4AB;
+  height: 100%;
 }
 
 .bodyBorderTrans{
@@ -282,7 +283,7 @@ tr.highlight td {
   color: blue;
 }
 
-.modal{
+/*.modal{
   position: fixed;
   z-index: 999;
   height: 100%;
@@ -294,7 +295,7 @@ tr.highlight td {
   opacity: 0.6;
   -moz-opacity: 0.8;
 }
-
+*/
 .gly-spin {
   -webkit-animation: spin 2s infinite linear;
   -moz-animation: spin 2s infinite linear;
