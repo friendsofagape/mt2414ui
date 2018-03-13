@@ -14,7 +14,6 @@ import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-// import { Modal, ModalHeader, ModalTitle, ModalClose, ModalBody, ModalFooter } from 'react-modal-bootstrap';
 import VirtualizedSelect from 'react-virtualized-select';
 import Modal from 'react-awesome-modal';
 import Checkbox from './Checkbox';
@@ -64,7 +63,6 @@ class Tab extends Component {
 class Translation extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       sourcelang:'',
       version: '',
@@ -91,7 +89,6 @@ class Translation extends Component {
       myToken: '',
       showhideboolean: true,
       TokenUpdateValue: '',
-      isOpen: false,
       visible: false
     }
 
@@ -121,10 +118,9 @@ class Translation extends Component {
   componentDidMount = () => {
     this.selectedCheckboxes1 = new Set();
     this.selectedCheckboxes2 = new Set();
-
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      $.ajax({
+    var _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    $.ajax({
       url: GlobalURL["hostURL"]+"/v1/languagelist",
       contentType: "application/json; charset=utf-8",
       method : "GET",
@@ -188,108 +184,100 @@ class Translation extends Component {
 
   //onSelect for Target Language
   onSelect(e) {
+    console.log("Target: ", this.state.selectValue)
     this.setState({ Targetlanguage: e.target.value });
   }
   
   onSelectInput(e) {
-    this.setState({
-      [e.target.name]: e.target.value });
+    this.setState({[e.target.name]: e.target.value });
   }
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
-      this.setState({ Sourcelanguage: e.target.value });
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": e.target.value
+    this.setState({ Sourcelanguage: e.target.value });
+    let _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    var data = { "language": e.target.value }
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/version",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        let getVer = JSON.parse(result);
+        _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+      },
+      error: function (error) {
       }
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/version",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data),
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        success: function (result) {
-          var getVer = JSON.parse(result);
-          _this.setState({getVersions: getVer.length > 0 ? getVer : []})
-        },
-        error: function (error) {
-        }
-      });
+    });
   }
 
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
-
-      this.setState({ Version: e.target.value });
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": this.state.Sourcelanguage, "version" : e.target.value
+    this.setState({ Version: e.target.value });
+    let _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    let data = { "language": this.state.Sourcelanguage, "version" : e.target.value }
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/revision",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getRev = JSON.parse(result);
+        _this.setState({getRevision: getRev.length > 0 ? getRev : []})
+      },
+      error: function (error) {
       }
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/revision",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data),
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        success: function (result) {
-          var getRev = JSON.parse(result);
-          _this.setState({getRevision: getRev.length > 0 ? getRev : []})
-        },
-        error: function (error) {
-        }
-      });
+    });
   }
 
   //onSelectRevision for Dynamic list of the books
   onSelectRevision(e) {
-      this.setState({ Revision: e.target.value });
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
-      }
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/book",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data),
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        success: function (result) {
-          var getAllBook = JSON.parse(result);
-          //for canonical sorting
-          var booksCollection = [];
-          for (var i = 0; i < BookArray.length; i++) {
-          for( var j = 0; j < getAllBook.length; j++) {
-              if(BookArray[i] === getAllBook[j]){
-                booksCollection.push(getAllBook[j]);
-              }
+    this.setState({ Revision: e.target.value });
+    let _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    let data = { 
+      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
+    }
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/book",
+      contentType: "application/json; charset=utf-8",
+      data : JSON.stringify(data),
+      method : "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getAllBook = JSON.parse(result);
+        var booksCollection = [];
+        for (var i = 0; i < BookArray.length; i++) {
+        for( var j = 0; j < getAllBook.length; j++) {
+            if(BookArray[i] === getAllBook[j]){
+              booksCollection.push(getAllBook[j]);
             }
           }
-          _this.setState({getAllBooks: booksCollection.length > 0 ? booksCollection : []})
-        },
-        error: function (error) {
         }
-      });
+        _this.setState({getAllBooks: booksCollection.length > 0 ? booksCollection : []})
+      },
+      error: function (error) {
+      }
+    });
   }
 
   //onSelectTargetLanguage for Dynamic Target Language
   onSelectTargetLanguage(e){
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value
-      }
+    let _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    let data = { "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": e.target.value }
 
-      $.ajax({
+    $.ajax({
       url: GlobalURL["hostURL"]+"/v1/targetlang",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
@@ -311,46 +299,37 @@ class Translation extends Component {
     e.preventDefault();
     global.books = [];
     global.nbooks= [];
-
     // eslint-disable-next-line
     for (const books of this.selectedCheckboxes1) {
       global.books = Array.from(this.selectedCheckboxes1);
-
     }
-  
     // eslint-disable-next-line
     for (const nbooks of this.selectedCheckboxes2) { 
       global.nbooks = Array.from(this.selectedCheckboxes2);
     }
 
-    var _this = this
-
-    var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "nbooks":global.nbooks, "books": global.books 
+    console.log(this.state.selectValue.value);
+    let _this = this
+    let data = { 
+      "sourcelang": this.state.Sourcelanguage,
+      "version": this.state.Version,
+      "revision": this.state.Revision,
+      "targetlang": this.state.selectValue.value,
+      "nbooks": global.nbooks,
+      "books": global.books 
     }
-    
-
+    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-    function beforeSend() {
-      document.getElementById("loading").style.display = "inline";
-    }
-
-    function complete() {
-      document.getElementById("loading").style.display = "none";
-    }
-
-    var xhr = new XMLHttpRequest();
+    function beforeSend() { document.getElementById("loading").style.display = "inline"; }
+    function complete() { document.getElementById("loading").style.display = "none"; }
+    let xhr = new XMLHttpRequest();
     beforeSend();
     xhr.open('POST', GlobalURL["hostURL"]+"/v1/getbookwiseautotokens/false", true);
     xhr.responseType = 'blob';
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.setRequestHeader('Authorization', "bearer " + accessToken);
-   
     xhr.onload = function(e) {      
      complete();
-
-      //if status is OK
       if (this.status === 200) {
       	const blb = new Blob([this.response], {type: "text/plain"});
 	      const reader = new FileReader();
@@ -361,8 +340,6 @@ class Translation extends Component {
 	      });
 	      reader.readAsText(blb);
       } 
-
-     //if status is failure
      if(this.status === 400){
        	const blb  = new Blob([this.response], {type: "text/plain"});
        	const reader = new FileReader();
@@ -382,31 +359,27 @@ class Translation extends Component {
 //for the updateTokenTranslation API
   updateTokenTranslation(e){
     e.preventDefault();
-    var _this = this
+    let _this = this
 
-    var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "token": this.state.TokenUpdateValue, "translation":this.state.translation
+    let data = { 
+      "sourcelang": this.state.Sourcelanguage,
+      "version": this.state.Version,
+      "revision": this.state.Revision,
+      "targetlang": this.state.Targetlanguage,
+      "token": this.state.TokenUpdateValue,
+      "translation":this.state.translation
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-
-    function beforeSend() {
-      document.getElementById("loading").style.display = "inline";
-    }
-
-    function complete() {
-      document.getElementById("loading").style.display = "none";
-    }
-
-    var xhr = new XMLHttpRequest();
+    function beforeSend() { document.getElementById("loading").style.display = "inline"; }
+    function complete() { document.getElementById("loading").style.display = "none"; }
+    let xhr = new XMLHttpRequest();
     beforeSend();
     xhr.open('POST', GlobalURL["hostURL"]+"/v1/updatetranslation");
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.setRequestHeader('Authorization', "bearer " + accessToken);
     xhr.onload = function(e) {
       complete();
-
-     //if status is OK
       if (this.status === 200) {
       	const blb = new Blob([this.response], {type: "text/plain"});
       	const reader = new FileReader();
@@ -430,22 +403,22 @@ class Translation extends Component {
         }, 5000);
       });
       reader.readAsText(blb);
-
       }
     };   
     xhr.send(JSON.stringify(data)); 
-
   }
 
 //To get concordances for a particular token
   getConcordances(obj){
     this.setState({ TokenUpdateValue: obj });
-    var _this = this
-    var data = {
-      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision, "token": obj
+    let _this = this
+    let data = {
+      "language": this.state.Sourcelanguage,
+      "version": this.state.Version,
+      "revision": this.state.Revision,
+      "token": obj
     }
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-    
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/getconcordance",
       contentType: "application/json; charset=utf-8",
@@ -464,7 +437,7 @@ class Translation extends Component {
         result = JSON.parse(result)
         if(result.success !== false){
           _this.setState({myResult: result.split('\n')});
-        }else {
+        } else {
            _this.setState({message: result.message, uploaded: 'failure'})
             setTimeout(function(){
               _this.setState({uploaded: 'fail'});
@@ -481,25 +454,25 @@ class Translation extends Component {
   }
 
    ShowHide() {
-    var _this = this;
-      var x = document.getElementById('bookDiv');
-      if (x.style.display === 'none') {
-          x.style.display = 'block';
-              _this.setState({showhideboolean:false});
-
-      } else {
-          x.style.display = 'none';
-              _this.setState({showhideboolean:true});
-
-      }
+    let _this = this;
+    let x = document.getElementById('bookDiv');
+    if (x.style.display === 'none') {
+    x.style.display = 'block';
+    _this.setState({showhideboolean:false});
+    } else {
+      x.style.display = 'none';
+      _this.setState({showhideboolean:true});
+    }
   }
 
   //Generate Concordance API
   generateConcordances () {
-    var _this = this;
+    let _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-    var data = { 
-      "language": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision
+    let data = { 
+      "language": this.state.Sourcelanguage,
+      "version": this.state.Version,
+      "revision": this.state.Revision
     }
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/generateconcordance",
@@ -530,21 +503,18 @@ class Translation extends Component {
   }
   
   handleChange(e){
-    var _this = this;
-    var value = e;
-    _this.setState({selectValueforTarget: value})
+    let _this = this;
+    _this.setState({selectValueforTarget: e})
   }
 
   openModal = () => {
     this.setState({
-      isOpen: true,
       visible: true
     });
   };
 
   hideModal = () => {
     this.setState({
-      isOpen: false,
       visible: false
     });
 
@@ -552,37 +522,30 @@ class Translation extends Component {
 
 
   render() {
-
-    let {isOpen} = this.state;
-
   	var myTarget = this.state.tokenListState;
     var myjson = this.state.myResult;
     var options = {};
     var myOptions = [];
     var tokenListView = [];
-
     Object.keys(myTarget).map(function(data, index){
       options = {label: myTarget[data], value: data};
       myOptions.push(options);
       tokenListView.push(myTarget[data]);
       return (myOptions);
     });
-
     var myTargetLang = this.state.getTargetLanguages;
     var options1 = {};
     var myOptions1 = [];
-
     Object.keys(myTargetLang).map(function(data, index){
       options1 = {label: data, value: myTargetLang[data]};
       myOptions1.push(options1);
       return (myOptions1);
     });
-
     var _this = this; 
     return(
       <div>
         <div className="col-md-12">
-            <Header/>
+          <Header/>
         </div>
         <div className="container">
           <div className="row">
@@ -590,12 +553,15 @@ class Translation extends Component {
               <h3>Translation</h3>
             </div>
           </div>
-
           <div className="row">
             <div className="col-md-3 divSpaceTrans bodyColorTrans bodyBorderTrans">
               <div className="row">
                 <div className="col-md-12">
-                  <label className="control-label"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="glyphicon glyphicon-search">&nbsp; </span>Search Tokens</strong></label>
+                  <label className="control-label">
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span className="glyphicon glyphicon-search">&nbsp;</span>Search Tokens
+                    </strong>
+                  </label>
                   <VirtualizedSelect
                     options={myOptions}/* eslint-disable */ 
                     onChange={ (e) => { this.handleChange(e); this.getConcordances(e["label"]) } }
@@ -606,177 +572,165 @@ class Translation extends Component {
               <div className="row">
                 <div className="col-md-12 myTable">
                   <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Token List</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      Object.keys(tokenListView).map(function(data, index){
-                        return (
-                          <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
-                            <td>
-                              {tokenListView[data]}
-                            </td>
-                          </tr>
-                        );
-                      })
-                    }
-                  </tbody>
+                    <thead>
+                      <tr>
+                        <th>Token List</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        Object.keys(tokenListView).map(function(data, index){
+                          return (
+                            <tr key={index} title="Token List for get Concordances" onClick={_this.getConcordances.bind(this, tokenListView[data])}>
+                              <td>
+                                {tokenListView[data]}
+                              </td>
+                            </tr>
+                          );
+                        })
+                      }
+                    </tbody>
                   </table>
                 </div>
               </div>
             </div>   
-
             <div className="col-md-8 translationWidth bodyColorTrans bodyBorderTrans"> 
               <div className="row"> 
                 <div className="col-md-12">       
-                    	<form encType="multipart/form-data">
-                        <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-                          <strong>{this.state.message}</strong>
-                        </div>&nbsp;&nbsp;
-                        <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
-                          <strong>{this.state.message}</strong>
-                        </div>&nbsp;&nbsp;
-                        <div className="form-inline">
-                          <label className="control-label"> <strong> Language </strong> </label>
-                            <ListLanguages 
-                              onChange={ this.onSelectSource}
-                              Language={this.state.getTargetLanguages}
-                            />&nbsp;&nbsp;
-                          <label className="control-label "> <strong> Version </strong> </label>
-                            <Versions 
-                              version={this.state.getVersions} 
-                              onChange={this.onSelectVersion} 
-                            />&nbsp;&nbsp;
-                          <label className="control-label"> <strong> Revision </strong> </label>
-                            <RevisionNumber
-                              revision={this.state.getRevision}  
-                              onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
-                            />&nbsp;&nbsp;
-                          <label className="control-label"> <strong> Target Language *</strong> </label>
-                          <VirtualizedSelect
-                            className="targetSelect"
-                            options={myOptions1}
-                            onChange={(selectValue) => this.setState({ selectValue })}
-                            value={this.state.selectValue}
-                          />
-                        </div>
-                        <div className="form-group">
-                        </div>
-                        <div id="loading" className="modal">
-                          <div className="center">
-                            <img alt="" src={require('../images/loader.gif')} />
-                          </div>
-                        </div>
-                      </form>
-                </div>
-
-
-              <div>
-                <div className="form-group col-md-12 top5 alignCenter">
-                  <input
-                    type="button"
-                    className="btn btn-success"
-                    value="Show Books / Generate Tokens"
-                    disabled={!this.state.Revision}
-                    onClick={() => this.openModal()}
-                  />&nbsp;
-                  <button type="button" className="btn btn-success" title="Generate Concordances" onClick={this.generateConcordances} disabled={!this.state.Revision} ><span className="glyphicon glyphicon-refresh"></span></button>
-                </div>
-              </div>
-              <div>
-                {/*
-                <Modal isOpen={isOpen} size="modal-lg"  onRequestHide={this.hideModal}>
-                  <ModalHeader>
-                    <ModalClose onClick={this.hideModal}/>
-                    <ModalTitle>List of the Books</ModalTitle>
-                  </ModalHeader>
-                  <ModalBody>
+                	<form encType="multipart/form-data">
                     <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
                       <strong>{this.state.message}</strong>
                     </div>&nbsp;&nbsp;
                     <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
                       <strong>{this.state.message}</strong>
+                    </div>&nbsp;&nbsp;
+                    <div className="form-inline">
+                      <label className="control-label">
+                        <strong> Language </strong>
+                      </label>
+                      <ListLanguages 
+                        onChange={ this.onSelectSource}
+                        Language={this.state.getTargetLanguages}
+                      />&nbsp;&nbsp;
+                      <label className="control-label ">
+                        <strong> Version </strong>
+                      </label>
+                      <Versions 
+                        version={this.state.getVersions} 
+                        onChange={this.onSelectVersion} 
+                      />&nbsp;&nbsp;
+                      <label className="control-label">
+                        <strong> Revision </strong>
+                      </label>
+                      <RevisionNumber
+                        revision={this.state.getRevision}  
+                        onChange={ (e) => { this.onSelectRevision(e); this.onSelectTargetLanguage(e) } }
+                      />&nbsp;&nbsp;
+                      <label className="control-label">
+                        <strong> Target Language *</strong>
+                      </label>
+                      <VirtualizedSelect
+                        className="targetSelect"
+                        options={myOptions1}
+                        onChange={(e) => { this.setState({ selectValue: e }) }}
+                        value={this.state.selectValue}
+                      />
                     </div>
-                    <div className="container displayBook">
-                    <div className="row">
-                    <div className="col-md-12 bgColor" id="bookDiv" style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
-                      <div>
-                      <section>
-                      <div className="topRound">
-                       <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-                      </div>  
-                        <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
-                          <h4 className="panel-heading panelHead">Include Books</h4>
-                          <div className="exclude1" >
-                            {this.createCheckboxes1(this, this.state.getAllBooks)}
-                          </div>
-                        </section>
-                        <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
-                          <h4 className="panel-heading panelHead">Exclude Books</h4>
-                          <div className="exclude1">
-                             {this.createCheckboxes2(this, this.state.getAllBooks)}
-                          </div>
-                        </section>
-                        <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
-                      </section>
+                    <div className="form-group">
                     </div>
-                      </div>  
+                    <div id="loading" className="modal">
+                      <div className="center">
+                        <img alt="" src={require('../images/loader.gif')} />
+                      </div>
                     </div>
+                  </form>
+                </div>
+                <div>
+                  <div className="form-group col-md-12 top5 alignCenter">
+                    <input
+                      type="button"
+                      className="btn btn-success"
+                      value="Show Books / Generate Tokens"
+                      disabled={!this.state.Revision}
+                      onClick={() => this.openModal()}
+                    />&nbsp;
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      title="Generate Concordances"
+                      onClick={this.generateConcordances}
+                      disabled={!this.state.Revision}
+                    >
+                      <span className="glyphicon glyphicon-refresh"></span>
+                    </button>
                   </div>
-                  </ModalBody>
-                  <ModalFooter>
-                    <button className="btn btn-default" onClick={this.hideModal}> Close </button>
-                    <button type="button" className="btn btn-success" onClick={(e) => { this.tokenList(e); this.hideModal(e) }}  disabled={!this.state.Revision} >Generate Tokens</button>&nbsp;
-                  </ModalFooter>
-                </Modal> */}
+                </div>
                 <Modal 
                   visible={this.state.visible}
-                  width="400"
-                  height="300"
-                  effect="fadeInUp"
+                  width="850"
+                  height="450"
+                  effect="fadeInDown"
                   onClickAway={() => this.closeModal()}
                 >
-                <div>
-                  <h1>List of the Books</h1>
-                    <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-                      <strong>{this.state.message}</strong>
-                    </div>&nbsp;&nbsp;
-                    <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
-                      <strong>{this.state.message}</strong>
-                    </div>
-                    <div className="container displayBook">
-                    <div className="row">
-                    <div className="col-md-12 bgColor" id="bookDiv" style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
-                      <div>
-                      <section>
-                      <div className="topRound">
-                       <Tabs activeTab={this.state.activeTab}  changeTab={this.handleClick}/>
-                      </div>  
-                        <section className="panel panel-success" style={this.state.dataDisplay === 'Exclude Books' ? {display:'none'} : {display: 'inline'} }>
-                          <h4 className="panel-heading panelHead">Include Books</h4>
-                          <div className="exclude1" >
-                            {this.createCheckboxes1(this, this.state.getAllBooks)}
+                  <div className="modal-body">
+                    <h1 className="modal-title">List of the Books</h1>
+                      <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                        <strong>{this.state.message}</strong>
+                      </div>&nbsp;&nbsp;
+                      <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+                        <strong>{this.state.message}</strong>
+                      </div>
+                      <div className="container displayBook">
+                        <div className="row">
+                        <div className="col-md-12 bgColor" id="bookDiv" style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                          <div>
+                            <section>
+                              <div className="topRound">
+                                <Tabs
+                                  activeTab={this.state.activeTab}
+                                  changeTab={this.handleClick}
+                                />
+                              </div>  
+                              <section className="panel panel-success" 
+                                style={
+                                  this.state.dataDisplay === 'Exclude Books' ?
+                                  {display:'none'} : {display: 'inline'}
+                                }
+                              >
+                                <h4 className="panel-heading panelHead">Include Books</h4>
+                                <div className="exclude1">
+                                  {this.createCheckboxes1(this, this.state.getAllBooks)}
+                                </div>
+                              </section>
+                              <section className="panel panel-danger"
+                                style={
+                                  this.state.dataDisplay === 'Include Books' ?
+                                  {display:'none'} : {display: 'inline'}
+                                }
+                              >
+                                <h4 className="panel-heading panelHead">Exclude Books</h4>
+                                <div className="exclude1">
+                                   {this.createCheckboxes2(this, this.state.getAllBooks)}
+                                </div>
+                              </section>
+                              <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
+                            </section>
                           </div>
-                        </section>
-                        <section className="panel panel-danger" style={this.state.dataDisplay === 'Include Books' ? {display:'none'} : {display: 'inline'} }>
-                          <h4 className="panel-heading panelHead">Exclude Books</h4>
-                          <div className="exclude1">
-                             {this.createCheckboxes2(this, this.state.getAllBooks)}
-                          </div>
-                        </section>
-                        <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
-                      </section>
+                        </div>  
+                        </div>
                     </div>
-                      </div>  
-                    </div>
+                    <button
+                      className="btn btn-default"
+                      onClick={this.hideModal}
+                    > Close </button>
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={(e) => { this.tokenList(e); this.hideModal(e) }}
+                      disabled={!this.state.Revision} 
+                    > Generate Tokens </button>&nbsp;
                   </div>
-                  <a href="javascript:void(0);" onClick={() => this.closeModal()}>Close</a>
-                </div>
                 </Modal>
-              </div>
               </div>
                 <div className="col-md-12 bodyBorderTrans">
                   <div className="form-inline">
@@ -795,19 +749,17 @@ class Translation extends Component {
                   <div className="row">
                   <div className="col-md-12">
                   <div className="myConcord bodyBorderTrans">
-                      
-                     {
-                        (myjson != null)?(myjson.map(function(v, i){
-                            return (<div key={i} className="paddingforConcordtext">
-                                     <TextHighlight
-                                        highlight={_this.state.TokenUpdateValue}
-                                        text={v}
-                                      />
-                                    </div>
-                            );
-                          })):(<h1></h1>)
-                      }
-                  
+                   {
+                      (myjson != null)?(myjson.map(function(v, i){
+                          return (<div key={i} className="paddingforConcordtext">
+                                   <TextHighlight
+                                      highlight={_this.state.TokenUpdateValue}
+                                      text={v}
+                                    />
+                                  </div>
+                          );
+                        })):(<h1></h1>)
+                    }
                   </div>
                   </div>
                   </div>
