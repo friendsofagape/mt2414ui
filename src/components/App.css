@@ -35,7 +35,6 @@ body {
   border: solid;
   border-width: thin;
   border-radius: 15px;
-  padding: inherit;
 }
 
 .tokenForm{
@@ -110,7 +109,6 @@ body {
 
 .modal-body{
   background-color: #F5F4AB;
-  height: 100%;
 }
 
 .bodyBorderTrans{
@@ -283,19 +281,6 @@ tr.highlight td {
   color: blue;
 }
 
-/*.modal{
-  position: fixed;
-  z-index: 999;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: white;
-  filter: alpha(opacity=60);
-  opacity: 0.6;
-  -moz-opacity: 0.8;
-}
-*/
 .gly-spin {
   -webkit-animation: spin 2s infinite linear;
   -moz-animation: spin 2s infinite linear;
