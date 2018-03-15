@@ -9,13 +9,11 @@
 */
 
 import React, { Component } from 'react';
-import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import VirtualizedSelect from 'react-virtualized-select';
-import Modal from 'react-awesome-modal';
 import Checkbox from './Checkbox';
 import booksName2 from './BookName';
 import ListLanguages from './ListLanguages'
@@ -184,7 +182,6 @@ class Translation extends Component {
 
   //onSelect for Target Language
   onSelect(e) {
-    console.log("Target: ", this.state.selectValue)
     this.setState({ Targetlanguage: e.target.value });
   }
   
@@ -307,8 +304,6 @@ class Translation extends Component {
     for (const nbooks of this.selectedCheckboxes2) { 
       global.nbooks = Array.from(this.selectedCheckboxes2);
     }
-
-    console.log(this.state.selectValue.value);
     let _this = this
     let data = { 
       "sourcelang": this.state.Sourcelanguage,
@@ -318,7 +313,6 @@ class Translation extends Component {
       "nbooks": global.nbooks,
       "books": global.books 
     }
-    console.log(data)
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
     function beforeSend() { document.getElementById("loading").style.display = "inline"; }
     function complete() { document.getElementById("loading").style.display = "none"; }
@@ -336,7 +330,10 @@ class Translation extends Component {
 	      reader.addEventListener('loadend', (e) => {
 	        const text = e.target.result;
 	        const tokenListfromsever = JSON.parse(text);
-	       _this.setState({tokenListState: tokenListfromsever});
+	       _this.setState({ tokenListState: tokenListfromsever, message: JSON.parse(text)["message"], uploaded: 'failure'});
+          setTimeout(function(){
+            _this.setState({uploaded: 'fail'})
+          }, 5000);
 	      });
 	      reader.readAsText(blb);
       } 
@@ -393,7 +390,7 @@ class Translation extends Component {
       	reader.readAsText(blb);
       } 
      if(this.status === 400){
-      const blb    = new Blob([this.response], {type: "text/plain"});
+      const blb = new Blob([this.response], {type: "text/plain"});
       const reader = new FileReader();
       reader.addEventListener('loadend', (e) => {
         const text = e.srcElement.result;
@@ -453,14 +450,14 @@ class Translation extends Component {
     });      
   }
 
-   ShowHide() {
+  ShowHide() {
     let _this = this;
     let x = document.getElementById('bookDiv');
     if (x.style.display === 'none') {
-    x.style.display = 'block';
-    _this.setState({showhideboolean:false});
+       x.style.display = 'block';
+      _this.setState({showhideboolean:false});
     } else {
-      x.style.display = 'none';
+       x.style.display = 'none';
       _this.setState({showhideboolean:true});
     }
   }
@@ -517,9 +514,7 @@ class Translation extends Component {
     this.setState({
       visible: false
     });
-
   };
-
 
   render() {
   	var myTarget = this.state.tokenListState;
@@ -645,44 +640,41 @@ class Translation extends Component {
                     </div>
                   </form>
                 </div>
-                <div>
-                  <div className="form-group col-md-12 top5 alignCenter">
-                    <input
-                      type="button"
-                      className="btn btn-success"
-                      value="Show Books / Generate Tokens"
-                      disabled={!this.state.Revision}
-                      onClick={() => this.openModal()}
-                    />&nbsp;
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      title="Generate Concordances"
-                      onClick={this.generateConcordances}
-                      disabled={!this.state.Revision}
-                    >
-                      <span className="glyphicon glyphicon-refresh"></span>
-                    </button>
-                  </div>
+                <div className="form-group col-md-12 top5 alignCenter">
+                  <input
+                    type="button"
+                    className="btn btn-success"
+                    value="Show Books / Generate Tokens"
+                    data-target="#myModal"
+                    data-toggle="modal"
+                    disabled={!this.state.Revision}
+                    onClick={() => this.openModal()}
+                  />&nbsp;
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    title="Generate Concordances"
+                    onClick={this.generateConcordances}
+                    disabled={!this.state.Revision}
+                  >
+                    <span className="glyphicon glyphicon-refresh"></span>
+                  </button>
                 </div>
-                <Modal 
-                  visible={this.state.visible}
-                  width="850"
-                  height="450"
-                  effect="fadeInDown"
-                  onClickAway={() => this.closeModal()}
-                >
-                  <div className="modal-body">
-                    <h1 className="modal-title">List of the Books</h1>
-                      <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
-                        <strong>{this.state.message}</strong>
-                      </div>&nbsp;&nbsp;
-                      <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
-                        <strong>{this.state.message}</strong>
-                      </div>
-                      <div className="container displayBook">
-                        <div className="row">
-                        <div className="col-md-12 bgColor" id="bookDiv" style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} }>
+                <div>
+                  <div className="modal fade" id="myModal" role="dialog">
+                    <div className="modal-dialog modal-lg">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <button type="button" className="close" data-dismiss="modal">&times;</button>
+                          <h4 className="modal-title">List of the Books</h4>
+                        </div>
+                        <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success msg' : 'invisible')}>
+                          <strong>{this.state.message}</strong>
+                        </div>&nbsp;&nbsp;
+                        <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger msg': 'invisible') }>
+                          <strong>{this.state.message}</strong>
+                        </div>
+                        <div className="modal-body">
                           <div>
                             <section>
                               <div className="topRound">
@@ -716,21 +708,25 @@ class Translation extends Component {
                               <div> * Optional field. Select <b>Target Language</b> to exclude the Translated Tokens.</div>
                             </section>
                           </div>
-                        </div>  
                         </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            data-dismiss="modal"
+                            className="btn btn-default"
+                            onClick={this.hideModal}
+                          > Close </button> &nbsp; &nbsp;
+                          <button
+                            type="button"
+                            className="btn btn-success"
+                            onClick={(e) => { this.tokenList(e); this.hideModal(e) }}
+                            disabled={!this.state.Revision} 
+                          > Generate Tokens </button>
+                        </div>
+                      </div>
                     </div>
-                    <button
-                      className="btn btn-default"
-                      onClick={this.hideModal}
-                    > Close </button>
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      onClick={(e) => { this.tokenList(e); this.hideModal(e) }}
-                      disabled={!this.state.Revision} 
-                    > Generate Tokens </button>&nbsp;
                   </div>
-                </Modal>
+                </div>
               </div>
                 <div className="col-md-12 bodyBorderTrans">
                   <div className="form-inline">

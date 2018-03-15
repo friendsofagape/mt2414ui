@@ -10,7 +10,6 @@
 */
 
 import React, { Component } from 'react';
-import './App.css';
 import ListLanguages from './ListLanguages';
 import Header from './Header';
 import Footer from './Footer';
