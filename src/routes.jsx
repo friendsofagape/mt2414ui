@@ -26,78 +26,93 @@ if (accessToken) {
   decoded = jwtDecode(accessToken);
 }
 
+const superadmin = (
+	<Switch>
+		<Route exact path="/" component={HomePage}/>
+		<Route  path="/sigin" component={SigninForm}/>
+		<Route  path="/signup" component={SignupForm}/>
+		<Route path="/superadmin" component={SuperAdmin}/>
+		<Route path="/admin" component={UploadSource} />
+		<Route path="/createsource" component={CreateSource}/>
+		<Route path="/logout" component={LogOut}/>
+		<Route path="/getlanguages" component={GetLanguages}/>
+		<Route path="/downloadtokens" component={DownloadTokens}/>
+		<Route path="/uploadtokens" component={UploadTokens}/>
+		<Route path="/gettranslationdraft" component={GetTranslationDraft}/>
+		<Route path="/resetpassword" component={ResetPassword}/>
+		<Route path="/forgotpassword" component={ForgotPassword}/>
+		<Route path="/translation" component={Translation}/>
+		<Route  path="*" component={NotFound} />
+	</Switch>
+);
+
+const admin = (
+	<Switch>
+		<Route path="/admin" component={UploadSource} />
+		<Route path="/logout" component={LogOut}/>
+		<Route path="/createsource" component={CreateSource}/>
+		<Route path="/superadmin" component={HomePage}/>
+		<Route path="/getlanguages" component={GetLanguages}/>
+		<Route path="/downloadtokens" component={DownloadTokens}/>
+		<Route path="/uploadtokens" component={UploadTokens}/>
+		<Route path="/gettranslationdraft" component={GetTranslationDraft}/>
+		<Route path="/signup" component={SignupForm}/>
+		<Route path="/resetpassword" component={ResetPassword}/>
+		<Route path="/forgotpassword" component={ForgotPassword}/>
+		<Route path="/translation" component={Translation}/>
+		<Route path="*" component={NotFound} />
+	</Switch>
+);
+
+const member = (
+	<Switch>
+		<Route path="/superadmin" component={HomePage}/>
+		<Route path="/admin" component={HomePage} />
+		<Route path="/logout" component={LogOut}/>
+		<Route path="/createsource" component={HomePage}/>
+		<Route path="/getlanguages" component={GetLanguages}/>
+		<Route path="/downloadtokens" component={DownloadTokens}/>
+		<Route path="/uploadtokens" component={UploadTokens}/>
+		<Route path="/gettranslationdraft" component={GetTranslationDraft}/>
+		<Route path="/signup" component={SignupForm}/>
+		<Route path="/resetpassword" component={ResetPassword}/>
+		<Route path="/forgotpassword" component={ForgotPassword}/>
+		<Route path="/translation" component={Translation}/>
+		<Route path="*" component={NotFound} />						
+	</Switch>
+);
+
+const nouser = (
+	<Switch>
+		<Route path="/superadmin" component={HomePage}/>
+		<Route path="/admin" component={HomePage} />
+		<Route path="/logout" component={LogOut}/>
+		<Route path="/createsource" component={HomePage}/>
+		<Route path="/getlanguages" component={HomePage}/>
+		<Route path="/downloadtokens" component={HomePage}/>
+		<Route path="/uploadtokens" component={HomePage}/>
+		<Route path="/gettranslationdraft" component={HomePage}/>
+		<Route path="/signup" component={SignupForm}/>
+		<Route path="/resetpassword" component={ResetPassword}/>
+		<Route path="/forgotpassword" component={ForgotPassword}/>
+		<Route path="/" component={HomePage}/>
+		<Route path="*" component={NotFound} />								
+	</Switch>
+);
 const Routes = () => (
 	<Router>
 		<App>
 			<Switch>
 			{(accessToken && decoded.role === 'superadmin') ? (
-				<Switch>
-					<Route exact path="/" component={HomePage}/>
-					<Route  path="/sigin" component={SigninForm}/>
-					<Route  path="/signup" component={SignupForm}/>
-					<Route path="/superadmin" component={SuperAdmin}/>
-					<Route path="/admin" component={UploadSource} />
-					<Route path="/createsource" component={CreateSource}/>
-					<Route path="/logout" component={LogOut}/>
-					<Route path="/getlanguages" component={GetLanguages}/>
-					<Route path="/downloadtokens" component={DownloadTokens}/>
-					<Route path="/uploadtokens" component={UploadTokens}/>
-					<Route path="/gettranslationdraft" component={GetTranslationDraft}/>
-					<Route path="/resetpassword" component={ResetPassword}/>
-					<Route path="/forgotpassword" component={ForgotPassword}/>
-					<Route path="/translation" component={Translation}/>
-					<Route  path="*" component={NotFound} />
-				</Switch>
+				superadmin
 				) : (
 					(accessToken && decoded.role === 'admin') ? (
-						<Switch>
-							<Route path="/admin" component={UploadSource} />
-							<Route path="/logout" component={LogOut}/>
-							<Route path="/createsource" component={CreateSource}/>
-							<Route path="/superadmin" component={HomePage}/>
-							<Route path="/getlanguages" component={GetLanguages}/>
-							<Route path="/downloadtokens" component={DownloadTokens}/>
-							<Route path="/uploadtokens" component={UploadTokens}/>
-							<Route path="/gettranslationdraft" component={GetTranslationDraft}/>
-							<Route path="/signup" component={SignupForm}/>
-							<Route path="/resetpassword" component={ResetPassword}/>
-							<Route path="/forgotpassword" component={ForgotPassword}/>
-							<Route path="/translation" component={Translation}/>
-							<Route path="*" component={NotFound} />
-						</Switch>
+						admin
 					) : (
 						(accessToken && decoded.role === 'member') ? (
-							<Switch>
-								<Route path="/superadmin" component={HomePage}/>
-								<Route path="/admin" component={HomePage} />
-								<Route path="/logout" component={LogOut}/>
-								<Route path="/createsource" component={HomePage}/>
-								<Route path="/getlanguages" component={GetLanguages}/>
-								<Route path="/downloadtokens" component={DownloadTokens}/>
-								<Route path="/uploadtokens" component={UploadTokens}/>
-								<Route path="/gettranslationdraft" component={GetTranslationDraft}/>
-								<Route path="/signup" component={SignupForm}/>
-								<Route path="/resetpassword" component={ResetPassword}/>
-								<Route path="/forgotpassword" component={ForgotPassword}/>
-								<Route path="/translation" component={Translation}/>
-								<Route path="*" component={NotFound} />						
-							</Switch>
+							member
 						) : (
-							<Switch>
-								<Route path="/superadmin" component={HomePage}/>
-								<Route path="/admin" component={HomePage} />
-								<Route path="/logout" component={LogOut}/>
-								<Route path="/createsource" component={HomePage}/>
-								<Route path="/getlanguages" component={HomePage}/>
-								<Route path="/downloadtokens" component={HomePage}/>
-								<Route path="/uploadtokens" component={HomePage}/>
-								<Route path="/gettranslationdraft" component={HomePage}/>
-								<Route path="/signup" component={SignupForm}/>
-								<Route path="/resetpassword" component={ResetPassword}/>
-								<Route path="/forgotpassword" component={ForgotPassword}/>
-								<Route path="/" component={HomePage}/>
-								<Route path="*" component={NotFound} />								
-							</Switch>
+							nouser
 						)
 					)
 				)
