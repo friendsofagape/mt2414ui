@@ -89,15 +89,15 @@ class GetTranslationDraft extends Component {
       getTargetLangList: ['']
     }
 
-      // Upload file specific callback handlers
-      this.DowloadDraft = this.DowloadDraft.bind(this);
-      this.onSelect = this.onSelect.bind(this);
-      this.onSelectSource = this.onSelectSource.bind(this);
-      this.onSelectTargetLanguage = this.onSelectTargetLanguage.bind(this);
-      this.onSelectVersion = this.onSelectVersion.bind(this);
-      this.onSelectRevision = this.onSelectRevision.bind(this);
-      this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
-      this.DowloadRemainingTokens = this.DowloadRemainingTokens.bind(this);
+    // Upload file specific callback handlers
+    this.DowloadDraft = this.DowloadDraft.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.onSelectSource = this.onSelectSource.bind(this);
+    this.onSelectTargetLanguage = this.onSelectTargetLanguage.bind(this);
+    this.onSelectVersion = this.onSelectVersion.bind(this);
+    this.onSelectRevision = this.onSelectRevision.bind(this);
+    this.exportToUSFMFile = this.exportToUSFMFile.bind(this);
+    this.DowloadRemainingTokens = this.DowloadRemainingTokens.bind(this);
   }
   
   componentDidMount = () => {
@@ -150,14 +150,14 @@ class GetTranslationDraft extends Component {
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
-      var _this = this;
-      _this.setState({ Sourcelanguage: e.target.value });
-      _this.setState({getVersions: ['']})
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": e.target.value
-      }
-      $.ajax({
+    var _this = this;
+    _this.setState({ Sourcelanguage: e.target.value });
+    _this.setState({getVersions: ['']})
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    var data = { 
+      "language": e.target.value
+    }
+    $.ajax({
       url: GlobalURL["hostURL"]+"/v1/version",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
@@ -176,13 +176,13 @@ class GetTranslationDraft extends Component {
 
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
-      var _this = this;
-      _this.setState({ Version: e.target.value });
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": this.state.Sourcelanguage, "version" : e.target.value
-      }
-      $.ajax({
+    var _this = this;
+    _this.setState({ Version: e.target.value });
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    var data = { 
+      "language": this.state.Sourcelanguage, "version" : e.target.value
+    }
+    $.ajax({
       url: GlobalURL["hostURL"]+"/v1/revision",
       contentType: "application/json; charset=utf-8",
       data : JSON.stringify(data),
@@ -206,7 +206,6 @@ class GetTranslationDraft extends Component {
 
   //OnSelectbook for the list of the book
   onSelectBook(e){
-
       var _this = this;
       let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
       var data = { 
@@ -267,7 +266,6 @@ class GetTranslationDraft extends Component {
   DowloadDraft(e){
     e.preventDefault();
     global.books = [];
-
     // eslint-disable-next-line
     for (const books of this.selectedCheckboxes1) {  
       global.books = Array.from(this.selectedCheckboxes1);
@@ -275,7 +273,11 @@ class GetTranslationDraft extends Component {
 
     var _this = this
     var data = { 
-      "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang": this.state.Targetlanguage, "books": global.books 
+      "sourcelang": this.state.Sourcelanguage,
+      "version": this.state.Version,
+      "revision": this.state.Revision ,
+      "targetlang": this.state.Targetlanguage,
+      "books": global.books 
     }
     
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -288,10 +290,10 @@ class GetTranslationDraft extends Component {
         "Authorization": "bearer " + accessToken
       },
       beforeSend: function () {
-          $(".modal").show();
+        $(".modal").show();
       },
       complete: function () {
-          $(".modal").hide();
+        $(".modal").hide();
       },
       success: function (result) {
         result = JSON.parse(result)
@@ -323,9 +325,7 @@ class GetTranslationDraft extends Component {
       global.books = Array.from(this.selectedCheckboxes1);
 
     }
-
     var _this = this
-
     // For file name changes
     var ListofLanguage = _this.state.getTargetLanguages;
     var FileNameSlanguage = '';
@@ -339,7 +339,11 @@ class GetTranslationDraft extends Component {
     }
 
     var data = { 
-        "sourcelang": this.state.Sourcelanguage, "version": this.state.Version, "revision": this.state.Revision , "targetlang":this.state.Targetlanguage, "book_list": global.books 
+      "sourcelang": this.state.Sourcelanguage,
+      "version": this.state.Version,
+      "revision": this.state.Revision,
+      "targetlang":this.state.Targetlanguage,
+      "book_list": global.books 
     }
 
     let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
@@ -395,7 +399,6 @@ class GetTranslationDraft extends Component {
   //for Download Zip file
   exportToUSFMFile(jsonData) {
     var _this = this;
-
     var ListofLanguage = _this.state.getTargetLanguages;
     var FileNameSlanguage = '';
     var FileNameTlanguage = '';
@@ -416,11 +419,11 @@ class GetTranslationDraft extends Component {
       zip.file(key + '.usfm', value)
     });
     zip.generateAsync({type:"blob"})
-      .then(function(content) {
-          saveAs(content, FileNameSlanguage + 'To' + FileNameTlanguage + '.zip');
-      }, function(err){
-         _this.setState({uploaded: 'failure'}) 
-      })
+    .then(function(content) {
+        saveAs(content, FileNameSlanguage + 'To' + FileNameTlanguage + '.zip');
+    }, function(err){
+       _this.setState({uploaded: 'failure'}) 
+    })
   }
 
 

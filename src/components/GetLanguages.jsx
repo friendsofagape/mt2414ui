@@ -32,9 +32,9 @@ class GetLanguages extends Component {
   }
   
   componentDidMount() {
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      $.ajax({
+    var _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    $.ajax({
       url: GlobalURL["hostURL"]+"/v1/get_languages",
       contentType: "application/json; charset=utf-8",
       method : "POST",
