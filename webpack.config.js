@@ -34,13 +34,13 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:3000' })
+    new OpenBrowserPlugin({ url: 'http://localhost:9000' })
   ],
   devServer: {
     contentBase: './public',
     hot: true,
     host: '0.0.0.0',
-    port: 3000,
+    port: 9000,
     historyApiFallback: true
   },
   performance: { hints: false }
