@@ -471,6 +471,7 @@ class Translation extends Component {
       "version": this.state.Version,
       "revision": this.state.Revision
     }
+    console.log(data);
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/generateconcordance",
       contentType: "application/json; charset=utf-8",
@@ -633,7 +634,7 @@ class Translation extends Component {
                     </div>
                     <div className="form-group">
                     </div>
-                    <div id="loading" className="modal">
+                    <div id="loading" className="modal"> 
                       <div className="center">
                         <img alt="" src={require('../images/loader.gif')} />
                       </div>
