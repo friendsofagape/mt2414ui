@@ -330,7 +330,11 @@ class Translation extends Component {
 	      reader.addEventListener('loadend', (e) => {
 	        const text = e.target.result;
 	        const tokenListfromsever = JSON.parse(text);
-	       _this.setState({ tokenListState: tokenListfromsever, message: JSON.parse(text)["message"], uploaded: 'failure'});
+	       _this.setState({
+            tokenListState: tokenListfromsever,
+            message: JSON.parse(text)["message"],
+            uploaded: 'failure'
+          });
           setTimeout(function(){
             _this.setState({uploaded: 'fail'})
           }, 5000);
@@ -512,6 +516,7 @@ class Translation extends Component {
   };
 
   hideModal = () => {
+    console.log("hide kro")
     this.setState({
       visible: false
     });
@@ -719,8 +724,9 @@ class Translation extends Component {
                           > Close </button> &nbsp; &nbsp;
                           <button
                             type="button"
+                            data-dismiss="modal"
                             className="btn btn-success"
-                            onClick={(e) => { this.tokenList(e); this.hideModal(e) }}
+                            onClick={(e) => { this.hideModal(e);this.tokenList(e)}}
                             disabled={!this.state.Revision} 
                           > Generate Tokens </button>
                         </div>
