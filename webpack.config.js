@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -33,8 +32,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:9000' })
+    new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
     contentBase: './public',
