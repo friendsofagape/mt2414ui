@@ -330,14 +330,21 @@ class Translation extends Component {
 	      reader.addEventListener('loadend', (e) => {
 	        const text = e.target.result;
 	        const tokenListfromsever = JSON.parse(text);
-	       _this.setState({
-            tokenListState: tokenListfromsever,
-            message: JSON.parse(text)["message"],
-            uploaded: 'failure'
-          });
-          setTimeout(function(){
-            _this.setState({uploaded: 'fail'})
-          }, 5000);
+          console.log(JSON.parse(text)["message"])
+          if (JSON.parse(text)["message"] === undefined) {
+           _this.setState({
+              tokenListState: tokenListfromsever
+            });
+          } else {
+            _this.setState({
+              tokenListState: tokenListfromsever,
+              message: JSON.parse(text)["message"],
+              uploaded: 'failure'
+            });
+            setTimeout(function(){
+              _this.setState({ uploaded: 'fail'})
+            }, 5000);
+          }
 	      });
 	      reader.readAsText(blb);
       } 
@@ -467,7 +474,7 @@ class Translation extends Component {
   }
 
   //Generate Concordance API
-  generateConcordances () {
+  generateConcordances(){
     let _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
     let data = { 
@@ -516,7 +523,6 @@ class Translation extends Component {
   };
 
   hideModal = () => {
-    console.log("hide kro")
     this.setState({
       visible: false
     });
