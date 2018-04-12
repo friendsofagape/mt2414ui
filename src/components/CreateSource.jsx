@@ -33,6 +33,7 @@ class CreateSource extends Component {
     // Upload file specific callback handlers
     this.createSource = this.createSource.bind(this);
     this.onSelect = this.onSelect.bind(this);
+    this.updateLanguageList = this.updateLanguageList.bind(this);
   }
 
   componentDidMount() {
@@ -64,7 +65,6 @@ class CreateSource extends Component {
       var data = { 
         "language": this.state.selectValue.value, "version": this.state.version
       }
-            
       let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       $.ajax({
         url: GlobalURL["hostURL"]+"/v1/createsources",
@@ -101,6 +101,48 @@ class CreateSource extends Component {
       }
       });
     }
+
+  updateLanguageList(e){
+    var _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/updatelanguagelist",
+      contentType: "application/json; charset=utf-8",
+      method : "GET",
+      headers: {
+                "Authorization": "bearer " + accessToken
+      },
+      beforeSend: function () {
+        $(".modal").show();
+      },
+      complete: function () {
+        $(".modal").hide();
+      },
+      success: function (result) {
+        $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/languagelist",
+        contentType: "application/json; charset=utf-8",
+        method : "GET",
+        headers: {
+                  "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getTargetLang = JSON.parse(result);
+          _this.setState({getTargetLanguages: getTargetLang})
+        },
+        error: function (error) {
+        }
+        });
+          var resultMes = JSON.parse(result);
+        _this.setState({message: resultMes.message, uploaded: 'success'})
+        setTimeout(function(){
+          _this.setState({ uploaded: 'fail'})
+        }, 5000);
+      },
+      error: function (error) {
+      }
+    });
+  }
 
   render() {
     
@@ -153,8 +195,26 @@ class CreateSource extends Component {
                     required 
                   />
               </div>
-              <div className="form-group top10">
-                <button type="button" className="btn btn-success btn-block center-block" onClick={this.createSource} disabled={!this.state.version} ><span className="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Create Source</button>&nbsp;&nbsp;&nbsp;
+              <div className="row alignCneter">
+                <div className="col-md-12">
+                  <div className="form-group center-block space">
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={this.createSource}
+                      disabled={!this.state.version} >
+                      <span className="glyphicon glyphicon-upload">&nbsp;</span>
+                      Create Source
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={this.updateLanguageList}>
+                      <span className="glyphicon glyphicon-refresh customLink2">&nbsp;</span>
+                      Update Language
+                    </button>
+                  </div>
+                </div>
               </div>
           </form>
           </div>
