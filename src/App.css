@@ -101,7 +101,7 @@ body {
 .bottom5{padding-top: 4%; padding-bottom: 9%}
 .bottom1{padding-bottom: 1%;}
 .borderfordiv{border: solid;}
-
+.space{padding-left: 9%;}
 .bodyColorTrans{
   background-color: #F5F4AB;
   border-radius: 12px;
@@ -331,4 +331,10 @@ img {
 .targetSelect{
   display: inline-flex;
   width: 19%;  
+}
+
+@media (max-width: 550px){
+  .colmd3Width{
+    width: 100%;
+  }
 }
