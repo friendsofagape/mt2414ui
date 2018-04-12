@@ -53,8 +53,8 @@ class HomePage extends Component {
     return (
       <div>
         <Header />
-      <div className="container">
-        <div className="row ">
+        <div className="container">
+          <div className="row ">
             <div className="col-md-8 bodyColor divSpace">
               <h3 className="top3 fonth3">Welcome to</h3>
               <h1 className="fonth1">Autographa MT</h1>
@@ -63,15 +63,15 @@ class HomePage extends Component {
                 <img alt="" src={require('../images/bible.png')} />
               </div>
             </div>
-          <div className="col-md-3 bodyColor divSpace colmd3Width" >
-            <SigninForm />
+            <div className="col-md-3 bodyColor divSpace colmd3Width" > 
+              <SigninForm />
+            </div>
           </div>
         </div>
+        <div>
+          <Footer/>
+        </div>
       </div>
-      <div>
-        <Footer/>
-      </div>
-    </div>
     );
   }
 }
