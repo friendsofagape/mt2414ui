@@ -126,13 +126,13 @@ class SignupForm extends Component {
     var _this = this;
     //Performing a POST request for registrations using AJAX call
     $.ajax({
-       url: GlobalURL["hostURL"]+"/v1/registrations",
-       data: {
-          email : this.state.email,
-          password : this.state.password
-          },
-           method : "POST",
-         success: function(result) {
+      url: GlobalURL["hostURL"]+"/v1/registrations",
+      data: {
+        email : this.state.email,
+        password : this.state.password
+      },
+      method : "POST",
+        success: function(result) {
              result = JSON.parse(result)
              if(result.success !== false){
             _this.setState({uploaded: result.success ? 'success' : ''})
@@ -171,11 +171,15 @@ class SignupForm extends Component {
         <div className="row"> 
           <div className="col-md-12 col-md-4 col-md-offset-4 bodyColor bodyBorder">
             <form encType="multipart/form-data" onSubmit={this.onRegistration}>
-                <div className={"alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')}>
+                <div className={
+                    "alert " + (this.state.uploaded === 'success'? 'alert-success dismissable' : 'invisible')
+                  }>
                   <a className="close" data-dismiss="alert" aria-label="close">×</a>                               
                   <strong>{this.state.message}</strong>
                 </div>
-                <div className={"alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')}>
+                <div className={
+                  "alert " + (this.state.uploaded === 'failure'? 'alert-danger dismissable': 'invisible')
+                  }>
                   <a className="close" data-dismiss="alert" aria-label="close">×</a>                                             
                   <strong>{this.state.message}</strong>
                 </div>
@@ -231,11 +235,11 @@ class SignupForm extends Component {
             </form>
           </div>
         </div>
-      </div>
-      <div>
-        <Footer/>
-      </div> 
-      </div>
+        </div>
+        <div>
+          <Footer/>
+        </div> 
+        </div>
       );
     }
  }
