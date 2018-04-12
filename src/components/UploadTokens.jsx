@@ -384,7 +384,9 @@ class UploadTokens extends Component {
               <div className="col-md-1">
                 {
                   (decoded.role === 'admin' || decoded.role === 'superadmin') ? (
-                    <a href="#" onClick={this.updateLanguageList} title="Update Language"><span className="glyphicon glyphicon-refresh customLink2"></span></a> 
+                    <a href="#" onClick={this.updateLanguageList} title="Update Language">
+                      <span className="glyphicon glyphicon-refresh customLink2"></span>
+                    </a> 
                   ):(
                     <div></div>
                     )
