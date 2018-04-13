@@ -12,7 +12,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import {ButtonToolbar} from 'react-bootstrap';
+import { ButtonToolbar } from 'react-bootstrap';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
 import saveAs from 'save-as'
@@ -146,7 +146,6 @@ class GetTranslationDraft extends Component {
   onSelect(e) {
     this.setState({ Targetlanguage: e.target.value });
   }
-
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {

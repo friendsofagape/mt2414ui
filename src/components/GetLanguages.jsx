@@ -89,6 +89,7 @@ class GetLanguages extends Component {
 
       },
       error: function (error) {
+        console.log(error);
       }
     });     
   }
