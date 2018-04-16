@@ -121,28 +121,6 @@ class SuperAdmin extends Component {
   render() {
     var _this = this;
     var currentRoles = this.state.currentRoles;
-    Object.keys(currentRoles).map(function(data, index){
-     return _this.state.tableRows.push(
-        <tr>
-          <td>{data}</td>
-          <td>
-            <p>{(currentRoles[data] === 'member')?("Member"):("Administrator")}</p>
-          </td>
-          <td>
-          {
-            (currentRoles[data] === 'admin')?(
-            // eslint-disable-next-line
-            <a title="Set as Member" href="javascript:void(0);" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
-            ):(
-            // eslint-disable-next-line
-            <a title="Approve as Administrator" href="javascript:void(0);" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
-            )
-          } 
-          </td>
-        </tr>
-      )
-    });
-
     return(
       <div>
           <div className="col-md-12">
@@ -167,7 +145,6 @@ class SuperAdmin extends Component {
               <div className="container">
               <div className="row">
                 <table className="table">
-              
                   <thead>
                     <tr>
                       <th>Users</th>
@@ -176,7 +153,29 @@ class SuperAdmin extends Component {
                     </tr>
                   </thead>
                     <tbody>
-                      {this.state.tableRows}
+                      {
+                        Object.keys(currentRoles).map(function(data, index){
+                          return(
+                          <tr key={index}>
+                            <td>{data}</td>
+                            <td>
+                              <p>{(currentRoles[data] === 'member')?("Member"):("Administrator")}</p>
+                            </td>
+                            <td>
+                            {
+                              (currentRoles[data] === 'admin')?(
+                              // eslint-disable-next-line
+                              <a title="Set as Member" href="javascript:void(0);" data-email={data} onClick={_this.setMember.bind(this,{"email": data, "admin": "False"})} className="customLink">Set as Member</a>
+                              ):(
+                              // eslint-disable-next-line
+                              <a title="Approve as Administrator" href="javascript:void(0);" data-email={data} onClick={_this.approveAdmin.bind(this,{"email": data, "admin": "True"})} className="customLink">Approve as Admin</a>
+                              )
+                            } 
+                            </td>
+                          </tr>
+                         )
+                        })                       
+                      }
                     </tbody>
                 </table>
               </div>
