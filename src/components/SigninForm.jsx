@@ -1,6 +1,5 @@
 /**
  * @module src/SigninForm
- *
  * Component that display SigninForm
  * Accepts the following properties:
  *  - email: enter email for signin
@@ -12,27 +11,27 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import GlobalURL from './GlobalURL';
-var jwtDecode = require('jwt-decode');
+let jwtDecode = require('jwt-decode');
 
-  class SigninForm extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        email: '',
-        password: '',
-        uploaded:'Uploading',
-        message: ''
-      }
-      // Signin form form specific callback handlers
-      this.onChange = this.onChange.bind(this);
-      this.onLogin = this.onLogin.bind(this);
+class SigninForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      uploaded:'Uploading',
+      message: ''
     }
+    // Signin form form specific callback handlers
+    this.onChange = this.onChange.bind(this);
+    this.onLogin = this.onLogin.bind(this);
+  }
 
-    onChange(e) {
-      e.target.classList.add('active');
-      this.setState({ [e.target.name]: e.target.value });
-      this.showInputError(e.target.name);
-    }
+  onChange(e) {
+    e.target.classList.add('active');
+    this.setState({ [e.target.name]: e.target.value });
+    this.showInputError(e.target.name);
+  }
 
   // Checking signup form error
   showFormErrors() {
@@ -41,75 +40,66 @@ var jwtDecode = require('jwt-decode');
     
     inputs.forEach(input => {
       input.classList.add('active');
-      
       const isInputValid = this.showInputError(input.name);
-      
       if (!isInputValid) {
         isFormValid = false;
       }
     });
-    
     return isFormValid;
   }
 
-//Showing input error for each field 
+  //Showing input error for each field 
   showInputError(refName) {
     const validity = this.refs[refName].validity;
     const label = document.getElementById(`${refName}Label`).textContent;
     const error = document.getElementById(`${refName}Error`);
-    const isPassword = refName.indexOf('password') !== -1;
-          
-      if (!validity.valid) {
-        if (validity.valueMissing) {
-          error.textContent = `${label} is a required field`; 
-        } else if (validity.typeMismatch) {
-          error.textContent = `${label} should be a valid email address`; 
-        } else if (isPassword && validity.patternMismatch) {
-          error.textContent = `${label} should be longer than 4 chars`; 
-        }
-        return false;
+    const isPassword = refName.indexOf('password') !== -1;          
+    if (!validity.valid) {
+      if (validity.valueMissing) {
+        error.textContent = `${label} is a required field`; 
+      } else if (validity.typeMismatch) {
+        error.textContent = `${label} should be a valid email address`; 
+      } else if (isPassword && validity.patternMismatch) {
+        error.textContent = `${label} should be longer than 4 chars`; 
       }
-      
-      error.textContent = '';
-      return true;
+      return false;
+    }
+    error.textContent = '';
+    return true;
   }
 
   onLogin(e) {
     e.preventDefault();
-    //Performing a POST request for authentcation
     var _this = this
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/auth",
-      data :{
-        email : this.state.email,
-        password : this.state.password
+      data: {
+        email: this.state.email,
+        password: this.state.password
       },
-      method : "POST",
+      method: "POST",
       success: function(result){
-         result = JSON.parse(result)
-         if (result.success !== false) {
+        result = JSON.parse(result)
+        if (result.success !== false) {
           window.localStorage.setItem('access_token', JSON.stringify(result.access_token))
           let accessToken = JSON.parse(window.localStorage.getItem('access_token'))
-          var decoded = jwtDecode(accessToken);
+          let decoded = jwtDecode(accessToken);
           if (!accessToken) {
             window.location.href = "./homepage";
           } else {
-                if(!decoded.role){
-                   window.location.href = "./homepage";
-                }else if (decoded.role === "superadmin") {
-                   window.location.href = "./superadmin";
-                }else if (decoded.role === "admin"){
-                  window.location.href = "./admin";
-                }else{
-                  window.location.href = "./getlanguages"; 
-                }
+              if(!decoded.role){
+                 window.location.href = "./homepage";
+              }else if (decoded.role === "superadmin") {
+                 window.location.href = "./superadmin";
+              }else if (decoded.role === "admin"){
+                window.location.href = "./admin";
+              }else{
+                window.location.href = "./getlanguages"; 
               }
             }
-        else {
-           
+          }else {           
           _this.setState({message: result.message, uploaded: 'failure'})
-
-          setTimeout(function(){
+          setTimeout(function() {
             _this.setState({uploaded: 'fail'})
           },5000);
         }
@@ -123,8 +113,8 @@ var jwtDecode = require('jwt-decode');
     });
   }
 
-  render() {
-    return (
+  render(){
+    return(
       <div className="top3"> 
         <form onSubmit={this.onLogin} onClick={this.getLanguages}>
           <div className={"alert " + (this.state.uploaded === 'success' ? 'alert-success' : 'invisible')}>
