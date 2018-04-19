@@ -39,48 +39,51 @@ class UploadSource extends Component {
   }
 
   componentDidMount() {
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+      let _this = this;
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
       $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/languagelist",
-      contentType: "application/json; charset=utf-8",
-      method : "GET",
-      headers: {
-                "Authorization": "bearer " + accessToken
-      },
-      success: function (result) {
-        var getTargetLang = JSON.parse(result);
-        _this.setState({getTargetLanguages: getTargetLang})
-      },
-      error: function (error) {
-      }
-    });
+        url: GlobalURL["hostURL"]+"/v1/languagelist",
+        contentType: "application/json; charset=utf-8",
+        method: "GET",
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        success: function (result) {
+          var getTargetLang = JSON.parse(result);
+          _this.setState({getTargetLanguages: getTargetLang})
+        },
+        error: function (error) {
+        }
+      });
   }
 
   onSelect(e) {
     this.setState({
-      [e.target.name]: e.target.value });
+      [e.target.name]: e.target.value
+    });
   }
 
   //onSelectSource for Dynamic Versions
   onSelectSource(e) {
     this.setState({ Sourcelanguage: e.target.value });
-    var _this = this;
+    let _this = this;
     let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-    var data = { 
+    let data = { 
       "language": e.target.value
-    }
+    };
     $.ajax({
       url: GlobalURL["hostURL"]+"/v1/version",
       contentType: "application/json; charset=utf-8",
-      data : JSON.stringify(data),
-      method : "POST",
+      data: JSON.stringify(data),
+      method: "POST",
       headers: {
         "Authorization": "bearer " + accessToken
       },
       success: function (result) {
-        var getVer = JSON.parse(result);
-        _this.setState({getVersions: getVer.length > 0 ? getVer : []})
+        let getVer = JSON.parse(result);
+        _this.setState({
+          getVersions: getVer.length > 0 ? getVer : []
+        })
       },
       error: function (error) {
       }
@@ -89,54 +92,52 @@ class UploadSource extends Component {
 
   //onSelectVersion for Dynamic Revision
   onSelectVersion(e) {
-      this.setState({ Version: e.target.value });
-      var _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
-      var data = { 
-        "language": this.state.Sourcelanguage, "version" : e.target.value
+    this.setState({ Version: e.target.value });
+    let _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token')) 
+    let data = { 
+      "language": this.state.Sourcelanguage, "version" : e.target.value
+    };
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/sourceid",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(data),
+      method: "POST",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var sourceID = JSON.parse(result);
+        _this.setState({ allSourceID: sourceID });
+      },
+      error: function (error) {
       }
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/sourceid",
-        contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(data),
-        method : "POST",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        success: function (result) {
-          var sourceID = JSON.parse(result);
-          _this.setState({allSourceID: sourceID})
-        },
-        error: function (error) {
-        }
-      });
+    });
   }
 
 //upload file with SourceID
   uploadFile(e){
     e.preventDefault();
-    var _this = this
-    var lblError = document.getElementById("lblError");
-    
-    if($('input[type=file]')[0].files.length === 0){
+    let _this = this;
+    let lblError = document.getElementById("lblError");
+    if($('input[type=file]')[0].files.length === 0) {
       lblError.innerHTML = "Please select a files to upload: <b> .usfm </b> only.";
     } else {
-            if(this.state.allSourceID){
-              for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
-              var uploadForm = document.getElementById("upload_form");
-              var formData = new FormData(uploadForm);
-              formData.append('content', $('input[type=file]')[0].files[i]);
-              formData.append('source_id', this.state.allSourceID)
-              let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
-              var countSuccess = 0;
-              var countFailure = 0;
-
-              if(formData.get('content')['name'].slice(-5, ) !== '.usfm'){
-                lblError.innerHTML = "Please upload files having extensions: <b> .usfm </b> only.";
-                i = $('input[type=file]')[0].files.length;
-                $(".modal").hide();
-                break;
-              }else{
+        if(this.state.allSourceID){
+          for(var i = 0; i < ($('input[type=file]')[0].files.length); i++){
+            var uploadForm = document.getElementById("upload_form");
+            var formData = new FormData(uploadForm);
+            formData.append('content', $('input[type=file]')[0].files[i]);
+            formData.append('source_id', this.state.allSourceID)
+            let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+            var countSuccess = 0;
+            var countFailure = 0;
+            if(formData.get('content')['name'].slice(-5, ) !== '.usfm'){
+              lblError.innerHTML = "Please upload files having extensions: <b> .usfm </b> only.";
+              i = $('input[type=file]')[0].files.length;
+              $(".modal").hide();
+              break;
+              } else {
                 lblError.innerHTML = " ";
                 $.ajax({
                 url: GlobalURL["hostURL"]+"/v1/sources",
@@ -148,34 +149,33 @@ class UploadSource extends Component {
                   "Authorization": "bearer " + accessToken
                 },
                 beforeSend: function () {
-                    $(".modal").show();
+                  $(".modal").show();
                 },
                 // eslint-disable-next-line
                 success: function (result) {
                 result = JSON.parse(result)
-                  if (result.success !== false) {
-                      countSuccess++;
-                    _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
-                    if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){  
-                      _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
-                      setTimeout(function(){
-                        _this.setState({uploaded: 'fail'})
-                      },5000);
-                      $(".modal").hide();
+                if (result.success !== false) {
+                  countSuccess++;
+                  _this.setState({message: "Uploading ...... file no." + countSuccess, uploaded: 'success'})
+                  if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){  
+                    _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+                    setTimeout(function(){
+                      _this.setState({uploaded: 'fail'})
+                    }, 5000);
+                    $(".modal").hide();
                     }        
-                  }else {
+                  } else {
                     countFailure++;
                     _this.setState({message: result.message, uploaded: 'failure'})
                     if((countSuccess + countFailure) === ($('input[type=file]')[0].files.length)){   
-                       _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
-                      setTimeout(function(){
-                        _this.setState({uploaded: 'fail'})
-                      },5000);
-                       $(".modal").hide();
+                      _this.setState({message: "Uploaded " + countSuccess + " files successfully", uploaded: 'success'})
+                    setTimeout(function() {
+                      _this.setState({uploaded: 'fail'})
+                    }, 5000);
+                    $(".modal").hide();
                     } 
                   }
-                }
-                ,
+                },
                 error: function (error) {
                  _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
                   setTimeout(function(){
