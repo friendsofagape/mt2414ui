@@ -394,7 +394,7 @@ class Translation extends Component {
       	reader.addEventListener('loadend', (e) => {
         const text = e.srcElement.result;
         _this.setState({message: JSON.parse(text)["message"], uploaded: 'success'})
-	        setTimeout(function(){
+	        setTimeout(function() {
 	          _this.setState({uploaded: 'fail'})
 	        }, 5000);
      	 });
