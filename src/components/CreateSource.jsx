@@ -61,46 +61,64 @@ class CreateSource extends Component {
     });
   }
 
+  validate = () => {
+    if (this.state.version == " ") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   createSource(e){
     let _this = this;
-    let data = { 
-      "language": this.state.selectValue.value, "version": this.state.version
-    };
-    let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
-    $.ajax({
-      url: GlobalURL["hostURL"]+"/v1/createsources",
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(data),
-      method: "POST",
-      async: false,
-      headers: {
-        "Authorization": "bearer " + accessToken
-      },
-      beforeSend: function () {
-        $(".modal").show();
-      },
-      // eslint-disable-next-line
-      success: function (result) {
-        result = JSON.parse(result)
-        if (result.success !== false) {
-          _this.setState({message: result.message, uploaded: 'success'});
-          setTimeout(function(){
-            window.location.href = "./admin";
-          }, 2000);
-        } else {
-          _this.setState({message: result.message, uploaded: 'failure'});
+    const err = this.validate();
+    if (err) {
+      let data = { 
+        "language": this.state.selectValue.value, "version": this.state.version
+      };
+      let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+      $.ajax({
+        url: GlobalURL["hostURL"]+"/v1/createsources",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        method: "POST",
+        async: false,
+        headers: {
+          "Authorization": "bearer " + accessToken
+        },
+        beforeSend: function () {
+          $(".modal").show();
+        },
+        // eslint-disable-next-line
+        success: function (result) {
+          result = JSON.parse(result)
+          if (result.success !== false) {
+            _this.setState({message: result.message, uploaded: 'success'});
+            return;
+            setTimeout(function(){
+              window.location.href = "./admin";
+            }, 2000);
+          } else {
+            _this.setState({message: result.message, uploaded: 'failure'});
+            setTimeout(function(){
+              _this.setState({uploaded: 'fail'});
+            }, 5000);
+          }
+        },
+        error: function (error) {
+          _this.setState({uploaded: 'failure'});
           setTimeout(function(){
             _this.setState({uploaded: 'fail'});
           }, 5000);
         }
-      },
-      error: function (error) {
-        _this.setState({uploaded: 'failure'});
+      });
+    } else {
+        let lblError = document.getElementById("lblError");
+        lblError.innerHTML = "Kindly enter valid version."
         setTimeout(function(){
-          _this.setState({uploaded: 'fail'});
-        }, 5000);
-      }
-    });
+          lblError.innerHTML = " ";
+        }, 3000);
+    }
   }
 
   updateLanguageList(e){
@@ -146,6 +164,10 @@ class CreateSource extends Component {
   }
 
   render() {
+    var style = { 
+      color: 'red',
+      margin: 'auto'
+    }; 
     const { getTargetLangJson } = this.state;
     let options = {};
     let myOptions = [];
@@ -163,7 +185,7 @@ class CreateSource extends Component {
       <div className="col-md-12">
         <Header/>
       </div>
-      <div className="container">
+      <div className="container topContainer">
         <div className="row">
           <div className="col-md-12">
             <h3 className="top3">Create Sources</h3>
@@ -196,6 +218,7 @@ class CreateSource extends Component {
                     required 
                   />
               </div>
+              <span id="lblError" style={style}></span>
               <div className="row alignCneter">
                 <div className="col-md-12">
                   <div className="form-group center-block space">
@@ -211,7 +234,7 @@ class CreateSource extends Component {
                       type="button"
                       className="btn btn-success"
                       onClick={this.updateLanguageList}>
-                      <span className="glyphicon glyphicon-refresh customLink2">&nbsp;</span>
+                      <span className="glyphicon glyphicon-refresh">&nbsp;</span>
                       Update Language
                     </button>
                   </div>
