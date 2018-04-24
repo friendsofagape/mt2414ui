@@ -21,6 +21,7 @@ body {
   display: flex;
 }
 
+
 .mywidth{
   margin-left: 1% !important;
   width: 70%;
@@ -38,7 +39,8 @@ body {
 }
 
 .tokenForm{
-  margin-left: -1%;
+  margin-left: -6%;
+  padding-left: 3%;
 }
 
 .scolor{
@@ -91,6 +93,9 @@ body {
   padding: 0 1% 1% 1%;
 }
 
+.topContainer{
+  margin-top: -2%;
+}
 .top10{padding-top: 3%;}
 .top9{padding-top: 10%; padding-bottom: 9%}
 .top5{padding-top: 2%;}
@@ -330,10 +335,10 @@ img {
 
 .targetSelect{
   display: inline-flex;
-  width: 19%;  
+  width: 15%;
 }
 
-@media (max-width: 550px){
+@media (min-width: 200px) and (max-width: 979px) {
   .colmd3Width{
     width: 100%;
   }
