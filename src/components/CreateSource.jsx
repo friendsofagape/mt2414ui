@@ -94,7 +94,6 @@ class CreateSource extends Component {
           result = JSON.parse(result)
           if (result.success !== false) {
             _this.setState({message: result.message, uploaded: 'success'});
-            return;
             setTimeout(function(){
               window.location.href = "./admin";
             }, 2000);
