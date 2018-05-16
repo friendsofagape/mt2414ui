@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Pie} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 
 class Chart extends Component{
   constructor(props){
     super(props);
     this.state = {
-      chartData:props.chartData
+      chartData: props.chartData
     }
   }
 
@@ -16,10 +16,12 @@ class Chart extends Component{
   }
 
   render(){
+    const { chartData } = this.props;
+    console.log(chartData)
     return (
       <div className="chart">
-        <Pie
-          data={this.props.chartData}
+        <Bar
+          data={chartData}
           options={{
             title:{
               display:this.props.displayTitle,

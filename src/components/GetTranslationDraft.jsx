@@ -516,7 +516,7 @@ class GetTranslationDraft extends Component {
             ]
           }
         });
-        }else {
+        } else {
           _this.setState({message: getRev.message, uploaded: 'failure'})
           setTimeout(function(){
             location.reload();
@@ -526,7 +526,7 @@ class GetTranslationDraft extends Component {
         error: function (error) {
          _this.setState({message: "Service Temporarily Unavailable", uploaded: 'failure'})
           setTimeout(function(){
-            _this.setState({uploaded: 'fail'})
+            _this.setState({ uploaded: 'fail' });
           },5000);             
         }
     });
@@ -577,10 +577,12 @@ class GetTranslationDraft extends Component {
               </div>
               <div>
                 <section style={this.state.getAllBooks === '' ? {display:'none'} : {display: 'inline'} } >
-                {(this.state.autoLoad === false)?(this.autoLoad=false):(<Chart 
-                  chartData={this.state.chartData}
-                  targetlang={this.state.targetlang}
-                  location="Bar Chart" legendPosition="bottom"
+                {(this.state.autoLoad === false)?(this.autoLoad=false) : (
+                    <Chart 
+                      chartData={this.state.chartData}
+                      targetlang={this.state.targetlang}
+                      location="Bar Chart"
+                      legendPosition="bottom"
                 />) }
                 <Tabs activeTab={this.state.activeTab} />
                 <div className="exclude2">{this.createCheckboxes1(this, this.state.getAllBooks, this.state.displayPercentage, this.state.displayTokenCount)}</div>

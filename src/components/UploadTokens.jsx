@@ -56,7 +56,6 @@ class UploadTokens extends Component {
     this.onSelectRevision = this.onSelectRevision.bind(this);
     this.updateTokens = this.updateTokens.bind(this);
     this.updateLanguageList = this.updateLanguageList.bind(this);
-
   }
 
   componentDidMount() {
@@ -370,8 +369,8 @@ class UploadTokens extends Component {
                     <RevisionNumber
                       revision={this.state.getRevision}
                       onChange={this.onSelectRevision} 
-                    />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <label className="control-label"> <strong> Target Language </strong> </label>
+                    />&nbsp;&nbsp;&nbsp;
+                  <label className="control-label"> <strong> Target Language </strong></label>
                 </div>
               </div>
               <div className="col-md-3">             

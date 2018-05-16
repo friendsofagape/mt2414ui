@@ -39,22 +39,22 @@ class UploadSource extends Component {
   }
 
   componentDidMount() {
-      let _this = this;
-      let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
-      $.ajax({
-        url: GlobalURL["hostURL"]+"/v1/languagelist",
-        contentType: "application/json; charset=utf-8",
-        method: "GET",
-        headers: {
-          "Authorization": "bearer " + accessToken
-        },
-        success: function (result) {
-          var getTargetLang = JSON.parse(result);
-          _this.setState({getTargetLanguages: getTargetLang})
-        },
-        error: function (error) {
-        }
-      });
+    let _this = this;
+    let accessToken = JSON.parse(window.localStorage.getItem('access_token'));
+    $.ajax({
+      url: GlobalURL["hostURL"]+"/v1/languagelist",
+      contentType: "application/json; charset=utf-8",
+      method: "GET",
+      headers: {
+        "Authorization": "bearer " + accessToken
+      },
+      success: function (result) {
+        var getTargetLang = JSON.parse(result);
+        _this.setState({getTargetLanguages: getTargetLang})
+      },
+      error: function (error) {
+      }
+    });
   }
 
   onSelect(e) {
@@ -120,6 +120,7 @@ class UploadSource extends Component {
     e.preventDefault();
     let _this = this;
     let lblError = document.getElementById("lblError");
+    
     if($('input[type=file]')[0].files.length === 0) {
       lblError.innerHTML = "Please select a files to upload: <b> .usfm </b> only.";
     } else {
