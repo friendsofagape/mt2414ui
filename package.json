@@ -34,7 +34,9 @@
     "jwt-decode": "^2.2.0",
     "radium": "^0.22.1",
     "react": "^16.2.0",
+    "react-bar-chart": "^0.1.2",
     "react-bootstrap": "^0.32.1",
+    "react-chartjs": "^1.2.0",
     "react-chartjs-2": "^2.1.0",
     "react-dom": "^16.2.0",
     "react-modal": "^3.3.1",
@@ -43,8 +45,10 @@
     "react-router-dom": "^4.2.2",
     "react-select": "~0.9.1",
     "react-text-highlight": "^0.2.0",
+    "react-transition-group": "^2.3.1",
     "react-virtualized": "^9.18.5",
     "react-virtualized-select": "^3.1.0",
-    "save-as": "^0.1.8"
+    "save-as": "^0.1.8",
+    "validator": "^10.2.0"
   }
 }

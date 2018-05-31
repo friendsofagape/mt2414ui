@@ -29,8 +29,8 @@ if (accessToken) {
 const superadmin = (
 	<Switch>
 		<Route exact path="/" component={HomePage}/>
-		<Route  path="/sigin" component={SigninForm}/>
-		<Route  path="/signup" component={SignupForm}/>
+		<Route path="/sigin" component={SigninForm}/>
+		<Route path="/signup" component={SignupForm}/>
 		<Route path="/superadmin" component={SuperAdmin}/>
 		<Route path="/admin" component={UploadSource} />
 		<Route path="/createsource" component={CreateSource}/>

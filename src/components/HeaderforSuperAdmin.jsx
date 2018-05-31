@@ -35,7 +35,7 @@ class HeaderforSuperAdmin extends Component {
           <NavItem eventKey={7} componentClass={Link} href="/" to="/translation">
             <strong className="scolor">Translation </strong>
           </NavItem>
-          <NavItem eventKey={8} componentClass={Link} href="/" to="/logout">
+          <NavItem eventKey={9} componentClass={Link} href="/" to="/logout">
             <strong className="scolor">Log out </strong>
           </NavItem>
           </Nav>
