@@ -11,13 +11,15 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {GlobalUrl} from './globalUrl';
+import { HorizontalCardComponent } from './horizontal-card/horizontal-card.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     D3MatrixComponent,
-    BcvSearchComponent
+    BcvSearchComponent,
+    HorizontalCardComponent
   ],
   imports: [
     BrowserModule,HttpModule,FormsModule,CommonModule,

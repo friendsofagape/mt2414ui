@@ -1,14 +1,21 @@
 <div>
-  <a id="saveButton" style="display: none;" href="#" class="next" (click)="saveOnClick()">Save Changes</a>
+    <button id="saveButton" type="button" class="btn btn-outline-success" style="display: none;padding: 2px 7px;margin:5px;" (click)="saveOnClick()">Save Changes</button>
+    <button id="appButton" type="button" class="btn btn-outline-primary" style="display: none;padding: 2px 7px;margin:5px;" (click)="approveOnClick()">Approve</button>
+    <button id="fixButton" type="button" class="btn btn-outline-secondary" style="padding: 2px 7px;margin:5px;" (click)="fixOnClick()">Fix Alignment</button>
+    <button id="discardButton" type="button" class="btn btn-outline-danger" style="display: none;padding: 2px 7px;margin:5px;" (click)="discardOnClick()">Discard Changes</button>
+      
+  <!-- <a id="saveButton" style="display: none;" href="#" class="next" (click)="saveOnClick()">Save Changes</a>
   <a id="appButton"  style="display: none;"  href="#" class="next" (click)="approveOnClick()">Approve</a>
   <a id="fixButton" href="#" class="next" (click)="fixOnClick()">Fix Alignment</a>
-  <a id="discardButton"  style="display: none;" href="#" class="next" (click)="discardOnClick()">Discard Changes</a>
+  <a id="discardButton"  style="display: none;" href="#" class="next" (click)="discardOnClick()">Discard Changes</a> -->
 </div>
 
-<div>
-<p id="sourceId" style="text-align: left;width:60%"></p>
-<p id="targetId" style="text-align: left;width:60%"></p>
-</div>
+
+<div style="text-align: left">
+  <a id="interlinearLink" href="#" style="width:fit-content; color: black; display:block;text-decoration-line:underline" (click)="interlinearOnClick()">{{Interlinear}}</a>
+ <horizontal-card style="display:inline-block;text-align:center" *ngFor="let horizontalCard of Statuses" [horizontalCard]="horizontalCard">  
+ </horizontal-card>
+ </div>
 
 <!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
 <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;"></div>

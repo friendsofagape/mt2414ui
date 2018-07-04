@@ -3,7 +3,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 body { 
-    padding:20px;
+    padding:2px;
     background: url(./images/bgImage.jpg) 
     
 }
@@ -11,8 +11,8 @@ body {
 a {
     text-decoration: none;
     display: inline-block;
-    padding: 5px 40px;
-    margin:10px;
+    padding: 2px 7px;
+    margin:5px;
     height: 30px;
 }
 
@@ -24,36 +24,40 @@ a:hover {
 .previous {
     background-color: green;
     color: white;
+    width: fit-content;
+    border-radius: 7px;
 }
 
 .next {
     background-color: green;
     color: white;
+    border-radius: 7px;
 }
 
 .round {
     border-radius: 50%;
 }
+/* 
 
-/* width */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
+
 ::-webkit-scrollbar-track {
     background: #f1f1f1; 
 }
  
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
     background: pink;
 }
 
-/* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(85, 85, 85); 
 }
+ */
 
 .toolTip {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -71,3 +75,32 @@ a:hover {
     text-align: center;
     word-wrap: break-word;
 }
+
+#interlinearLink{
+    text-decoration: none;
+    display: inline-block;
+    padding:0px 0px;
+    margin:0px;
+}
+
+#interlinearLink:hover{
+    background-color:white;
+    color: black;   
+}
+
+.label {
+    color: white;
+    border-right: 1px solid white;
+    padding: 1px;
+}
+
+.labelHindi{
+    color:black;
+    padding: 1px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.success {background-color:white;}
+.hindicolor {background-color: rgb(0, 124, 128);}
