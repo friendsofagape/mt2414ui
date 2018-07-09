@@ -96,8 +96,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         }
 
         d.greek.unshift('NULL');
-        let greekHorizontalWords = d.greek;
-
+        d.englishword.unshift('NULL');
+        let greekHorizontalWords = d.englishword;
+        let greekHorizontalWord = d.greek;
         d.hinditext.unshift('NULL');
         let hindiVerticalWords = d.hinditext;
 
@@ -116,6 +117,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     positionalPair: row + "-" + column,// column + "-" + row ,
                     positionalPairOfApi: this.positionalPairOfApi,
                     greekHorizontalWords: greekHorizontalWords,
+                    greekHorizontalWord: greekHorizontalWord,
                     hindiVerticalWords: hindiVerticalWords,
                     greekIndexWise: greekHorizontalWords[column] + column + 'column',
                     hindiIndexWise: hindiVerticalWords[row] + row + 'row',
@@ -273,12 +275,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             greekPair.push("Null");
                         }
                         else {
-                            greekPair.push(this.gridDataJson.greek[Number(pair[1] - 1)]);
+                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" + this.gridDataJson.greek[Number(pair[1] - 1)] + ")");
                         }
                     }
                 }
-                if(greekPair[0]== undefined)
-                {
+                if (greekPair[0] == undefined) {
                     greekPair.push("NA");
                 }
                 this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.hinditext[h], greekPair))
@@ -302,12 +303,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             greekPair.push("Null");
                         }
                         else {
-                            greekPair.push(this.gridDataJson.hinditext[Number(pair[0] - 1)]);
+                            greekPair.push(this.gridDataJson.englishword[Number(pair[0] - 1)] + "(" +  this.gridDataJson.hinditext[Number(pair[0] - 1)] + ")");
                         }
                     }
                 }
-                if(greekPair[0]== undefined)
-                {
+                if (greekPair[0] == undefined) {
                     greekPair.push("NA");
                 }
                 this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.greek[h], greekPair))
@@ -360,12 +360,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                     greekPair.push("Null");
                                 }
                                 else {
-                                    greekPair.push(data.json().greek[Number(pair[1] - 1)]);
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().greek[Number(pair[1] - 1)] + ")");
                                 }
                             }
                         }
-                        if(greekPair[0]== undefined)
-                        {
+                        if (greekPair[0] == undefined) {
                             greekPair.push("NA");
                         }
                         this.Statuses.push(new HorizontalAlign(h, data.json().hinditext[h], greekPair))
@@ -389,12 +388,12 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                     greekPair.push("Null");
                                 }
                                 else {
-                                    greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
+                                    //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
+                                    greekPair.push(data.json().englishword[Number(pair[0] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
                                 }
                             }
                         }
-                        if(greekPair[0]== undefined)
-                        {
+                        if (greekPair[0] == undefined) {
                             greekPair.push("NA");
                         }
                         this.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
@@ -414,13 +413,14 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             // console.log(data.json())
                             greekArray.push("<b>English Word</b>:- " + data.json().englishword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().greek_word + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().pronunciation + "<br/><br/>" + "strongs:- " + data.json().strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().transliteration);
                         });
-                   
+
                     //    console.log(greekArray)       
                 }
 
                 var grid = d3.select("#grid")
                     .append("svg")
                     .style("overflow", "auto")
+                    .style("padding-top", "35px")
 
                 var row = grid.selectAll(".row")
                     .data(gridData)
@@ -440,7 +440,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     .attr("ry", "5")
                     .attr("width", function (d: any) { return d.width })
                     .attr("height", function (d: any) { return d.height })
-                    .attr("stroke","#66a877")//"#acb7b7"
+                    .attr("stroke", "#66a877")//"#acb7b7"
                     .attr("fill",
                         function (d: any) {
                             if (d.positionalPairOfApi.includes(d.positionalPair)) {
@@ -511,12 +511,12 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                                 greekPair.push("Null");
                                             }
                                             else {
-                                                greekPair.push(data.json().greek[Number(pair[1] - 1)]);
+                                                //greekPair.push(data.json().greek[Number(pair[1] - 1)]);
+                                                greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().greek[Number(pair[1] - 1)] + ")");
                                             }
                                         }
                                     }
-                                    if(greekPair[0]== undefined)
-                                    {
+                                    if (greekPair[0] == undefined) {
                                         greekPair.push("NA");
                                     }
                                     self.Statuses.push(new HorizontalAlign(h, data.json().hinditext[h], greekPair))
@@ -539,12 +539,12 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                                 greekPair.push("Null");
                                             }
                                             else {
-                                                greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
+                                                //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
+                                                greekPair.push(data.json().englishword[Number(pair[0] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
                                             }
                                         }
                                     }
-                                    if(greekPair[0]== undefined)
-                                    {
+                                    if (greekPair[0] == undefined) {
                                         greekPair.push("NA");
                                     }
                                     self.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
@@ -552,9 +552,6 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                 // Ends Here
                             }
                             self.gridDataJson.positionalpairs = d.positionalPairOfApi;
-
-
-
                         }
                         else {
                             d3.select(this)
@@ -591,19 +588,18 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                                 greekPair.push("Null");
                                             }
                                             else {
-                                                greekPair.push(data.json().greek[Number(pair[1] - 1)]);
+                                                //greekPair.push(data.json().greek[Number(pair[1] - 1)]);
+                                                greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().greek[Number(pair[1] - 1)] + ")");
                                             }
                                         }
                                     }
-                                    if(greekPair[0]== undefined)
-                                    {
+                                    if (greekPair[0] == undefined) {
                                         greekPair.push("NA");
                                     }
                                     self.Statuses.push(new HorizontalAlign(h, data.json().hinditext[h], greekPair))
                                 }
                                 // Ends Here
                             }
-
 
                             if (self.Interlinear == "Reverse-Interlinear") {
                                 // Code for horizontal alignment
@@ -619,12 +615,12 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                                 greekPair.push("Null");
                                             }
                                             else {
-                                                greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
+                                                //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
+                                                greekPair.push(data.json().englishword[Number(pair[0] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
                                             }
                                         }
                                     }
-                                    if(greekPair[0]== undefined)
-                                    {
+                                    if (greekPair[0] == undefined) {
                                         greekPair.push("NA");
                                     }
                                     self.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
@@ -632,9 +628,6 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                 // Ends Here
                             }
                             self.gridDataJson.positionalpairs = d.positionalPairOfApi;
-
-
-
                         }
                         //console.log(d.positionalPairOfApi)
                         //console.log(self.indPair)
@@ -655,9 +648,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         div.style("width", "400px")
                         div.html(function () {
 
-                            if (d.greekHorizontalWords[i] != 'NULL') {
+                            if (d.greekHorizontalWord[i] != 'NULL') {
                                 // console.log(Number(d.greekHorizontalWords[i].substring(1,d.greekHorizontalWords[i].length)));
-                                let removeZero = Number(d.greekHorizontalWords[i].substring(1, d.greekHorizontalWords[i].length)).toString();
+                                let removeZero = Number(d.greekHorizontalWord[i].substring(1, d.greekHorizontalWord[i].length)).toString();
                                 if (removeZero.endsWith('0')) {
                                     removeZero = removeZero.substring(0, removeZero.length - 1)
                                 }
@@ -686,9 +679,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     .on("mouseout", function (d: any) {
                         var x = document.getElementById(d.greekIndexWise);
                         var y = document.getElementById(d.hindiIndexWise);
-                        x.style.fontSize = "13px";
+                        x.style.fontSize = "14px";
                         x.style.fill = "black";
-                        y.style.fontSize = "13px";
+                        y.style.fontSize = "14px";
                         y.style.fill = "black";
                         div.style("display", "none");
                     })
@@ -751,10 +744,10 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 var labelGreek = labelll.append("text")
 
                     .attr("transform", function (d: any, i) {
-                        var xAxis = d.x + 17;
-                        return "translate(" + xAxis + ",85)rotate(300)";
+                        var xAxis = d.x + 14;
+                        return "translate(" + xAxis + ",95)rotate(300)";
                     })
-                    .style("font-size", "13px")
+                    .style("font-size", "14px")
                     .attr("id", function (d: any, i) {
                         return d.greekIndexWise;
                     })
@@ -774,9 +767,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         div.style("width", "400px")
                         div.html(function () {
 
-                            if (d.greekHorizontalWords[i] != 'NULL') {
+                            if (d.greekHorizontalWord[i] != 'NULL') {
                                 // console.log(Number(d.greekHorizontalWords[i].substring(1,d.greekHorizontalWords[i].length)));
-                                let removeZero = Number(d.greekHorizontalWords[i].substring(1, d.greekHorizontalWords[i].length)).toString();
+                                let removeZero = Number(d.greekHorizontalWord[i].substring(1, d.greekHorizontalWord[i].length)).toString();
                                 if (removeZero.endsWith('0')) {
                                     removeZero = removeZero.substring(0, removeZero.length - 1)
                                 }
