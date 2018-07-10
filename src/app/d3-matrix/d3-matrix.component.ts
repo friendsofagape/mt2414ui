@@ -101,6 +101,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         let greekHorizontalWord = d.greek;
         d.hinditext.unshift('NULL');
         let hindiVerticalWords = d.hinditext;
+        let colorCode = d.colorcode;
 
         var data = new Array();
         var rowcount = hindiVerticalWords.length;
@@ -119,6 +120,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     greekHorizontalWords: greekHorizontalWords,
                     greekHorizontalWord: greekHorizontalWord,
                     hindiVerticalWords: hindiVerticalWords,
+                    colorCode:colorCode,
                     greekIndexWise: greekHorizontalWords[column] + column + 'column',
                     hindiIndexWise: hindiVerticalWords[row] + row + 'row',
                     rawPosss: rawPoss,
@@ -445,7 +447,21 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         function (d: any) {
                             if (d.positionalPairOfApi.includes(d.positionalPair)) {
                                 d.filled = true;
-                                return "#007C80"
+                                let index = d.positionalPairOfApi.indexOf(d.positionalPair)
+                                // console.log(d.colorCode)
+                                // console.log(d.positionalPairOfApi)
+                                // console.log(d.positionalPair)
+                                // console.log(d.colorCode[index])
+                                 if(d.colorCode[index] == '0'){
+                                    return "#007C80"
+                                }
+                                else if(d.colorCode[index] == '1'){
+                                    return '#023659'
+                                }
+                                else if(d.colorCode[index] == '2')
+                                {
+                                    return '#4695c9'
+                                }
                             }
                             else {
                                 d.filled = false;
