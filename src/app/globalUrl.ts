@@ -4,7 +4,7 @@ export class GlobalUrl {
 
     
     //In case of get request this api Returns list of positional pairs, list of Hindi words, list of strong numbers for the bcv queried. 
-    // and in case of post it updates the corresponding Verses alignments as per the corrections made by user.
+    // // and in case of post it updates the corresponding Verses alignments as per the corrections made by user.
     // getnUpdateBCV : string = 'http://127.0.0.1:8000/v2/alignments';
 
     // // Returns a list of books whose alignments are available

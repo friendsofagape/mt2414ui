@@ -302,15 +302,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     let pair = this.gridDataJson.positionalpairs[g].split('-');
                     if (h == (Number(pair[1] - 1))) {
                         if (pair[0] == "255" || pair[0] == "0") {
-                            greekPair.push("Null");
+                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                         }
                         else {
-                            greekPair.push(this.gridDataJson.englishword[Number(pair[0] - 1)] + "(" +  this.gridDataJson.hinditext[Number(pair[0] - 1)] + ")");
+                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" +  this.gridDataJson.hinditext[Number(pair[0] - 1)] + ")");
                         }
                     }
                 }
                 if (greekPair[0] == undefined) {
-                    greekPair.push("NA");
+                    greekPair.push(this.gridDataJson.englishword[h] + "(" + "NA" + ")");
                 }
                 this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.greek[h], greekPair))
             }
@@ -377,6 +377,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
                 if (this.Interlinear == "Reverse-Interlinear") {
                     // Code for horizontal alignment
+                    //console.log(data.json())
                     this.Statuses = [];
                     for (var h = 0; h < data.json().greek.length; h++) {
 
@@ -387,16 +388,16 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             let pair = data.json().positionalpairs[g].split('-');
                             if (h == (Number(pair[1] - 1))) {
                                 if (pair[0] == "255") {
-                                    greekPair.push("Null");
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                                 }
                                 else {
                                     //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
-                                    greekPair.push(data.json().englishword[Number(pair[0] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
                                 }
                             }
                         }
                         if (greekPair[0] == undefined) {
-                            greekPair.push("NA");
+                            greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
                         }
                         this.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
                     }
@@ -480,7 +481,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     .on('click', function (d: any, i) {
                         if (!d.filled) {
                             d3.select(this)
-                                .style("fill", "#007C80")
+                                .style("fill", "#023659")
                                 .attr('class', "filledsquare");
 
                             //console.log(d.positionalPairOfApi)
@@ -497,7 +498,16 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                     d.positionalPairOfApi.splice(index, 1);
                                 }
                                 document.getElementById('rect-' + d.y + 0).style.fill = "#fff";
-                                //console.log(splilttedWord[0]);
+                                
+                            }
+
+                            // console.log(splilttedWord)
+                            if (d.positionalPairOfApi.includes("0-" + splilttedWord[1])) {
+                                const indexs: number = d.positionalPairOfApi.indexOf("0-" + splilttedWord[1]);
+                                if (indexs !== -1) {
+                                    d.positionalPairOfApi.splice(indexs, 1);
+                                }
+                                document.getElementById('rect-' + 100 + i).style.fill = "#fff";
                             }
 
                             d.filled = true;
@@ -552,16 +562,16 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                         let pair = d.positionalPairOfApi[g].split('-');
                                         if (h == (Number(pair[1] - 1))) {
                                             if (pair[0] == "0") {
-                                                greekPair.push("Null");
+                                                greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                                             }
                                             else {
                                                 //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
-                                                greekPair.push(data.json().englishword[Number(pair[0] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
+                                                greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
                                             }
                                         }
                                     }
                                     if (greekPair[0] == undefined) {
-                                        greekPair.push("NA");
+                                        greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
                                     }
                                     self.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
                                 }
@@ -628,16 +638,16 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                         let pair = d.positionalPairOfApi[g].split('-');
                                         if (h == (Number(pair[1] - 1))) {
                                             if (pair[0] == "0") {
-                                                greekPair.push("Null");
+                                                greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                                             }
                                             else {
                                                 //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
-                                                greekPair.push(data.json().englishword[Number(pair[0] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
+                                                greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
                                             }
                                         }
                                     }
                                     if (greekPair[0] == undefined) {
-                                        greekPair.push("NA");
+                                        greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
                                     }
                                     self.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
                                 }

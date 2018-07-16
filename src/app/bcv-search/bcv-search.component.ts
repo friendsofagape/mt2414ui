@@ -149,7 +149,7 @@ export class BcvSearchComponent implements OnInit {
   prevOnclick(){
     document.getElementById('grid').scrollTop =0;
     if(document.getElementById("saveButton").style.display != "none"){
-      this.toastr.warning("Kindly click on save to make the updation.")
+      this.toastr.warning("Kindly click on save to make the updation or discard changes.")
     }
 
     else {
@@ -193,7 +193,7 @@ export class BcvSearchComponent implements OnInit {
   nextOnClick(){
     document.getElementById('grid').scrollTop =0;
     if(document.getElementById("saveButton").style.display != "none"){
-      this.toastr.warning("Kindly click on save to make the updation.")
+      this.toastr.warning("Kindly click on save to make the updation or discard changes.")
     }
 
     else {
