@@ -358,7 +358,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         for (var g = 0; g < data.json().positionalpairs.length; g++) {
                             let pair = data.json().positionalpairs[g].split('-');
                             if (h == (Number(pair[0] - 1))) {
-                                if (pair[1] == "255") {
+                                if (pair[1] == "255" || pair[1] == "0") {
                                     greekPair.push("Null");
                                 }
                                 else {
