@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {GlobalUrl} from './globalUrl';
 import { HorizontalCardComponent } from './horizontal-card/horizontal-card.component';
+import { VerticalInterlinearComponent } from './vertical-interlinear/vertical-interlinear.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { HorizontalCardComponent } from './horizontal-card/horizontal-card.compo
     AppComponent,
     D3MatrixComponent,
     BcvSearchComponent,
-    HorizontalCardComponent
+    HorizontalCardComponent,
+    VerticalInterlinearComponent
   ],
   imports: [
     BrowserModule,HttpModule,FormsModule,CommonModule,

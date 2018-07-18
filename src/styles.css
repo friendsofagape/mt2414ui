@@ -88,6 +88,18 @@ a:hover {
     color: black;   
 }
 
+#verticalORgrid{
+    text-decoration: none;
+    display: inline-block;
+    padding:0px 0px;
+    margin:0px;
+}
+
+#verticalORgrid:hover{
+    background-color:white;
+    color: black;   
+}
+
 .label {
     color: white;
     border-right: 1px solid white;

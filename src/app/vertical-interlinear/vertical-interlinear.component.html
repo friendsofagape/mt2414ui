@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+      <div class="col-xs-3" style="text-align: right">
+        <label *ngFor= "let hindiLabel of hindiLabels" style="display:block;height: 15px">{{hindiLabel}} <br></label>
+      </div>
+      <div class="col-xs-3">
+        <canvas id="myCanvas" width="1" height="1">
+          Your browser does not support the HTML5 canvas tag.</canvas>
+      </div>
+      <div class="col-xs-3">
+       <b> <label *ngFor= "let greekLabel of greekLabels" style="display:block;height: 15px">{{"<" + greekLabel + ">"}} <br></label></b>
+      </div>
+      <div class="col-xs-3">
+        <label *ngFor= "let englishword of englishword" style="display:block;height: 15px;text-align: left;">{{englishword}} <br></label>
+      </div>
+  </div>
+</div>

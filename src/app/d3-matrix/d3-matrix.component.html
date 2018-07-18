@@ -18,4 +18,10 @@
  </div>
 
 <!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
-<div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;"></div>
+<br>
+<a id="verticalORgrid" href="#" style="padding-bottom:0; margin-right: 400px;text-align: right; color: black; display:block;text-decoration-line:underline" (click)="verticalORgridOnClick()">{{verticalORgrid}}</a>
+<div id="grid" class="content" style="margin-left: 300px; width:800px;height:470px;"></div>
+
+ <div id="verticalInterlinear"  class="content" style="margin-left: 540px; width:800px;display: none;">
+  <vertical-interlinear *ngIf="gridDataJson" [bilinearData]="gridDataJson" > </vertical-interlinear>
+ </div>

@@ -42,7 +42,8 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     private greekPopUp: string[];
     @Input() BCV: any;
     private Statuses = new Array();
-    private Interlinear = "Interlinear"
+    private Interlinear = "Interlinear";
+    private verticalORgrid = "Display Bilinear";
     private gridDataJson: any;
 
     constructor(private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
@@ -261,6 +262,21 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.bindHorizontalAlign();
     }
 
+    verticalORgridOnClick() {
+        // this.bilinearData = this.gridDataJson;
+        // console.log(this.bilinearData)
+        if (this.verticalORgrid == "Display Grid") {
+            this.verticalORgrid = "Display Bilinear"
+            document.getElementById('verticalInterlinear').style.display = "none";
+            document.getElementById('grid').style.display = "";
+        }
+        else {
+            this.verticalORgrid = "Display Grid"            
+            document.getElementById('verticalInterlinear').style.display = "";
+            document.getElementById('grid').style.display = "none";
+        }
+    }
+
     bindHorizontalAlign() {
         if (this.Interlinear == "Interlinear") {
             // Code for horizontal alignment
@@ -327,6 +343,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.BCV = bookChapterVerse.currentValue;
         this.gridBind();
         this.Interlinear = "Interlinear"
+        this.verticalORgrid = "Display Bilinear";
+        document.getElementById('verticalInterlinear').style.display = "none";
+        document.getElementById('grid').style.display = "";
     }
 
 
@@ -423,7 +442,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 var grid = d3.select("#grid")
                     .append("svg")
                     .style("overflow", "auto")
-                    .style("padding-top", "35px")
+                    .style("padding-top", "10px")
 
                 var row = grid.selectAll(".row")
                     .data(gridData)
