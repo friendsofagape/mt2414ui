@@ -34,7 +34,7 @@ export class VerticalInterlinearComponent {
  
      for(var i=0;i < this.bilinearData.positionalpairs.length; i++){
           
-         if(!this.bilinearData.positionalpairs[i].split('-')[0].includes('255') && !this.bilinearData.positionalpairs[i].split('-')[1].includes('255')){
+         if((this.bilinearData.positionalpairs[i].split('-')[0] !== '255') && (this.bilinearData.positionalpairs[i].split('-')[0] !== '0') && (this.bilinearData.positionalpairs[i].split('-')[1] !== '255') && (this.bilinearData.positionalpairs[i].split('-')[1] !== '0') ){
           var xMoveAxis = 0;
           var yMoveAxis = ((this.bilinearData.positionalpairs[i].split('-')[0] - 1)  * 23) + 10;
 

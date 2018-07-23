@@ -24,6 +24,7 @@ import { GlobalUrl } from '../globalUrl';
 import { HorizontalAlign } from '../horizontalAlign';
 import { getHostElement } from '@angular/core/src/render3';
 import { stringify } from '@angular/compiler/src/util';
+import { saveAs } from 'file-saver/FileSaver';
 
 @Component({
     selector: 'app-d3-matrix',
@@ -45,6 +46,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     private Interlinear = "Interlinear";
     private verticalORgrid = "Display Bilinear";
     private gridDataJson: any;
+    private fixFlag:boolean;
 
     constructor(private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
         this.d3 = d3Service.getD3();
@@ -61,6 +63,10 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         var width = 25;
         var height = 25;
         var filled;
+
+        if(!this.fixFlag){
+        localStorage.setItem("lastAlignments", "");
+    }
 
         var rawpossCount = rawPoss.length;
         for (let index = 0; index < rawpossCount; index++) {
@@ -180,8 +186,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
         document.getElementById('saveButton').style.display = 'none';
         document.getElementById("appButton").style.display = "";
-        document.getElementById('discardButton').style.display = 'none';
-
+        //document.getElementById('discardButton').style.display = 'none';
+        
+        localStorage.setItem("lastAlignments", this.rawPos);
+        // console.log(this.positionalPairOfApi)
+        // console.log(this.rawPos)
     }
 
     approveOnClick() {
@@ -214,9 +223,10 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     fixOnClick() {
-
+        
         var x: any = this.BCV;
         //console.log(x)
+        this.fixFlag = true;
 
         var data = { "bcv": x };
 
@@ -227,7 +237,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 if (response._body === 'Saved') {
                     this.toastr.success('Feedback alignment have been updated successfully.');
                     this.gridBind();
-                    document.getElementById('discardButton').style.display = 'none';
+                    document.getElementById('discardButton').style.display = '';
                     document.getElementById("saveButton").style.display = "none";
                 }
             }, (error: Response) => {
@@ -245,9 +255,60 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     discardOnClick() {
-        this.gridBind();
+
+        if(localStorage.getItem("lastAlignments") !== "")
+        {
+        var x: any = this.BCV;
+        var y: any =  localStorage.getItem("lastAlignments").split(',');
+        //var y: any = this.positionalPairOfApi;
+
+        var z: number = y.length;
+
+        for (let index = 0; index < z; index++) {
+            let separatedPair = y[index].split('-');
+            if (separatedPair.length === 2) {
+
+                if (Number(separatedPair[0]) === 0) {
+                    separatedPair[0] = 255;
+                }
+
+                if (Number(separatedPair[1]) === 0) {
+                    separatedPair[1] = 255;
+                }
+            }
+            y[index] = separatedPair[0] + "-" + separatedPair[1];
+        }
+        var data = { "bcv": x, "positional_pairs": y };
+
+        this._http.post(this.ApiUrl.getnUpdateBCV, data)
+            .subscribe(data => {
+                let response: any = data;
+                //console.log(response._body);
+                if (response._body === 'Saved') {
+                    this.toastr.success('Discarded the changes successfully.');
+                    this.gridBind(); 
+                    localStorage.setItem("lastAlignments", "");
+                }
+            }, (error: Response) => {
+                if (error.status === 400) {
+                    this.toastr.warning("Bad Request Error.")
+                }
+                else {
+                    this.toastr.error("An Unexpected Error Occured.")
+                }
+
+            })
+            //console.log('1')
+        }
+
+        else {
+            //console.log('2')
+            this.gridBind(); 
+        }
+        
+        document.getElementById('saveButton').style.display = 'none';
+        document.getElementById("appButton").style.display = 'none';
         document.getElementById('discardButton').style.display = 'none';
-        document.getElementById("saveButton").style.display = "none";
     }
 
 
@@ -334,6 +395,18 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             // Ends Here
         }
     }
+
+
+    exportOnClick() {
+        this._http.get(this.ApiUrl.grkhin)
+          .toPromise()
+          .then(response => this.saveToFileSystem(response.json()));
+      }
+     
+      private saveToFileSystem(response) {
+        const blob = new Blob([JSON.stringify(response)], { type: 'application/json' });
+        saveAs(blob, 'bible.json');
+      }
 
 
     ngOnInit() { }

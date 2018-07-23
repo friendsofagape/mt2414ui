@@ -144,6 +144,7 @@ export class BcvSearchComponent implements OnInit {
 
     document.getElementById("saveButton").style.display = "none";
     document.getElementById("appButton").style.display = 'none';
+    document.getElementById("discardButton").style.display = 'none';
   }
 
   prevOnclick(){
@@ -158,6 +159,7 @@ export class BcvSearchComponent implements OnInit {
     {
     document.getElementById("saveButton").style.display = "none";
     document.getElementById("appButton").style.display = 'none';
+    document.getElementById("discardButton").style.display = 'none';
     }
 
     if(this.chapterNumber && this.verseNumber){
@@ -205,6 +207,7 @@ export class BcvSearchComponent implements OnInit {
 
     document.getElementById("saveButton").style.display = "none";
     document.getElementById("appButton").style.display = 'none';
+    document.getElementById("discardButton").style.display = 'none';
     }
     //console.log(this.chapterNumber);
 

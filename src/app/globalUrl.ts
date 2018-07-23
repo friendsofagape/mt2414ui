@@ -24,6 +24,9 @@ export class GlobalUrl {
 
     // // Saves the new approved alignments in the feedback lookup table for further use
     // fixAlignments : string = 'http://127.0.0.1:8000/v2/alignments/feedbacks/verses';
+
+    // // Fetch the whole bible alignment
+    // grkhin : string = 'http://127.0.0.1:8000/v2/alignments/grkhin';
     
     
 
@@ -50,4 +53,7 @@ export class GlobalUrl {
 
     //Saves the new approved alignments in the feedback lookup table for further use
     fixAlignments : string = 'https://stagingapi.autographamt.com/v2/alignments/feedbacks/verses';
+
+    // Fetch the whole bible alignment
+       grkhin : string = 'https://stagingapi.autographamt.com/v2/alignments/grkhin';
 }
