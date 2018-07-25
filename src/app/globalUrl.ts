@@ -36,7 +36,7 @@ export class GlobalUrl {
     // and in case of post it updates the corresponding Verses alignments as per the corrections made by user.
     getnUpdateBCV : string = 'https://stagingapi.autographamt.com/v2/alignments';
 
-    // Returns a list of books whose alignments are available
+    //Returns a list of books whose alignments are available
     getBooks : string = 'https://stagingapi.autographamt.com/v2/alignments/books';
 
     //Returns a list of chapter number of the book queried.
@@ -54,6 +54,6 @@ export class GlobalUrl {
     //Saves the new approved alignments in the feedback lookup table for further use
     fixAlignments : string = 'https://stagingapi.autographamt.com/v2/alignments/feedbacks/verses';
 
-    // Fetch the whole bible alignment
-       grkhin : string = 'https://stagingapi.autographamt.com/v2/alignments/grkhin';
+    //Fetch the whole bible alignment
+    grkhin : string = 'https://stagingapi.autographamt.com/v2/alignments/grkhin';
 }

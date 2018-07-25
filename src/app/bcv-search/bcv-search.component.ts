@@ -145,6 +145,7 @@ export class BcvSearchComponent implements OnInit {
     document.getElementById("saveButton").style.display = "none";
     document.getElementById("appButton").style.display = 'none';
     document.getElementById("discardButton").style.display = 'none';
+    localStorage.setItem("lastAlignments", "");
   }
 
   prevOnclick(){
@@ -190,6 +191,7 @@ export class BcvSearchComponent implements OnInit {
             //console.log (this.BCV + "  " + "prev")
           }
         }
+        localStorage.setItem("lastAlignments", "");
   }
 
   nextOnClick(){
@@ -230,6 +232,8 @@ export class BcvSearchComponent implements OnInit {
     else
     this.BCV = this.bookNumber + this.chapterNumber + this.verseNumber;
     //console.log (this.BCV + "  " + "next")
+
+    localStorage.setItem("lastAlignments", "");
 }
 }
 

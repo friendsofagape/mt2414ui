@@ -33,6 +33,7 @@ import { saveAs } from 'file-saver/FileSaver';
 })
 export class D3MatrixComponent implements OnInit, OnChanges {
 
+    private display = false;
     private d3: D3;
     private serviceResult: any;
     private positionalPairOfApi: any;
@@ -46,13 +47,13 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     private Interlinear = "Interlinear";
     private verticalORgrid = "Display Bilinear";
     private gridDataJson: any;
-    private fixFlag:boolean;
 
     constructor(private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
         this.d3 = d3Service.getD3();
         this.toastr.toastrConfig.positionClass = "toast-top-center"
         this.toastr.toastrConfig.closeButton = true;
         this.toastr.toastrConfig.progressBar = true;
+        this.toastr.toastrConfig.timeOut= 1200;
 
     }
 
@@ -63,10 +64,6 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         var width = 25;
         var height = 25;
         var filled;
-
-        if(!this.fixFlag){
-        localStorage.setItem("lastAlignments", "");
-    }
 
         var rawpossCount = rawPoss.length;
         for (let index = 0; index < rawpossCount; index++) {
@@ -91,13 +88,24 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             let separatedPair = positionalPairOfApiDemo[index].split('-');
             if (separatedPair.length === 2) {
 
+
+                if (Number(separatedPair[0]) === 0) {
+                    separatedPair[0] = 100;
+                }
+
                 if (Number(separatedPair[0]) === 255) {
                     separatedPair[0] = 0;
+                }
+ 
+                if (Number(separatedPair[1]) === 0) {
+                    separatedPair[1] = 100;
                 }
 
                 if (Number(separatedPair[1]) === 255) {
                     separatedPair[1] = 0;
                 }
+
+
             }
             positionalPairOfApiDemo[index] = separatedPair[0] + "-" + separatedPair[1];
         }
@@ -146,6 +154,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
     saveOnClick() {
 
+        document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
         var y: any = this.positionalPairOfApi;
 
@@ -159,26 +168,38 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     separatedPair[0] = 255;
                 }
 
+                if (Number(separatedPair[0]) === 100) {
+                    separatedPair[0] = 0;
+                }
+
                 if (Number(separatedPair[1]) === 0) {
                     separatedPair[1] = 255;
+                }
+
+                if (Number(separatedPair[1]) === 100) {
+                    separatedPair[1] = 0;
                 }
             }
             y[index] = separatedPair[0] + "-" + separatedPair[1];
         }
         var data = { "bcv": x, "positional_pairs": y };
-
+        this.display = true;
         this._http.post(this.ApiUrl.getnUpdateBCV, data)
             .subscribe(data => {
                 let response: any = data;
+                this.display = false;
                 //console.log(response._body);
                 if (response._body === 'Saved') {
                     this.toastr.success('Updation has been done successfully.');
+                    this.gridBind();
                 }
             }, (error: Response) => {
                 if (error.status === 400) {
-                    this.toastr.warning("Bad Request Error.")
+                    this.display = false;
+                    this.toastr.warning("Bad Request Error.")                    
                 }
                 else {
+                    this.display = false;
                     this.toastr.error("An Unexpected Error Occured.")
                 }
 
@@ -194,68 +215,74 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     approveOnClick() {
-
         var x: any = this.BCV;
         var y: any = this.indPair;
         //console.log(x,y)
 
         var data = { "bcv": x, "positional_pairs": y };
-
+        this.display = true;
         this._http.post(this.ApiUrl.approveAlignments, data)
             .subscribe(data => {
                 let response: any = data;
+                this.display = false;
                 //console.log(response._body);
                 if (response._body === 'Saved') {
                     this.toastr.success('New alignments have been approved successfully.');
                 }
             }, (error: Response) => {
                 if (error.status === 400) {
+                    this.display = false;
                     this.toastr.warning("Bad Request Error.")
                 }
                 else {
+                    this.display = false;
                     this.toastr.error("An Unexpected Error Occured.")
                 }
 
             })
-
         document.getElementById("appButton").style.display = 'none';
+        document.getElementById('discardButton').style.display = 'none';
+        this.indPair = [];
 
     }
 
     fixOnClick() {
-        
+        document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
         //console.log(x)
-        this.fixFlag = true;
 
         var data = { "bcv": x };
-
+        this.display = true;
         this._http.post(this.ApiUrl.fixAlignments, data)
             .subscribe(data => {
                 let response: any = data;
+                this.display = false;
                 //console.log(response._body);
-                if (response._body === 'Saved') {
+                if (response._body === 'Saved') {                    
                     this.toastr.success('Feedback alignment have been updated successfully.');
                     this.gridBind();
                     document.getElementById('discardButton').style.display = '';
-                    document.getElementById("saveButton").style.display = "none";
+                    document.getElementById("saveButton").style.display = "none"; 
+                    document.getElementById("appButton").style.display = 'none';
+                    localStorage.setItem("lastAlignments", this.positionalPairOfApi);
+                    // console.log(this.positionalPairOfApi)
+                    // console.log(this.rawPos)           
                 }
             }, (error: Response) => {
                 if (error.status === 400) {
+                    this.display = false;
                     this.toastr.warning("Bad Request Error.")
                 }
                 else {
+                    this.display = false;
                     this.toastr.error("An Unexpected Error Occured.")
                 }
 
             })
-
-
-
     }
 
     discardOnClick() {
-
+        document.getElementById("grid").innerHTML = "";
         if(localStorage.getItem("lastAlignments") !== "")
         {
         var x: any = this.BCV;
@@ -272,17 +299,26 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     separatedPair[0] = 255;
                 }
 
+                if (Number(separatedPair[0]) === 100) {
+                    separatedPair[0] = 0;
+                }
+
                 if (Number(separatedPair[1]) === 0) {
                     separatedPair[1] = 255;
+                }
+
+                if (Number(separatedPair[1]) === 100) {
+                    separatedPair[1] = 0;
                 }
             }
             y[index] = separatedPair[0] + "-" + separatedPair[1];
         }
         var data = { "bcv": x, "positional_pairs": y };
-
+        this.display = true;
         this._http.post(this.ApiUrl.getnUpdateBCV, data)
             .subscribe(data => {
                 let response: any = data;
+                this.display = false;
                 //console.log(response._body);
                 if (response._body === 'Saved') {
                     this.toastr.success('Discarded the changes successfully.');
@@ -291,9 +327,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 }
             }, (error: Response) => {
                 if (error.status === 400) {
+                    this.display = false;
                     this.toastr.warning("Bad Request Error.")
                 }
                 else {
+                    this.display = false;
                     this.toastr.error("An Unexpected Error Occured.")
                 }
 
@@ -398,9 +436,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
 
     exportOnClick() {
+        this.display = true;
         this._http.get(this.ApiUrl.grkhin)
           .toPromise()
           .then(response => this.saveToFileSystem(response.json()));
+        this.display = false;
       }
      
       private saveToFileSystem(response) {
@@ -426,16 +466,19 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         let bcv: any = this.BCV; //40001010;
         //   var data = new FormData();
         //   data.append("bcv",bcv);
+        this.display = true;
+        document.getElementById("grid").innerHTML = "";
         this._http.get(this.ApiUrl.getnUpdateBCV + '/' + bcv)
             .subscribe(data => {
                 //console.log(data.json())
                 this.gridDataJson = data.json();
                 this.rawPos = data.json().positionalpairs;
+                this.display = false;
                 var that = this;
                 let self = this;
                 let d3 = this.d3;
 
-                document.getElementById("grid").innerHTML = "";
+                //document.getElementById("grid").innerHTML = "";
                 var content = document.getElementById('grid');
 
 
@@ -498,7 +541,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 }
 
                 var gridData = this.gridData(data.json(), this.rawPos);
-
+                //console.log(gridData)
 
                 var greekLexiconText = '';
                 var greekArray = new Array();
@@ -517,10 +560,10 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     .style("overflow", "auto")
                     .style("padding-top", "10px")
 
-                var row = grid.selectAll(".row")
+                var row = grid.selectAll(".rowd3")
                     .data(gridData)
                     .enter().append("g")
-                    .attr("class", "row");
+                    .attr("class", "rowd3");
 
 
                 var column = row.selectAll(".square")
@@ -538,6 +581,8 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     .attr("stroke", "#66a877")//"#acb7b7"
                     .attr("fill",
                         function (d: any) {
+                            //console.log(d.positionalPairOfApi)
+                            //console.log(d.positionalPair)
                             if (d.positionalPairOfApi.includes(d.positionalPair)) {
                                 d.filled = true;
                                 let index = d.positionalPairOfApi.indexOf(d.positionalPair)
@@ -609,6 +654,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             if (d.rawPosss != d.positionalPairOfApi) {
                                 document.getElementById("saveButton").style.display = "";
                                 document.getElementById("discardButton").style.display = "";
+                                document.getElementById("appButton").style.display = "none";
                             }
                             else {
                                 document.getElementById("saveButton").style.display = "none";
@@ -826,7 +872,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     })
                 // Ended Here   
 
-                var labell = d3.selectAll(".row")
+                var labell = d3.selectAll(".rowd3")
                     .data(gridData)
 
                 var label = labell.append("text")

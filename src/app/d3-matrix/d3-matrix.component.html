@@ -10,8 +10,28 @@
   <a id="discardButton"  style="display: none;" href="#" class="next" (click)="discardOnClick()">Discard Changes</a> -->
 </div>
 
+<div class="container"  *ngIf = "display">
+  <div class="row">
 
-<div style="text-align: left">
+      <div class="col-sm-5">
+          
+        </div>
+
+      <div class="col-sm-6" style="margin-top: 20px">
+        <app-radar-spinner
+        [animationDuration]="1000"
+        [size]="100"
+        [color]="'blue'">
+      </app-radar-spinner>
+      </div>
+      <div class="col-sm-1">
+          
+        </div>
+  </div>
+</div>
+
+
+<div style="text-align: left" *ngIf = "!display">
   <a id="interlinearLink" href="#" style="width:fit-content; color: black; display:block;text-decoration-line:underline" (click)="interlinearOnClick()">{{Interlinear}}</a>
  <horizontal-card style="display:inline-block;text-align:center" *ngFor="let horizontalCard of Statuses" [horizontalCard]="horizontalCard">  
  </horizontal-card>
@@ -19,7 +39,7 @@
 
 <!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
 <br>
-<a id="verticalORgrid" href="#" style="padding-bottom:0; margin-right: 400px;text-align: right; color: black; display:block;text-decoration-line:underline" (click)="verticalORgridOnClick()">{{verticalORgrid}}</a>
+<a *ngIf = "!display" id="verticalORgrid" href="#" style="padding-bottom:0; margin-right: 400px;text-align: right; color: black; display:block;text-decoration-line:underline" (click)="verticalORgridOnClick()">{{verticalORgrid}}</a>
 <div id="grid" class="content" style="margin-left: 300px; width:800px;height:470px;"></div>
 
  <div id="verticalInterlinear"  class="content" style="margin-left: 540px; width:800px;display: none;">

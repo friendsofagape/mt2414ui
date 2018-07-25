@@ -13,7 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {GlobalUrl} from './globalUrl';
 import { HorizontalCardComponent } from './horizontal-card/horizontal-card.component';
 import { VerticalInterlinearComponent } from './vertical-interlinear/vertical-interlinear.component';
-
+import {SelfBuildingSquareSpinnerModule, FulfillingSquareSpinnerModule, HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule} from 'angular-epic-spinners';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { VerticalInterlinearComponent } from './vertical-interlinear/vertical-in
   ],
   imports: [
     BrowserModule,HttpModule,FormsModule,CommonModule,
+    SelfBuildingSquareSpinnerModule,HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot()
   ],
