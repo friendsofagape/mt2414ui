@@ -43,6 +43,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     private lexiconData: string;
     private greekPopUp: string[];
     @Input() BCV: any;
+    @Input() BOOKNAME: any;
     private Statuses = new Array();
     private Interlinear = "Interlinear";
     private verticalORgrid = "Display Bilinear";
@@ -436,8 +437,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
 
     exportOnClick() {
+        console.log(this.BOOKNAME)
         this.display = true;
-        this._http.get(this.ApiUrl.grkhin)
+        this._http.get(this.ApiUrl.grkhin + "/" + this.BOOKNAME)
           .toPromise()
           .then(response => this.saveToFileSystem(response.json()));
         this.display = false;
