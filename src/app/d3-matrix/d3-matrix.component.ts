@@ -476,11 +476,13 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 this.generateVisual(data)
 
             }, (error: Response) => {
-                if (error.status === 404) {
+                if (error.status === 404 || error.status === 500) {
                     this.toastr.warning("Data not available")
+                    this.display = false;
                 }
                 else {
                     this.toastr.error("An Unexpected Error Occured.")
+                    this.display = false;
                 }
 
             });

@@ -32,14 +32,14 @@
 
 
 <div style="text-align: left" *ngIf = "!display">
-  <a id="interlinearLink" href="#" style="width:fit-content; color: black; display:block;text-decoration-line:underline" (click)="interlinearOnClick()">{{Interlinear}}</a>
+  <a id="interlinearLink"  style="cursor:pointer; width:fit-content; color: black; display:block;text-decoration-line:underline" (click)="interlinearOnClick()">{{Interlinear}}</a>
  <horizontal-card style="display:inline-block;text-align:center" *ngFor="let horizontalCard of Statuses" [horizontalCard]="horizontalCard">  
  </horizontal-card>
  </div>
 
 <!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
 <br>
-<a *ngIf = "!display" id="verticalORgrid" href="#" style="padding-bottom:0; margin-right: 400px;text-align: right; color: black; display:block;text-decoration-line:underline" (click)="verticalORgridOnClick()">{{verticalORgrid}}</a>
+<a *ngIf = "!display" id="verticalORgrid"  style="cursor:pointer;padding-bottom:0; margin-right: 400px;text-align: right; color: black; display:block;text-decoration-line:underline" (click)="verticalORgridOnClick()">{{verticalORgrid}}</a>
 <div id="grid" class="content" style="margin-left: 300px; width:800px;height:470px;"></div>
 
  <div id="verticalInterlinear"  class="content" style="margin-left: 540px; width:800px;display: none;">

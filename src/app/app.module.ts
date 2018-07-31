@@ -14,6 +14,8 @@ import {GlobalUrl} from './globalUrl';
 import { HorizontalCardComponent } from './horizontal-card/horizontal-card.component';
 import { VerticalInterlinearComponent } from './vertical-interlinear/vertical-interlinear.component';
 import {SelfBuildingSquareSpinnerModule, FulfillingSquareSpinnerModule, HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule} from 'angular-epic-spinners';
+import { CsvToTableComponent } from './csv-to-table/csv-to-table.component';
+import { RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,29 @@ import {SelfBuildingSquareSpinnerModule, FulfillingSquareSpinnerModule, HalfCirc
     D3MatrixComponent,
     BcvSearchComponent,
     HorizontalCardComponent,
-    VerticalInterlinearComponent
+    VerticalInterlinearComponent,
+    CsvToTableComponent
   ],
   imports: [
     BrowserModule,HttpModule,FormsModule,CommonModule,
     SelfBuildingSquareSpinnerModule,HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule,
     BrowserAnimationsModule, 
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    RouterModule.forRoot([
+      { path: '', component: BcvSearchComponent },
+      {
+         path: 'csv-to-table',
+         component: CsvToTableComponent
+      },
+      {
+        path: 'app-bcv-search',
+        component: BcvSearchComponent
+     },
+     {
+      path: 'app-bcv-search/:BCV',
+      component: BcvSearchComponent
+   }
+   ])
   ],
   providers: [AlignerService,D3Service,GlobalUrl],
   bootstrap: [AppComponent]
