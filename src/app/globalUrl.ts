@@ -28,7 +28,8 @@ export class GlobalUrl {
     // // Fetch the whole bible alignment
     // grkhin : string = 'http://127.0.0.1:8000/v2/alignments/export/grk';
     
-    
+    // // Fetch CSV file
+    // csvFile : string = 'http://localhost:4200/assets/reference.csv';
 
     
     // For Production Environment
@@ -56,4 +57,7 @@ export class GlobalUrl {
 
     //Fetch the whole bible alignment
     grkhin : string = 'https://stagingapi.autographamt.com/v2/alignments/export/grkhin';
+
+    // Fetch CSV file
+    csvFile : string = 'https://align.staging.autographamt.com/assets/reference.csv';
 }

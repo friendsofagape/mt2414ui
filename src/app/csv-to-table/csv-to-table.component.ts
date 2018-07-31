@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http , Response } from '@angular/http';
+import {GlobalUrl} from '../globalUrl';
 
 @Component({
   selector: 'csv-to-table',
@@ -8,7 +9,7 @@ import { Http , Response } from '@angular/http';
 })
 export class CsvToTableComponent implements OnInit {
 
-  constructor(private _http:Http) { }
+  constructor(private _http:Http,private ApiUrl:GlobalUrl) { }
 
   private alignmentData;
   private cell_data;
@@ -16,7 +17,7 @@ export class CsvToTableComponent implements OnInit {
 
   getData(){
     this.display = true;
-    this._http.get("https://transfer.sh/32E5d/reference.csv")
+    this._http.get(this.ApiUrl.csvFile)
     .subscribe(data => {
       this.alignmentData = data.text().split(/\r?\n|\r/);
       this.display = false;
