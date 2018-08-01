@@ -44,6 +44,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     private greekPopUp: string[];
     @Input() BCV: any;
     @Input() BOOKNAME: any;
+    @Input() Lang: any;
     private Statuses = new Array();
     private Interlinear = "Interlinear";
     private verticalORgrid = "Display Bilinear";
@@ -111,12 +112,12 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             positionalPairOfApiDemo[index] = separatedPair[0] + "-" + separatedPair[1];
         }
 
-        d.greek.unshift('NULL');
+        d.sourcetext.unshift('NULL');
         d.englishword.unshift('NULL');
         let greekHorizontalWords = d.englishword;
-        let greekHorizontalWord = d.greek;
-        d.hinditext.unshift('NULL');
-        let hindiVerticalWords = d.hinditext;
+        let greekHorizontalWord = d.sourcetext;
+        d.targettext.unshift('NULL');
+        let hindiVerticalWords = d.targettext;
         let colorCode = d.colorcode;
 
         var data = new Array();
@@ -158,6 +159,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
         var y: any = this.positionalPairOfApi;
+        var l: any = this.Lang;
 
         var z: number = y.length;
 
@@ -183,7 +185,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             }
             y[index] = separatedPair[0] + "-" + separatedPair[1];
         }
-        var data = { "bcv": x, "positional_pairs": y };
+        var data = { "bcv": x, "positional_pairs": y, "lang":l };
         this.display = true;
         this._http.post(this.ApiUrl.getnUpdateBCV, data)
             .subscribe(data => {
@@ -208,6 +210,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
         document.getElementById('saveButton').style.display = 'none';
         document.getElementById("appButton").style.display = "";
+        document.getElementById("fixButton").style.display = "none";
         //document.getElementById('discardButton').style.display = 'none';
         
         localStorage.setItem("lastAlignments", this.rawPos);
@@ -216,11 +219,13 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     approveOnClick() {
+        document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
         var y: any = this.indPair;
+        var l: any = this.Lang;
         //console.log(x,y)
 
-        var data = { "bcv": x, "positional_pairs": y };
+        var data = { "bcv": x, "positional_pairs": y, "lang":l  };
         this.display = true;
         this._http.post(this.ApiUrl.approveAlignments, data)
             .subscribe(data => {
@@ -229,6 +234,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 //console.log(response._body);
                 if (response._body === 'Saved') {
                     this.toastr.success('New alignments have been approved successfully.');
+                    this.gridBind(); 
                 }
             }, (error: Response) => {
                 if (error.status === 400) {
@@ -250,9 +256,10 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     fixOnClick() {
         document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
+        var l: any = this.Lang;
         //console.log(x)
 
-        var data = { "bcv": x };
+        var data = { "bcv": x , "lang":l  };
         this.display = true;
         this._http.post(this.ApiUrl.fixAlignments, data)
             .subscribe(data => {
@@ -261,11 +268,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 //console.log(response._body);
                 //if (response._body === 'Saved') {                    
                     this.toastr.success('Feedback alignment have been updated successfully.');
+                    localStorage.setItem("lastAlignments", this.positionalPairOfApi);
                     this.generateVisual(data);
                     document.getElementById('discardButton').style.display = '';
                     document.getElementById("saveButton").style.display = ""; 
                     document.getElementById("appButton").style.display = 'none';
-                    localStorage.setItem("lastAlignments", this.positionalPairOfApi);
                     // console.log(this.positionalPairOfApi)
                     // console.log(this.rawPos)           
                 //}
@@ -280,6 +287,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 }
 
             })
+            this.indPair = [];
     }
 
     discardOnClick() {
@@ -288,6 +296,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         {
         var x: any = this.BCV;
         var y: any =  localStorage.getItem("lastAlignments").split(',');
+        var l: any = this.Lang;
         //var y: any = this.positionalPairOfApi;
 
         var z: number = y.length;
@@ -314,7 +323,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             }
             y[index] = separatedPair[0] + "-" + separatedPair[1];
         }
-        var data = { "bcv": x, "positional_pairs": y };
+        var data = { "bcv": x, "positional_pairs": y , "lang":l };
         this.display = true;
         this._http.post(this.ApiUrl.getnUpdateBCV, data)
             .subscribe(data => {
@@ -344,7 +353,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             //console.log('2')
             this.gridBind(); 
         }
-        
+        this.indPair = [];
         document.getElementById('saveButton').style.display = 'none';
         document.getElementById("appButton").style.display = 'none';
         document.getElementById('discardButton').style.display = 'none';
@@ -381,7 +390,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         if (this.Interlinear == "Interlinear") {
             // Code for horizontal alignment
             this.Statuses = [];
-            for (var h = 0; h < this.gridDataJson.hinditext.length; h++) {
+            for (var h = 0; h < this.gridDataJson.targettext.length; h++) {
 
 
                 var greekPair = new Array();
@@ -393,14 +402,14 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             greekPair.push("Null");
                         }
                         else {
-                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" + this.gridDataJson.greek[Number(pair[1] - 1)] + ")");
+                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" + this.gridDataJson.sourcetext[Number(pair[1] - 1)] + ")");
                         }
                     }
                 }
                 if (greekPair[0] == undefined) {
                     greekPair.push("NA");
                 }
-                this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.hinditext[h], greekPair))
+                this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.targettext[h], greekPair))
             }
             //console.log(this.Statuses)
             // Ends Here
@@ -409,7 +418,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         if (this.Interlinear == "Reverse-Interlinear") {
             // Code for horizontal alignment
             this.Statuses = [];
-            for (var h = 0; h < this.gridDataJson.greek.length; h++) {
+            for (var h = 0; h < this.gridDataJson.sourcetext.length; h++) {
 
 
                 var greekPair = new Array();
@@ -421,14 +430,14 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                             greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                         }
                         else {
-                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" +  this.gridDataJson.hinditext[Number(pair[0] - 1)] + ")");
+                            greekPair.push(this.gridDataJson.englishword[Number(pair[1] - 1)] + "(" +  this.gridDataJson.targettext[Number(pair[0] - 1)] + ")");
                         }
                     }
                 }
                 if (greekPair[0] == undefined) {
                     greekPair.push(this.gridDataJson.englishword[h] + "(" + "NA" + ")");
                 }
-                this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.greek[h], greekPair))
+                this.Statuses.push(new HorizontalAlign(h, this.gridDataJson.sourcetext[h], greekPair))
             }
             //console.log(this.Statuses)
             // Ends Here
@@ -461,6 +470,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.verticalORgrid = "Display Bilinear";
         document.getElementById('verticalInterlinear').style.display = "none";
         document.getElementById('grid').style.display = "";
+        document.getElementById("fixButton").style.display = "";
     }
 
 
@@ -470,7 +480,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         //   data.append("bcv",bcv);
         this.display = true;
         document.getElementById("grid").innerHTML = "";
-        this._http.get(this.ApiUrl.getnUpdateBCV + '/' + bcv)
+        this._http.get(this.ApiUrl.getnUpdateBCV + '/' + bcv + '/' + this.Lang)
             .subscribe(data => {
                 //console.log(data.json())
                 this.generateVisual(data)
@@ -505,7 +515,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     if (this.Interlinear == "Interlinear") {
         // Code for horizontal alignment
         this.Statuses = [];
-        for (var h = 0; h < data.json().hinditext.length; h++) {
+        for (var h = 0; h < data.json().targettext.length; h++) {
 
 
             var greekPair = new Array();
@@ -517,14 +527,14 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         greekPair.push("Null");
                     }
                     else {
-                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().greek[Number(pair[1] - 1)] + ")");
+                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
                     }
                 }
             }
             if (greekPair[0] == undefined) {
                 greekPair.push("NA");
             }
-            this.Statuses.push(new HorizontalAlign(h, data.json().hinditext[h], greekPair))
+            this.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
         }
         //console.log(this.Statuses)
         // Ends Here
@@ -534,7 +544,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         // Code for horizontal alignment
         //console.log(data.json())
         this.Statuses = [];
-        for (var h = 0; h < data.json().greek.length; h++) {
+        for (var h = 0; h < data.json().sourcetext.length; h++) {
 
 
             var greekPair = new Array();
@@ -546,15 +556,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                     }
                     else {
-                        //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
-                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
+                        //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
+                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
                     }
                 }
             }
             if (greekPair[0] == undefined) {
                 greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
             }
-            this.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
+            this.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
         }
         //console.log(this.Statuses)
         // Ends Here
@@ -565,11 +575,11 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
     var greekLexiconText = '';
     var greekArray = new Array();
-    for (var l = 0; l < data.json().greek.length; l++) {
-        self._http.get(self.ApiUrl.getLexicon + '/' + data.json().greek[l])
+    for (var l = 0; l < data.json().sourcetext.length; l++) {
+        self._http.get(self.ApiUrl.getLexicon + '/' + data.json().sourcetext[l])
             .subscribe(data => {
                 // console.log(data.json())
-                greekArray.push("<b>English Word</b>:- " + data.json().englishword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().greek_word + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().pronunciation + "<br/><br/>" + "strongs:- " + data.json().strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().transliteration);
+                greekArray.push("<b>English Word</b>:- " + data.json().targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().pronunciation + "<br/><br/>" + "strongs:- " + data.json().strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().transliteration);
             });
 
         //    console.log(greekArray)       
@@ -644,6 +654,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 //console.log(d.positionalPairOfApi)
                 if (!self.indPair.includes(d.positionalPair)) {
                     self.indPair.push(d.positionalPair);
+                    console.log(self.indPair)
                 }
 
                 //document.getElementById('rect-'+d.y+0).style.fill = "#fff";
@@ -685,7 +696,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     // Code for horizontal alignment
 
                     self.Statuses = [];
-                    for (var h = 0; h < data.json().hinditext.length; h++) {
+                    for (var h = 0; h < data.json().targettext.length; h++) {
                         var greekPair = new Array();
 
                         for (var g = 0; g < d.positionalPairOfApi.length; g++) {
@@ -696,14 +707,14 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                 }
                                 else {
                                     //greekPair.push(data.json().greek[Number(pair[1] - 1)]);
-                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().greek[Number(pair[1] - 1)] + ")");
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
                                 }
                             }
                         }
                         if (greekPair[0] == undefined) {
                             greekPair.push("NA");
                         }
-                        self.Statuses.push(new HorizontalAlign(h, data.json().hinditext[h], greekPair))
+                        self.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
                     }
                     // Ends Here
                 }
@@ -713,7 +724,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     // Code for horizontal alignment
 
                     self.Statuses = [];
-                    for (var h = 0; h < data.json().greek.length; h++) {
+                    for (var h = 0; h < data.json().sourcetext.length; h++) {
                         var greekPair = new Array();
 
                         for (var g = 0; g < d.positionalPairOfApi.length; g++) {
@@ -723,15 +734,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                     greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                                 }
                                 else {
-                                    //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
-                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
+                                    //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
                                 }
                             }
                         }
                         if (greekPair[0] == undefined) {
                             greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
                         }
-                        self.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
+                        self.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
                     }
                     // Ends Here
                 }
@@ -762,7 +773,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     // Code for horizontal alignment
 
                     self.Statuses = [];
-                    for (var h = 0; h < data.json().hinditext.length; h++) {
+                    for (var h = 0; h < data.json().targettext.length; h++) {
                         var greekPair = new Array();
 
                         for (var g = 0; g < d.positionalPairOfApi.length; g++) {
@@ -772,15 +783,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                     greekPair.push("Null");
                                 }
                                 else {
-                                    //greekPair.push(data.json().greek[Number(pair[1] - 1)]);
-                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().greek[Number(pair[1] - 1)] + ")");
+                                    //greekPair.push(data.json().sourcetext[Number(pair[1] - 1)]);
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
                                 }
                             }
                         }
                         if (greekPair[0] == undefined) {
                             greekPair.push("NA");
                         }
-                        self.Statuses.push(new HorizontalAlign(h, data.json().hinditext[h], greekPair))
+                        self.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
                     }
                     // Ends Here
                 }
@@ -789,7 +800,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     // Code for horizontal alignment
 
                     self.Statuses = [];
-                    for (var h = 0; h < data.json().greek.length; h++) {
+                    for (var h = 0; h < data.json().sourcetext.length; h++) {
                         var greekPair = new Array();
 
                         for (var g = 0; g < d.positionalPairOfApi.length; g++) {
@@ -799,15 +810,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                                     greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
                                 }
                                 else {
-                                    //greekPair.push(data.json().hinditext[Number(pair[0] - 1)]);
-                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().hinditext[Number(pair[0] - 1)] + ")");
+                                    //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
+                                    greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
                                 }
                             }
                         }
                         if (greekPair[0] == undefined) {
                             greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
                         }
-                        self.Statuses.push(new HorizontalAlign(h, data.json().greek[h], greekPair))
+                        self.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
                     }
                     // Ends Here
                 }

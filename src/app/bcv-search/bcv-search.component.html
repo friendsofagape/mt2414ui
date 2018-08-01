@@ -2,10 +2,10 @@
 
 <div class="form-group">
         <div style="width: 20%;display:inline-block;padding: 10px">
-        <label> SOURCE </label>
-        <select style="height: 32px;font-size: 13px;" class="form-control">
-                <option value="0">Engine-1 (Giza)</option>
-                <option value="1">Engine-2 (Efmaral)</option>
+        <label>LANGUAGE</label>
+        <select style="height: 32px;font-size: 13px;" [(ngModel)]="langFirstIndex" ngModel name="glLang" id="glLang" class="form-control" #glLang="ngModel" (change)="glLangChange(glLang.value)">
+                <option value="0">Select</option>
+                <option *ngFor="let glLang of LangArray" [value]="glLang">{{glLang}}</option>
         </select>
         </div>
 
@@ -44,4 +44,4 @@
   </div>
   
   </form>
-  <app-d3-matrix *ngIf="BCV" [BCV]="BCV" [BOOKNAME]="bookName" ></app-d3-matrix>
+  <app-d3-matrix *ngIf="BCV" [BCV]="BCV" [BOOKNAME]="bookName" [Lang]="langParam" ></app-d3-matrix>

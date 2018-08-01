@@ -16,6 +16,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 export class BcvSearchComponent implements OnInit {
 
+  Lang:any;
   Books:any;
   Chapters:any;
   Verses:any;    
@@ -24,10 +25,12 @@ export class BcvSearchComponent implements OnInit {
   bookNumber:string;
   verseNumber:string;
   BCV:any;
+  langFirstIndex:any;
   chapterFirstIndex:any;
   verseFirstIndex:any;
   bookFirstIndex:any;
-
+  LangArray:any = new Array();
+  langParam:any;
 
   constructor(private activatedRoute: ActivatedRoute,private toastr: ToastrService,private _http:Http,private ApiUrl:GlobalUrl) {
 
@@ -41,13 +44,20 @@ export class BcvSearchComponent implements OnInit {
     this.chapterFirstIndex = 0;
     this.verseFirstIndex = 0;
     this.bookFirstIndex = 0;
-    this._http.get(this.ApiUrl.getBooks)
+    this.langFirstIndex = 0;
+
+    enum langName {"grkguj" = "Gujarati", "grkhin" = "Hindi", "grkmar" = "Marathi"}
+
+    this._http.get(this.ApiUrl.getLang)
     .subscribe(data => {
-      this.Books = data.json().books;
-      //console.log (data.json())
+      this.Lang =  Object.keys(data.json());
+      for(let i = 0; i < this.Lang.length; i++){
+        this.LangArray.push(langName[this.Lang[i]])
+      }    
+      
     },(error:Response) =>{
       if(error.status === 404){
-        this.toastr.warning("Books data not available")
+        this.toastr.warning("Language data not available")
       }
       else{
         this.toastr.error("An Unexpected Error Occured.")
@@ -73,6 +83,11 @@ export class BcvSearchComponent implements OnInit {
      
       BcvParam = BcvParam.replace( /\./g, "" );
       if(BcvParam.length == 8 ){
+        
+      let langstr = "Hindi";
+      this.langFirstIndex = "Hindi";
+      this.glLangChange(langstr);
+
       let booknostr = bookno[BcvParam.substring(0,2)];
       this.bookFirstIndex = booknostr;
       this.bookChange(booknostr);
@@ -97,6 +112,51 @@ export class BcvSearchComponent implements OnInit {
     
   }
 
+
+  glLangChange(l){
+    this.bookFirstIndex=0;
+    this.chapterFirstIndex = 0;
+    this.verseFirstIndex = 0;
+    this.verseNumber=stringify(0);
+    this.BCV = null
+    
+    switch(l){
+     case 'Gujarati':{
+            l = 'grkguj';
+            this.langParam='grkguj';
+            break;
+     }
+     case 'Hindi':{
+      l = 'grkhin';
+      this.langParam='grkhin';
+      break;
+    }
+    case 'Marathi':{
+      l = 'grkmar';
+      this.langParam='grkmar';
+      break;
+    }
+    default: { 
+      l = 'grkhin' 
+      this.langParam='grkhin';
+      break;              
+   } 
+    }
+
+    this._http.get(this.ApiUrl.getBooks + '/' + l)
+    .subscribe(data => {
+      this.Books = data.json().books;
+      //console.log (data.json())
+    },(error:Response) =>{
+      if(error.status === 404){
+        this.toastr.warning("Books data not available")
+      }
+      else{
+        this.toastr.error("An Unexpected Error Occured.")
+      }
+      
+    })
+  }
 
   bookChange(x){
     this.chapterFirstIndex = 0;
@@ -182,6 +242,7 @@ export class BcvSearchComponent implements OnInit {
     if(this.verseNumber == '000')
     {this.BCV = null}
     else
+    //this.BCV = this.bookNumber + this.chapterNumber + this.verseNumber;
     this.BCV = this.bookNumber + this.chapterNumber + this.verseNumber;
 
     if(document.getElementById("saveButton"))
@@ -230,6 +291,7 @@ export class BcvSearchComponent implements OnInit {
             if(this.verseNumber == '000')
             {this.BCV = null}
             else
+            //this.BCV = this.bookNumber + this.chapterNumber + this.verseNumber;
             this.BCV = this.bookNumber + this.chapterNumber + this.verseNumber;
 
             //console.log('prev' + this.bookNumber + this.chapterNumber + this.verseNumber);
@@ -273,6 +335,7 @@ export class BcvSearchComponent implements OnInit {
     //console.log(this.verseNumber)
 
     //console.log('prev' + this.bookNumber + this.chapterNumber + this.verseNumber);
+
     if(this.verseNumber == '000')
     {this.BCV = null}
     else

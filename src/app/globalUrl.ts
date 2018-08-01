@@ -31,6 +31,9 @@ export class GlobalUrl {
     // // Fetch CSV file
     // csvFile : string = 'http://localhost:4200/assets/reference.csv';
 
+    // //Fetch all the available language list
+    // getLang : string = 'http://127.0.0.1:8000/v2/alignments/languages';
+
     
     // For Production Environment
     //In case of get request this api Returns list of positional pairs, list of Hindi words, list of strong numbers for the bcv queried. 
@@ -60,4 +63,8 @@ export class GlobalUrl {
 
     // Fetch CSV file
     csvFile : string = 'https://align.staging.autographamt.com/assets/reference.csv';
+
+
+    //Fetch all the available language list
+    getLang : string = 'https://stagingapi.autographamt.com/v2/alignments/languages';
 }

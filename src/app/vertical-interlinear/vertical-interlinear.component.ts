@@ -19,8 +19,8 @@ export class VerticalInterlinearComponent {
 
   ngOnChanges() { 
        //console.log(this.bilinearData)
-       this.hindiLabels = this.bilinearData.hinditext;
-       this.greekLabels = this.bilinearData.greek;
+       this.hindiLabels = this.bilinearData.targettext;
+       this.greekLabels = this.bilinearData.sourcetext;
        this.englishword = this.bilinearData.englishword;
 
        this.hindiLabels.length > this.greekLabels.length ? this.canvasLength = this.hindiLabels.length * 23 : this.canvasLength = this.greekLabels.length * 23;
