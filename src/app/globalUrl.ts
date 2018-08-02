@@ -26,7 +26,7 @@ export class GlobalUrl {
     // fixAlignments : string = 'http://127.0.0.1:8000/v2/alignments/feedbacks/verses';
 
     // // Fetch the whole bible alignment
-    // grkhin : string = 'http://127.0.0.1:8000/v2/alignments/export/grk';
+    // grkhin : string = 'http://127.0.0.1:8000/v2/alignments/export';
     
     // // Fetch CSV file
     // csvFile : string = 'http://localhost:4200/assets/reference.csv';
@@ -59,7 +59,7 @@ export class GlobalUrl {
     fixAlignments : string = 'https://stagingapi.autographamt.com/v2/alignments/feedbacks/verses';
 
     //Fetch the whole bible alignment
-    grkhin : string = 'https://stagingapi.autographamt.com/v2/alignments/export/grkhin';
+    grkhin : string = 'https://stagingapi.autographamt.com/v2/alignments/export';
 
     // Fetch CSV file
     csvFile : string = 'https://align.staging.autographamt.com/assets/reference.csv';

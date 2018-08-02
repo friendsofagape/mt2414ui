@@ -448,7 +448,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     exportOnClick() {
         console.log(this.BOOKNAME)
         this.display = true;
-        this._http.get(this.ApiUrl.grkhin + "/" + this.BOOKNAME)
+        this._http.get(this.ApiUrl.grkhin + "/" + this.Lang + "/" + this.BOOKNAME)
           .toPromise()
           .then(response => this.saveToFileSystem(response.json()));
         this.display = false;
