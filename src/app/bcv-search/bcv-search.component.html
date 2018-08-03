@@ -5,7 +5,7 @@
         <label>LANGUAGE</label>
         <select style="height: 32px;font-size: 13px;" [(ngModel)]="langFirstIndex" ngModel name="glLang" id="glLang" class="form-control" #glLang="ngModel" (change)="glLangChange(glLang.value)">
                 <option value="0">Select</option>
-                <option *ngFor="let glLang of LangArray" [value]="glLang">{{glLang}}</option>
+                <option *ngFor="let glLang of LangArray | keysPipe" [value]="glLang.key">{{glLang.value}}</option>
         </select>
         </div>
 

@@ -357,6 +357,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         document.getElementById('saveButton').style.display = 'none';
         document.getElementById("appButton").style.display = 'none';
         document.getElementById('discardButton').style.display = 'none';
+        document.getElementById('verticalInterlinear').style.display = "none";
     }
 
 

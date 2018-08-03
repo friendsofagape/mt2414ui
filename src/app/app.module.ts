@@ -16,6 +16,7 @@ import { VerticalInterlinearComponent } from './vertical-interlinear/vertical-in
 import {SelfBuildingSquareSpinnerModule, FulfillingSquareSpinnerModule, HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule} from 'angular-epic-spinners';
 import { CsvToTableComponent } from './csv-to-table/csv-to-table.component';
 import { RouterModule} from '@angular/router';
+import { KeysPipePipe } from './keys-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RouterModule} from '@angular/router';
     BcvSearchComponent,
     HorizontalCardComponent,
     VerticalInterlinearComponent,
-    CsvToTableComponent
+    CsvToTableComponent,
+    KeysPipePipe
   ],
   imports: [
     BrowserModule,HttpModule,FormsModule,CommonModule,

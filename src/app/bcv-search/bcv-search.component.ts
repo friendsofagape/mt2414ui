@@ -8,6 +8,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { ToastrService } from 'ngx-toastr';
 import {GlobalUrl} from '../globalUrl';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import {KeysPipePipe} from '../keys-pipe.pipe';
 
 @Component({
   selector: 'app-bcv-search',
@@ -29,7 +30,7 @@ export class BcvSearchComponent implements OnInit {
   chapterFirstIndex:any;
   verseFirstIndex:any;
   bookFirstIndex:any;
-  LangArray:any = new Array();
+  LangArray:any; //= new Array();
   langParam:any;
 
   constructor(private activatedRoute: ActivatedRoute,private toastr: ToastrService,private _http:Http,private ApiUrl:GlobalUrl) {
@@ -46,15 +47,10 @@ export class BcvSearchComponent implements OnInit {
     this.bookFirstIndex = 0;
     this.langFirstIndex = 0;
 
-    enum langName {"grkguj" = "Gujarati", "grkhin" = "Hindi", "grkmar" = "Marathi"}
 
     this._http.get(this.ApiUrl.getLang)
     .subscribe(data => {
-      this.Lang =  Object.keys(data.json());
-      for(let i = 0; i < this.Lang.length; i++){
-        this.LangArray.push(langName[this.Lang[i]])
-      }    
-      
+        this.LangArray = data.json();
     },(error:Response) =>{
       if(error.status === 404){
         this.toastr.warning("Language data not available")
@@ -84,8 +80,8 @@ export class BcvSearchComponent implements OnInit {
       BcvParam = BcvParam.replace( /\./g, "" );
       if(BcvParam.length == 8 ){
         
-      let langstr = "Hindi";
-      this.langFirstIndex = "Hindi";
+      let langstr = "grkhin";
+      this.langFirstIndex = "grkhin";
       this.glLangChange(langstr);
 
       let booknostr = bookno[BcvParam.substring(0,2)];
@@ -119,29 +115,7 @@ export class BcvSearchComponent implements OnInit {
     this.verseFirstIndex = 0;
     this.verseNumber=stringify(0);
     this.BCV = null
-    
-    switch(l){
-     case 'Gujarati':{
-            l = 'grkguj';
-            this.langParam='grkguj';
-            break;
-     }
-     case 'Hindi':{
-      l = 'grkhin';
-      this.langParam='grkhin';
-      break;
-    }
-    case 'Marathi':{
-      l = 'grkmar';
-      this.langParam='grkmar';
-      break;
-    }
-    default: { 
-      l = 'grkhin' 
-      this.langParam='grkhin';
-      break;              
-   } 
-    }
+    this.langParam = l;
 
     this._http.get(this.ApiUrl.getBooks + '/' + l)
     .subscribe(data => {
