@@ -590,6 +590,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         .append("svg")
         .style("overflow", "auto")
         .style("padding-top", "10px")
+        .style("padding-left", "40px")
 
     var row = grid.selectAll(".rowd3")
         .data(gridData)
@@ -834,14 +835,14 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             var y = document.getElementById(d.hindiIndexWise);
             x.style.fontSize = "16px";
             x.style.fill = "#008000";
-            y.style.fontSize = "16px";
+            y.style.fontSize = "18px";
             y.style.fill = "#008000";
 
             div.style("left", d3.event.pageX + 10 + "px");
             div.style("top", d3.event.pageY - 25 + "px");
             div.style("display", "inline-block");
             div.style("text-align", "left")
-            div.style("width", "400px")
+            div.style("width", "150px")
             div.html(function () {
 
                 if (d.greekHorizontalWord[i] != 'NULL') {
@@ -855,7 +856,8 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         //console.log(greekArray[count])
                         if (greekArray[count].includes("strongs:- " + removeZero + " ")) {
                             //console.log(greekArray[count])
-                            return "<b>" + y.innerHTML + "</b>" + " => " + "<b>" + x.innerHTML + "</b>" + "<br/><br/>" + greekArray[count];
+                            //return "<b>" + y.innerHTML + "</b>" + " => " + "<b>" + x.innerHTML + "</b>" + "<br/><br/>" + greekArray[count];
+                            return "<b>" + y.innerHTML + "</b>" + " => " + "<b>" + x.innerHTML + "</b>";
                         }
 
 
@@ -877,7 +879,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             var y = document.getElementById(d.hindiIndexWise);
             x.style.fontSize = "14px";
             x.style.fill = "black";
-            y.style.fontSize = "14px";
+            y.style.fontSize = "16px";
             y.style.fill = "black";
             div.style("display", "none");
         })
@@ -894,7 +896,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         .data(gridData)
         .attr("width", function (d, i) {
             let len = d.length;
-            len = (len * 35) + 120;
+            len = (len * 35) + 200;
             return len;
         })
         .attr("height", function (d, i) {
@@ -907,18 +909,24 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     var labell = d3.selectAll(".rowd3")
         .data(gridData)
 
-    var label = labell.append("text")
+    var label:any = labell.append("text")
         .attr("x", "36")
         .attr("y", function (d, i) {
             return d[0].y + 17;
         })
-        .style("font-size", "13px")
+        .style("font-size", "16px")
         .attr("id", function (d, i) {
             return d[0].hindiIndexWise;
         })
         .text(function (d, i) {
             return d[0].hindiVerticalWords[i];
         })
+
+        for(var i =0; i<label.nodes().length; i++){
+            //console.log(  label.nodes()[i].getComputedTextLength());
+            var textLen = label.nodes()[i].getComputedTextLength();
+            label.nodes()[i].setAttribute('x',75- textLen)
+           }
 
     //  content.addEventListener('scroll', function(evt) {
     //    //console.log(  label.nodes()[1]);
