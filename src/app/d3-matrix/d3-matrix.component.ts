@@ -590,7 +590,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         .append("svg")
         .style("overflow", "auto")
         .style("padding-top", "10px")
-        .style("padding-left", "40px")
+        .style("padding-left", "100px")
 
     var row = grid.selectAll(".rowd3")
         .data(gridData)
@@ -896,7 +896,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         .data(gridData)
         .attr("width", function (d, i) {
             let len = d.length;
-            len = (len * 35) + 200;
+            len = (len * 35) + 240;
             return len;
         })
         .attr("height", function (d, i) {
