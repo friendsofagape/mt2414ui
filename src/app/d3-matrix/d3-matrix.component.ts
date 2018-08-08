@@ -33,22 +33,22 @@ import { saveAs } from 'file-saver/FileSaver';
 })
 export class D3MatrixComponent implements OnInit, OnChanges {
 
-    private display = false;
-    private d3: D3;
-    private serviceResult: any;
-    private positionalPairOfApi: any;
-    private rawPos: any;
-    private indPair = new Array();
-    private saveButtonFlag: boolean = true;
-    private lexiconData: string;
-    private greekPopUp: string[];
+     display = false;
+     d3: D3;
+     serviceResult: any;
+     positionalPairOfApi: any;
+     rawPos: any;
+     indPair = new Array();
+     saveButtonFlag: boolean = true;
+     lexiconData: string;
+     greekPopUp: string[];
     @Input() BCV: any;
     @Input() BOOKNAME: any;
     @Input() Lang: any;
-    private Statuses = new Array();
-    private Interlinear = "Interlinear";
-    private verticalORgrid = "Display Bilinear";
-    private gridDataJson: any;
+     Statuses = new Array();
+     Interlinear = "Interlinear";
+     verticalORgrid = "Display Bilinear";
+     gridDataJson: any;
 
     constructor(private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
         this.d3 = d3Service.getD3();

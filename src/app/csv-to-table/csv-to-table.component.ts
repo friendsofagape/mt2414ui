@@ -11,9 +11,9 @@ export class CsvToTableComponent implements OnInit {
 
   constructor(private _http:Http,private ApiUrl:GlobalUrl) { }
 
-  private alignmentData;
-  private cell_data;
-  private display = false;
+   alignmentData;
+   cell_data;
+   display = false;
 
   getData(){
     this.display = true;

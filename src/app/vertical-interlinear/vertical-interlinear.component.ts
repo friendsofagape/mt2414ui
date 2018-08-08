@@ -8,10 +8,10 @@ import {Http}  from '@angular/http';
 })
 export class VerticalInterlinearComponent {
 
-  private hindiLabels;
-  private greekLabels;
-  private englishword;
-  private canvasLength;
+   hindiLabels;
+   greekLabels;
+   englishword;
+   canvasLength;
   @Input() bilinearData: any;
 
   constructor(private _http:Http) { }
