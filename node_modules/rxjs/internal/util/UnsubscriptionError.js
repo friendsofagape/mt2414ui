@@ -10,11 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * An error thrown when one or more errors have occurred during the
- * `unsubscribe` of a {@link Subscription}.
- */
-var UnsubscriptionError = /** @class */ (function (_super) {
+var UnsubscriptionError = (function (_super) {
     __extends(UnsubscriptionError, _super);
     function UnsubscriptionError(errors) {
         var _this = _super.call(this, errors ?

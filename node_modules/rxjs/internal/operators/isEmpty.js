@@ -15,7 +15,7 @@ function isEmpty() {
     return function (source) { return source.lift(new IsEmptyOperator()); };
 }
 exports.isEmpty = isEmpty;
-var IsEmptyOperator = /** @class */ (function () {
+var IsEmptyOperator = (function () {
     function IsEmptyOperator() {
     }
     IsEmptyOperator.prototype.call = function (observer, source) {
@@ -23,12 +23,7 @@ var IsEmptyOperator = /** @class */ (function () {
     };
     return IsEmptyOperator;
 }());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var IsEmptySubscriber = /** @class */ (function (_super) {
+var IsEmptySubscriber = (function (_super) {
     __extends(IsEmptySubscriber, _super);
     function IsEmptySubscriber(destination) {
         return _super.call(this, destination) || this;

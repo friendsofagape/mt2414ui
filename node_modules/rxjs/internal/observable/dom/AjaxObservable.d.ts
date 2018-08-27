@@ -42,9 +42,11 @@ export declare class AjaxObservable<T> extends Observable<T> {
      * Creates an observable for an Ajax request with either a request object with
      * url, headers, etc or a string for a URL.
      *
-     * @example
+     * ## Example
+     * ```javascript
      * source = Rx.Observable.ajax('/products');
      * source = Rx.Observable.ajax({ url: 'products', method: 'GET' });
+     * ```
      *
      * @param {string|Object} request Can be one of the following:
      *   A string of the URL to make the Ajax call.

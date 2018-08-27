@@ -22,7 +22,7 @@ export function expand<T>(project: (value: T, index: number) => ObservableInput<
  * projection function to every source value as well as every output value.
  * It's recursive.</span>
  *
- * <img src="./img/expand.png" width="100%">
+ * ![](expand.png)
  *
  * Returns an Observable that emits items based on applying a function that you
  * supply to each item emitted by the source Observable, where that function
@@ -34,13 +34,17 @@ export function expand<T>(project: (value: T, index: number) => ObservableInput<
  * given to the `project` function to produce new output values. This is how
  * *expand* behaves recursively.
  *
- * @example <caption>Start emitting the powers of two on every click, at most 10 of them</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var powersOfTwo = clicks
- *   .mapTo(1)
- *   .expand(x => Rx.Observable.of(2 * x).delay(1000))
- *   .take(10);
+ * ## Example
+ * Start emitting the powers of two on every click, at most 10 of them
+ * ```javascript
+ * const clicks = fromEvent(document, 'click');
+ * const powersOfTwo = clicks.pipe(
+ *   mapTo(1),
+ *   expand(x => of(2 * x).pipe(delay(1000))),
+ *   take(10),
+ * );
  * powersOfTwo.subscribe(x => console.log(x));
+ * ```
  *
  * @see {@link mergeMap}
  * @see {@link mergeScan}
@@ -50,7 +54,7 @@ export function expand<T>(project: (value: T, index: number) => ObservableInput<
  * returns an Observable.
  * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
  * Observables being subscribed to concurrently.
- * @param {Scheduler} [scheduler=null] The IScheduler to use for subscribing to
+ * @param {SchedulerLike} [scheduler=null] The {@link SchedulerLike} to use for subscribing to
  * each projected inner Observable.
  * @return {Observable} An Observable that emits the source values and also
  * result of applying the projection function to each value emitted on the

@@ -12,10 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Subject_1 = require("./Subject");
 var Subscription_1 = require("./Subscription");
-/**
- * @class AsyncSubject<T>
- */
-var AsyncSubject = /** @class */ (function (_super) {
+var AsyncSubject = (function (_super) {
     __extends(AsyncSubject, _super);
     function AsyncSubject() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -24,7 +21,6 @@ var AsyncSubject = /** @class */ (function (_super) {
         _this.hasCompleted = false;
         return _this;
     }
-    /** @deprecated This is an internal implementation detail, do not use. */
     AsyncSubject.prototype._subscribe = function (subscriber) {
         if (this.hasError) {
             subscriber.error(this.thrownError);

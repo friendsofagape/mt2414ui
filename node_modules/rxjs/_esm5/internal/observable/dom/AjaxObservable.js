@@ -33,7 +33,6 @@ function getXMLHttpRequest() {
                     }
                 }
                 catch (e) {
-                    //suppress exceptions
                 }
             }
             return new root.ActiveXObject(progId);
@@ -70,11 +69,6 @@ export function ajaxGetJSON(url, headers) {
         headers: headers
     }));
 }
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @extends {Ignored}
- * @hide true
- */
 var AjaxObservable = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(AjaxObservable, _super);
     function AjaxObservable(urlOrRequest) {
@@ -104,37 +98,9 @@ var AjaxObservable = /*@__PURE__*/ (function (_super) {
         _this.request = request;
         return _this;
     }
-    /** @deprecated This is an internal implementation detail, do not use. */
     AjaxObservable.prototype._subscribe = function (subscriber) {
         return new AjaxSubscriber(subscriber, this.request);
     };
-    /**
-     * Creates an observable for an Ajax request with either a request object with
-     * url, headers, etc or a string for a URL.
-     *
-     * @example
-     * source = Rx.Observable.ajax('/products');
-     * source = Rx.Observable.ajax({ url: 'products', method: 'GET' });
-     *
-     * @param {string|Object} request Can be one of the following:
-     *   A string of the URL to make the Ajax call.
-     *   An object with the following properties
-     *   - url: URL of the request
-     *   - body: The body of the request
-     *   - method: Method of the request, such as GET, POST, PUT, PATCH, DELETE
-     *   - async: Whether the request is async
-     *   - headers: Optional headers
-     *   - crossDomain: true if a cross domain request, else false
-     *   - createXHR: a function to override if you need to use an alternate
-     *   XMLHttpRequest implementation.
-     *   - resultSelector: a function to use to alter the output value type of
-     *   the Observable. Gets {@link AjaxResponse} as an argument.
-     * @return {Observable} An observable sequence containing the XMLHttpRequest.
-     * @static true
-     * @name ajax
-     * @owner Observable
-     * @nocollapse
-    */
     AjaxObservable.create = (function () {
         var create = function (urlOrRequest) {
             return new AjaxObservable(urlOrRequest);
@@ -150,11 +116,6 @@ var AjaxObservable = /*@__PURE__*/ (function (_super) {
     return AjaxObservable;
 }(Observable));
 export { AjaxObservable };
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
 var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(AjaxSubscriber, _super);
     function AjaxSubscriber(destination, request) {
@@ -162,15 +123,12 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
         _this.request = request;
         _this.done = false;
         var headers = request.headers = request.headers || {};
-        // force CORS if requested
         if (!request.crossDomain && !headers['X-Requested-With']) {
             headers['X-Requested-With'] = 'XMLHttpRequest';
         }
-        // ensure content type is set
         if (!('Content-Type' in headers) && !(root.FormData && request.body instanceof root.FormData) && typeof request.body !== 'undefined') {
             headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
         }
-        // properly serialize body
         request.body = _this.serializeBody(request.body, request.headers['Content-Type']);
         _this.send();
         return _this;
@@ -190,12 +148,7 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
         }
         else {
             this.xhr = xhr;
-            // set up the events before open XHR
-            // https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
-            // You need to add the event listeners before calling open() on the request.
-            // Otherwise the progress events will not fire.
             this.setupEvents(xhr, request);
-            // open XHR
             var result = void 0;
             if (user) {
                 result = tryCatch(xhr.open).call(xhr, method, url, async, user, password);
@@ -207,7 +160,6 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
                 this.error(errorObject.e);
                 return null;
             }
-            // timeout, responseType and withCredentials can be set once the XHR is open
             if (async) {
                 xhr.timeout = request.timeout;
                 xhr.responseType = request.responseType;
@@ -215,9 +167,7 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
             if ('withCredentials' in xhr) {
                 xhr.withCredentials = !!request.withCredentials;
             }
-            // set headers
             this.setHeaders(xhr, headers);
-            // finally send the request
             result = body ? tryCatch(xhr.send).call(xhr, body) : tryCatch(xhr.send).call(xhr);
             if (result === errorObject) {
                 this.error(errorObject.e);
@@ -262,7 +212,7 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
             if (progressSubscriber) {
                 progressSubscriber.error(e);
             }
-            subscriber.error(new AjaxTimeoutError(this, request)); //TODO: Make betterer.
+            subscriber.error(new AjaxTimeoutError(this, request));
         }
         xhr.ontimeout = xhrTimeout;
         xhrTimeout.request = request;
@@ -306,16 +256,11 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
         function xhrLoad(e) {
             var _a = xhrLoad, subscriber = _a.subscriber, progressSubscriber = _a.progressSubscriber, request = _a.request;
             if (this.readyState === 4) {
-                // normalize IE9 bug (http://bugs.jquery.com/ticket/1450)
                 var status_1 = this.status === 1223 ? 204 : this.status;
                 var response = (this.responseType === 'text' ? (this.response || this.responseText) : this.response);
-                // fix status code when it is 0 (0 status is undocumented).
-                // Occurs when accessing file resources or on Android 4.1 stock browser
-                // while retrieving files from application cache.
                 if (status_1 === 0) {
                     status_1 = response ? 200 : 0;
                 }
-                // 4xx and 5xx should error (https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
                 if (status_1 < 400) {
                     if (progressSubscriber) {
                         progressSubscriber.complete();
@@ -346,13 +291,6 @@ var AjaxSubscriber = /*@__PURE__*/ (function (_super) {
     return AjaxSubscriber;
 }(Subscriber));
 export { AjaxSubscriber };
-/**
- * A normalized AJAX response.
- *
- * @see {@link ajax}
- *
- * @class AjaxResponse
- */
 var AjaxResponse = /*@__PURE__*/ (function () {
     function AjaxResponse(originalEvent, xhr, request) {
         this.originalEvent = originalEvent;
@@ -365,13 +303,6 @@ var AjaxResponse = /*@__PURE__*/ (function () {
     return AjaxResponse;
 }());
 export { AjaxResponse };
-/**
- * A normalized AJAX error.
- *
- * @see {@link ajax}
- *
- * @class AjaxError
- */
 var AjaxError = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(AjaxError, _super);
     function AjaxError(message, xhr, request) {
@@ -392,10 +323,7 @@ export { AjaxError };
 function parseXhrResponse(responseType, xhr) {
     switch (responseType) {
         case 'json':
-            // HACK(benlesh): TypeScript shennanigans
-            // tslint:disable-next-line:no-any XMLHttpRequest is defined to always have 'response' inferring xhr as never for the else clause.
             if ('response' in xhr) {
-                //IE does not support json as responseType, parse it internally
                 return xhr.responseType ? xhr.response : JSON.parse(xhr.response || xhr.responseText || 'null');
             }
             else {
@@ -405,16 +333,9 @@ function parseXhrResponse(responseType, xhr) {
             return xhr.responseXML;
         case 'text':
         default:
-            // HACK(benlesh): TypeScript shennanigans
-            // tslint:disable-next-line:no-any XMLHttpRequest is defined to always have 'response' inferring xhr as never for the else sub-expression.
             return ('response' in xhr) ? xhr.response : xhr.responseText;
     }
 }
-/**
- * @see {@link ajax}
- *
- * @class AjaxTimeoutError
- */
 var AjaxTimeoutError = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(AjaxTimeoutError, _super);
     function AjaxTimeoutError(xhr, request) {

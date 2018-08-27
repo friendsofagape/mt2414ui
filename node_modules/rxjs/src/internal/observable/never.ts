@@ -4,7 +4,7 @@ import { noop } from '../util/noop';
 /**
  * An Observable that emits no items to the Observer and never completes.
  *
- * <img src="./img/never.png" width="100%">
+ * ![](never.png)
  *
  * A simple Observable that emits neither values nor errors nor the completion
  * notification. It can be used for testing purposes or for composing with other
@@ -12,15 +12,19 @@ import { noop } from '../util/noop';
  * Observable keeps the subscription from being disposed automatically.
  * Subscriptions need to be manually disposed.
  *
- * @example <caption>Emit the number 7, then never emit anything else (not even complete).</caption>
+ * ##  Example
+ * ### Emit the number 7, then never emit anything else (not even complete)
+ * ```javascript
  * function info() {
  *   console.log('Will not be called');
  * }
- * var result = NEVER.startWith(7);
+ * const result = NEVER.pipe(startWith(7));
  * result.subscribe(x => console.log(x), info, info);
  *
- * @see {@link create}
- * @see {@link EMPTY}
+ * ```
+ *
+ * @see {@link Observable}
+ * @see {@link index/EMPTY}
  * @see {@link of}
  * @see {@link throwError}
  */

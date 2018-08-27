@@ -12,23 +12,11 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var OuterSubscriber_1 = require("../OuterSubscriber");
 var subscribeToResult_1 = require("../util/subscribeToResult");
-/**
- * Returns an Observable that skips items emitted by the source Observable until a second Observable emits an item.
- *
- * <img src="./img/skipUntil.png" width="100%">
- *
- * @param {Observable} notifier - The second Observable that has to emit an item before the source Observable's elements begin to
- * be mirrored by the resulting Observable.
- * @return {Observable<T>} An Observable that skips items from the source Observable until the second Observable emits
- * an item, then emits the remaining items.
- * @method skipUntil
- * @owner Observable
- */
 function skipUntil(notifier) {
     return function (source) { return source.lift(new SkipUntilOperator(notifier)); };
 }
 exports.skipUntil = skipUntil;
-var SkipUntilOperator = /** @class */ (function () {
+var SkipUntilOperator = (function () {
     function SkipUntilOperator(notifier) {
         this.notifier = notifier;
     }
@@ -37,12 +25,7 @@ var SkipUntilOperator = /** @class */ (function () {
     };
     return SkipUntilOperator;
 }());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var SkipUntilSubscriber = /** @class */ (function (_super) {
+var SkipUntilSubscriber = (function (_super) {
     __extends(SkipUntilSubscriber, _super);
     function SkipUntilSubscriber(destination, notifier) {
         var _this = _super.call(this, destination) || this;
@@ -62,7 +45,6 @@ var SkipUntilSubscriber = /** @class */ (function (_super) {
         }
     };
     SkipUntilSubscriber.prototype.notifyComplete = function () {
-        /* do nothing */
     };
     return SkipUntilSubscriber;
 }(OuterSubscriber_1.OuterSubscriber));

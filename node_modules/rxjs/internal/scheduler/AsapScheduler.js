@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var AsyncScheduler_1 = require("./AsyncScheduler");
-var AsapScheduler = /** @class */ (function (_super) {
+var AsapScheduler = (function (_super) {
     __extends(AsapScheduler, _super);
     function AsapScheduler() {
         return _super !== null && _super.apply(this, arguments) || this;

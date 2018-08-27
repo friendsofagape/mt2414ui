@@ -1,47 +1,55 @@
-<form>
+<div class="container">
+        <form>
 
-<div class="form-group">
-        <div style="width: 20%;display:inline-block;padding: 10px">
-        <label>LANGUAGE</label>
-        <select style="height: 32px;font-size: 13px;" [(ngModel)]="langFirstIndex" ngModel name="glLang" id="glLang" class="form-control" #glLang="ngModel" (change)="glLangChange(glLang.value)">
-                <option value="0">Select</option>
-                <option *ngFor="let glLang of LangArray | keysPipe" [value]="glLang.key">{{glLang.value}}</option>
-        </select>
-        </div>
+                <div class="form-group">
+                        <div style="width: 20%;display:inline-block;padding: 10px">
+                                <mat-form-field>
+                                        <mat-select placeholder="LANGUAGE" [(ngModel)]="langFirstIndex" ngModel name="glLang" id="glLang" #glLang="ngModel" (selectionChange)="glLangChange(glLang.value)">
+                                                <mat-option value="0">Select</mat-option>
+                                                <mat-option *ngFor="let glLang of LangArray | keysPipe" [value]="glLang.key">{{glLang.value}}</mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
 
 
-      <div style="width: 20%;display:inline-block;padding: 10px">
-      <label for="book">BOOK</label>
-      <select style="height: 32px;font-size: 13px;" [(ngModel)]="bookFirstIndex" ngModel name="book" id="book" class="form-control" #book="ngModel" (change)="bookChange(book.value)">
-          <option value="0">Select</option>
-          <option *ngFor="let book of Books" [value]="book">{{book}}</option>
-      </select>
-      </div>
-  
-      <div style="width: 20%; display:inline-block;padding: 10px" >
-              <label for="chapter">CHAPTER</label>
-              <select style="height: 32px;font-size: 13px;" [(ngModel)]="chapterFirstIndex" ngModel name="chapter" id="chapter" class="form-control" #chapter="ngModel" (change)="chapterChange(chapter.value,book.value)">
-                 <option value="0">Select</option>
-                  <option *ngFor="let chapter of Chapters" [value]="chapter">{{chapter}}</option>
-              </select>
-      </div>
-  
-          <div style="width: 20%;display:inline-block;padding: 10px">
-                  <label for="verse">VERSE</label>
-                  <select style="height: 32px;font-size: 13px;" [(ngModel)]="verseFirstIndex" ngModel name="verse" id="verse" class="form-control" #verse="ngModel" (change)="verseChange(verse.value)">
-                          <option value="0">Select</option>
-                  <option *ngFor="let verse of Verses"  [value]="verse">{{verse}}</option>     
-                  </select>
-          </div>
-  
-  </div>
+                        <div style="width: 20%;display:inline-block;padding: 10px">
+                                <mat-form-field>
+                                        <mat-select placeholder="BOOK" [(ngModel)]="bookFirstIndex" ngModel name="book" id="book" #book="ngModel" (selectionChange)="bookChange(book.value)">
+                                                <mat-option value="0">Select</mat-option>
+                                                <mat-option *ngFor="let book of Books" [value]="book">{{book}}</mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
 
-  <div>
-          <button type="button" class="btn btn-outline-primary" style="padding: 2px 7px;margin:5px;" (click)="prevOnclick()">&laquo; Previous Verse</button>
-          <button type="button" class="btn btn-outline-primary" style="padding: 2px 7px;margin:5px;" (click)="nextOnClick()">Next Verse &raquo;</button>
-          <!-- <a href="#" class="btn btn-outline-primary" (click)="prevOnclick()">&laquo; Previous Verse</a> -->
-          <!-- <a href="#" class="next" (click)="nextOnClick()">Next Verse &raquo;</a> -->
-  </div>
-  
-  </form>
-  <app-d3-matrix *ngIf="BCV" [BCV]="BCV" [BOOKNAME]="bookName" [Lang]="langParam" ></app-d3-matrix>
+                        <div style="width: 20%; display:inline-block;padding: 10px">
+
+                                <mat-form-field>
+                                        <mat-select placeholder="CHAPTER" [(ngModel)]="chapterFirstIndex" ngModel name="chapter" id="chapter" #chapter="ngModel"
+                                                (selectionChange)="chapterChange(chapter.value,book.value)">
+                                                <mat-option value="0">Select</mat-option>
+                                                <mat-option *ngFor="let chapter of Chapters" [value]="chapter">{{chapter}}</mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
+
+                        <div style="width: 20%;display:inline-block;padding: 10px">
+                                <mat-form-field>
+                                        <mat-select placeholder="VERSE" [(ngModel)]="verseFirstIndex" ngModel name="verse" id="verse" #verse="ngModel" (selectionChange)="verseChange(verse.value)">
+                                                <mat-option value="0">Select</mat-option>
+                                                <mat-option *ngFor="let verse of Verses" [value]="verse">{{verse}}</mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+                        </div>
+
+                </div>
+
+                <div>
+                        <button id="prebtn" type="button" class="btn btn-outline-primary" style="padding: 2px 7px;margin:5px;" (click)="prevOnclick()">&laquo; Previous Verse</button>
+                        <button id="nxtbtn" type="button" class="btn btn-outline-primary" style="padding: 2px 7px;margin:5px;" (click)="nextOnClick()">Next Verse &raquo;</button>
+                        <!-- <a href="#" class="btn btn-outline-primary" (click)="prevOnclick()">&laquo; Previous Verse</a> -->
+                        <!-- <a href="#" class="next" (click)="nextOnClick()">Next Verse &raquo;</a> -->
+                </div>
+
+        </form>
+</div>
+<app-d3-matrix *ngIf="BCV" [BCV]="BCV" [BOOKNAME]="bookName" [Lang]="langParam"></app-d3-matrix>

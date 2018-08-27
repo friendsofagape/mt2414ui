@@ -14,12 +14,7 @@ var Subject_1 = require("../Subject");
 var Subscription_1 = require("../Subscription");
 var SubscriptionLoggable_1 = require("./SubscriptionLoggable");
 var applyMixins_1 = require("../util/applyMixins");
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var HotObservable = /** @class */ (function (_super) {
+var HotObservable = (function (_super) {
     __extends(HotObservable, _super);
     function HotObservable(messages, scheduler) {
         var _this = _super.call(this) || this;
@@ -28,7 +23,6 @@ var HotObservable = /** @class */ (function (_super) {
         _this.scheduler = scheduler;
         return _this;
     }
-    /** @deprecated This is an internal implementation detail, do not use. */
     HotObservable.prototype._subscribe = function (subscriber) {
         var subject = this;
         var index = subject.logSubscribedFrame();
@@ -40,11 +34,9 @@ var HotObservable = /** @class */ (function (_super) {
     HotObservable.prototype.setup = function () {
         var subject = this;
         var messagesLength = subject.messages.length;
-        /* tslint:disable:no-var-keyword */
         for (var i = 0; i < messagesLength; i++) {
             (function () {
                 var message = subject.messages[i];
-                /* tslint:enable */
                 subject.scheduler.schedule(function () { message.notification.observe(subject); }, message.frame);
             })();
         }

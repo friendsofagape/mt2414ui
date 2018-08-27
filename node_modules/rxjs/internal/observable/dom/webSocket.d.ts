@@ -2,8 +2,9 @@ import { WebSocketSubject, WebSocketSubjectConfig } from './WebSocketSubject';
 /**
  * Wrapper around the w3c-compatible WebSocket object provided by the browser.
  *
- * @example <caption>Wraps browser WebSocket</caption>
- *
+ * ## Examples
+ * ### Wrapping browser WebSocket
+ * ```javascript
  * import { webSocket } from 'rxjs/webSocket';
  *
  * let socket$ = webSocket('ws://localhost:8081');
@@ -15,9 +16,10 @@ import { WebSocketSubject, WebSocketSubjectConfig } from './WebSocketSubject';
  * );
  *
  * socket$.next(JSON.stringify({ op: 'hello' }));
+ * ```
  *
- * @example <caption>Wraps WebSocket from nodejs-webSocket (using node.js)</caption>
- *
+ * ### Wraps nodejs-webSocket</caption>
+ * ```javascript
  * import { webSocket } from 'rxjs/webSocket';
  * import { w3cwebSocket } from 'webSocket';
  *
@@ -33,6 +35,7 @@ import { WebSocketSubject, WebSocketSubjectConfig } from './WebSocketSubject';
  * );
  *
  * socket$.next(JSON.stringify({ op: 'hello' }));
+ * ```
  *
  * @param {string | WebSocketSubjectConfig} urlConfigOrSource the source of the webSocket as an url or a structure defining the webSocket object
  * @return {WebSocketSubject}

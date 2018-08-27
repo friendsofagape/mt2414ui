@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { GlobalUrl } from './globalUrl';
+import { Router } from '@angular/router';
+import 'hammerjs';
 
 @Component({
   selector: 'app-root',
@@ -6,20 +10,40 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private ApiUrl: GlobalUrl, private _http: Http, public router: Router) {
+  }
+
   title = 'app';
 
-  componame:any = "csv-to-table";
-  linkName:string = "Translation Page"
+  home: any = "app-bcv-search";
+  csv: string = "csv-to-table";
+  textValue: string;
 
-  compchange(){
-    if(this.componame == "csv-to-table")
-    {
-     this.componame = "app-bcv-search";
-     this.linkName = "Home";
+  searchBCV() {
+    if (this.textValue) {
+      var formData = new FormData();
+      formData.append("reference", this.textValue);
+      this._http.post(this.ApiUrl.getBcvSearch, formData)
+        .subscribe(data => {
+          let response: any = data;
+          //this.display = false;
+          //console.log(this.textValue);
+          this.textValue = "";
+          this.router.navigate(['/app-bcv-search/' + response.json()]);
+
+        }, (error: Response) => {
+          if (error.status === 400) {
+            //this.display = false;
+            //this.toastr.warning("Bad Request Error.")
+          }
+          else {
+            //this.display = false;
+            //this.toastr.error("An Unexpected Error Occured.")
+          }
+
+        })
+    }
   }
-  else{
-    this.componame = "csv-to-table"
-    this.linkName = "Translation Page";
-  }
-}
+
 }

@@ -1,9 +1,5 @@
 /** PURE_IMPORTS_START _ReplaySubject PURE_IMPORTS_END */
 import { ReplaySubject } from '../ReplaySubject';
-/**
- * @method shareReplay
- * @owner Observable
- */
 export function shareReplay(bufferSize, windowTime, scheduler) {
     return function (source) { return source.lift(shareReplayOperator(bufferSize, windowTime, scheduler)); };
 }

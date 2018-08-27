@@ -16,38 +16,6 @@ var Subscriber_1 = require("../Subscriber");
 var OuterSubscriber_1 = require("../OuterSubscriber");
 var subscribeToResult_1 = require("../util/subscribeToResult");
 var iterator_1 = require("../../internal/symbol/iterator");
-/* tslint:enable:max-line-length */
-/**
- * Combines multiple Observables to create an Observable whose values are calculated from the values, in order, of each
- * of its input Observables.
- *
- * If the latest parameter is a function, this function is used to compute the created value from the input values.
- * Otherwise, an array of the input values is returned.
- *
- * @example <caption>Combine age and name from different sources</caption>
- *
- * let age$ = Observable.of<number>(27, 25, 29);
- * let name$ = Observable.of<string>('Foo', 'Bar', 'Beer');
- * let isDev$ = Observable.of<boolean>(true, true, false);
- *
- * Observable
- *     .zip(age$,
- *          name$,
- *          isDev$,
- *          (age: number, name: string, isDev: boolean) => ({ age, name, isDev }))
- *     .subscribe(x => console.log(x));
- *
- * // outputs
- * // { age: 27, name: 'Foo', isDev: true }
- * // { age: 25, name: 'Bar', isDev: true }
- * // { age: 29, name: 'Beer', isDev: false }
- *
- * @param observables
- * @return {Observable<R>}
- * @static true
- * @name zip
- * @owner Observable
- */
 function zip() {
     var observables = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -60,7 +28,7 @@ function zip() {
     return fromArray_1.fromArray(observables, undefined).lift(new ZipOperator(resultSelector));
 }
 exports.zip = zip;
-var ZipOperator = /** @class */ (function () {
+var ZipOperator = (function () {
     function ZipOperator(resultSelector) {
         this.resultSelector = resultSelector;
     }
@@ -70,12 +38,7 @@ var ZipOperator = /** @class */ (function () {
     return ZipOperator;
 }());
 exports.ZipOperator = ZipOperator;
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var ZipSubscriber = /** @class */ (function (_super) {
+var ZipSubscriber = (function (_super) {
     __extends(ZipSubscriber, _super);
     function ZipSubscriber(destination, resultSelector, values) {
         if (values === void 0) { values = Object.create(null); }
@@ -112,7 +75,7 @@ var ZipSubscriber = /** @class */ (function (_super) {
                 this.add(iterator.subscribe(iterator, i));
             }
             else {
-                this.active--; // not an observable
+                this.active--;
             }
         }
     };
@@ -126,7 +89,6 @@ var ZipSubscriber = /** @class */ (function (_super) {
         var iterators = this.iterators;
         var len = iterators.length;
         var destination = this.destination;
-        // abort if not all of them have values
         for (var i = 0; i < len; i++) {
             var iterator = iterators[i];
             if (typeof iterator.hasValue === 'function' && !iterator.hasValue()) {
@@ -138,8 +100,6 @@ var ZipSubscriber = /** @class */ (function (_super) {
         for (var i = 0; i < len; i++) {
             var iterator = iterators[i];
             var result = iterator.next();
-            // check to see if it's completed now that you've gotten
-            // the next value.
             if (iterator.hasCompleted()) {
                 shouldComplete = true;
             }
@@ -173,7 +133,7 @@ var ZipSubscriber = /** @class */ (function (_super) {
     return ZipSubscriber;
 }(Subscriber_1.Subscriber));
 exports.ZipSubscriber = ZipSubscriber;
-var StaticIterator = /** @class */ (function () {
+var StaticIterator = (function () {
     function StaticIterator(iterator) {
         this.iterator = iterator;
         this.nextResult = iterator.next();
@@ -192,7 +152,7 @@ var StaticIterator = /** @class */ (function () {
     };
     return StaticIterator;
 }());
-var StaticArrayIterator = /** @class */ (function () {
+var StaticArrayIterator = (function () {
     function StaticArrayIterator(array) {
         this.array = array;
         this.index = 0;
@@ -215,12 +175,7 @@ var StaticArrayIterator = /** @class */ (function () {
     };
     return StaticArrayIterator;
 }());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var ZipBufferIterator = /** @class */ (function (_super) {
+var ZipBufferIterator = (function (_super) {
     __extends(ZipBufferIterator, _super);
     function ZipBufferIterator(destination, parent, observable) {
         var _this = _super.call(this, destination) || this;
@@ -234,8 +189,6 @@ var ZipBufferIterator = /** @class */ (function (_super) {
     ZipBufferIterator.prototype[iterator_1.iterator] = function () {
         return this;
     };
-    // NOTE: there is actually a name collision here with Subscriber.next and Iterator.next
-    //    this is legit because `next()` will never be called by a subscription in this case.
     ZipBufferIterator.prototype.next = function () {
         var buffer = this.buffer;
         if (buffer.length === 0 && this.isComplete) {

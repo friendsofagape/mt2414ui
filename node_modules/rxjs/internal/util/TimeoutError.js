@@ -10,14 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * An error thrown when duetime elapses.
- *
- * @see {@link timeout}
- *
- * @class TimeoutError
- */
-var TimeoutError = /** @class */ (function (_super) {
+var TimeoutError = (function (_super) {
     __extends(TimeoutError, _super);
     function TimeoutError() {
         var _this = _super.call(this, 'Timeout has occurred') || this;

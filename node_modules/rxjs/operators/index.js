@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/* Operator exports */
 var audit_1 = require("../internal/operators/audit");
 exports.audit = audit_1.audit;
 var auditTime_1 = require("../internal/operators/auditTime");

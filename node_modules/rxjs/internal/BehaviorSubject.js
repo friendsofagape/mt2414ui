@@ -12,10 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Subject_1 = require("./Subject");
 var ObjectUnsubscribedError_1 = require("./util/ObjectUnsubscribedError");
-/**
- * @class BehaviorSubject<T>
- */
-var BehaviorSubject = /** @class */ (function (_super) {
+var BehaviorSubject = (function (_super) {
     __extends(BehaviorSubject, _super);
     function BehaviorSubject(_value) {
         var _this = _super.call(this) || this;
@@ -29,7 +26,6 @@ var BehaviorSubject = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /** @deprecated This is an internal implementation detail, do not use. */
     BehaviorSubject.prototype._subscribe = function (subscriber) {
         var subscription = _super.prototype._subscribe.call(this, subscriber);
         if (subscription && !subscription.closed) {

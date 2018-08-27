@@ -4,11 +4,6 @@ import { Observable } from '../Observable';
 import { Subscription } from '../Subscription';
 import { SubscriptionLoggable } from './SubscriptionLoggable';
 import { applyMixins } from '../util/applyMixins';
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
 var ColdObservable = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(ColdObservable, _super);
     function ColdObservable(messages, scheduler) {

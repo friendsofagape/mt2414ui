@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var AsyncScheduler_1 = require("./AsyncScheduler");
-var AnimationFrameScheduler = /** @class */ (function (_super) {
+var AnimationFrameScheduler = (function (_super) {
     __extends(AnimationFrameScheduler, _super);
     function AnimationFrameScheduler() {
         return _super !== null && _super.apply(this, arguments) || this;

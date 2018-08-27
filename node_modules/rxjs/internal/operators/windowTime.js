@@ -39,7 +39,7 @@ function windowTime(windowTimeSpan) {
     };
 }
 exports.windowTime = windowTime;
-var WindowTimeOperator = /** @class */ (function () {
+var WindowTimeOperator = (function () {
     function WindowTimeOperator(windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler) {
         this.windowTimeSpan = windowTimeSpan;
         this.windowCreationInterval = windowCreationInterval;
@@ -51,7 +51,7 @@ var WindowTimeOperator = /** @class */ (function () {
     };
     return WindowTimeOperator;
 }());
-var CountedSubject = /** @class */ (function (_super) {
+var CountedSubject = (function (_super) {
     __extends(CountedSubject, _super);
     function CountedSubject() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -71,12 +71,7 @@ var CountedSubject = /** @class */ (function (_super) {
     });
     return CountedSubject;
 }(Subject_1.Subject));
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var WindowTimeSubscriber = /** @class */ (function (_super) {
+var WindowTimeSubscriber = (function (_super) {
     __extends(WindowTimeSubscriber, _super);
     function WindowTimeSubscriber(destination, windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler) {
         var _this = _super.call(this, destination) || this;

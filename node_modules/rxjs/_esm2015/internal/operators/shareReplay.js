@@ -1,8 +1,4 @@
 import { ReplaySubject } from '../ReplaySubject';
-/**
- * @method shareReplay
- * @owner Observable
- */
 export function shareReplay(bufferSize, windowTime, scheduler) {
     return (source) => source.lift(shareReplayOperator(bufferSize, windowTime, scheduler));
 }

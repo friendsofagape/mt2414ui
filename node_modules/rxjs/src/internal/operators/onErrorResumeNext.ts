@@ -24,7 +24,7 @@ export function onErrorResumeNext<T, R>(array: ObservableInput<any>[]): Operator
  *
  * <span class="informal">Execute series of Observables no matter what, even if it means swallowing errors.</span>
  *
- * <img src="./img/onErrorResumeNext.png" width="100%">
+ * ![](onErrorResumeNext.png)
  *
  * `onErrorResumeNext` is an operator that accepts a series of Observables, provided either directly as
  * arguments or as an array. If no single Observable is provided, returned Observable will simply behave the same
@@ -44,22 +44,25 @@ export function onErrorResumeNext<T, R>(array: ObservableInput<any>[]): Operator
  * an error.
  *
  * Note that you do not get any access to errors emitted by the Observables. In particular do not
- * expect these errors to appear in error callback passed to {@link subscribe}. If you want to take
- * specific actions based on what error was emitted by an Observable, you should try out {@link catch} instead.
+ * expect these errors to appear in error callback passed to {@link Observable#subscribe}. If you want to take
+ * specific actions based on what error was emitted by an Observable, you should try out {@link catchError} instead.
  *
  *
- * @example <caption>Subscribe to the next Observable after map fails</caption>
- * Rx.Observable.of(1, 2, 3, 0)
- *   .map(x => {
+ * ## Example
+ * Subscribe to the next Observable after map fails
+ * ```javascript
+ * of(1, 2, 3, 0).pipe(
+ *   map(x => {
  *       if (x === 0) { throw Error(); }
          return 10 / x;
- *   })
- *   .onErrorResumeNext(Rx.Observable.of(1, 2, 3))
- *   .subscribe(
- *     val => console.log(val),
- *     err => console.log(err),          // Will never be called.
- *     () => console.log('that\'s it!')
- *   );
+ *   }),
+ *   onErrorResumeNext(of(1, 2, 3)),
+ * )
+ * .subscribe(
+ *   val => console.log(val),
+ *   err => console.log(err),          // Will never be called.
+ *   () => console.log('that\'s it!')
+ * );
  *
  * // Logs:
  * // 10
@@ -69,9 +72,10 @@ export function onErrorResumeNext<T, R>(array: ObservableInput<any>[]): Operator
  * // 2
  * // 3
  * // "that's it!"
+ * ```
  *
  * @see {@link concat}
- * @see {@link catch}
+ * @see {@link catchError}
  *
  * @param {...ObservableInput} observables Observables passed either directly or as an array.
  * @return {Observable} An Observable that emits values from source Observable, but - if it errors - subscribes

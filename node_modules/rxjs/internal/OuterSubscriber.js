@@ -11,12 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Subscriber_1 = require("./Subscriber");
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var OuterSubscriber = /** @class */ (function (_super) {
+var OuterSubscriber = (function (_super) {
     __extends(OuterSubscriber, _super);
     function OuterSubscriber() {
         return _super !== null && _super.apply(this, arguments) || this;

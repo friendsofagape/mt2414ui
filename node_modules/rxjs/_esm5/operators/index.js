@@ -1,4 +1,3 @@
-/* Operator exports */
 /** PURE_IMPORTS_START  PURE_IMPORTS_END */
 export { audit } from '../internal/operators/audit';
 export { auditTime } from '../internal/operators/auditTime';

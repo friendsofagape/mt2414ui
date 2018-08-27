@@ -10,17 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * An error thrown when an Observable or a sequence was queried but has no
- * elements.
- *
- * @see {@link first}
- * @see {@link last}
- * @see {@link single}
- *
- * @class EmptyError
- */
-var EmptyError = /** @class */ (function (_super) {
+var EmptyError = (function (_super) {
     __extends(EmptyError, _super);
     function EmptyError() {
         var _this = _super.call(this, 'no elements in sequence') || this;

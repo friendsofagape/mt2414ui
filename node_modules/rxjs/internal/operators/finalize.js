@@ -12,19 +12,11 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Subscriber_1 = require("../Subscriber");
 var Subscription_1 = require("../Subscription");
-/**
- * Returns an Observable that mirrors the source Observable, but will call a specified function when
- * the source terminates on complete or error.
- * @param {function} callback Function to be called when source terminates.
- * @return {Observable} An Observable that mirrors the source, but will call the specified function on termination.
- * @method finally
- * @owner Observable
- */
 function finalize(callback) {
     return function (source) { return source.lift(new FinallyOperator(callback)); };
 }
 exports.finalize = finalize;
-var FinallyOperator = /** @class */ (function () {
+var FinallyOperator = (function () {
     function FinallyOperator(callback) {
         this.callback = callback;
     }
@@ -33,12 +25,7 @@ var FinallyOperator = /** @class */ (function () {
     };
     return FinallyOperator;
 }());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-var FinallySubscriber = /** @class */ (function (_super) {
+var FinallySubscriber = (function (_super) {
     __extends(FinallySubscriber, _super);
     function FinallySubscriber(destination, callback) {
         var _this = _super.call(this, destination) || this;

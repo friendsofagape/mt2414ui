@@ -1,9 +1,5 @@
 /** PURE_IMPORTS_START tslib PURE_IMPORTS_END */
 import * as tslib_1 from "tslib";
-/**
- * An error thrown when one or more errors have occurred during the
- * `unsubscribe` of a {@link Subscription}.
- */
 var UnsubscriptionError = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(UnsubscriptionError, _super);
     function UnsubscriptionError(errors) {

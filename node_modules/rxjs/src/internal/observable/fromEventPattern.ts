@@ -17,14 +17,16 @@ export function fromEventPattern<T>(addHandler: (handler: Function) => any, remo
  * <span class="informal">Converts any addHandler/removeHandler API to an
  * Observable.</span>
  *
- * <img src="./img/fromEventPattern.png" width="100%">
+ * ![](fromEventPattern.png)
  *
  * Creates an Observable by using the `addHandler` and `removeHandler`
  * functions to add and remove the handlers. The `addHandler` is
  * called when the output Observable is subscribed, and `removeHandler` is
  * called when the Subscription is unsubscribed.
  *
- * @example <caption>Emits clicks happening on the DOM document</caption>
+ * ## Example
+ * ### Emits clicks happening on the DOM document
+ * ```javascript
  * function addClickHandler(handler) {
  *   document.addEventListener('click', handler);
  * }
@@ -33,11 +35,12 @@ export function fromEventPattern<T>(addHandler: (handler: Function) => any, remo
  *   document.removeEventListener('click', handler);
  * }
  *
- * var clicks = fromEventPattern(
+ * const clicks = fromEventPattern(
  *   addClickHandler,
- *   removeClickHandler
+ *   removeClickHandler,
  * );
  * clicks.subscribe(x => console.log(x));
+ * ```
  *
  * @see {@link from}
  * @see {@link fromEvent}

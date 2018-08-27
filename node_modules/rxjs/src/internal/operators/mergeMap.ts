@@ -24,17 +24,19 @@ export function mergeMap<T, I, R>(project: (value: T, index: number) => Observab
  * <span class="informal">Maps each value to an Observable, then flattens all of
  * these inner Observables using {@link mergeAll}.</span>
  *
- * <img src="./img/mergeMap.png" width="100%">
+ * ![](mergeMap.png)
  *
  * Returns an Observable that emits items based on applying a function that you
  * supply to each item emitted by the source Observable, where that function
  * returns an Observable, and then merging those resulting Observables and
  * emitting the results of this merger.
  *
- * @example <caption>Map and flatten each letter to an Observable ticking every 1 second</caption>
- * var letters = Rx.Observable.of('a', 'b', 'c');
- * var result = letters.mergeMap(x =>
- *   Rx.Observable.interval(1000).map(i => x+i)
+ * ## Example
+ * Map and flatten each letter to an Observable ticking every 1 second
+ * ```javascript
+ * const letters = of('a', 'b', 'c');
+ * const result = letters.pipe(
+ *   mergeMap(x => interval(1000).pipe(map(i => x+i))),
  * );
  * result.subscribe(x => console.log(x));
  *
@@ -46,6 +48,7 @@ export function mergeMap<T, I, R>(project: (value: T, index: number) => Observab
  * // b1
  * // c1
  * // continues to list a,b,c with respective ascending integers
+ * ```
  *
  * @see {@link concatMap}
  * @see {@link exhaustMap}

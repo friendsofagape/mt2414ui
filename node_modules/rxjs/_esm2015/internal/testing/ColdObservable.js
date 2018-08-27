@@ -2,11 +2,6 @@ import { Observable } from '../Observable';
 import { Subscription } from '../Subscription';
 import { SubscriptionLoggable } from './SubscriptionLoggable';
 import { applyMixins } from '../util/applyMixins';
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
 export class ColdObservable extends Observable {
     constructor(messages, scheduler) {
         super(function (subscriber) {

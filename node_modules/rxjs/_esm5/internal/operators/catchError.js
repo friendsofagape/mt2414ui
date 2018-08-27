@@ -18,11 +18,6 @@ var CatchOperator = /*@__PURE__*/ (function () {
     };
     return CatchOperator;
 }());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
 var CatchSubscriber = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(CatchSubscriber, _super);
     function CatchSubscriber(destination, selector, caught) {
@@ -31,11 +26,6 @@ var CatchSubscriber = /*@__PURE__*/ (function (_super) {
         _this.caught = caught;
         return _this;
     }
-    // NOTE: overriding `error` instead of `_error` because we don't want
-    // to have this flag this subscriber as `isStopped`. We can mimic the
-    // behavior of the RetrySubscriber (from the `retry` operator), where
-    // we unsubscribe from our source chain, reset our Subscriber flags,
-    // then subscribe to the selector result.
     CatchSubscriber.prototype.error = function (err) {
         if (!this.isStopped) {
             var result = void 0;

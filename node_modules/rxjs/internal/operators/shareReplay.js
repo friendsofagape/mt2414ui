@@ -1,10 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ReplaySubject_1 = require("../ReplaySubject");
-/**
- * @method shareReplay
- * @owner Observable
- */
 function shareReplay(bufferSize, windowTime, scheduler) {
     return function (source) { return source.lift(shareReplayOperator(bufferSize, windowTime, scheduler)); };
 }

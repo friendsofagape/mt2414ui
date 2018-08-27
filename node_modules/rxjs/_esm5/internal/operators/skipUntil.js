@@ -2,18 +2,6 @@
 import * as tslib_1 from "tslib";
 import { OuterSubscriber } from '../OuterSubscriber';
 import { subscribeToResult } from '../util/subscribeToResult';
-/**
- * Returns an Observable that skips items emitted by the source Observable until a second Observable emits an item.
- *
- * <img src="./img/skipUntil.png" width="100%">
- *
- * @param {Observable} notifier - The second Observable that has to emit an item before the source Observable's elements begin to
- * be mirrored by the resulting Observable.
- * @return {Observable<T>} An Observable that skips items from the source Observable until the second Observable emits
- * an item, then emits the remaining items.
- * @method skipUntil
- * @owner Observable
- */
 export function skipUntil(notifier) {
     return function (source) { return source.lift(new SkipUntilOperator(notifier)); };
 }
@@ -26,11 +14,6 @@ var SkipUntilOperator = /*@__PURE__*/ (function () {
     };
     return SkipUntilOperator;
 }());
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
 var SkipUntilSubscriber = /*@__PURE__*/ (function (_super) {
     tslib_1.__extends(SkipUntilSubscriber, _super);
     function SkipUntilSubscriber(destination, notifier) {
@@ -51,7 +34,6 @@ var SkipUntilSubscriber = /*@__PURE__*/ (function (_super) {
         }
     };
     SkipUntilSubscriber.prototype.notifyComplete = function () {
-        /* do nothing */
     };
     return SkipUntilSubscriber;
 }(OuterSubscriber));

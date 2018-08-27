@@ -1,9 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body { 
     padding:2px;
+    background-color:  #ffffff;
     /* background: url(./images/bgImage.jpg)  */
     
 }
@@ -76,7 +78,7 @@ a:hover {
     word-wrap: break-word;
 }
 
-#interlinearLink{
+/* #interlinearLink{
     text-decoration: none;
     display: inline-block;
     padding:0px 0px;
@@ -86,9 +88,9 @@ a:hover {
 #interlinearLink:hover{
     background-color:white;
     color: black;   
-}
+} */
 
-#verticalORgrid{
+/* #verticalORgrid{
     text-decoration: none;
     display: inline-block;
     padding:0px 0px;
@@ -98,7 +100,7 @@ a:hover {
 #verticalORgrid:hover{
     background-color:white;
     color: black;   
-}
+} */
 
 .label {
     color: white;

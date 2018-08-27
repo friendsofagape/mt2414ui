@@ -18,12 +18,12 @@ export function switchMapTo<T, I, R>(observable: ObservableInput<I>, resultSelec
 
 /**
  * Projects each source value to the same Observable which is flattened multiple
- * times with {@link switch} in the output Observable.
+ * times with {@link switchMap} in the output Observable.
  *
  * <span class="informal">It's like {@link switchMap}, but maps each value
  * always to the same inner Observable.</span>
  *
- * <img src="./img/switchMapTo.png" width="100%">
+ * ![](switchMapTo.png)
  *
  * Maps each source value to the given Observable `innerObservable` regardless
  * of the source value, and then flattens those resulting Observables into one
@@ -31,13 +31,16 @@ export function switchMapTo<T, I, R>(observable: ObservableInput<I>, resultSelec
  * emits values only from the most recently emitted instance of
  * `innerObservable`.
  *
- * @example <caption>Rerun an interval Observable on every click event</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var result = clicks.switchMapTo(Rx.Observable.interval(1000));
+ * ## Example
+ * Rerun an interval Observable on every click event
+ * ```javascript
+ * const clicks = fromEvent(document, 'click');
+ * const result = clicks.pipe(switchMapTo(interval(1000)));
  * result.subscribe(x => console.log(x));
+ * ```
  *
  * @see {@link concatMapTo}
- * @see {@link switch}
+ * @see {@link switchAll}
  * @see {@link switchMap}
  * @see {@link mergeMapTo}
  *

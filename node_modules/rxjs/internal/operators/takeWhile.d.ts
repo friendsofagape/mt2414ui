@@ -7,7 +7,7 @@ import { MonoTypeOperatorFunction } from '../types';
  * <span class="informal">Takes values from the source only while they pass the
  * condition given. When the first value does not satisfy, it completes.</span>
  *
- * <img src="./img/takeWhile.png" width="100%">
+ * ![](takeWhile.png)
  *
  * `takeWhile` subscribes and begins mirroring the source Observable. Each value
  * emitted on the source is given to the `predicate` function which returns a
@@ -16,10 +16,13 @@ import { MonoTypeOperatorFunction } from '../types';
  * returns false, at which point `takeWhile` stops mirroring the source
  * Observable and completes the output Observable.
  *
- * @example <caption>Emit click events only while the clientX property is greater than 200</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var result = clicks.takeWhile(ev => ev.clientX > 200);
+ * ## Example
+ * Emit click events only while the clientX property is greater than 200
+ * ```javascript
+ * const clicks = fromEvent(document, 'click');
+ * const result = clicks.pipe(takeWhile(ev => ev.clientX > 200));
  * result.subscribe(x => console.log(x));
+ * ```
  *
  * @see {@link take}
  * @see {@link takeLast}

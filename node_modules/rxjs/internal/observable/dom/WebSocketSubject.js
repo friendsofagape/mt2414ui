@@ -31,12 +31,7 @@ var DEFAULT_WEBSOCKET_CONFIG = {
     serializer: function (value) { return JSON.stringify(value); },
 };
 var WEBSOCKETSUBJECT_INVALID_ERROR_OBJECT = 'WebSocketSubject.error must be called with an object with an error code, and an optional reason: { code: number, reason: string }';
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @extends {Ignored}
- * @hide true
- */
-var WebSocketSubject = /** @class */ (function (_super) {
+var WebSocketSubject = (function (_super) {
     __extends(WebSocketSubject, _super);
     function WebSocketSubject(urlConfigOrSource, destination) {
         var _this = _super.call(this) || this;
@@ -80,24 +75,6 @@ var WebSocketSubject = /** @class */ (function (_super) {
         }
         this._output = new Subject_1.Subject();
     };
-    /**
-     * Creates an {@link Observable}, that when subscribed to, sends a message,
-     * defined by the `subMsg` function, to the server over the socket to begin a
-     * subscription to data over that socket. Once data arrives, the
-     * `messageFilter` argument will be used to select the appropriate data for
-     * the resulting Observable. When teardown occurs, either due to
-     * unsubscription, completion or error, a message defined by the `unsubMsg`
-     * argument will be send to the server over the WebSocketSubject.
-     *
-     * @param subMsg A function to generate the subscription message to be sent to
-     * the server. This will still be processed by the serializer in the
-     * WebSocketSubject's config. (Which defaults to JSON serialization)
-     * @param unsubMsg A function to generate the unsubscription message to be
-     * sent to the server at teardown. This will still be processed by the
-     * serializer in the WebSocketSubject's config.
-     * @param messageFilter A predicate for selecting the appropriate messages
-     * from the server for the output stream.
-     */
     WebSocketSubject.prototype.multiplex = function (subMsg, unsubMsg, messageFilter) {
         var self = this;
         return new Observable_1.Observable(function (observer) {
@@ -221,7 +198,6 @@ var WebSocketSubject = /** @class */ (function (_super) {
             }
         };
     };
-    /** @deprecated This is an internal implementation detail, do not use. */
     WebSocketSubject.prototype._subscribe = function (subscriber) {
         var _this = this;
         var source = this.source;
