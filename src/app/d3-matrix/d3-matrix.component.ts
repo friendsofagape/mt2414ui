@@ -213,7 +213,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
         document.getElementById('saveButton').style.display = 'none';
         document.getElementById("appButton").style.display = "";
-        document.getElementById("fixButton").style.display = "none";
+        // document.getElementById("fixButton").style.display = "none";
         //document.getElementById('discardButton').style.display = 'none';
 
         localStorage.setItem("lastAlignments", this.rawPos);
@@ -488,7 +488,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.verticalORgrid = "Display Bilinear";
         document.getElementById('verticalInterlinear').style.display = "none";
         document.getElementById('grid').style.display = "";
-        document.getElementById("fixButton").style.display = "";
+        // document.getElementById("fixButton").style.display = "";
     }
 
 
@@ -597,13 +597,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         var greekLexiconText = '';
         var greekArray = new Array();
         for (var l = 0; l < data.json().sourcetext.length; l++) {
-            self._http.get(self.ApiUrl.getLexicon + '/' + data.json().sourcetext[l])
-                .subscribe(data => {
-                    // console.log(data.json())
-                    greekArray.push("<b>English Word</b>:- " + data.json().targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().pronunciation + "<br/><br/>" + "strongs:- " + data.json().strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().transliteration);
-                });
+            // self._http.get(self.ApiUrl.getLexicon + '/' + data.json().sourcetext[l])
+            //     .subscribe(data => {
+            //         // console.log(data.json())
+            //         greekArray.push("<b>English Word</b>:- " + data.json().targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().pronunciation + "<br/><br/>" + "strongs:- " + data.json().strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().transliteration);
+            //     });
 
-            //    console.log(greekArray)       
+            //    console.log(greekArray) 
+
+                                greekArray.push("<b>English Word</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicondata[data.json().sourcetext[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].transliteration);      
         }
 
         var grid = d3.select("#grid")
