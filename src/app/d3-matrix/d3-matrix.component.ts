@@ -13,7 +13,7 @@ import {
     Transition
 } from 'd3-ng2-service';
 
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/map';
@@ -25,6 +25,8 @@ import { HorizontalAlign } from '../horizontalAlign';
 import { getHostElement } from '@angular/core/src/render3';
 import { stringify } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver/FileSaver';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { toDate } from '@angular/common/src/i18n/format_date';
 
 @Component({
     selector: 'app-d3-matrix',
@@ -51,14 +53,36 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     gridDataJson: any;
     linear = false;
     interLinearflag = true;
+    headers = new Headers();
 
-    constructor(private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
+    constructor(public router: Router, private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
         this.d3 = d3Service.getD3();
         this.toastr.toastrConfig.positionClass = "toast-top-center"
         this.toastr.toastrConfig.closeButton = true;
         this.toastr.toastrConfig.progressBar = true;
         this.toastr.toastrConfig.timeOut = 1200;
 
+        this.createAuthorizationHeader(this.headers);
+
+    }
+
+    createAuthorizationHeader(headers: Headers) {
+        if (localStorage.getItem("access-token")) {
+            headers.append('Authorization', 'bearer ' +
+                localStorage.getItem("access-token"));
+
+            this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
+        }
+    }
+
+    decodeToken(token) {
+        var playload = JSON.parse(atob(token.split('.')[1]));
+        let dd = Number(playload.exp)
+        var timeDiff = Math.abs(new Date(dd * 1000).getTime() - new Date().getTime());
+        if (Math.ceil(timeDiff / (1000 * 3600 * 24)) > 1) {
+            localStorage.setItem("access-token", '');
+            this.router.navigate(['../app-login']);
+        }
     }
 
 
@@ -158,6 +182,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
     saveOnClick() {
 
+        this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
         document.getElementById("grid").style.display = "none";
         var x: any = this.BCV;
         var y: any = this.positionalPairOfApi;
@@ -189,7 +214,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         }
         var data = { "bcv": x, "positional_pairs": y, "lang": l };
         this.display = true;
-        this._http.post(this.ApiUrl.getnUpdateBCV, data)
+        this._http.post(this.ApiUrl.getnUpdateBCV, data, {
+            headers: this.headers
+        })
             .subscribe(data => {
                 let response: any = data;
                 this.display = false;
@@ -222,6 +249,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     approveOnClick() {
+        this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
         document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
         var y: any = this.indPair;
@@ -230,7 +258,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
         var data = { "bcv": x, "positional_pairs": y, "lang": l };
         this.display = true;
-        this._http.post(this.ApiUrl.approveAlignments, data)
+        this._http.post(this.ApiUrl.approveAlignments, data, {
+            headers: this.headers
+        })
             .subscribe(data => {
                 let response: any = data;
                 this.display = false;
@@ -257,6 +287,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     fixOnClick() {
+        this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
         document.getElementById("grid").innerHTML = "";
         var x: any = this.BCV;
         var l: any = this.Lang;
@@ -264,7 +295,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
         var data = { "bcv": x, "lang": l };
         this.display = true;
-        this._http.post(this.ApiUrl.fixAlignments, data)
+        this._http.post(this.ApiUrl.fixAlignments, data, {
+            headers: this.headers
+        })
             .subscribe(data => {
                 //let response: any = data;
                 this.display = false;
@@ -294,6 +327,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     }
 
     discardOnClick() {
+        this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
         document.getElementById("grid").innerHTML = "";
         if (localStorage.getItem("lastAlignments") !== "") {
             var x: any = this.BCV;
@@ -327,7 +361,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             }
             var data = { "bcv": x, "positional_pairs": y, "lang": l };
             this.display = true;
-            this._http.post(this.ApiUrl.getnUpdateBCV, data)
+            this._http.post(this.ApiUrl.getnUpdateBCV, data, {
+                headers: this.headers
+            })
                 .subscribe(data => {
                     let response: any = data;
                     this.display = false;
@@ -605,7 +641,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
             //    console.log(greekArray) 
 
-                                greekArray.push("<b>English Word</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicondata[data.json().sourcetext[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].transliteration);      
+            greekArray.push("<b>English Word</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicondata[data.json().sourcetext[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicondata[data.json().sourcetext[l]].transliteration);
         }
 
         var grid = d3.select("#grid")
@@ -669,186 +705,191 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 }
             })
             .on('click', function (d: any, i) {
-                if (!d.filled) {
-                    d3.select(this)
-                        .style("fill", "#023659")
-                        .attr('class', "filledsquare");
+                if (localStorage.getItem('access-token')) {
+                    if (!d.filled) {
+                        d3.select(this)
+                            .style("fill", "#023659")
+                            .attr('class', "filledsquare");
 
-                    //console.log(d.positionalPairOfApi)
-                    if (!self.indPair.includes(d.positionalPair)) {
-                        self.indPair.push(d.positionalPair);
-                        //console.log(self.indPair)
-                    }
-
-                    //document.getElementById('rect-'+d.y+0).style.fill = "#fff";
-
-                    var splilttedWord = d.positionalPair.split('-');
-                    if (d.positionalPairOfApi.includes(splilttedWord[0] + "-0")) {
-                        const index: number = d.positionalPairOfApi.indexOf(splilttedWord[0] + "-0");
-                        if (index !== -1) {
-                            d.positionalPairOfApi.splice(index, 1);
+                        //console.log(d.positionalPairOfApi)
+                        if (!self.indPair.includes(d.positionalPair)) {
+                            self.indPair.push(d.positionalPair);
+                            //console.log(self.indPair)
                         }
-                        document.getElementById('rect-' + d.y + 0).style.fill = "#fff";
 
-                    }
+                        //document.getElementById('rect-'+d.y+0).style.fill = "#fff";
 
-                    // console.log(splilttedWord)
-                    if (d.positionalPairOfApi.includes("0-" + splilttedWord[1])) {
-                        const indexs: number = d.positionalPairOfApi.indexOf("0-" + splilttedWord[1]);
-                        if (indexs !== -1) {
-                            d.positionalPairOfApi.splice(indexs, 1);
+                        var splilttedWord = d.positionalPair.split('-');
+                        if (d.positionalPairOfApi.includes(splilttedWord[0] + "-0")) {
+                            const index: number = d.positionalPairOfApi.indexOf(splilttedWord[0] + "-0");
+                            if (index !== -1) {
+                                d.positionalPairOfApi.splice(index, 1);
+                            }
+                            document.getElementById('rect-' + d.y + 0).style.fill = "#fff";
+
                         }
-                        document.getElementById('rect-' + 100 + i).style.fill = "#fff";
-                    }
 
-                    d.filled = true;
-                    d.positionalPairOfApi.push(d.positionalPair);
-
-                    //console.log(d.positionalPairOfApi)
-                    if (d.rawPosss != d.positionalPairOfApi) {
-                        document.getElementById("saveButton").style.display = "";
-                        document.getElementById("discardButton").style.display = "";
-                        document.getElementById("appButton").style.display = "none";
-                    }
-                    else {
-                        document.getElementById("saveButton").style.display = "none";
-                        document.getElementById("discardButton").style.display = "none";
-                    }
-
-                    if (self.Interlinear == "Interlinear") {
-                        // Code for horizontal alignment
-
-                        self.Statuses = [];
-                        for (var h = 0; h < data.json().targettext.length; h++) {
-                            var greekPair = new Array();
-
-                            for (var g = 0; g < d.positionalPairOfApi.length; g++) {
-                                let pair = d.positionalPairOfApi[g].split('-');
-                                if (h == (Number(pair[0] - 1))) {
-                                    if (pair[1] == "0") {
-                                        greekPair.push("Null");
-                                    }
-                                    else {
-                                        //greekPair.push(data.json().greek[Number(pair[1] - 1)]);
-                                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
-                                    }
-                                }
+                        // console.log(splilttedWord)
+                        if (d.positionalPairOfApi.includes("0-" + splilttedWord[1])) {
+                            const indexs: number = d.positionalPairOfApi.indexOf("0-" + splilttedWord[1]);
+                            if (indexs !== -1) {
+                                d.positionalPairOfApi.splice(indexs, 1);
                             }
-                            if (greekPair[0] == undefined) {
-                                greekPair.push("NA");
-                            }
-                            self.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
+                            document.getElementById('rect-' + 100 + i).style.fill = "#fff";
                         }
-                        // Ends Here
-                    }
 
+                        d.filled = true;
+                        d.positionalPairOfApi.push(d.positionalPair);
 
-                    if (self.Interlinear == "Reverse-Interlinear") {
-                        // Code for horizontal alignment
-
-                        self.Statuses = [];
-                        for (var h = 0; h < data.json().sourcetext.length; h++) {
-                            var greekPair = new Array();
-
-                            for (var g = 0; g < d.positionalPairOfApi.length; g++) {
-                                let pair = d.positionalPairOfApi[g].split('-');
-                                if (h == (Number(pair[1] - 1))) {
-                                    if (pair[0] == "0") {
-                                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
-                                    }
-                                    else {
-                                        //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
-                                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
-                                    }
-                                }
-                            }
-                            if (greekPair[0] == undefined) {
-                                greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
-                            }
-                            self.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
-                        }
-                        // Ends Here
-                    }
-                    self.gridDataJson.positionalpairs = d.positionalPairOfApi;
-                }
-                else {
-                    d3.select(this)
-                        .style("fill", "#fff")
-                        .attr('class', "square")
-                    d.filled = false;
-                    var index = d.positionalPairOfApi.indexOf(d.positionalPair);
-                    if (index > -1) {
-                        d.positionalPairOfApi.splice(index, 1);
+                        //console.log(d.positionalPairOfApi)
                         if (d.rawPosss != d.positionalPairOfApi) {
-                            //console.log('not matching')
                             document.getElementById("saveButton").style.display = "";
                             document.getElementById("discardButton").style.display = "";
+                            document.getElementById("appButton").style.display = "none";
                         }
                         else {
-                            //console.log('matching')
                             document.getElementById("saveButton").style.display = "none";
                             document.getElementById("discardButton").style.display = "none";
                         }
 
-                    }
+                        if (self.Interlinear == "Interlinear") {
+                            // Code for horizontal alignment
 
-                    if (self.Interlinear == "Interlinear") {
-                        // Code for horizontal alignment
+                            self.Statuses = [];
+                            for (var h = 0; h < data.json().targettext.length; h++) {
+                                var greekPair = new Array();
 
-                        self.Statuses = [];
-                        for (var h = 0; h < data.json().targettext.length; h++) {
-                            var greekPair = new Array();
-
-                            for (var g = 0; g < d.positionalPairOfApi.length; g++) {
-                                let pair = d.positionalPairOfApi[g].split('-');
-                                if (h == (Number(pair[0] - 1))) {
-                                    if (pair[1] == "0") {
-                                        greekPair.push("Null");
-                                    }
-                                    else {
-                                        //greekPair.push(data.json().sourcetext[Number(pair[1] - 1)]);
-                                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
-                                    }
-                                }
-                            }
-                            if (greekPair[0] == undefined) {
-                                greekPair.push("NA");
-                            }
-                            self.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
-                        }
-                        // Ends Here
-                    }
-
-                    if (self.Interlinear == "Reverse-Interlinear") {
-                        // Code for horizontal alignment
-
-                        self.Statuses = [];
-                        for (var h = 0; h < data.json().sourcetext.length; h++) {
-                            var greekPair = new Array();
-
-                            for (var g = 0; g < d.positionalPairOfApi.length; g++) {
-                                let pair = d.positionalPairOfApi[g].split('-');
-                                if (h == (Number(pair[1] - 1))) {
-                                    if (pair[0] == "0") {
-                                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
-                                    }
-                                    else {
-                                        //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
-                                        greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
+                                for (var g = 0; g < d.positionalPairOfApi.length; g++) {
+                                    let pair = d.positionalPairOfApi[g].split('-');
+                                    if (h == (Number(pair[0] - 1))) {
+                                        if (pair[1] == "0") {
+                                            greekPair.push("Null");
+                                        }
+                                        else {
+                                            //greekPair.push(data.json().greek[Number(pair[1] - 1)]);
+                                            greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
+                                        }
                                     }
                                 }
+                                if (greekPair[0] == undefined) {
+                                    greekPair.push("NA");
+                                }
+                                self.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
                             }
-                            if (greekPair[0] == undefined) {
-                                greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
-                            }
-                            self.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
+                            // Ends Here
                         }
-                        // Ends Here
+
+
+                        if (self.Interlinear == "Reverse-Interlinear") {
+                            // Code for horizontal alignment
+
+                            self.Statuses = [];
+                            for (var h = 0; h < data.json().sourcetext.length; h++) {
+                                var greekPair = new Array();
+
+                                for (var g = 0; g < d.positionalPairOfApi.length; g++) {
+                                    let pair = d.positionalPairOfApi[g].split('-');
+                                    if (h == (Number(pair[1] - 1))) {
+                                        if (pair[0] == "0") {
+                                            greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
+                                        }
+                                        else {
+                                            //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
+                                            greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
+                                        }
+                                    }
+                                }
+                                if (greekPair[0] == undefined) {
+                                    greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
+                                }
+                                self.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
+                            }
+                            // Ends Here
+                        }
+                        self.gridDataJson.positionalpairs = d.positionalPairOfApi;
                     }
-                    self.gridDataJson.positionalpairs = d.positionalPairOfApi;
+                    else {
+                        d3.select(this)
+                            .style("fill", "#fff")
+                            .attr('class', "square")
+                        d.filled = false;
+                        var index = d.positionalPairOfApi.indexOf(d.positionalPair);
+                        if (index > -1) {
+                            d.positionalPairOfApi.splice(index, 1);
+                            if (d.rawPosss != d.positionalPairOfApi) {
+                                //console.log('not matching')
+                                document.getElementById("saveButton").style.display = "";
+                                document.getElementById("discardButton").style.display = "";
+                            }
+                            else {
+                                //console.log('matching')
+                                document.getElementById("saveButton").style.display = "none";
+                                document.getElementById("discardButton").style.display = "none";
+                            }
+
+                        }
+
+                        if (self.Interlinear == "Interlinear") {
+                            // Code for horizontal alignment
+
+                            self.Statuses = [];
+                            for (var h = 0; h < data.json().targettext.length; h++) {
+                                var greekPair = new Array();
+
+                                for (var g = 0; g < d.positionalPairOfApi.length; g++) {
+                                    let pair = d.positionalPairOfApi[g].split('-');
+                                    if (h == (Number(pair[0] - 1))) {
+                                        if (pair[1] == "0") {
+                                            greekPair.push("Null");
+                                        }
+                                        else {
+                                            //greekPair.push(data.json().sourcetext[Number(pair[1] - 1)]);
+                                            greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().sourcetext[Number(pair[1] - 1)] + ")");
+                                        }
+                                    }
+                                }
+                                if (greekPair[0] == undefined) {
+                                    greekPair.push("NA");
+                                }
+                                self.Statuses.push(new HorizontalAlign(h, data.json().targettext[h], greekPair))
+                            }
+                            // Ends Here
+                        }
+
+                        if (self.Interlinear == "Reverse-Interlinear") {
+                            // Code for horizontal alignment
+
+                            self.Statuses = [];
+                            for (var h = 0; h < data.json().sourcetext.length; h++) {
+                                var greekPair = new Array();
+
+                                for (var g = 0; g < d.positionalPairOfApi.length; g++) {
+                                    let pair = d.positionalPairOfApi[g].split('-');
+                                    if (h == (Number(pair[1] - 1))) {
+                                        if (pair[0] == "0") {
+                                            greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + "Null" + ")");
+                                        }
+                                        else {
+                                            //greekPair.push(data.json().targettext[Number(pair[0] - 1)]);
+                                            greekPair.push(data.json().englishword[Number(pair[1] - 1)] + "(" + data.json().targettext[Number(pair[0] - 1)] + ")");
+                                        }
+                                    }
+                                }
+                                if (greekPair[0] == undefined) {
+                                    greekPair.push(data.json().englishword[h] + "(" + "NA" + ")");
+                                }
+                                self.Statuses.push(new HorizontalAlign(h, data.json().sourcetext[h], greekPair))
+                            }
+                            // Ends Here
+                        }
+                        self.gridDataJson.positionalpairs = d.positionalPairOfApi;
+                    }
+                    //console.log(d.positionalPairOfApi)
+                    //console.log(self.indPair)
                 }
-                //console.log(d.positionalPairOfApi)
-                //console.log(self.indPair)
+                else{
+                    self.toastr.error('You are not a registered User. Sign In to make changes.')
+                }
             })
 
             .on("mouseover", function (d: any, i) {
@@ -860,17 +901,17 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 y.style.fill = "#008000";
                 let xValue = d.x;
 
-                xValue = xValue/25 - 8;
-                for(let m = xValue; m >= 0; m --){
-                   
-                    document.getElementById('rect-'+d.y+m.toString()).style.stroke = 'blue';
-                    document.getElementById('rect-'+d.y+m.toString()).style.strokeWidth = '2px';
+                xValue = xValue / 25 - 8;
+                for (let m = xValue; m >= 0; m--) {
+
+                    document.getElementById('rect-' + d.y + m.toString()).style.stroke = 'blue';
+                    document.getElementById('rect-' + d.y + m.toString()).style.strokeWidth = '2px';
                 }
                 let yValue = d.y;
-                for(let n= yValue; n >= 100; n = n-25){
+                for (let n = yValue; n >= 100; n = n - 25) {
 
-                    document.getElementById('rect-'+n+xValue.toString()).style.stroke = 'blue';
-                    document.getElementById('rect-'+n+xValue.toString()).style.strokeWidth = '2px';
+                    document.getElementById('rect-' + n + xValue.toString()).style.stroke = 'blue';
+                    document.getElementById('rect-' + n + xValue.toString()).style.strokeWidth = '2px';
                 }
 
                 div.style("left", d3.event.pageX + 10 + "px");
@@ -919,17 +960,17 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
                 let xValue = d.x;
 
-                xValue = xValue/25 - 8;
-                for(let m = xValue; m >= 0; m --){
-                   
-                    document.getElementById('rect-'+d.y+m.toString()).style.stroke = '';
-                    document.getElementById('rect-'+d.y+m.toString()).style.strokeWidth = '';
+                xValue = xValue / 25 - 8;
+                for (let m = xValue; m >= 0; m--) {
+
+                    document.getElementById('rect-' + d.y + m.toString()).style.stroke = '';
+                    document.getElementById('rect-' + d.y + m.toString()).style.strokeWidth = '';
                 }
                 let yValue = d.y;
-                for(let n= yValue; n >= 100; n = n-25){
+                for (let n = yValue; n >= 100; n = n - 25) {
 
-                    document.getElementById('rect-'+n+xValue.toString()).style.stroke = '';
-                    document.getElementById('rect-'+n+xValue.toString()).style.strokeWidth = '';
+                    document.getElementById('rect-' + n + xValue.toString()).style.stroke = '';
+                    document.getElementById('rect-' + n + xValue.toString()).style.strokeWidth = '';
                 }
 
             })
@@ -946,7 +987,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             .data(gridData)
             .attr("width", function (d, i) {
                 let len = d.length;
-                len = (len * 35) + 140;
+                len = (len * 35) +  215;  //140;
                 return len;
             })
             .attr("height", function (d, i) {
@@ -960,7 +1001,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 height = (height * 35) + 120;
 
                 let width = d.length;
-                width = (width * 35) + 140;
+                width = (width * 35) + 215;  //140;
                 return "0 0 " + width + " " + height;
             })
         //"0 0 400 400")

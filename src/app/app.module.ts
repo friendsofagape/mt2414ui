@@ -5,21 +5,21 @@ import { D3MatrixComponent } from './d3-matrix/d3-matrix.component';
 import { BcvSearchComponent } from './bcv-search/bcv-search.component';
 import { D3Service } from 'd3-ng2-service';
 import { HttpModule } from '@angular/http';
-import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlignerService } from './aligner.service';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import {GlobalUrl} from './globalUrl';
+import { GlobalUrl } from './globalUrl';
 import { HorizontalCardComponent } from './horizontal-card/horizontal-card.component';
 import { VerticalInterlinearComponent } from './vertical-interlinear/vertical-interlinear.component';
-import {SelfBuildingSquareSpinnerModule, FulfillingSquareSpinnerModule, HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule} from 'angular-epic-spinners';
+import { SelfBuildingSquareSpinnerModule, FulfillingSquareSpinnerModule, HalfCircleSpinnerModule, ScalingSquaresSpinnerModule, IntersectingCirclesSpinnerModule, RadarSpinnerModule } from 'angular-epic-spinners';
 import { CsvToTableComponent } from './csv-to-table/csv-to-table.component';
-import { RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { KeysPipePipe } from './keys-pipe.pipe';
 import { LinearWidgetComponent } from './linear-widget/linear-widget.component';
-import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -57,6 +57,11 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 
 @NgModule({
   declarations: [
@@ -67,11 +72,16 @@ import {
     VerticalInterlinearComponent,
     CsvToTableComponent,
     KeysPipePipe,
-    LinearWidgetComponent
+    LinearWidgetComponent,
+    NavBarComponent,
+    ForgotpasswordComponent,
+    LoginComponent,
+    RegisterComponent,
+    ResetpasswordComponent
   ],
   imports: [
-    BrowserModule,HttpModule,FormsModule,CommonModule,
-    SelfBuildingSquareSpinnerModule,HalfCircleSpinnerModule,ScalingSquaresSpinnerModule,IntersectingCirclesSpinnerModule,RadarSpinnerModule,
+    BrowserModule, HttpModule, FormsModule, CommonModule,
+    SelfBuildingSquareSpinnerModule, HalfCircleSpinnerModule, ScalingSquaresSpinnerModule, IntersectingCirclesSpinnerModule, RadarSpinnerModule,
     BrowserAnimationsModule, MatNativeDateModule,
     ReactiveFormsModule, CdkTableModule,
     CdkTreeModule,
@@ -114,20 +124,36 @@ import {
     RouterModule.forRoot([
       { path: '', component: BcvSearchComponent },
       {
-         path: 'csv-to-table',
-         component: CsvToTableComponent
+        path: 'csv-to-table',
+        component: CsvToTableComponent
       },
       {
         path: 'app-bcv-search',
         component: BcvSearchComponent
-     },
-     {
-      path: 'app-bcv-search/:BCV',
-      component: BcvSearchComponent
-   }
-   ])
+      },
+      {
+        path: 'app-bcv-search/:BCV',
+        component: BcvSearchComponent
+      },
+      {
+        path: 'app-register',
+        component: RegisterComponent
+      },
+      {
+        path: 'app-login',
+        component: LoginComponent
+      },
+      {
+        path: 'resetpassword',
+        component: ResetpasswordComponent
+      },
+      {
+        path: 'forgotpassword',
+        component: ForgotpasswordComponent
+      }
+    ])
   ],
-  providers: [AlignerService,D3Service,GlobalUrl],
+  providers: [AlignerService, D3Service, GlobalUrl],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

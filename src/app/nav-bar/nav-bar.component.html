@@ -1,9 +1,4 @@
-<!-- <div style="text-align:center">
-  <app-bcv-search> </app-bcv-search>
-</div> -->
-
-
-<!-- <div style="text-align:center">
+<div style="text-align:center" *ngIf="navBarFlag">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -19,11 +14,14 @@
         <input class="form-control mr-sm-2" [(ngModel)]="textValue" name="text" type="search" placeholder="Search  (MAT 1 : 1)" aria-label="Search">
         <button (click)="searchBCV()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
+    
+      <button *ngIf="logoutFlag" (click)="logout()" class="btn btn-outline-danger my-2 my-sm-0" style="margin-left: 10px" type="submit">Logout</button>
+
+      <button *ngIf="!logoutFlag" (click)="signin()" class="btn btn-outline-primary my-2 my-sm-0" style="margin-left: 10px" type="submit">Sign in</button>
+
+      <button *ngIf="!logoutFlag" (click)="signup()" class="btn btn-outline-primary my-2 my-sm-0" style="margin-left: 10px" type="submit">Sign Up</button>
+
     </div>
   </nav>
-  <br> -->
-
-<marquee behavior="alternate" direction="">This is a testing site. Dont use it for production purpose.</marquee>
-<div style="text-align:center">
-  <router-outlet></router-outlet>
+  <br>
 </div>

@@ -1,0 +1,60 @@
+<div style="text-align:center">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li [routerLinkActive]="['active']">
+          <a routerLink="{{home}}" class="nav-link" href="#">
+            <mat-icon style="color:grey;" matSuffix>home</mat-icon>
+            <b style="color:grey;">AutographaMT ITL</b>
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+  <br>
+</div>
+
+
+<mat-card class="mat-elevation-z24  example-card">
+  <form class="form-signin">
+    <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+
+    <h1 class="h3 mb-3 font-weight-normal" style="color:grey;"> Log In</h1>
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field style="width:300px !important">
+            <input matInput placeholder="Email Id" [(ngModel)]="username" [formControl]="email" name="username" required>
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field style="width:300px !important">
+            <input matInput placeholder="Password" [(ngModel)]="password" [formControl]="passwords" [type]="hide ? 'password' : 'text'"
+              name="password" minlength="5" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            <mat-error *ngIf="passwords.invalid">{{getErrorMessageForPassword()}}</mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <button class="btn btn-lg btn-secondary btn-block" type="submit" (click)="login()">Sign in</button>
+    <a routerLink="../resetpassword" style="color:grey;font-size: 13px;text-align: left">Forgot Password?</a>
+  </form>
+
+  <mat-divider></mat-divider>
+  <span class="mt-5 mb-3 text-muted">Dont have an Account?
+    <a routerLink="../app-register" style="color:grey;">
+      <b> Sign Up</b>
+    </a>
+  </span>
+  <br>
+  <span class="mt-5 mb-3 text-muted">&copy; 2018-2019</span>
+
+</mat-card>
