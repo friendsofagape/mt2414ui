@@ -124,23 +124,23 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
     RouterModule.forRoot([
       { path: '', component: BcvSearchComponent },
       {
-        path: 'csv-to-table',
+        path: 'TranslationWords',
         component: CsvToTableComponent
       },
       {
-        path: 'app-bcv-search',
+        path: 'bcv',
         component: BcvSearchComponent
       },
       {
-        path: 'app-bcv-search/:BCV',
+        path: 'bcv/:BCV',
         component: BcvSearchComponent
       },
       {
-        path: 'app-register',
+        path: 'register',
         component: RegisterComponent
       },
       {
-        path: 'app-login',
+        path: 'login',
         component: LoginComponent
       },
       {

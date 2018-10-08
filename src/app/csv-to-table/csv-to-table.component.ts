@@ -16,7 +16,7 @@ export interface PeriodicElement {
 }
 
 @Component({
-  selector: 'csv-to-table',
+  selector: 'TranslationWords',
   templateUrl: './csv-to-table.component.html',
   styleUrls: ['./csv-to-table.component.css']
 })

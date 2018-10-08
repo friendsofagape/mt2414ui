@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { KeysPipePipe } from '../keys-pipe.pipe';
 
 @Component({
-  selector: 'app-bcv-search',
+  selector: 'bcv',
   templateUrl: './bcv-search.component.html',
   styleUrls: ['./bcv-search.component.css']
 })
@@ -86,7 +86,7 @@ export class BcvSearchComponent implements OnInit {
 
           if (localStorage.getItem('language') != "" && localStorage.getItem('language') != 'null') {
             langstr = localStorage.getItem('language');
-            this.langFirstIndex = localStorage.getItem('language');            
+            this.langFirstIndex = localStorage.getItem('language');
           }
           else {
             langstr = "grkhin";
@@ -100,7 +100,7 @@ export class BcvSearchComponent implements OnInit {
 
 
           let chapterstr = BcvParam.substring(2, 5).replace(/^0+/, '');
-          this.chapterFirstIndex =Number(BcvParam.substring(2, 5).replace(/^0+/, ''));
+          this.chapterFirstIndex = Number(BcvParam.substring(2, 5).replace(/^0+/, ''));
           this.chapterChange(chapterstr, booknostr);
 
           this.bookNumber = BcvParam.substring(0, 2);
@@ -118,28 +118,30 @@ export class BcvSearchComponent implements OnInit {
   }
 
   glLangChange(l) {
-    this.bookFirstIndex = 0;
-    this.chapterFirstIndex = 0;
-    this.verseFirstIndex = 0;
-    this.verseNumber = stringify(0);
-    this.BCV = null
-    this.langParam = l;
+    if (l != 0) {
+      this.bookFirstIndex = 0;
+      this.chapterFirstIndex = 0;
+      this.verseFirstIndex = 0;
+      this.verseNumber = stringify(0);
+      this.BCV = null
+      this.langParam = l;
+      //console.log('langparam' + l)
+      localStorage.setItem('language', this.langParam);
 
-    localStorage.setItem('language', this.langParam);
+      this._http.get(this.ApiUrl.getBooks + '/' + l)
+        .subscribe(data => {
+          this.Books = data.json().books;
+          //console.log (data.json())
+        }, (error: Response) => {
+          if (error.status === 404) {
+            this.toastr.warning("Books data not available")
+          }
+          else {
+            this.toastr.error("An Unexpected Error Occured.")
+          }
 
-    this._http.get(this.ApiUrl.getBooks + '/' + l)
-      .subscribe(data => {
-        this.Books = data.json().books;
-        //console.log (data.json())
-      }, (error: Response) => {
-        if (error.status === 404) {
-          this.toastr.warning("Books data not available")
-        }
-        else {
-          this.toastr.error("An Unexpected Error Occured.")
-        }
-
-      })
+        })
+    }
   }
 
   bookChange(x) {

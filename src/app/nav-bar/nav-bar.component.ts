@@ -30,8 +30,8 @@ export class NavBarComponent implements OnInit {
 
   title = 'app';
 
-  home: any = "/app-bcv-search";
-  csv: string = "/csv-to-table";
+  home: any = "/bcv";
+  csv: string = "/TranslationWords";
   textValue: string;
   headers = new Headers();
 
@@ -43,7 +43,7 @@ export class NavBarComponent implements OnInit {
         .subscribe(data => {
           let response: any = data;
           this.textValue = "";
-          this.router.navigate(['/app-bcv-search/' + response.json()]);
+          this.router.navigate(['/bcv/' + response.json()]);
 
         }, (error: Response) => {
           if (error.status === 400) {
@@ -58,15 +58,15 @@ export class NavBarComponent implements OnInit {
   logout() {
     localStorage.getItem("access-token") ? localStorage.setItem("access-token", '') : localStorage.setItem("access-token", ''); 
     this.toastr.success('You are succesfully logged out')
-    this.router.navigate(['../app-login'])
+    this.router.navigate(['../login'])
   }
 
   signin() {
-    this.router.navigate(['../app-login'])
+    this.router.navigate(['../login'])
   }
 
   signup() {
-    this.router.navigate(['../app-register'])
+    this.router.navigate(['../register'])
   }
 
 }

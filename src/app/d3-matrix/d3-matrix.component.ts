@@ -27,6 +27,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver/FileSaver';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { toDate } from '@angular/common/src/i18n/format_date';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-d3-matrix',
@@ -55,7 +56,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     interLinearflag = true;
     headers = new Headers();
 
-    constructor(public router: Router, private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
+    constructor(public locations: Location, public router: Router, private ApiUrl: GlobalUrl, private toastr: ToastrService, element: ElementRef, private ngZone: NgZone, d3Service: D3Service, private service: AlignerService, private _http: Http) {
         this.d3 = d3Service.getD3();
         this.toastr.toastrConfig.positionClass = "toast-top-center"
         this.toastr.toastrConfig.closeButton = true;
@@ -81,7 +82,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         var timeDiff = Math.abs(new Date(dd * 1000).getTime() - new Date().getTime());
         if (Math.ceil(timeDiff / (1000 * 3600 * 24)) > 1) {
             localStorage.setItem("access-token", '');
-            this.router.navigate(['../app-login']);
+            this.router.navigate(['../login']);
         }
     }
 
@@ -519,6 +520,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const bookChapterVerse: SimpleChange = changes.BCV;
         this.BCV = bookChapterVerse.currentValue;
+        this.locations.go('/bcv/'+ this.BCV)
         this.gridBind();
         this.Interlinear = "Interlinear"
         this.verticalORgrid = "Display Bilinear";

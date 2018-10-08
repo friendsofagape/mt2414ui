@@ -6,7 +6,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { GlobalUrl } from '../globalUrl';
 
 @Component({
-  selector: 'app-register',
+  selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
             if (Response.json().success == true) {
               this.display = false;
               this.toastr.success(Response.json().message)
-              this.router.navigate(['../app-login'])
+              this.router.navigate(['../login'])
             }
             else {
               this.display = false;

@@ -6,7 +6,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {GlobalUrl} from '../globalUrl';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
             if(Response.json().access_token){
               this.display = false;
                this.toastr.success('YOU ARE SUCCESSFULLY LOGGED IN...')
-               this.router.navigate(['../app-bcv-search'])
+               this.router.navigate(['../bcv'])
                localStorage.setItem("access-token",Response.json().access_token);
               }
               else{
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {      
-           localStorage.getItem("access-token")?this.router.navigate(['../app-bcv-search']):'';
+           localStorage.getItem("access-token")?this.router.navigate(['../bcv']):'';
   }
 
 }
