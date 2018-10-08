@@ -32,6 +32,7 @@ export class BcvSearchComponent implements OnInit {
   bookFirstIndex: any;
   LangArray: any; //= new Array();
   langParam: any;
+  NextFlag: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private toastr: ToastrService, private _http: Http, private ApiUrl: GlobalUrl) {
 
@@ -111,6 +112,7 @@ export class BcvSearchComponent implements OnInit {
           this.verseChange(versestr);
 
           localStorage.setItem("lastAlignments", "");
+          this.NextFlag = false;
         }
       }
     });
@@ -239,6 +241,7 @@ export class BcvSearchComponent implements OnInit {
       document.getElementById("discardButton").style.display = 'none';
 
     localStorage.setItem("lastAlignments", "");
+    this.NextFlag = false;
   }
 
   prevOnclick() {
@@ -286,6 +289,7 @@ export class BcvSearchComponent implements OnInit {
       }
     }
     localStorage.setItem("lastAlignments", "");
+    this.NextFlag = false;
   }
 
   nextOnClick() {
@@ -330,6 +334,7 @@ export class BcvSearchComponent implements OnInit {
       //console.log (this.BCV + "  " + "next")
 
       localStorage.setItem("lastAlignments", "");
+      this.NextFlag = true;
     }
   }
 

@@ -48,6 +48,9 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     @Input() BCV: any;
     @Input() BOOKNAME: any;
     @Input() Lang: any;
+    @Input() NextFlag: boolean;
+    DiscardFlag: boolean = false;
+    prefetchData: any = "";
     Statuses = new Array();
     Interlinear = "Interlinear";
     verticalORgrid = "Display Bilinear";
@@ -329,6 +332,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
     discardOnClick() {
         this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
+        this.DiscardFlag = true;
         document.getElementById("grid").innerHTML = "";
         if (localStorage.getItem("lastAlignments") !== "") {
             var x: any = this.BCV;
@@ -498,18 +502,26 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
 
     exportOnClick() {
+        let flag = (<HTMLInputElement>document.getElementById("usfmchkbox")).checked;
+        let usfmFlag = "";
+        if (flag) {
+            usfmFlag = "/true";
+        }
 
         this.display = true;
         //console.log(this.display)
-        this._http.get(this.ApiUrl.grkhin + "/" + this.Lang + "/" + this.BOOKNAME)
+        this._http.get(this.ApiUrl.grkhin + "/" + this.Lang + "/" + this.BOOKNAME + usfmFlag)
             .toPromise()
-            .then(response => this.saveToFileSystem(response.json()));
-
+            .then(response => this.saveToFileSystem(response.json()))
+            .catch((err) => {
+                this.toastr.error(err)
+                this.display = false;
+              });
     }
 
     private saveToFileSystem(response) {
         const blob = new Blob([JSON.stringify(response)], { type: 'application/json' });
-        saveAs(blob, 'bible.json');
+        saveAs(blob, this.Lang + '_' + this.BOOKNAME + '.json');
         this.display = false;
         //console.log(this.display)
     }
@@ -520,12 +532,15 @@ export class D3MatrixComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const bookChapterVerse: SimpleChange = changes.BCV;
         this.BCV = bookChapterVerse.currentValue;
-        this.locations.go('/bcv/'+ this.BCV)
+        this.locations.go('/bcv/' + this.BCV)
         this.gridBind();
         this.Interlinear = "Interlinear"
         this.verticalORgrid = "Display Bilinear";
+        this.linear = false;
+        this.interLinearflag = true;
         document.getElementById('verticalInterlinear').style.display = "none";
         document.getElementById('grid').style.display = "";
+        (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;
         // document.getElementById("fixButton").style.display = "";
     }
 
@@ -535,27 +550,63 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         //   var data = new FormData();
         //   data.append("bcv",bcv);
         this.display = true;
-        document.getElementById("grid").innerHTML = "";
-        this._http.get(this.ApiUrl.getnUpdateBCV + '/' + bcv + '/' + this.Lang)
-            .subscribe(data => {
-                //console.log(data.json())
-                document.getElementById("grid").innerHTML = "";
+        //console.log (this.DiscardFlag)
+        if ((this.DiscardFlag) || this.prefetchData == "" || (!this.NextFlag)) {
+            document.getElementById("grid").innerHTML = "";
+            this._http.get(this.ApiUrl.getnUpdateBCV + '/' + bcv + '/' + this.Lang)
+                .subscribe(data => {
+                    //console.log(data.json())
+                    this.DiscardFlag = false;
+                    document.getElementById("grid").innerHTML = "";
+                    // (<HTMLInputElement>document.getElementById("nxtbtn")).disabled = false;
+                    // (<HTMLInputElement>document.getElementById("prebtn")).disabled = false;
+                    this.generateVisual(data)
+
+                }, (error: Response) => {
+                    if (error.status === 404 || error.status === 500) {
+                        (<HTMLInputElement>document.getElementById("prebtn")).disabled = false;
+                        this.toastr.warning("Data not available")
+                        this.display = false;
+                    }
+                    else {
+                        (<HTMLInputElement>document.getElementById("prebtn")).disabled = false;
+                        this.toastr.error("An Unexpected Error Occured.")
+                        this.display = false;
+                    }
+
+                });
+        }
+
+        if(this.NextFlag  && (!this.DiscardFlag) && this.prefetchData != ""){
+                    document.getElementById("grid").innerHTML = "";
+                    document.getElementById('grid').style.display = "";
+                   this.generateVisual(this.prefetchData)
+        }
+
+            this._http.get(this.ApiUrl.getnUpdateBCV + '/' + Number(Number(bcv) + 1) + '/' + this.Lang)
+                .subscribe(dataa => {
+                    //console.log(data.json())
                 (<HTMLInputElement>document.getElementById("nxtbtn")).disabled = false;
                 (<HTMLInputElement>document.getElementById("prebtn")).disabled = false;
-                this.generateVisual(data)
-
-            }, (error: Response) => {
-                if (error.status === 404 || error.status === 500) {
-                    this.toastr.warning("Data not available")
-                    this.display = false;
-                }
-                else {
-                    this.toastr.error("An Unexpected Error Occured.")
-                    this.display = false;
-                }
-
-            });
-
+                    this.prefetchData = dataa;
+    
+                }, (error: Response) => {
+                    if (error.status === 404 || error.status === 500) {
+                        this.prefetchData = "";
+                        (<HTMLInputElement>document.getElementById("nxtbtn")).disabled = false;
+                        (<HTMLInputElement>document.getElementById("prebtn")).disabled = false;
+                        // this.toastr.warning("Data not available")
+                        // this.display = false;
+                    }
+                    else {
+                        this.prefetchData = "";
+                        (<HTMLInputElement>document.getElementById("nxtbtn")).disabled = false;
+                        (<HTMLInputElement>document.getElementById("prebtn")).disabled = false;
+                        // this.toastr.error("An Unexpected Error Occured.")
+                        // this.display = false;
+                    }
+    
+                });   
     }
 
 
@@ -889,7 +940,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                     //console.log(d.positionalPairOfApi)
                     //console.log(self.indPair)
                 }
-                else{
+                else {
                     self.toastr.error('You are not a registered User. Sign In to make changes.')
                 }
             })
@@ -989,7 +1040,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             .data(gridData)
             .attr("width", function (d, i) {
                 let len = d.length;
-                len = (len * 35) +  215;  //140;
+                len = (len * 35) + 215;  //140;
                 return len;
             })
             .attr("height", function (d, i) {
