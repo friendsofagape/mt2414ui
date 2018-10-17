@@ -83,14 +83,14 @@ export class GlobalUrl {
     grkhin: string = 'https://stagingapi.autographamt.com/v2/alignments/export';
     
     // Fetch CSV file
-    csvFile : string = 'https://align.staging.autographamt.com/assets/reference.csv';
+    csvFile : string = 'https://staging.autographamt.com/assets/reference.csv';
 
     // Fetch CSV file
     //csvFile: string = 'https://autographa.herokuapp.com/assets/reference.csv';
 
     // Fetch sampleData file    
     //sampleFile: string = 'https://autographa.herokuapp.com/assets/SampleDemo.json';
-    sampleFile: string = 'https://align.staging.autographamt.com/assets/SampleDemo.json';
+    sampleFile: string = 'https://staging.autographamt.com/assets/SampleDemo.json';
     //Fetch all the available language list
     getLang: string = 'https://stagingapi.autographamt.com/v2/alignments/languages';
 
