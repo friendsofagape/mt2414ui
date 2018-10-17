@@ -975,10 +975,18 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                 div.html(function () {
                     if (d.greekHorizontalWord[i] != 'NULL') {
                         // console.log(Number(d.greekHorizontalWords[i].substring(1,d.greekHorizontalWords[i].length)));
-                        let removeZero = Number(d.greekHorizontalWord[i].substring(1, d.greekHorizontalWord[i].length)).toString();
-                        if (removeZero.endsWith('0')) {
-                            removeZero = removeZero.substring(0, removeZero.length - 1)
-                        }
+
+                        //Commented on 17 Oct for showing lexicon data as per new updates
+                        // let removeZero = Number(d.greekHorizontalWord[i].substring(1, d.greekHorizontalWord[i].length)).toString();
+                        // if (removeZero.endsWith('0')) {
+                        //     removeZero = removeZero.substring(0, removeZero.length - 1)
+                        // }
+                        // Ended here on 17 Oct
+
+                        //Added on 17 Oct for showing lexicon data as per new updates
+                        let removeZero = Number(d.greekHorizontalWord[i]);
+                        // Ended here on 17 Oct
+
                         // console.log(removeZero)
                         for (let count = 0; count < greekArray.length; count++) {
                             //console.log(greekArray[count])
@@ -1135,10 +1143,10 @@ export class D3MatrixComponent implements OnInit, OnChanges {
                         // }
                         // Ended here on 17 Oct
 
-                        //Commented on 17 Oct for showing lexicon data as per new updates
-
-                        // Ended here on 17 Oct
+                        //Added on 17 Oct for showing lexicon data as per new updates
                         let removeZero = Number(d.greekHorizontalWord[i]);
+                        // Ended here on 17 Oct
+                        
                         // console.log(removeZero)
                         for (let count = 0; count < greekArray.length; count++) {
                             //console.log(greekArray[count])
