@@ -1,0 +1,29 @@
+<div style="text-align:center" *ngIf="navBarFlag">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li [routerLinkActive]="['active']">
+          <a routerLink = "{{home}}" class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input id="q" class="form-control mr-sm-2" (keyup)="do_parse()" [(ngModel)]="textValue" name="text" type="search" placeholder="Search  (MAT 1 : 1)" aria-label="Search">
+        <mat-chip-list>
+          <mat-chip *ngFor="let osis of osisMat">{{osis.osis}}</mat-chip>
+        </mat-chip-list>&nbsp;
+        <button (click)="searchBCV()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    
+      <button *ngIf="logoutFlag" (click)="logout()" class="btn btn-outline-danger my-2 my-sm-0" style="margin-left: 10px" type="submit">Logout</button>
+
+      <button *ngIf="!logoutFlag" (click)="signin()" class="btn btn-outline-primary my-2 my-sm-0" style="margin-left: 10px" type="submit">Sign in</button>
+
+      <button *ngIf="!logoutFlag" (click)="signup()" class="btn btn-outline-primary my-2 my-sm-0" style="margin-left: 10px" type="submit">Sign Up</button>
+
+    </div>
+  </nav>
+  <br>
+
+<!-- <app-login></app-login> -->
+</div>

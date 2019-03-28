@@ -1,0 +1,20 @@
+<div style="text-align:center">
+<mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+
+<br>
+
+<div *ngIf="linearCard" class="container" style="display:inline-block;text-align:left">
+  <mat-card>
+    <span id="up-{{i+1}}" style="color: #99D6FF;font-size: 18px" *ngFor="let span of targettext; let i = index" (click)="targetClick(i+1)" >{{span + ' '}}</span>
+    <br>
+    <span style="color: #d55500;" *ngFor="let span of englishSourceArray">{{span + ' '}}</span>
+    <br>
+
+    <span id="down-{{i+1}}" style="color: #001320;font-size: 18px;" *ngFor="let span of sourcetext; let i = index"> {{ '<' + span + '>' + ' '}} </span>
+
+    <br>
+
+    <br>
+    <button class="btn btn-primary" (click)="saveOnClick()">submit</button>
+  </mat-card>
+</div></div>

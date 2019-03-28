@@ -24,9 +24,18 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+              "./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "node_modules/slick-carousel/slick/slick.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -74,9 +83,18 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+              "./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "node_modules/slick-carousel/slick/slick.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

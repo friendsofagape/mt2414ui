@@ -1,0 +1,27 @@
+<div style="text-align:center">
+
+<div mat-dialog-content>
+  <!-- <p>Give a project name</p> -->
+
+
+<mat-form-field>
+  <mat-select placeholder="LANGUAGE" [(ngModel)]="langFirstIndex" ngModel name="glLang" id="glLang" #glLang="ngModel" (selectionChange)="glLangChange(glLang.value)">
+    <mat-option value="0">Select</mat-option>
+    <mat-option *ngFor="let glLang of LangArray | keysPipe" [value]="glLang.key">{{glLang.value}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<!-- <mat-form-field>
+  <mat-select placeholder="Select User">
+    <mat-option value="0">Select</mat-option>
+    <mat-option value="1">Ajay</mat-option>
+    <mat-option value="2">Vipin</mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button cdkFocusInitial (click)="createProject()" >Create</button>
+</div>
+</div>

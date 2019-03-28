@@ -1,28 +1,53 @@
+<!-- <mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="Email Id" [(ngModel)]="username" name="username" required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required>
+        </mat-form-field></td>
+      </tr></table>
+    </form>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  </mat-card-content>
+  <mat-card-actions>
+    <button  mat-raised-button (click)="login()" color="primary">Login</button>
+  </mat-card-actions>
+    <a routerLink="../app-register"  color="primary">Register</a>
+</mat-card> -->
+
+
+<!-- <div style="text-align:center">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li [routerLinkActive]="['active']">
+            <a routerLink = "{{home}}" class="nav-link" href="#"><mat-icon style="color:grey;" matSuffix>home</mat-icon> <b style="color:grey;">AutographaMT ITL</b> <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+    <br>
+</div> -->
 <div style="text-align:center">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li [routerLinkActive]="['active']">
-          <a routerLink="{{home}}" class="nav-link" href="#">
-            <mat-icon style="color:grey;" matSuffix>home</mat-icon>
-            <b style="color:grey;">AutographaMT ITL</b>
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
-  <br>
-</div>
-
-
+<mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
 <mat-card class="mat-elevation-z24  example-card">
   <form class="form-signin">
     <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-
-    <h1 class="h3 mb-3 font-weight-normal" style="color:grey;"> Log In</h1>
+    
+    <h1 class="h3 mb-3 font-weight-normal" style="color:grey;" > Log In</h1>
     <table class="example-full-width" cellspacing="0">
       <tr>
         <td>
@@ -36,25 +61,24 @@
       <tr>
         <td>
           <mat-form-field style="width:300px !important">
-            <input matInput placeholder="Password" [(ngModel)]="password" [formControl]="passwords" [type]="hide ? 'password' : 'text'"
-              name="password" minlength="5" required>
+            <input matInput placeholder="Password" [(ngModel)]="password" [formControl]="passwords" [type]="hide ? 'password' : 'text'" name="password" minlength="5" required>
             <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
             <mat-error *ngIf="passwords.invalid">{{getErrorMessageForPassword()}}</mat-error>
           </mat-form-field>
         </td>
       </tr>
     </table>
+    <!-- <div class="checkbox mb-3" style="text-align: left">
+        <mat-checkbox>Remember me</mat-checkbox>
+    </div> -->
     <button class="btn btn-lg btn-secondary btn-block" type="submit" (click)="login()">Sign in</button>
     <a routerLink="../resetpassword" style="color:grey;font-size: 13px;text-align: left">Forgot Password?</a>
   </form>
 
   <mat-divider></mat-divider>
-  <span class="mt-5 mb-3 text-muted">Dont have an Account?
-    <a routerLink="../register" style="color:grey;">
-      <b> Sign Up</b>
-    </a>
-  </span>
+  <span class="mt-5 mb-3 text-muted">Dont have an Account?  <a routerLink="../app-register" style="color:grey;"><b> Sign Up</b></a></span>
   <br>
   <span class="mt-5 mb-3 text-muted">&copy; 2018-2019</span>
 
 </mat-card>
+</div>

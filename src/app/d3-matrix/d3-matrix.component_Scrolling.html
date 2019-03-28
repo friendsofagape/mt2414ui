@@ -1,0 +1,65 @@
+<div style="text-align:center">
+  <div class="container">
+    <button id="saveButton" type="button" class="btn btn-outline-success" style="display: none;padding: 2px 7px;margin:5px;"
+      (click)="saveOnClick()">Save Changes</button>
+    <button id="appButton" type="button" class="btn btn-outline-primary" style="display: none;padding: 2px 7px;margin:5px;" (click)="approveOnClick()">Approve</button>
+    <button id="fixButton" type="button" class="btn btn-outline-secondary" style="padding: 2px 7px;margin:5px;" (click)="fixOnClick()"
+      style="display: none">Fix Alignment</button>
+    <button id="discardButton" type="button" class="btn btn-outline-danger" style="display: none;padding: 2px 7px;margin:5px;"
+      (click)="discardOnClick()">UNDO</button>
+    <label>
+      <input id="usfmchkbox" type="checkbox" value="">Include USFM</label>
+    <button id="export" type="button" class="btn btn-outline-success" style="padding: 2px 7px;margin:5px;" (click)="exportOnClick()">Export Alignments</button>
+    <!-- <a id="saveButton" style="display: none;" href="#" class="next" (click)="saveOnClick()">Save Changes</a>
+  <a id="appButton"  style="display: none;"  href="#" class="next" (click)="approveOnClick()">Approve</a>
+  <a id="fixButton" href="#" class="next" (click)="fixOnClick()">Fix Alignment</a>
+  <a id="discardButton"  style="display: none;" href="#" class="next" (click)="discardOnClick()">Discard Changes</a> -->
+  </div>
+  <br>
+
+  <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+  <!-- <div class="container" *ngIf="display">
+  <div class="row">
+
+    <div class="col-sm-5">
+
+    </div>
+
+    <div class="col-sm-6" style="margin-top: 20px">
+      <app-radar-spinner [animationDuration]="1000" [size]="100" [color]="'blue'">
+      </app-radar-spinner>
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+  </div>
+</div> -->
+
+
+  <div class="container" style="text-align: left" *ngIf="!display">
+    <div>
+      <button type="button" id="interlinearLink" class="btn btn-light" (click)="interlinearOnClick()">{{Interlinear}}</button>
+      <button type="button" id="interlinearLink" class="btn btn-light" style="margin-left: 15px;" (click)="linearOnClick()">Linear</button>
+    </div>
+    <div *ngIf="interLinearflag">
+      <horizontal-card style="display:inline-block;text-align:center" *ngFor="let horizontalCard of Statuses" [horizontalCard]="horizontalCard">
+      </horizontal-card>
+    </div>
+
+    <div *ngIf="linear">
+      <linear-widget style="display:inline-block;text-align:left" [linearCard]="gridDataJson"></linear-widget>
+    </div>
+  </div>
+
+  <!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
+  <br>
+  <div class="container">
+    <button type="button" *ngIf="!display" id="verticalORgrid" class="btn btn-light" (click)="verticalORgridOnClick()">{{verticalORgrid}}</button>
+    <!-- <div id="grid" class="content"></div> -->
+    <div id="grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+
+    <div id="verticalInterlinear" class="content" style="display: none;padding-left: 200px;margin-top:10px">
+      <vertical-interlinear *ngIf="gridDataJson" [bilinearData]="gridDataJson"> </vertical-interlinear>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div style="text-align:center">
+      <div>
+            <button class="btn btn-secondary border border-white" style="margin-top: 10px" (click)="openDialog()">Create New Project</button>
+      </div>
+      <br>
+      <mat-divider></mat-divider>
+      <br>
+      <br>
+
+
+      <div>
+            <h5>
+                  <span style="color:grey;"> Organization : {{organisation?organisation:"Not Available"}} </span>
+            </h5>
+            <br>
+            <div *ngIf="projectList!=''">
+                  <h5>
+                        <span style="color:grey;"> Projects </span>
+                  </h5>
+                  <br>
+                  <button style="width:150px;height:100px;" *ngFor="let project of projectList" class="btn btn-secondary border border-white"
+                        (click)="openUserListDialog(project)">{{project}}</button>
+            </div>
+      </div>
+      <br>
+      <br>
+</div>

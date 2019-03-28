@@ -1,0 +1,23 @@
+<div style="text-align:center">
+  <mat-form-field style="width:auto;margin-top:20px">
+    <mat-select placeholder="SOURCE" [(ngModel)]="langFirstIndex" ngModel name="glLang" id="glLang" #glLang="ngModel" (selectionChange)="glLangChange(glLang.value)">
+      <mat-option value="0">Select</mat-option>
+      <mat-option *ngFor="let glLang of LangArray | keysPipe" [value]="glLang.key">{{glLang.value}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+    <mat-form-field  style="width:auto;margin:20px;">
+            <mat-select placeholder="TARGET" [(ngModel)]="trgFirstIndex" ngModel name="targetLang" id="targetLang" #targetLang="ngModel" (selectionChange)="targetLangChange(targetLang.value)">
+                    <mat-option value="0">Select</mat-option>
+                    <mat-option *ngFor="let item of Target | keysPipe" [value]="item.key">{{item.value | uppercase}}</mat-option>
+            </mat-select>
+    </mat-form-field>
+
+  <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+  <div id="pie" style="visibility: hidden;">
+    <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="single" [legend]="showLegend" [explodeSlices]="explodeSlices"
+      [labels]="showLabels" [doughnut]="doughnut" [trimLabels]="trimLabels" [gradient]="gradient" (select)="onSelect($event)">
+    </ngx-charts-pie-chart>
+  </div>
+</div>

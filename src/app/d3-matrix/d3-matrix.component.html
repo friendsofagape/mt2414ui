@@ -1,62 +1,142 @@
-<div class="container">
-  <button id="saveButton" type="button" class="btn btn-outline-success" style="display: none;padding: 2px 7px;margin:5px;"
-    (click)="saveOnClick()">Save Changes</button>
-  <button id="appButton" type="button" class="btn btn-outline-primary" style="display: none;padding: 2px 7px;margin:5px;" (click)="approveOnClick()">Approve</button>
-  <button id="fixButton" type="button" class="btn btn-outline-secondary" style="padding: 2px 7px;margin:5px;" (click)="fixOnClick()" style="display: none">Fix Alignment</button>
-  <button id="discardButton" type="button" class="btn btn-outline-danger" style="display: none;padding: 2px 7px;margin:5px;"
-    (click)="discardOnClick()">UNDO</button>
-    <label><input id="usfmchkbox" type="checkbox" value="">Include USFM</label>
-  <button id="export" type="button" class="btn btn-outline-success" style="padding: 2px 7px;margin:5px;" (click)="exportOnClick()">Export Alignments</button>
-  <!-- <a id="saveButton" style="display: none;" href="#" class="next" (click)="saveOnClick()">Save Changes</a>
-  <a id="appButton"  style="display: none;"  href="#" class="next" (click)="approveOnClick()">Approve</a>
-  <a id="fixButton" href="#" class="next" (click)="fixOnClick()">Fix Alignment</a>
-  <a id="discardButton"  style="display: none;" href="#" class="next" (click)="discardOnClick()">Discard Changes</a> -->
-</div>
-<br>
+<div style="text-align:center">
+  <div class="container">
+    <button id="saveButton" type="button" class="btn btn-outline-success" style="display: none;padding: 2px 7px;margin:5px;"
+      (click)="saveOnClick()">Save Changes</button>
 
-<mat-progress-bar *ngIf = "display" mode="indeterminate"></mat-progress-bar>
-<!-- <div class="container" *ngIf="display">
-  <div class="row">
+    <button id="discardButton" type="button" class="btn btn-outline-danger" style="display: none;padding: 2px 7px;margin:5px;"
+      (click)="discardOnClick()">UNDO</button>
+    <label>
+      <input id="usfmchkbox" type="checkbox" value="">Include USFM</label>
+    <button id="export" type="button" class="btn btn-outline-success" style="padding: 2px 7px;margin:5px;" (click)="exportOnClick()">Export Alignments</button>
+  </div>
+  <br>
 
-    <div class="col-sm-5">
+  <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
 
+  <div class="container" style="text-align: left" *ngIf="!display">
+    <div>
+      <button type="button" id="interlinearLink" class="btn btn-light" (click)="interlinearOnClick()">{{Interlinear}}</button>
+      <button type="button" id="interlinearLink" class="btn btn-light" style="margin-left: 15px;" (click)="linearOnClick()">Linear</button>
+    </div>
+    <div *ngIf="interLinearflag">
+      <horizontal-card style="display:inline-block;text-align:center" *ngFor="let horizontalCard of Statuses" [horizontalCard]="horizontalCard">
+      </horizontal-card>
     </div>
 
-    <div class="col-sm-6" style="margin-top: 20px">
-      <app-radar-spinner [animationDuration]="1000" [size]="100" [color]="'blue'">
-      </app-radar-spinner>
-    </div>
-    <div class="col-sm-1">
-
+    <div *ngIf="linear">
+      <linear-widget style="display:inline-block;text-align:left" [linearLid]= "carouselBcv" [linearCard]="gridDataJson" ></linear-widget>
     </div>
   </div>
-</div> -->
+
+  <!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
+  <br>
+  <div class="container">
 
 
-<div class="container" style="text-align: left" *ngIf="!display">
-  <div>
-    <button type="button" id="interlinearLink" class="btn btn-light" (click)="interlinearOnClick()">{{Interlinear}}</button>
-    <button type="button" id="interlinearLink" class="btn btn-light" style="margin-left: 15px;" (click)="linearOnClick()">Linear</button>
+
+    <!-- <button type="button" *ngIf="!display" id="verticalORgrid" class="btn btn-light" (click)="verticalORgridOnClick()">{{verticalORgrid}}</button> -->
+    <div *ngIf="!display">
+      <div>
+        <mat-slide-toggle [disabled]="matDisabled" [checked]="checked" style="padding-left: 30px; margin-right: 40px" *ngIf="!display" [formControl]="autoRenew" (change)="onChange()"
+          color="primary">
+          <span style="color:grey;font-size: 17px">Word Across verses</span>
+        </mat-slide-toggle>
+        <!-- <div id="grid" class="content"></div> -->
+        <!-- <select name="targetDrpDwn" id="targetDrpDwn" (change)="targetDrpDwn($event)">
+      <option *ngFor="let targetValue of TargetContent" value="{{targetValue}}">{{targetValue}}</option>
+    </select> -->
+
+        <!-- <mat-form-field>
+          <mat-select placeholder="ChangeTargetContent"  ngModel name="targetDrpDwn" id="targetDrpDwn"
+            #targetDrpDwn="ngModel" (selectionChange)="targetDrpDwn()">
+            <mat-option value="0">Select</mat-option>
+            <mat-option *ngFor="let targetDrpDwn of TargetContent" [value]="targetDrpDwn">{{targetDrpDwn}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field>
+            <mat-select [disabled]="matDisabled" placeholder="ChangeTargetContent" [(ngModel)]="targetContentFirstIndex" ngModel name="targetDrpDwn" id="targetDrpDwn" #targetDrpDwn="ngModel" (selectionChange)="targetDrpDwnfunc(targetDrpDwn.value)">
+                    <mat-option value="0">Select</mat-option>
+                    <mat-option *ngFor="let targetDrpDwn of TargetContent" [value]="targetDrpDwn">{{targetDrpDwn}}</mat-option>
+            </mat-select>
+    </mat-form-field>
+
+
+      </div>
+
+      <div *ngIf="acrossVerseFlag" style="margin-left: 0px;width:100%;">
+        <a id="prevContent" style="background-color: inherit;cursor:pointer" (click)="prevContentOnClick()">
+          <mat-icon id='befNav' [ngStyle]="{'color': befNav == 'blue'? befNave : 'grey'}" style="font-size: 60px;margin-right: 80px;">navigate_before</mat-icon>
+        </a>
+        <!-- <button type="button" id="prevContent" class="btn btn-light" (click)="prevContentOnClick()">Previous Content</button> -->
+        <span style="font-size: 25px;color:grey;">{{alphaBcv}}</span>
+        <!-- <button type="button" id="nextContent" class="btn btn-light" (click)="nextContentOnClick()">Next Content</button> -->
+        <a id="nextContent" style="background-color: inherit;cursor:pointer" (click)="nextContentOnClick()">
+          <mat-icon id='nextNav' [ngStyle]="{'color':nextNav  == 'blue'? nextNav : 'grey'}" style="font-size: 60px;margin-left: 80px;">navigate_next</mat-icon>
+        </a>
+
+      </div>
+    </div>
+    <owl-carousel #owlElement [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'sliding']">
+      <div class="item">
+        <div id="prev0grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="prev1grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="prev2grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="prev3grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="next5grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="next6grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="next7grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <div id="next8grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
+        </div>
+      </div>
+
+    </owl-carousel>
+
+    <!-- 
+    <div id="grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div> -->
+
+    <!-- <div id="verticalInterlinear" class="content" style="display: none;padding-left: 200px;margin-top:10px">
+      <vertical-interlinear *ngIf="gridDataJson" [bilinearData]="gridDataJson"> </vertical-interlinear>
+    </div> -->
   </div>
-  <div *ngIf="interLinearflag">
-    <horizontal-card style="display:inline-block;text-align:center" *ngFor="let horizontalCard of Statuses" [horizontalCard]="horizontalCard">
-    </horizontal-card>
-  </div>
-
-  <div *ngIf="linear">
-    <linear-widget style="display:inline-block;text-align:left" [linearCard]="gridDataJson"></linear-widget>
-  </div>
-</div>
-
-<!-- <div id="grid" class="content" style="margin-left: 240px; width:800px;height:470px;overflow-y: scroll;overflow-x: scroll;"></div> -->
-<br>
-<div class="container">
-<button type="button" *ngIf="!display" id="verticalORgrid" class="btn btn-light" 
-  (click)="verticalORgridOnClick()">{{verticalORgrid}}</button>
-<!-- <div id="grid" class="content"></div> -->
-<div id="grid" class="content" style="margin-left: 0px; width:100%;height:670px;overflow-y: scroll;overflow-x: scroll;"></div>
-
-<div id="verticalInterlinear" class="content" style="display: none;padding-left: 200px;margin-top:10px">
-  <vertical-interlinear *ngIf="gridDataJson" [bilinearData]="gridDataJson"> </vertical-interlinear>
-</div>
 </div>

@@ -1,0 +1,65 @@
+<!-- <div style="text-align:center">
+<mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+
+<div style="width: 400px;display:inline-block" >
+  Name of the Organization <br>
+  <input type="text" [(ngModel)]="name" ><br><br>
+
+  Address <br>
+  <textarea type="text" [(ngModel)]="address"></textarea><br><br>
+
+  Email <br>
+  <input type="email" [(ngModel)]="email">
+  <br><br>
+
+  County Code <br>
+  <input type="text" [(ngModel)]="concode">
+  <br><br>
+
+  Contact Phone Number <br>
+  <input type="text" [(ngModel)]="phone"> <br><br>
+
+  Organization Owner (Email) <br>
+  <input type="email" [(ngModel)]="owner">
+
+   <br><br>
+   <input type="button" value="Submit" (click)="submit()" >
+</div>
+</div> -->
+
+<div class="container contact-form">
+
+  <form method="post">
+      <h3>Create a New Organization</h3>
+     <div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+                  <input type="text" name="name" [(ngModel)]="name"  class="form-control" placeholder="Name of the Organization *" value="" />
+              </div>
+              <div class="form-group">
+                  <input type="text" name="address"  [(ngModel)]="address" class="form-control" placeholder="Address *" value="" />
+              </div>
+              <div class="form-group">
+                  <input type="text" name="email" [(ngModel)]="email" class="form-control" placeholder="Your Email *" value="" />
+              </div>
+              <div class="form-group">
+                  <input type="text" name="concode" [(ngModel)]="concode" class="form-control" placeholder="Country Code *" value="" />
+              </div>
+              <div class="form-group">
+                  <input type="text" name="phone" [(ngModel)]="phone" class="form-control" placeholder="Your Phone Number *" value="" />
+              </div>
+              <div class="form-group">
+                <input type="text" name="owner" [(ngModel)]="owner" class="form-control" placeholder="Organization Owner (Email) *" value="" />
+            </div>
+              <div class="form-group">
+                  <input type="submit" name="btnSubmit" (click)="submit()" class="btn btn-outline-success my-2 my-sm-0 btnContact"  value="Create" />
+              </div>
+          </div>
+          <!-- <div class="col-md-6">
+              <div class="form-group">
+                  <textarea name="txtMsg" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;"></textarea>
+              </div>
+          </div> -->
+      </div>
+  </form>
+</div>

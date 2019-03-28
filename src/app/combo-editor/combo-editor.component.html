@@ -1,0 +1,20 @@
+<div style="text-align:center">
+<mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+
+<br>
+
+<div *ngIf="linearCard" class="container" style="display:inline-block;text-align:left">
+  <mat-card>
+    <span id="{{span}}" style="color: #99D6FF;font-size: 18px" *ngFor="let span of targettext">{{span + ' '}}</span>
+    <br>
+
+    <span id="{{span}}" style="color: #001320;font-size: 18px;" *ngFor="let span of sourcetext"> {{ '<' + span + '>' + ' '}} </span>
+
+    <br>
+
+    <span style="color: #d55500;" *ngFor="let span of englishSourceArray">{{span + ' '}}</span>
+    <br>
+    <br>
+    <button class="btn btn-primary">submit</button>
+  </mat-card>
+</div></div>

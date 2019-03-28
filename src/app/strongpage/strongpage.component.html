@@ -1,0 +1,109 @@
+<div style="text-align:center">
+<mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+
+<br>
+
+
+<div class="container" *ngIf="!display">
+  <mat-card>
+    <span>
+      <h2>Strong:- {{strongNo}}</h2>
+    </span>
+    <mat-tab-group>
+      <mat-tab label="English Word">
+        <div style="margin-top: 10px; width:900px;padding-left:200px;text-align: center">
+          {{targetword}} </div>
+      </mat-tab>
+      <mat-tab label="Definition">
+        <div style="margin-top: 10px; width:900px;padding-left:200px;text-align: center">{{definition}} </div>
+      </mat-tab>
+      <mat-tab label="Greek Word">
+        <div style="margin-top: 10px; width:900px;padding-left:200px;text-align: center"> {{sourceword}}</div>
+      </mat-tab>
+      <mat-tab label="Pronunciation">
+        <div style="margin-top: 10px; width:900px;padding-left:200px;text-align: center">{{pronunciation}}</div>
+      </mat-tab>
+      <mat-tab label="Transliteration">
+        <div style="margin-top: 10px; width:900px;padding-left:200px;text-align: center">{{transliteration}}</div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+  <br>
+  <mat-divider></mat-divider>
+  <!-- <br>
+  <mat-card>
+   
+    <mat-chip-list>
+      Checked :- &nbsp;&nbsp;&nbsp;
+              <mat-chip>Papadum</mat-chip>
+        <mat-chip>Naan</mat-chip>
+        <mat-chip>Dal</mat-chip>
+      </mat-chip-list>
+
+      <mat-chip-list>
+          Unchecked :- 
+            <mat-chip>Papadum</mat-chip>
+            <mat-chip>Naan</mat-chip>
+            <mat-chip>Dal</mat-chip>
+          </mat-chip-list>
+  </mat-card> -->
+
+  <div style="text-align: left">
+    <mat-accordion *ngFor="let acc of objLenArr">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <!-- <mat-panel-title>
+            Total Count :- {{objCountArr[acc]}}
+          </mat-panel-title> -->
+          <mat-panel-description style="margin-top: 15px;padding-left: 0px;">
+            <span matBadge={{objCountArr[acc]}} matBadgeOverlap="false">{{objLangWordArr[acc]}}</span>
+          </mat-panel-description>
+          <mat-panel-description>
+            Checked count:- {{checkedCount[acc]}} | Unchecked count:- {{uncheckedCount[acc]}}
+          </mat-panel-description>
+          <!-- <button class="btn btn-outline-primary" (click)="changeFlag()">{{checkFlag}}</button> -->
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        </mat-expansion-panel-header>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-description>{{objLangWordArr[acc]}}(Checked-{{checkedCount[acc]}})</mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="checkedCount[acc] > 0" style="border:ridge; text-align: right">
+                <button  class="btn btn-outline-danger" (click)="Unchecked(objLangWordArr[acc],acc)">UNCHECK ALL</button>
+                <a routerLink="/combo/{{link}}/{{lang}}/{{trglang}}/{{(objBcvCheckPos[acc])[i]}}" style="display:block;text-decoration:underline;text-align: center"
+                  target="_blank" *ngFor="let link of objBcvCheckArr[acc] ; let i = index">
+                  <!-- {{link|numberToString}} -->
+                  {{ bookno[(link|numberToString).substring(0,2)] }}:{{(link|numberToString).substring(2,5)|number}}:{{(link|numberToString).substring(5,8)|number}}
+                </a>
+              </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-description>{{objLangWordArr[acc]}}(Unchecked-{{uncheckedCount[acc]}})</mat-panel-description>
+              </mat-expansion-panel-header>
+              <div *ngIf="uncheckedCount[acc] > 0" style="border:ridge; text-align: right">
+                  <button class="btn btn-outline-primary" (click)="Checked(objLangWordArr[acc],acc)">CHECK ALL</button>
+                  <a routerLink="/combo/{{link}}/{{lang}}/{{trglang}}/{{(objBcvUncheckPos[acc])[i]}}" style="display:block;text-decoration:underline;text-align: center"
+                    target="_blank" *ngFor="let link of objBcvUncheckArr[acc] ; let i = index">
+                    <!-- {{link|numberToString}} -->
+                    {{ bookno[(link|numberToString).substring(0,2)] }}:{{(link|numberToString).substring(2,5)|number}}:{{(link|numberToString).substring(5,8)|number}}
+                  </a>
+                </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+      
+
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+</div>
+</div>

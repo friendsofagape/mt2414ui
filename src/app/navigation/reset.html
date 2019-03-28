@@ -1,0 +1,16 @@
+<mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+
+<div style="text-align:center">
+  <h1 class="h3 mb-3 font-weight-normal">
+    <mat-icon matSuffix>lock</mat-icon> Reset Password</h1>
+  <h6>Enter your registered email Id, we'll send you a password reset email</h6>
+    <form class="form-signin">
+    
+            <mat-form-field >
+              <input matInput placeholder="Email Id" [(ngModel)]="username" [formControl]="email" name="username" required>
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+      <button class="btn btn-lg btn-secondary btn-block" type="submit" (click)="reset()">Reset Password</button>
+    </form>
+</div>

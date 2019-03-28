@@ -42,7 +42,7 @@ export class ForgotpasswordComponent implements OnInit {
           if (Response.json().success) {
             this.display = false;
             this.toastr.success(Response.json().message)
-            this.router.navigate(['../login'])
+            this.router.navigate(['../app-login'])
           }
           else {
             this.display = false;

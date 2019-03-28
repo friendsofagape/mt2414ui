@@ -21,6 +21,7 @@ import { LinearWidgetComponent } from './linear-widget/linear-widget.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import {
+  MAT_DIALOG_DEFAULT_OPTIONS,
   MatAutocompleteModule,
   MatBadgeModule,
   MatBottomSheetModule,
@@ -57,11 +58,36 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ComboEditorComponent } from './combo-editor/combo-editor.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { DummyAppComponentComponent } from './dummy-app-component/dummy-app-component.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { WordViewEditorComponent } from './word-view-editor/word-view-editor.component';
+import { StrongpageComponent } from './strongpage/strongpage.component';
+import { ComboComponent } from './combo/combo.component';
+import { NumberToStringPipe } from './number-to-string.pipe';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { DialogOverviewExampleDialog } from './admin-panel/admin-panel.component';
+import { AssignTaskDialog } from './admin-panel/admin-panel.component';
+import { LoginDialog } from './navigation/navigation.component';
+import { SignupDialog } from './navigation/navigation.component';
+import { resetDialog } from './navigation/navigation.component';
+import { forgotDialog } from './navigation/navigation.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { RequestorganisationComponent } from './requestorganisation/requestorganisation.component';
+import { ReportsComponent } from './reports/reports.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { OwlModule } from 'ngx-owl-carousel';
+import { WordViewAlignerComponent } from './word-view-aligner/word-view-aligner.component';
+
 
 @NgModule({
   declarations: [
@@ -73,11 +99,32 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
     CsvToTableComponent,
     KeysPipePipe,
     LinearWidgetComponent,
-    NavBarComponent,
-    ForgotpasswordComponent,
+    ComboEditorComponent,
     LoginComponent,
     RegisterComponent,
-    ResetpasswordComponent
+    DummyAppComponentComponent,
+    ResetpasswordComponent,
+    ForgotpasswordComponent,
+    WordViewEditorComponent,
+    StrongpageComponent,
+    ComboComponent,
+    NumberToStringPipe,
+    AdminPanelComponent,
+    DialogOverviewExampleDialog,
+    AssignTaskDialog,
+    LoginDialog,
+    SignupDialog,
+    resetDialog,
+    forgotDialog,
+    NavigationComponent,
+    OrganizationComponent,
+    UserManagementComponent,
+    DashboardComponent,
+    FeedbackComponent,
+    RequestorganisationComponent,
+    ReportsComponent,
+    CarouselComponent,
+    WordViewAlignerComponent
   ],
   imports: [
     BrowserModule, HttpModule, FormsModule, CommonModule,
@@ -120,40 +167,80 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    NgxChartsModule,
+    SlickCarouselModule,
+    OwlModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: BcvSearchComponent },
       {
-        path: 'TranslationWords',
+        path: 'csv-to-table',
         component: CsvToTableComponent
       },
       {
-        path: 'bcv',
+        path: 'app-bcv-search',
         component: BcvSearchComponent
       },
       {
-        path: 'bcv/:BCV',
+        path: 'app-bcv-search/:BCV',
         component: BcvSearchComponent
       },
       {
-        path: 'register',
-        component: RegisterComponent
+        path: 'app-bcv-search/:BCV/:AssignOrganisation',
+        component: BcvSearchComponent
       },
       {
-        path: 'login',
-        component: LoginComponent
+        path: 'app-bcv-search/:AssignLang/:AssignBook/:AssignOrganisation',
+        component: BcvSearchComponent
       },
       {
-        path: 'resetpassword',
-        component: ResetpasswordComponent
+        path: 'ComboEditor/:BCV/:Strong/:Hindi',
+        component: ComboEditorComponent
+      },
+      // {
+      //   path: 'app-register',
+      //   component: RegisterComponent
+      // },
+      // {
+      //   path: 'app-login',
+      //   component: LoginComponent
+      // },
+      // {
+      //   path: 'resetpassword',
+      //   component: ResetpasswordComponent
+      // },
+      // {
+      //   path: 'forgotpassword',
+      //   component: ForgotpasswordComponent
+      // },
+      {
+        path: 'wordview',
+        component: WordViewEditorComponent
       },
       {
-        path: 'forgotpassword',
-        component: ForgotpasswordComponent
-      }
+        path: 'strong/:Strong/:Lang/:TrgLang',
+        component: StrongpageComponent
+      },
+      {
+        path: 'combo/:BCV/:Lang/:TrgLang/:Pos',
+        component: ComboComponent
+      },
+      {
+        path: 'UserDashboard',
+        component: DashboardComponent
+      },
+      { path: 'Organization', component: OrganizationComponent },
+      { path: 'UserManagement', component: UserManagementComponent },
+      { path: 'feedback', component: FeedbackComponent },
+      { path: 'requestorg', component: RequestorganisationComponent },
+      { path: 'AdminDashboard', component: AdminPanelComponent },
+      { path: 'reports', component: ReportsComponent },
+      { path: 'carousel', component: CarouselComponent },
+      { path: 'WordViewAligner', component: WordViewAlignerComponent }
     ])
   ],
   providers: [AlignerService, D3Service, GlobalUrl],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogOverviewExampleDialog, AssignTaskDialog, LoginDialog, SignupDialog, resetDialog, forgotDialog]
 })
 export class AppModule { }

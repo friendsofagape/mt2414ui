@@ -1,0 +1,13 @@
+.example-container {
+  /* height: 100%; */
+  margin: 2px;
+}
+
+
+.mat-nav-list .mat-list-item {
+   color:grey;
+}
+
+::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
+  background: none;
+}

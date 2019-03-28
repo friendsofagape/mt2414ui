@@ -1,0 +1,64 @@
+<div style="text-align:center">
+    <mat-progress-bar *ngIf="display" mode="indeterminate"></mat-progress-bar>
+        <br>
+      <form class="form-signin">
+        <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+        
+        <h1 class="h3 mb-3 font-weight-normal" style="color:grey;" > Sign Up</h1>
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field style="width:300px !important">
+                <input matInput placeholder="Email Id" [(ngModel)]="username" [formControl]="email" name="username" required>
+                <mat-icon matSuffix>email</mat-icon>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+    
+          <tr>
+            <td>
+              <mat-form-field style="width:300px !important">
+                <input matInput placeholder="First Name" [(ngModel)]="firstname" [formControl]="firstnameValid" name="firstname" required>
+               
+                <mat-error *ngIf="firstnameValid.invalid">{{getErrorMessageForFirstName()}}</mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+    
+          <tr>
+            <td>
+              <mat-form-field style="width:300px !important">
+                <input matInput placeholder="Last Name" [(ngModel)]="lastname"  name="lastname" >
+              </mat-form-field>
+            </td>
+          </tr>
+    
+          <tr>
+            <td>
+              <mat-form-field style="width:300px !important">
+                <input matInput placeholder="Password" [(ngModel)]="password"  [formControl]="passwords" minlength="5" [type]="hide ? 'password' : 'text'" name="password" required>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="passwords.invalid">{{getErrorMessageForPassword()}}</mat-error>
+              </mat-form-field> 
+            </td>
+          </tr> 
+    
+          <tr>
+              <td>
+                <mat-form-field style="width:300px !important">
+                  <input matInput placeholder="Confirm Password" [(ngModel)]="confirmPassword"   [formControl]="confirmPass" minlength="5" [type]="hide ? 'password' : 'text'" name="confirmPassword" required>
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>  
+                  <mat-error *ngIf="confirmPass.invalid">{{getErrorMessageForConfirmPassword()}}</mat-error>           
+                </mat-form-field>
+              </td>
+            </tr>
+        </table>
+        <button class="btn btn-lg btn-secondary btn-block" type="submit" (click)="register()">Register</button>
+      </form>
+    
+      <mat-divider></mat-divider>
+      <!-- <span class="mt-5 mb-3 text-muted">Already have an Account?  <a (click)="alreadyClick()" style="color:grey;cursor: pointer;"><b> Sign In</b></a></span>
+      <br> -->
+      <span class="mt-5 mb-3 text-muted">&copy; 2018-2019</span>
+    </div>

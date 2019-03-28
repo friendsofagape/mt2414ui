@@ -14,7 +14,7 @@ export class HorizontalCardComponent implements OnInit {
   ngOnInit() {
     for(let i=1; i < this.horizontalCard.greekWords.length; i++){
           let firstIndex = this.horizontalCard.greekWords[i].indexOf("(");
-          this.horizontalCard.greekWords[i] = this.horizontalCard.greekWords[i].substring(firstIndex);
+          this.horizontalCard.greekWords[i] = this.horizontalCard.greekWords[i];//.substring(firstIndex);
           //console.log( this.horizontalCard.greekWords[i].substring(firstIndex));
     }
   }
