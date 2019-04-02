@@ -55,8 +55,8 @@ export class BcvSearchComponent implements OnInit {
     this.langFirstIndex = 0;
     this.trgFirstIndex = 0;
 
-    localStorage.setItem("language", "");
-    localStorage.setItem("Targetlanguage", "");
+    // localStorage.setItem("language", "");
+    // localStorage.setItem("Targetlanguage", "");
 
     this._http.get(this.ApiUrl.getLang).subscribe(
       data => {
@@ -156,9 +156,9 @@ export class BcvSearchComponent implements OnInit {
                 langstr = "hin-4";
                 this.langFirstIndex = "hin-4";
 
-                trglangstr = "grk-UGNT";
-                this.trgFirstIndex = "grk-UGNT";
-                this.trglangParam = "grk-UGNT";
+                trglangstr = "grk-WH";
+                this.trgFirstIndex = "grk-WH";
+                this.trglangParam = "grk-WH";
               }
 
               this.glLangChange(langstr);

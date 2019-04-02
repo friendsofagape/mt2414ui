@@ -125,6 +125,13 @@ export class NavigationComponent implements OnInit {
 
   logout() {
     localStorage.getItem("access-token") ? localStorage.setItem("access-token", '') : localStorage.setItem("access-token", '');
+    localStorage.setItem("AssignBook", '');
+    localStorage.setItem("AssignLang", '');
+    localStorage.setItem("AlignmentBooks", '');
+    localStorage.setItem("AlignmentLang", '');
+    localStorage.setItem("Targetlanguage", '');
+    localStorage.setItem("language", '');
+    
     this.toastr.success('You are succesfully logged out')
     this.router.navigate(['../'])
     this.logoutFlag = false;

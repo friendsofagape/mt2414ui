@@ -13,6 +13,7 @@ export class LinearWidgetComponent implements OnInit {
    targettext;
    englishword;
    englishSourceArray = new Array();
+   currLinearLid:any;
 
   constructor() { }
 
@@ -21,12 +22,20 @@ export class LinearWidgetComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes.linearLid.currentValue)
+    console.log(this.linearCard);
     
+    if(changes.linearLid.currentValue.length == 8 && changes.linearLid.currentValue.substring(0,1) == '0'){
+      this.currLinearLid = changes.linearLid.currentValue.substring(1,8);
+    }
+    else{
+      this.currLinearLid = changes.linearLid.currentValue;
+    }
+    console.log(this.currLinearLid)
 
-    this.sourcetext =  this.linearCard.targetContent[this.linearCard.LidList[this.linearCard.bcvList.indexOf(String(changes.linearLid.currentValue))]].strongs;
+    this.sourcetext =  this.linearCard.targetContent[this.linearCard.LidList[this.linearCard.bcvList.indexOf(String(this.currLinearLid))]].strongs;
     //this.targettext = this.linearCard.sourceContent[this.linearCard.lid].hin_text;
     this.targettext =  Object.values(this.linearCard.sourceContent[this.linearCard.lid])[0];
-    this.englishword = this.linearCard.targetContent[this.linearCard.LidList[this.linearCard.bcvList.indexOf(String(changes.linearLid.currentValue))]].english;
+    this.englishword = this.linearCard.targetContent[this.linearCard.LidList[this.linearCard.bcvList.indexOf(String(this.currLinearLid))]].english;
     //this.englishword = this.linearCard.targetContent[this.linearCard.lid].english;
 
     if(this.sourcetext.length ==  this.englishword.length){
