@@ -359,7 +359,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.interLinearflag = true;
         //document.getElementById('verticalInterlinear').style.display = "none";
         document.getElementById('grid').style.display = "";
-        (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;   
+        // (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;   
 
     }
 
@@ -393,7 +393,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.interLinearflag = true;
         //document.getElementById('verticalInterlinear').style.display = "none";
         document.getElementById('grid').style.display = "";
-        (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;
+        // (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;
     }
 
     gridData(d: any, rawPoss: any) {
@@ -1056,7 +1056,8 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
 
     exportOnClick() {
-        let flag = (<HTMLInputElement>document.getElementById("usfmchkbox")).checked;
+        // let flag = (<HTMLInputElement>document.getElementById("usfmchkbox")).checked;
+        let flag = false;
         let usfmFlag = "";
         if (flag) {
             usfmFlag = "/true";
@@ -1119,7 +1120,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
         this.interLinearflag = true;
         //document.getElementById('verticalInterlinear').style.display = "none";
         document.getElementById('grid').style.display = "";
-        (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;
+        // (<HTMLInputElement>document.getElementById("usfmchkbox")).checked = false;
         //document.getElementById("fixButton").style.display = "";
     }
     }
@@ -1406,7 +1407,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             //console.log(data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].targetword)
 
             if (data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]]) {
-                greekArray.push("<b>English Word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].transliteration);
+                greekArray.push("<b>English Word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].definition + "<br/><br/>" + "<b>Word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].transliteration);
             }
             //});
 
@@ -2137,7 +2138,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
 
         for (var l = 0; l < data.json().targetContent[acrossLid].strongs.length; l++) {
             if (data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]]) {
-                greekArray.push("<b>English Word</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].transliteration);
+                greekArray.push("<b>English Word</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].definition + "<br/><br/>" + "<b>Word</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicanData[(data.json().targetContent[acrossLid].strongs)[l]].transliteration);
             }
         }
 
@@ -2901,7 +2902,7 @@ export class D3MatrixComponent implements OnInit, OnChanges {
             //console.log(data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].targetword)
 
             if (data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]]) {
-                greekArray.push("<b>English Word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].definition + "<br/><br/>" + "<b>greek_word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].transliteration);
+                greekArray.push("<b>English Word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].targetword + "<br/><br/>" + "<b>Definition</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].definition + "<br/><br/>" + "<b>Word</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].sourceword + "<br/><br/>" + "<b>pronunciation</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].pronunciation + "<br/><br/>" + "strongs:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].strongs + " " + "<br/><br/>" + "<b>transliteration</b>:- " + data.json().lexicanData[data.json().targetContent[lidApi].strongs[l]].transliteration);
             }
             //});
 
