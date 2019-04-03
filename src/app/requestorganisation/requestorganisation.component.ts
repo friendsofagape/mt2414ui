@@ -69,6 +69,7 @@ export class RequestorganisationComponent implements OnInit {
         if (Response.json().success == true) {
           this.display = false;
           this.toastr.success('Request Sent to admin.')
+          this.router.navigate(['../'])
         }
         else {
           this.display = false;

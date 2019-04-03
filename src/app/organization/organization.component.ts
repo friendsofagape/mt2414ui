@@ -61,8 +61,10 @@ export class OrganizationComponent implements OnInit {
 
     this.decodeToken(String(JSON.parse(JSON.stringify(this.headers)).Authorization));
 
+    console.log(this.name.replace(/\s/g,''));
+    
     this.display = true;
-    this._http.post(this.API.createOrganization, { "organisation_name": this.name.replace(' ',''), "address": this.address, "email": this.email, "country_code": Number(this.concode), "phone": this.phone, "organisation_owner_email": this.owner }, {
+    this._http.post(this.API.createOrganization, { "organisation_name": this.name.replace(/\s/g,''), "address": this.address, "email": this.email, "country_code": Number(this.concode), "phone": this.phone, "organisation_owner_email": this.owner }, {
       headers: this.headers
     })
       .subscribe(Response => {
@@ -70,6 +72,7 @@ export class OrganizationComponent implements OnInit {
         if (Response.json().success == true) {
           this.display = false;
           this.toastr.success('Organisation created succesfully.')
+          this.router.navigate(['../'])
         }
         else {
           this.display = false;
