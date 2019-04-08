@@ -156,9 +156,9 @@ export class BcvSearchComponent implements OnInit {
                 langstr = "hin-4";
                 this.langFirstIndex = "hin-4";
 
-                trglangstr = "grk-WH";
-                this.trgFirstIndex = "grk-WH";
-                this.trglangParam = "grk-WH";
+                trglangstr = "grk-wh";
+                this.trgFirstIndex = "grk-wh";
+                this.trglangParam = "grk-wh";
               }
 
               this.glLangChange(langstr);
