@@ -31,9 +31,7 @@ class HeaderforAdmin extends Component {
             <NavItem eventKey={5} componentClass={Link} href="/" to="/gettranslationdraft">
               <strong className="scolor">Download Draft</strong>
             </NavItem>
-            <NavItem eventKey={7} componentClass={Link} href="/" to="/translation">
-              <strong className="scolor">Translation </strong>
-            </NavItem>
+            
             <NavItem eventKey={6} componentClass={Link} href="/" to="/logout">
               <strong className="scolor">Log out</strong>
             </NavItem>
