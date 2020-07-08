@@ -29,9 +29,11 @@ class HeaderforMember extends Component {
             <NavItem eventKey={4} componentClass={Link} href="/" to="/gettranslationdraft">
               <strong className="scolor">Download Translation Draft</strong>
             </NavItem>
+            {/*  only for super admin
             <NavItem eventKey={7} componentClass={Link} href="/" to="translation">
               <strong className="scolor">Translation </strong>
             </NavItem>
+            */}
             <NavItem eventKey={5} componentClass={Link} href="/" to="/logout">
               <strong className="scolor">Log out</strong>
             </NavItem>
